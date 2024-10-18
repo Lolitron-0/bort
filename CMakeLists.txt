@@ -11,14 +11,16 @@ endif()
 include_directories(include)
 
 set(SOURCES 
-  src/CLI/Main.cpp 
-  src/Frontend/File.cpp
+  src/CLI/Main.cpp
+  src/CLI/IO.cpp
+  src/Frontend/InputFile.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Dependencies
+add_subdirectory(thirdparty/cxxopts)
+target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 
-find_package(Hana REQUIRED)
-target_link_libraries(${PROJECT_NAME} hana)
-
+# for header only
+target_include_directories(${PROJECT_NAME} PRIVATE thirdparty)

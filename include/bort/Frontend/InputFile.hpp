@@ -5,10 +5,9 @@
 
 namespace bort {
 
-class SourceFile {
+class InputFile {
 public:
-  std::string m_Content;
-  std::filesystem::path m_Path;
+  std::filesystem::path Path;
 };
 
 class SourceFileReadException : std::runtime_error {
@@ -21,7 +20,7 @@ private:
 
 class SourceFileReader {
 public:
-  static auto ReadSmallCFile(const std::string& pathStr) -> SourceFile;
+  static auto ReadSmallCFile(const InputFile& input) -> std::string;
 };
 
 } // namespace bort

@@ -1,0 +1,6 @@
+[submodule "thirdparty/oof"]
+	path = thirdparty/oof
+	url = https://github.com/s9w/oof.git
+[submodule "thirdparty/cxxopts"]
+	path = thirdparty/cxxopts
+	url = https://github.com/jarro2783/cxxopts.git

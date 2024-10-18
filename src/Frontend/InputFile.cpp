@@ -11,7 +11,8 @@ SourceFileReadException::SourceFileReadException(
     : std::runtime_error{ "SourceFileReader: " + message } {
 }
 
-constexpr std::string SmallCFileExtension{ "c" };
+// TODO: consider making things like this constexpr (hana or frozen)
+static const std::string SmallCFileExtension{ "c" }; // NOLINT
 
 auto SourceFileReader::ReadSmallCFile(const InputFile& input)
     -> std::string {

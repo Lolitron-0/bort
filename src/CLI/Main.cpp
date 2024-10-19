@@ -1,4 +1,5 @@
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/Frontend/FrontendOptions.hpp"
 #include <algorithm>
 #include <cxxopts.hpp>
@@ -36,6 +37,9 @@ auto main(int argc, char* argv[]) -> int {
                  [](auto&& input) {
                    return bort::InputFile{ .Path = input };
                  });
+
+  bort::FrontendInstance frontend{ std::move(frontendOptions) };
+  frontend.Run();
 
   return 0;
 }

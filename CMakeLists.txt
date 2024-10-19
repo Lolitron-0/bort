@@ -14,6 +14,7 @@ set(SOURCES
   src/CLI/Main.cpp
   src/CLI/IO.cpp
   src/Frontend/InputFile.cpp
+  src/Frontend/FrontendInstance.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -10,13 +10,14 @@
   -llvm-include-order,\
   -llvmlibc-*,\
   -misc-non-private-member-variables-in-classes, \
-  -cppcoreguidelines-avoid-magic-numbers, \
   -readability-magic-numbers, \
   -readability-identifier-length, \
   -readability-implicit-bool-conversion, \
   -readability-redundant-access-specifiers, \
   -bugprone-easily-swappable-parameters, \
-  -cppcoreguidelines-non-private-member-variables-in-classes"
+  -cppcoreguidelines-avoid-magic-numbers, \
+  -cppcoreguidelines-non-private-member-variables-in-classes, \
+  -cppcoreguidelines-avoid-const-or-ref-data-members"
 WarningsAsErrors: ''
 CheckOptions:
   - key: 'bugprone-argument-comment.StrictMode'
@@ -37,8 +38,6 @@ CheckOptions:
     value: 'true'
   - key: 'cppcoreguidelines-init-variables.MathHeader'
     value: '<cmath>'
-  - key: 'cppcoreguidelines-narrowing-conversions.PedanticMode'
-    value: 'true'
   - key: 'readability-else-after-return.WarnOnUnfixable'
     value: 'true'
   - key: 'readability-else-after-return.WarnOnConditionVariables'
@@ -47,18 +46,14 @@ CheckOptions:
     value: 'true'
   - key: 'readability-qualified-auto.AddConstToQualified'
     value: 'true'
-  - key: 'readability-redundant-access-specifiers.CheckFirstDeclaration'
-    value: 'true'
 
   # IDENTIFIERS
-  - key: 'readability-identifier-naming.PrivateMethodPrefix'
-    value: '_'
   - key: 'readability-identifier-naming.ClassCase'
     value: 'CamelCase'
   - key: 'readability-identifier-naming.PrivateMethodCase'
-    value: 'camelBack'
+    value: 'CamelCase'
   - key: 'readability-identifier-naming.PublicMethodCase'
-    value: 'camelBack'
+    value: 'CamelCase'
   - key: 'readability-identifier-naming.PrivateMemberPrefix'
     value: 'm_'
   - key: 'readability-identifier-naming.ProtectedMemberPrefix'

@@ -1,5 +1,4 @@
 #pragma once
-#include "bort/Frontend/InputFile.hpp"
 #include <string>
 #include <unordered_map>
 

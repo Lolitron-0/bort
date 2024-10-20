@@ -16,5 +16,5 @@ cp -f build/compile_commands.json .
 
 if [ $# -ne 0 ] && [ "$1" == "run" ]; then
 	echo -e "----------------------------------\n"
-	./build/bort ./tests/corpus/globals.c
+	./build/bort ./tests/corpus/basic.c
 fi

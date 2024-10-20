@@ -1,5 +1,6 @@
 #pragma once
-#include "bort/Frontend/SourceLocation.hpp"
+#include "bort/Frontend/SourceFile.hpp"
+#include <string_view>
 
 namespace bort {
 
@@ -11,29 +12,39 @@ enum class TokenKind {
 
 class Token {
 public:
-  Token(TokenKind kind, SourceLocation loc);
+  Token(TokenKind kind, SourceFileIt loc);
 
-  [[nodiscard]] auto Is(TokenKind kind) const -> bool {
-    return Kind == kind;
+  [[nodiscard]] auto is(TokenKind kind) const -> bool {
+    return m_Kind == kind;
   }
-  [[nodiscard]] auto IsOneOf(TokenKind tk1, TokenKind tk2) const -> bool {
-    return Kind == tk1 || Kind == tk2;
+  [[nodiscard]] auto isOneOf(TokenKind tk1, TokenKind tk2) const -> bool {
+    return m_Kind == tk1 || m_Kind == tk2;
   }
   template <typename... TKs>
-  [[nodiscard]] auto IsOneOf(TokenKind tk, TKs... other) const -> bool {
-    return Is(tk) || IsOneOf(other...);
+  [[nodiscard]] auto isOneOf(TokenKind tk, TKs... other) const -> bool {
+    return is(tk) || isOneOf(other...);
   }
 
-  void SetKind(TokenKind kind);
+  void setKind(TokenKind kind) {
+    m_Kind = kind;
+  }
 
-  [[nodiscard]] auto GetLoc() const -> SourceLocation;
-  void SetLoc(const SourceLocation& loc) {
-    Loc = loc;
+  [[nodiscard]] auto getLoc() const -> SourceFileIt {
+    return m_Loc;
+  }
+
+  [[nodiscard]] auto getValue() const -> std::string_view {
+    return std::string_view{
+      m_Loc.asBufIter(),
+      m_Loc.asBufIter() +
+          static_cast<SourceFileIt::difference_type>(m_Length)
+    };
   }
 
 private:
-  TokenKind Kind;
-  SourceLocation Loc;
+  TokenKind m_Kind;
+  SourceFileIt m_Loc;
+  size_t m_Length;
 };
 
 } // namespace bort

@@ -7,7 +7,7 @@ namespace bort {
 struct FrontendInstance {
 public:
   explicit FrontendInstance(FrontendOptions frontendOptions);
-  void Run();
+  void run();
 
 private:
   FrontendOptions m_FrontendOptions;

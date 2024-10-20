@@ -1,22 +1,20 @@
-#ifndef TOK(t)
+#ifndef TOK
 #define TOK(t) 
 #endif
-#ifndef PUNCT(t, s)
+#ifndef PUNCT
 #define PUNCT(t, s) TOK(t)
 #endif
-
-#ifndef PPTOK(t)
-#define PPTOK(t) 
+#ifndef KEYWORD
+#define KEYWORD(t) TOK(KW_ ## t)
 #endif
 
 TOK(Unknown)
 TOK(Eof)
 
 TOK(Identifier)
-TOK(Keyword)
-TOK(String)
-TOK(Char)
-TOK(Numeric)
+TOK(StringLiteral)
+TOK(CharConstant)
+TOK(NumericConstant)
 
 PUNCT(LParen,       "(")
 PUNCT(RParen,       ")")
@@ -43,3 +41,10 @@ PUNCT(TimesAssign,  "*=")
 PUNCT(DivAssign,    "/=")
 PUNCT(Less,         "<")
 PUNCT(Greater,      ">")
+
+KEYWORD(int)
+KEYWORD(char)
+
+// Preprocessor
+KEYWORD(define)
+KEYWORD(undef)

@@ -26,7 +26,7 @@ auto main(int argc, char* argv[]) -> int {
   }
 
   if (result.count("inputs") == 0) {
-    bort::EmitError("No input files");
+    bort::emitError("No input files");
     return 1;
   }
 
@@ -35,11 +35,11 @@ auto main(int argc, char* argv[]) -> int {
   std::transform(inputs.begin(), inputs.end(),
                  std::back_inserter(frontendOptions.InputFiles),
                  [](auto&& input) {
-                   return bort::InputFile{ .Path = input };
+                   return bort::SourceFileInfo{ .Path = input };
                  });
 
   bort::FrontendInstance frontend{ std::move(frontendOptions) };
-  frontend.Run();
+  frontend.run();
 
   return 0;
 }

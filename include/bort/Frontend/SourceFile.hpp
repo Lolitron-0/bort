@@ -73,11 +73,11 @@ class SourceFileIt {
 public:
   using difference_type = SourceFileBuffer::difference_type;
 
-  explicit SourceFileIt(const SourceFile& file)
-      : m_File{ &file },
-        m_LineEndIdx{ file.getBuffer().find('\n') } {
+  explicit SourceFileIt(const std::shared_ptr<SourceFile>& file)
+      : m_File{ file },
+        m_LineEndIdx{ file->getBuffer().find('\n') } {
     if (m_LineEndIdx == std::string::npos) {
-      m_LineEndIdx = file.getBuffer().size() - 1;
+      m_LineEndIdx = file->getBuffer().size() - 1;
     }
   }
 
@@ -164,7 +164,7 @@ public:
   }
 
 private:
-  const SourceFile* m_File;
+  std::shared_ptr<SourceFile> m_File;
   size_t m_LineStartIdx{ 0 };
   size_t m_LineEndIdx;
   size_t m_Index{ 0 };

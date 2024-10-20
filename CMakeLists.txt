@@ -6,14 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include)
 
-set(SOURCES 
-  src/CLI/Main.cpp
-  src/CLI/IO.cpp
-  src/Frontend/SourceFile.cpp
-  src/Frontend/FrontendInstance.cpp
-  src/Lex/Lexer.cpp
-  src/Lex/Preprocessor.cpp
-)
+set(SOURCES
+    src/CLI/Main.cpp
+    src/CLI/IO.cpp
+    src/Frontend/SourceFile.cpp
+    src/Frontend/FrontendInstance.cpp
+    src/Lex/Lexer.cpp
+    src/Lex/Preprocessor.cpp
+    src/Lex/Token.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -24,7 +24,7 @@ endif()
 # Dependencies
 include(FetchContent)
 
-#cxxopts
+# cxxopts
 add_subdirectory(thirdparty/cxxopts)
 target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 
@@ -32,6 +32,14 @@ target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 FetchContent_Declare(
   fmt
   GIT_REPOSITORY https://github.com/fmtlib/fmt
-  GIT_TAG        0c9fce2ffefecfdce794e1859584e25877b7b592) # 11.0.2
+  GIT_TAG 0c9fce2ffefecfdce794e1859584e25877b7b592) # 11.0.2
 FetchContent_MakeAvailable(fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+
+# cul
+FetchContent_Declare(
+  cul
+  GIT_REPOSITORY https://github.com/Lolitron-0/cul.git
+  GIT_TAG 6c8fd4d76d046a5fb88a19a90795fb732e043d24)
+FetchContent_MakeAvailable(cul)
+target_link_libraries(${PROJECT_NAME} PRIVATE cul)

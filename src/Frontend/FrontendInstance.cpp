@@ -2,6 +2,7 @@
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Lexer.hpp"
+#include <memory>
 #include <utility>
 
 namespace bort {
@@ -13,9 +14,10 @@ FrontendInstance::FrontendInstance(FrontendOptions frontendOptions)
 void FrontendInstance::run() {
   for (auto& input : m_FrontendOptions.InputFiles) {
     try {
-      auto sourceFile{ SourceFile::readSmallCFile(input) };
+      std::shared_ptr<SourceFile> sourceFile{ SourceFile::readSmallCFile(
+          input) };
       Lexer lexer;
-      lexer.lex(*sourceFile);
+      lexer.lex(sourceFile);
     } catch (const exceptions::SourceFileReaderError& e) {
       emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());

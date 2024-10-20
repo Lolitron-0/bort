@@ -9,7 +9,7 @@ using TokenList = std::list<Token>;
 
 class Lexer {
 public:
-  void lex(SourceFile& file);
+  void lex(const std::shared_ptr<SourceFile>& file);
 
 private:
   TokenList m_Tokens;

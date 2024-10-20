@@ -6,18 +6,19 @@ namespace bort {
 
 enum class TokenKind {
 #define TOK(t) t, // NOLINT
-#include "bort/Lex/Token.def"
-  NumTokens
+#include "bort/Lex/Tokens.def"
+  NUM_TOKENS
 };
 
 class Token {
 public:
-  Token(TokenKind kind, SourceFileIt loc);
+  Token(TokenKind kind, SourceFileIt loc, size_t length);
 
-  [[nodiscard]] auto is(TokenKind kind) const -> bool {
+  [[nodiscard]] inline auto is(TokenKind kind) const -> bool {
     return m_Kind == kind;
   }
-  [[nodiscard]] auto isOneOf(TokenKind tk1, TokenKind tk2) const -> bool {
+  [[nodiscard]] inline auto isOneOf(TokenKind tk1,
+                                    TokenKind tk2) const -> bool {
     return m_Kind == tk1 || m_Kind == tk2;
   }
   template <typename... TKs>
@@ -25,21 +26,11 @@ public:
     return is(tk) || isOneOf(other...);
   }
 
-  void setKind(TokenKind kind) {
-    m_Kind = kind;
-  }
+  void setKind(TokenKind kind);
 
-  [[nodiscard]] auto getLoc() const -> SourceFileIt {
-    return m_Loc;
-  }
+  [[nodiscard]] auto getLoc() const -> SourceFileIt;
 
-  [[nodiscard]] auto getValue() const -> std::string_view {
-    return std::string_view{
-      m_Loc.asBufIter(),
-      m_Loc.asBufIter() +
-          static_cast<SourceFileIt::difference_type>(m_Length)
-    };
-  }
+  [[nodiscard]] auto getValue() const -> std::string_view;
 
 private:
   TokenKind m_Kind;

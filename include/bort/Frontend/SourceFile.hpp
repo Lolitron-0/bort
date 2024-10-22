@@ -25,6 +25,10 @@ public:
     return m_Buffer;
   }
 
+  [[nodiscard]] auto getBuffer() -> SourceFileBuffer& {
+    return m_Buffer;
+  }
+
   static auto readSmallCFile(const SourceFileInfo& input)
       -> std::unique_ptr<SourceFile>;
 
@@ -127,6 +131,13 @@ public:
   [[nodiscard]] auto getCurrentLine() const -> std::string_view {
     return { getLineStartBufIt(), getLineEndBufIt() };
   }
+
+    [[nodiscard]] auto getValue(size_t length) const -> std::string_view {
+    return std::string_view{
+      asBufIter(),
+      asBufIter() + static_cast<SourceFileIt::difference_type>(length)
+    };
+  };
 
   auto operator*() const -> const char& {
     return m_File->getBuffer().at(m_Index);

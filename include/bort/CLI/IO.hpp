@@ -21,15 +21,25 @@ template <typename... Args>
 void emitWarning(const fmt::format_string<Args...>& message,
                  Args&&... args) {
 
-  fmt::print(stderr, fmt::fg(fmt::color::purple), "warning: ");
+  fmt::print(stderr, fmt::fg(fmt::color::magenta), "warning: ");
   fmt::println(stderr, message, std::forward<Args>(args)...);
 }
 
+template <typename... Args>
 void emitError(const SourceFileIt& loc, size_t length,
-               const std::string_view& message);
+               const fmt::format_string<Args...>& message,
+               Args&&... args) {
+  emitError(message, std::forward<Args>(args)...);
+  underlineSource(stderr, loc, length, fmt::color::red);
+}
 
+template <typename... Args>
 void emitWarning(const SourceFileIt& loc, size_t length,
-                 const std::string_view& message);
+                 const fmt::format_string<Args...>& message,
+                 Args&&... args) {
+  emitWarning(message, std::forward<Args>(args)...);
+  underlineSource(stderr, loc, length, fmt::color::orange);
+}
 
 template <typename... Args>
 void debugOut(const fmt::format_string<Args...>& message,

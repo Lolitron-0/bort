@@ -12,6 +12,11 @@ public:
   void lex(const std::shared_ptr<SourceFile>& file);
 
 private:
+  auto lexNumericLiteral(SourceFileIt& pos) -> bool;
+  auto lexIdentifier(SourceFileIt& pos) -> bool;
+  auto lexStringLiteral(SourceFileIt& pos) -> bool;
+  auto lexCharLiteral(SourceFileIt& pos) -> bool;
+
   TokenList m_Tokens;
 };
 

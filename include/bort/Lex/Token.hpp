@@ -1,6 +1,8 @@
 #pragma once
 #include "bort/Frontend/SourceFile.hpp"
 #include <string_view>
+#include <type_traits>
+#include <variant>
 
 namespace bort {
 
@@ -12,6 +14,9 @@ enum class TokenKind {
 
 class Token {
 public:
+  using LiteralValue =
+      std::variant<std::monostate, std::string, int, char>;
+
   Token(TokenKind kind, SourceFileIt loc, size_t length);
 
   [[nodiscard]] inline auto is(TokenKind kind) const -> bool {
@@ -30,12 +35,23 @@ public:
 
   [[nodiscard]] auto getLoc() const -> SourceFileIt;
 
-  [[nodiscard]] auto getValue() const -> std::string_view;
+  [[nodiscard]] auto getString() const -> std::string_view;
+
+  template <typename T>
+  void setLiteralValue(T&& value) {
+    m_LiteralValue.emplace<std::decay_t<T>>(std::forward<T>(value));
+  }
+
+  template <typename Func>
+  auto visitLiteralValue(Func&& func) const {
+    return std::visit(std::forward<Func>(func), m_LiteralValue);
+  }
 
 private:
   TokenKind m_Kind;
   SourceFileIt m_Loc;
   size_t m_Length;
+  LiteralValue m_LiteralValue{ std::monostate{} };
 };
 
 } // namespace bort

@@ -10,6 +10,6 @@ public:
   void run();
 
 private:
-  FrontendOptions m_FrontendOptions;
+  FrontendOptions m_CliOptions;
 };
 } // namespace bort

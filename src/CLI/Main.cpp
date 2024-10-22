@@ -13,6 +13,8 @@ auto main(int argc, char* argv[]) -> int {
   // clang-format off
   cliOptions.add_options()
       ("h,help", "Show help")
+      ("E,preprocess", "Just preprocess file and dump it to stdout",
+       cxxopts::value<bool>(frontendOptions.PreprocessorOnly))
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 

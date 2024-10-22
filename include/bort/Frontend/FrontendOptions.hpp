@@ -8,6 +8,7 @@ class FrontendOptions {
 public:
   std::vector<SourceFileInfo> InputFiles;
 
+  bool PreprocessorOnly{ false };
   // TODO: glue all inputs to single output
 };
 

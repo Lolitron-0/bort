@@ -8,6 +8,10 @@
 #define KEYWORD(t) TOK(KW_ ## t)
 #endif
 
+#ifndef PPTOK
+#define PPTOK(t) TOK(PP_ ## t)
+#endif
+
 TOK(Unknown)
 TOK(Eof)
 
@@ -44,5 +48,5 @@ KEYWORD(int)
 KEYWORD(char)
 
 // Preprocessor
-KEYWORD(define)
-KEYWORD(undef)
+PPTOK(define)
+PPTOK(undef)

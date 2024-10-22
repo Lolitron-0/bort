@@ -13,7 +13,9 @@ set(SOURCES
     src/Frontend/FrontendInstance.cpp
     src/Lex/Lexer.cpp
     src/Lex/Preprocessor.cpp
-    src/Lex/Token.cpp)
+    src/Lex/Token.cpp
+    src/Lex/Utils.cpp
+  )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

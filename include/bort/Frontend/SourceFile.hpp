@@ -169,8 +169,7 @@ public:
     return m_Index < m_File->getBuffer().size();
   }
 
-  constexpr /* implicit */ operator SourceFileBuffer::const_iterator()
-      const {
+  /* implicit */ operator SourceFileBuffer::const_iterator() const {
     return m_File->getBuffer().begin() +
            static_cast<difference_type>(m_Index);
   }

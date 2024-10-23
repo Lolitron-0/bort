@@ -42,6 +42,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 FetchContent_Declare(
   cul
   GIT_REPOSITORY https://github.com/Lolitron-0/cul.git
-  GIT_TAG 6c8fd4d76d046a5fb88a19a90795fb732e043d24)
+  GIT_TAG c316615e9a5fb3535293082fb187856da01ea492)
 FetchContent_MakeAvailable(cul)
 target_link_libraries(${PROJECT_NAME} PRIVATE cul)

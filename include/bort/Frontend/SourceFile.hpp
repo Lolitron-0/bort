@@ -140,6 +140,10 @@ public:
     };
   };
 
+  [[nodiscard]] auto canAdd(size_t n) const -> bool {
+    return m_Index + n < m_File->getBuffer().size();
+  }
+
   auto operator*() const -> const char& {
     return m_File->getBuffer().at(m_Index);
   }

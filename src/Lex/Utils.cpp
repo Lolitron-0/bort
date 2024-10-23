@@ -5,7 +5,10 @@ namespace bort {
 
 auto startsWith(const SourceFileIt& pos,
                 std::string_view prefix) -> bool {
-  // TODO: check overflow
+  if (!pos.canAdd(prefix.size())) {
+    return false;
+  }
+
   return std::equal(prefix.begin(), prefix.end(), pos.asBufIter());
 }
 

@@ -137,7 +137,7 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
   }
 
   ++pos;
-  std::string value{ *pos };
+  std::string value{};
 
   while (*pos != '"' && *pos != '\n') {
     if (*pos == '\\') {

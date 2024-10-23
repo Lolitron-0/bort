@@ -2,12 +2,14 @@
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Lexer.hpp"
-#include "bort/Lex/Preprocessor.hpp"
-#include <iostream>
 #include <memory>
 #include <utility>
 
 namespace bort {
+
+FrontendFatalError::FrontendFatalError(const std::string& message)
+    : std::runtime_error{ message } {
+}
 
 FrontendInstance::FrontendInstance(FrontendOptions frontendOptions)
     : m_CliOptions(std::move(frontendOptions)) {
@@ -18,8 +20,6 @@ void FrontendInstance::run() {
     try {
       std::shared_ptr<SourceFile> sourceFile{ SourceFile::readSmallCFile(
           input) };
-      // Preprocessor pp;
-      // pp.preprocess(sourceFile);
 
       Lexer lexer;
       lexer.lex(sourceFile);
@@ -27,6 +27,9 @@ void FrontendInstance::run() {
       emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());
       continue;
+    } catch (const FrontendFatalError& e) {
+      emitError("{}", e.what());
+      exit(1);
     }
   }
 }

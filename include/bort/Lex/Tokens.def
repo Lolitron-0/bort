@@ -17,8 +17,8 @@ TOK(Eof)
 
 TOK(Identifier)
 TOK(StringLiteral)
-TOK(CharConstant)
-TOK(NumericConstant)
+TOK(CharLiteral)
+TOK(NumericLiteral)
 
 PUNCT(LParen,       "(")
 PUNCT(RParen,       ")")

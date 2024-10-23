@@ -1,12 +1,17 @@
 #include "bort/Lex/Lexer.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Token.hpp"
 #include "bort/Lex/Utils.hpp"
+#include <algorithm>
+#include <array>
 #include <cctype>
 #include <cul/cul.hpp>
+#include <iterator>
 #include <memory>
 #include <string_view>
+#include <vector>
 
 namespace bort {
 
@@ -27,7 +32,43 @@ static constexpr cul::BiMap s_IdentifierMapping{
 #undef PPTOK
 // clang-format on
 
-static char decodeEscapedChar(const SourceFileIt& pos) {
+// clang-format off
+#undef TOK
+#undef PUNCT
+#define PUNCT(t, s) .Case(s, TokenKind::t)
+static constexpr cul::BiMap s_PunctuatorMapping{
+  [](auto selector) {
+    return selector 
+#include "bort/Lex/Tokens.def" 
+      ;
+  }
+};
+// clang-format on
+
+#undef PUNCT
+#define PUNCT(t, s) t,
+namespace detail {
+enum class CountPunctuators {
+#include "bort/Lex/Tokens.def" // LParen, RParen, Equals, ...
+  value
+};
+constexpr size_t CountPunctuators_v =
+    static_cast<size_t>(CountPunctuators::value);
+} // namespace detail
+
+#undef PUNCT
+#define PUNCT(t, s) s,
+static constexpr std::array<std::string_view, detail::CountPunctuators_v>
+    s_PunctuatorStrings = sortConstexpr(
+        std::array<std::string_view, detail::CountPunctuators_v>{
+#include "bort/Lex/Tokens.def" // "<=", "<", "&&", ...
+        },
+        [](const auto& a, const auto& b) {
+          return a.length() > b.length();
+        });
+#undef PUNCT
+
+static auto decodeEscapedChar(const SourceFileIt& pos) -> char {
   switch (*pos) {
   case 'a':
     return '\a';
@@ -45,7 +86,10 @@ static char decodeEscapedChar(const SourceFileIt& pos) {
     return '\v';
   case '0':
     return '\0';
+  case '\\':
+    return '\\';
   default:
+    emitWarning(pos, 1, "Invalid escape sequence, ignoring '\\'");
     return *pos;
   }
 }
@@ -80,7 +124,7 @@ auto Lexer::lexNumericLiteral(SourceFileIt& pos) -> bool {
     ++pos;
     ++length;
   }
-  m_Tokens.emplace_back(TokenKind::NumericConstant, start, length);
+  m_Tokens.emplace_back(TokenKind::NumericLiteral, start, length);
   m_Tokens.back().setLiteralValue(
       std::stoi(std::string{ start.getValue(length) }));
   return true;
@@ -92,24 +136,29 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
     return false;
   }
 
-  auto length{ 1 };
   ++pos;
+  std::string value{ *pos };
 
   while (*pos != '"' && *pos != '\n') {
+    if (*pos == '\\') {
+      ++pos; // consume backslash
+      value += decodeEscapedChar(pos);
+      ++pos;
+      continue;
+    }
+    value += *pos;
     ++pos;
-    ++length;
   }
   if (*pos == '"') {
     ++pos;
-    ++length;
   } else {
-    emitError(start, length, "Unclosed string literal");
+    emitError(start, value.length(), "Unclosed string literal");
+    throw LexerFatalError();
     return false;
   }
-  m_Tokens.emplace_back(TokenKind::StringLiteral, start, length);
-  // get unquoted value
-  m_Tokens.back().setLiteralValue(
-      std::string{ (++start).getValue(length - 2) });
+  m_Tokens.emplace_back(TokenKind::StringLiteral, start,
+                        value.length() + 2); // plus quotes
+  m_Tokens.back().setLiteralValue(value);
   return true;
 }
 
@@ -118,29 +167,44 @@ auto Lexer::lexCharLiteral(SourceFileIt& pos) -> bool {
   if (*pos != '\'') {
     return false;
   }
-  ++pos;
+  ++pos;            // consume first quote
   auto length{ 3 }; // normal char literal expr length
 
   char value{ *pos };
   if (*pos == '\\') {
-    ++pos;
+    ++pos; // consume backslash
     ++length;
     value = decodeEscapedChar(pos);
-    if (value == *pos) {
-      emitError(start, 4, "Invalid escape sequence");
-      return false; // TODO: throw fatal
-    }
   }
-  ++pos;
+  ++pos; // consume actual char
 
   if (*pos != '\'') {
     emitError(start, length, "Unclosed character literal");
+    throw LexerFatalError();
     return false;
   }
 
-  m_Tokens.emplace_back(TokenKind::CharConstant, start, length);
+  ++pos; // consume last quote
+  m_Tokens.emplace_back(TokenKind::CharLiteral, start, length);
   m_Tokens.back().setLiteralValue(value);
   return true;
+}
+
+auto Lexer::lexPunctuator(SourceFileIt& pos) -> bool {
+  // s_PunctuatorStrings is sorted by length descending, so we'll match
+  // long punctuators first
+  for (const auto& punct : s_PunctuatorStrings) {
+    if (startsWith(pos, punct)) {
+      auto pucntKindOpt{ s_PunctuatorMapping.FindByFirst(punct) };
+      assert(pucntKindOpt.has_value() &&
+             "Punctuator mapping and list somehow doesn't match");
+      m_Tokens.emplace_back(pucntKindOpt.value(), pos, punct.length());
+      pos += punct.length();
+      return true;
+    }
+  }
+
+  return false;
 }
 
 void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
@@ -196,9 +260,18 @@ void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
       continue;
     }
 
-    DEBUG_OUT("Unknown tok: {}", *pos);
-    pos++;
+    // Punctuators
+    if (lexPunctuator(pos)) {
+      continue;
+    }
+
+    emitError(pos, 1, "Unknown token");
+    throw LexerFatalError();
   }
+}
+
+LexerFatalError::LexerFatalError()
+    : FrontendFatalError{ "Lexer fatal failure. Aborting." } {
 }
 
 } // namespace bort

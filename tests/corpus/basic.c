@@ -4,15 +4,12 @@ int a;
  comment */
 const int b = 3;
 
-#define TEST 1+1 * \
-  3
-
-#define TEST  troll
-
 // comment
 // another
 int main() {
-  //comment
-  a = b;
-  char str[] = "hello";
+  // comment
+  a          = b;
+  char str[] = "hel\nlo\h";
+  char c     = '\n';
+  char d     = '\\';
 }

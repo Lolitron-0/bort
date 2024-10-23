@@ -1,27 +1,17 @@
 #include "bort/CLI/IO.hpp"
-#include <iostream>
-#define OOF_IMPL
-#include <oof/oof.h>
+#include "bort/Frontend/SourceFile.hpp"
 
 namespace bort {
 
-static constexpr oof::color ErrrorFg{ 255, 0, 0 };
-static constexpr oof::color WarningFg{ 252, 122, 23 };
-static constexpr oof::color DebugFg{ 79, 232, 181 };
+void underlineSource(FILE* out, const SourceFileIt& loc, size_t length,
+                     fmt::color color) {
+  fmt::print(out, "at {}:\n", loc.toString());
 
-void EmitError(const std::string& message) {
-  std::cerr << oof::fg_color(ErrrorFg) << "error: " << oof::reset_formatting()
-            << message << std::endl;
-}
+  fmt::println(out, "{}", loc.getCurrentLine());
 
-void EmitWarning(const std::string& message) {
-  std::cerr << oof::fg_color(WarningFg) << "warning: " << oof::reset_formatting()
-            << message << std::endl;
-}
-
-void DebugOut(const std::string& message) {
-  std::cerr << oof::fg_color(DebugFg) << "debug: " << oof::reset_formatting()
-            << message << std::endl;
+  fmt::print(out, fmt::fg(color), "{}^{}\n",
+             std::string(loc.getColumnNum() - 2, ' '),
+             std::string(length - 1, '~'));
 }
 
 } // namespace bort

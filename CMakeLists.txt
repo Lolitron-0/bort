@@ -4,23 +4,40 @@ project(bort)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  add_compile_options(-Wall)
-endif()
-
 include_directories(include)
 
-set(SOURCES 
-  src/CLI/Main.cpp
-  src/CLI/IO.cpp
-  src/Frontend/InputFile.cpp
-)
+set(SOURCES
+    src/CLI/Main.cpp
+    src/CLI/IO.cpp
+    src/Frontend/SourceFile.cpp
+    src/Frontend/FrontendInstance.cpp
+    src/Lex/Lexer.cpp
+    src/Lex/Preprocessor.cpp
+    src/Lex/Token.cpp
+    src/Lex/Utils.cpp
+  )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Dependencies
+include(FetchContent)
+
+# cxxopts
 add_subdirectory(thirdparty/cxxopts)
 target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 
-# for header only
-target_include_directories(${PROJECT_NAME} PRIVATE thirdparty)
+# fmt
+FetchContent_Declare(
+  fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt
+  GIT_TAG 0c9fce2ffefecfdce794e1859584e25877b7b592) # 11.0.2
+FetchContent_MakeAvailable(fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+
+# cul
+FetchContent_Declare(
+  cul
+  GIT_REPOSITORY https://github.com/Lolitron-0/cul.git
+  GIT_TAG c316615e9a5fb3535293082fb187856da01ea492)
+FetchContent_MakeAvailable(cul)
+target_link_libraries(${PROJECT_NAME} PRIVATE cul)

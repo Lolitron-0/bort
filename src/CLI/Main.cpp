@@ -1,4 +1,5 @@
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/Frontend/FrontendOptions.hpp"
 #include <algorithm>
 #include <cxxopts.hpp>
@@ -12,6 +13,8 @@ auto main(int argc, char* argv[]) -> int {
   // clang-format off
   cliOptions.add_options()
       ("h,help", "Show help")
+      ("E,preprocess", "Just preprocess file and dump it to stdout",
+       cxxopts::value<bool>(frontendOptions.PreprocessorOnly))
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 
@@ -25,7 +28,7 @@ auto main(int argc, char* argv[]) -> int {
   }
 
   if (result.count("inputs") == 0) {
-    bort::EmitError("No input files");
+    bort::emitError("No input files");
     return 1;
   }
 
@@ -34,8 +37,11 @@ auto main(int argc, char* argv[]) -> int {
   std::transform(inputs.begin(), inputs.end(),
                  std::back_inserter(frontendOptions.InputFiles),
                  [](auto&& input) {
-                   return bort::InputFile{ .Path = input };
+                   return bort::SourceFileInfo{ .Path = input };
                  });
+
+  bort::FrontendInstance frontend{ std::move(frontendOptions) };
+  frontend.run();
 
   return 0;
 }

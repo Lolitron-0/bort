@@ -1,0 +1,52 @@
+#ifndef TOK
+#define TOK(t) 
+#endif
+#ifndef PUNCT
+#define PUNCT(t, s) TOK(t)
+#endif
+#ifndef KEYWORD
+#define KEYWORD(t) TOK(KW_ ## t)
+#endif
+
+#ifndef PPTOK
+#define PPTOK(t) TOK(PP_ ## t)
+#endif
+
+TOK(Unknown)
+TOK(Eof)
+
+TOK(Identifier)
+TOK(StringLiteral)
+TOK(CharLiteral)
+TOK(NumericLiteral)
+
+PUNCT(LParen,       "(")
+PUNCT(RParen,       ")")
+PUNCT(LBrace,       "{")
+PUNCT(RBrace,       "}")
+PUNCT(LBracket,     "[")
+PUNCT(RBracket,     "]")
+PUNCT(Comma,        ",")
+PUNCT(Semicolon,    ";")
+PUNCT(Amp,          "&")
+PUNCT(Assign,       "=")
+PUNCT(Equals,       "==")
+PUNCT(PlusPlus,     "++")
+PUNCT(MinusMinus,   "--")
+PUNCT(Plus,         "+")
+PUNCT(Minus,        "-")
+PUNCT(Star,         "*")
+PUNCT(Div,          "/")
+PUNCT(PlusAssign,   "+=")
+PUNCT(MinusAssign,  "-=")
+PUNCT(TimesAssign,  "*=")
+PUNCT(DivAssign,    "/=")
+PUNCT(Less,         "<")
+PUNCT(Greater,      ">")
+
+KEYWORD(int)
+KEYWORD(char)
+
+// Preprocessor
+PPTOK(define)
+PPTOK(undef)

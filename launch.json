@@ -6,7 +6,7 @@
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceFolder}/build/bort",
-            "args": [],
+            "args": ["${workspaceFolder}/tests/corpus/basic.c"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

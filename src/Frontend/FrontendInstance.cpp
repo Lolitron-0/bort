@@ -2,6 +2,7 @@
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Lexer.hpp"
+#include "bort/Parse/Parser.hpp"
 #include <memory>
 #include <utility>
 
@@ -21,8 +22,18 @@ void FrontendInstance::run() {
       std::shared_ptr<SourceFile> sourceFile{ SourceFile::readSmallCFile(
           input) };
 
+      // TODO preprocessing
+      if (m_CliOptions.PreprocessorOnly) {
+        emitError("Preprocessing is not yet implemented");
+        return;
+      }
+
       Lexer lexer;
       lexer.lex(sourceFile);
+      Parser parser{ lexer.getTokens() };
+      parser.buildAST();
+
+      // TODO dump ast
     } catch (const exceptions::SourceFileReaderError& e) {
       emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());

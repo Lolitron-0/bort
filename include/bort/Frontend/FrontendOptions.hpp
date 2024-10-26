@@ -9,6 +9,7 @@ public:
   std::vector<SourceFileInfo> InputFiles;
 
   bool PreprocessorOnly{ false };
+  bool DumpAST{false};
   // TODO: glue all inputs to single output
 };
 

@@ -15,6 +15,8 @@ set(SOURCES
     src/Lex/Preprocessor.cpp
     src/Lex/Token.cpp
     src/Lex/Utils.cpp
+    src/Parse/Parser.cpp
+    src/Parse/ASTNode.cpp
   )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -41,3 +43,11 @@ FetchContent_Declare(
   GIT_TAG c316615e9a5fb3535293082fb187856da01ea492)
 FetchContent_MakeAvailable(cul)
 target_link_libraries(${PROJECT_NAME} PRIVATE cul)
+
+# frozen
+FetchContent_Declare(
+  frozen
+  GIT_REPOSITORY https://github.com/serge-sans-paille/frozen
+  GIT_TAG 06bee5321cecd9a9ffaceb164b5adb2ffafae781)
+FetchContent_MakeAvailable(frozen)
+target_link_libraries(${PROJECT_NAME} PRIVATE frozen)

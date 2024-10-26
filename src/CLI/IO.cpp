@@ -10,7 +10,7 @@ void underlineSource(FILE* out, const SourceFileIt& loc, size_t length,
   fmt::println(out, "{}", loc.getCurrentLine());
 
   fmt::print(out, fmt::fg(color), "{}^{}\n",
-             std::string(loc.getColumnNum() - 2, ' '),
+             std::string(loc.getColumnNum() - 1, ' '),
              std::string(length - 1, '~'));
 }
 

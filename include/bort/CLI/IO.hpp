@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/Frontend/SourceFile.hpp"
+#include "bort/Lex/Token.hpp"
 #include <fmt/base.h>
 #include <fmt/color.h>
 #include <fmt/core.h>
@@ -32,6 +33,14 @@ void emitError(const SourceFileIt& loc, size_t length,
                Args&&... args) {
   emitError(message, std::forward<Args>(args)...);
   underlineSource(stderr, loc, length, fmt::color::red);
+}
+
+template <typename... Args>
+void emitError(const Token& tok,
+               const fmt::format_string<Args...>& message,
+               Args&&... args) {
+  emitError(tok.getLoc(), tok.getLength(), message,
+            std::forward<Args>(args)...);
 }
 
 template <typename... Args>

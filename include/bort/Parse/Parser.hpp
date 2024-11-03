@@ -1,7 +1,7 @@
 #pragma once
+#include "bort/AST/ASTNode.hpp"
+#include "bort/Basic/Ref.hpp"
 #include "bort/Lex/Lexer.hpp"
-#include "bort/Parse/ASTNode.hpp"
-#include <memory>
 
 namespace bort {
 
@@ -10,12 +10,13 @@ namespace bort {
 
 class Parser {
 public:
-  explicit Parser(const std::shared_ptr<TokenList>& tokenList)
+  explicit Parser(const Ref<TokenList>& tokenList)
       : m_Tokens{ tokenList },
-        m_CurTokIter{ tokenList->begin() } {
+        m_CurTokIter{ tokenList->begin() },
+        m_ASTRoot{ makeUnique<ast::ASTRoot>() } {
   }
 
-  void buildAST();
+  auto buildAST() -> Ref<ast::ASTRoot>;
 
 private:
   [[nodiscard]] inline auto curTok() -> const Token& {
@@ -27,29 +28,30 @@ private:
   }
 
   // number -> {integer}
-  auto parseNumberExpr() -> std::unique_ptr<ast::NumberExpr>;
+  auto parseNumberExpr() -> Unique<ast::NumberExpr>;
   // parenExpr -> '(' expression ')'
-  auto parseParenExpr() -> std::unique_ptr<ast::ExpressionNode>;
+  auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   // identifier
   // -> identifier - variable
   // -> identifier '(' expr, ... ')' - function call
-  auto parseIdentifierExpr() -> std::unique_ptr<ast::ExpressionNode>;
+  auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
   // value expression
   // -> number
   // -> parenExpr
   // -> identifierExpr
-  auto parseValueExpression() -> std::unique_ptr<ast::ExpressionNode>;
+  auto parseValueExpression() -> Unique<ast::ExpressionNode>;
   // expression
   // -> valueExpression (binOp valueExpression ...)
-  auto parseExpression() -> std::unique_ptr<ast::ExpressionNode>;
+  auto parseExpression() -> Unique<ast::ExpressionNode>;
   // binOpRhs
   // -> bipOp valueExpression (binOpRhs ...)
-  auto parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
+  auto parseBinOpRhs(Unique<ast::ExpressionNode> lhs,
                      int32_t prevPrecedence = 0)
-      -> std::unique_ptr<ast::ExpressionNode>;
+      -> Unique<ast::ExpressionNode>;
 
-  std::shared_ptr<TokenList> m_Tokens;
+  Ref<TokenList> m_Tokens;
   TokenList::const_iterator m_CurTokIter;
+  Ref<ast::ASTRoot> m_ASTRoot;
 };
 
 } // namespace bort

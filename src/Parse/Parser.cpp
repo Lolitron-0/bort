@@ -1,8 +1,7 @@
 #include "bort/Parse/Parser.hpp"
+#include "bort/AST/ASTNode.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Lex/Token.hpp"
-#include "bort/Parse/ASTNode.hpp"
-#include <cassert>
 #include <frozen/unordered_map.h>
 
 namespace bort {
@@ -16,30 +15,32 @@ static constexpr auto s_BinopPrecedence{
         { TokenKind::Less, 10 } })
 };
 
-void Parser::buildAST() {
+auto Parser::buildAST() -> Ref<ast::ASTRoot> {
   while (true) {
     if (curTok().is(TokenKind::Eof)) {
       break;
     }
 
-    auto expr{ parseExpression() };
+    Ref<ast::ExpressionNode> expr{ parseExpression() };
     if (!expr) {
       break;
     }
-    expr->dump();
+    m_ASTRoot->pushChild(expr);
   }
+  return m_ASTRoot;
 }
 
-auto Parser::parseNumberExpr() -> std::unique_ptr<ast::NumberExpr> {
-  assert(curTok().is(TokenKind::NumericLiteral) &&
-         "Expected numeric literal");
+auto Parser::parseNumberExpr() -> Unique<ast::NumberExpr> {
+  bort_assert(curTok().is(TokenKind::NumericLiteral),
+              "Expected numeric literal");
   auto result{ curTok().getLiteralValue<ast::NumberExpr::ValueT>() };
+  auto token{ curTok() };
   consumeToken();
-  return std::make_unique<ast::NumberExpr>(result);
+  return m_ASTRoot->registerNode<ast::NumberExpr>(token, result);
 }
 
-auto Parser::parseParenExpr() -> std::unique_ptr<ast::ExpressionNode> {
-  assert(curTok().is(TokenKind::LParen) && "Expected '('");
+auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
+  bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
   consumeToken();
   auto result{ parseExpression() };
   if (!result) {
@@ -55,14 +56,17 @@ auto Parser::parseParenExpr() -> std::unique_ptr<ast::ExpressionNode> {
   return result;
 }
 
-auto Parser::parseIdentifierExpr()
-    -> std::unique_ptr<ast::ExpressionNode> {
-  assert(curTok().is(TokenKind::Identifier) && "Expected identifier");
-  std::string identifierName{ curTok().getString() };
+auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
+  bort_assert(curTok().is(TokenKind::Identifier), "Expected identifier");
+  auto identifierTok{ curTok() };
+
   consumeToken();
 
   if (curTok().isNot(TokenKind::LParen)) {
-    return std::make_unique<ast::VariableExpr>(identifierName);
+    // it's a variable
+    return m_ASTRoot->registerNode<ast::VariableExpr>(
+        identifierTok,
+        makeRef<Variable>(std::string{ identifierTok.getStringView() }));
   }
 
   // TODO: parse function call
@@ -128,8 +132,8 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     }
 
     // now: (lhs binOp rhs) lookahead unparsed
-    lhs = std::make_unique<ast::BinOpExpr>(std::move(lhs), std::move(rhs),
-                                           binOp.getKind());
+    lhs = m_ASTRoot->registerNode<ast::BinOpExpr>(
+        binOp, std::move(lhs), std::move(rhs), binOp.getKind());
   }
 }
 

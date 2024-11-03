@@ -1,4 +1,5 @@
 #include "bort/Frontend/FrontendInstance.hpp"
+#include "bort/AST/SymbolResolveVisitor.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Lexer.hpp"
@@ -31,7 +32,18 @@ void FrontendInstance::run() {
       Lexer lexer;
       lexer.lex(sourceFile);
       Parser parser{ lexer.getTokens() };
-      parser.buildAST();
+      auto ast{ parser.buildAST() };
+
+      ast->dump();
+
+      auto symbolResolveVisitor{ ast::SymbolResolveVisitor::create(ast) };
+      ast->structureAwareVisit(symbolResolveVisitor);
+      if (symbolResolveVisitor->isASTInvalidated()) {
+        emitError("Symbol resolution pass failed. Aborting");
+        return;
+      }
+
+      ast->dump();
 
       // TODO dump ast
     } catch (const exceptions::SourceFileReaderError& e) {

@@ -1,6 +1,5 @@
 #pragma once
 #include "bort/Frontend/SourceFile.hpp"
-#include <cassert>
 #include <memory>
 #include <unordered_map>
 

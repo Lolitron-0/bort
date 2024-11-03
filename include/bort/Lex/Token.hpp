@@ -1,7 +1,7 @@
 #pragma once
+#include "bort/Basic/Assert.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "cul/BiMap.hpp"
-#include <cassert>
 #include <string_view>
 #include <type_traits>
 #include <variant>
@@ -41,7 +41,7 @@ public:
 
   [[nodiscard]] auto getLoc() const -> SourceFileIt;
 
-  [[nodiscard]] auto getString() const -> std::string_view;
+  [[nodiscard]] auto getStringView() const -> std::string_view;
   [[nodiscard]] auto getLength() const -> size_t;
 
   template <typename T>
@@ -57,7 +57,7 @@ public:
   template <typename T>
   auto getLiteralValue() const -> T {
     auto&& result{ std::get<T>(m_LiteralValue) };
-    assert(result && "Invalid literal type");
+    bort_assert(result, "Invalid literal type");
     return result;
   }
 

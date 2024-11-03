@@ -17,7 +17,9 @@ function build {
   cmake -S . \
         -B build/build-${cc}-${build_type} \
         -G Ninja \
-        -DCMAKE_BUILD_TYPE=Release 
+        -DCMAKE_BUILD_TYPE=$build_type  \
+        -DCMAKE_C_COMPILER=$cc \
+        -DCMAKE_CXX_COMPILER=$cxx 
   cmake --build build/build-${cc}-${build_type} --parallel $(nproc)
 }
 

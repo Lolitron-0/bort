@@ -103,7 +103,7 @@ auto Lexer::lexIdentifier(SourceFileIt& pos) -> bool {
   }
 
   Token newTok{ TokenKind::Unknown, start, ident.size() };
-  auto kind{ s_IdentifierMapping.FindByFirst(newTok.getString()) };
+  auto kind{ s_IdentifierMapping.FindByFirst(newTok.getStringView()) };
   newTok.setKind(
       kind.value_or(TokenKind::Identifier)); // either keyword or name
   m_Tokens->push_back(std::move(newTok));
@@ -196,7 +196,7 @@ auto Lexer::lexPunctuator(SourceFileIt& pos) -> bool {
   for (const auto& punct : s_PunctuatorStrings) {
     if (startsWith(pos, punct)) {
       auto pucntKindOpt{ s_PunctuatorMapping.FindByFirst(punct) };
-      assert(pucntKindOpt.has_value() &&
+      bort_assert(pucntKindOpt.has_value(), 
              "Punctuator mapping and list somehow doesn't match");
       m_Tokens->emplace_back(pucntKindOpt.value(), pos, punct.length());
       pos += punct.length();

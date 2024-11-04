@@ -68,7 +68,7 @@ message(STATUS "Fetching Boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
 
-if(${CMAKE_VERSION} VERSION_LESS "3.28.0")
+if(${CMAKE_MINOR_VERSION} LESS 28)
   message(
     WARNING
       "CMake version less than 3.28 (${CMAKE_VERSION}), building entire Boost")

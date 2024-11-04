@@ -68,18 +68,22 @@ message(STATUS "Fetching Boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
 
-# if(${CMAKE_MINOR_VERSION} LESS 28) message( WARNING "CMake version less than
-# 3.28 (${CMAKE_VERSION}), building entire Boost")
-FetchContent_Declare(
-  Boost
-  URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
-  URL_MD5 893b5203b862eb9bbd08553e24ff146a
-  DOWNLOAD_EXTRACT_TIMESTAMP ON)
-# else() FetchContent_Declare( Boost URL
-# https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
-# URL_MD5 893b5203b862eb9bbd08553e24ff146a DOWNLOAD_EXTRACT_TIMESTAMP ON
-# EXCLUDE_FROM_ALL)
-#
-# set(BOOST_INCLUDE_LIBRARIES functional assert stacktrace range) endif()
+if(${CMAKE_MINOR_VERSION} LESS 28)
+  message(WARNING "CMake version less than
+3.28 (${CMAKE_VERSION}), building entire Boost")
+  FetchContent_Declare(
+    Boost
+    URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
+    URL_MD5 893b5203b862eb9bbd08553e24ff146a
+    DOWNLOAD_EXTRACT_TIMESTAMP ON)
+else()
+  FetchContent_Declare(
+    Boost
+    URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
+    URL_MD5 893b5203b862eb9bbd08553e24ff146a
+    DOWNLOAD_EXTRACT_TIMESTAMP ON EXCLUDE_FROM_ALL)
+
+  set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
+endif()
 
 FetchContent_MakeAvailable(Boost)

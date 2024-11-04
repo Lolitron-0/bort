@@ -53,12 +53,6 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Install boost
-      uses: MarkusJx/install-boost@v2.4.5
-      id: install-boost
-      with:
-          boost_version: 1.84.0
-
     - name: Configure CMake
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}

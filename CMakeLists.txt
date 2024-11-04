@@ -68,9 +68,7 @@ message(STATUS "Fetching Boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
 
-find_package(Boost REQUIRED)
+set(Boost_ENABLE_CMAKE ON)
+set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-  target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
-endif()
+add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)

@@ -27,12 +27,13 @@ public:
   [[nodiscard]] inline auto isNot(TokenKind kind) const -> bool {
     return !is(kind);
   }
-  [[nodiscard]] inline auto isOneOf(TokenKind tk1,
-                                    TokenKind tk2) const -> bool {
+  [[nodiscard]] constexpr auto isOneOf(TokenKind tk1,
+                                       TokenKind tk2) const -> bool {
     return m_Kind == tk1 || m_Kind == tk2;
   }
   template <typename... TKs>
-  [[nodiscard]] auto isOneOf(TokenKind tk, TKs... other) const -> bool {
+  [[nodiscard]] constexpr auto isOneOf(TokenKind tk,
+                                       TKs... other) const -> bool {
     return is(tk) || isOneOf(other...);
   }
 

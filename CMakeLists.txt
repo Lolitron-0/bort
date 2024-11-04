@@ -64,6 +64,7 @@ FetchContent_MakeAvailable(frozen)
 target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 
 # boost
+message(STATUS "Fetching Boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
 set(BOOST_INCLUDE_LIBRARIES functional assert stacktrace range)
@@ -78,8 +79,6 @@ if(CMAKE_VERSION VERSION_LESS "3.28.0")
   FetchContent_GetProperties(Boost)
 
   if(NOT Boost_POPULATED)
-
-    message(STATUS "Fetching Boost")
     FetchContent_Populate(Boost)
 
     message(STATUS "Configuring Boost")

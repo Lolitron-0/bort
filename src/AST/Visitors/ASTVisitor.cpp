@@ -1,5 +1,7 @@
-#include "bort/AST/ASTVisitor.hpp"
+#include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/AST/ASTNode.hpp"
+#include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/Block.hpp"
 
 namespace bort::ast {
 

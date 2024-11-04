@@ -2,7 +2,6 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Frontend/Type.hpp"
 #include <initializer_list>
-#include <iostream>
 #include <string>
 #include <vector>
 

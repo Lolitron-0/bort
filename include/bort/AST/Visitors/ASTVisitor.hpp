@@ -9,6 +9,7 @@ class VariableExpr;
 class StringExpr;
 class CharExpr;
 class BinOpExpr;
+class VarDecl;
 class Block;
 class ASTRoot;
 
@@ -32,6 +33,8 @@ public:
   virtual void visit(BinOpExpr* /* binopNode */) {
   }
   virtual void visit(Block* /* blockNode */) {
+  }
+  virtual void visit(VarDecl* /* blockNode */) {
   }
 
   [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
@@ -74,6 +77,9 @@ public:
     // leaf
   }
   void visit(CharExpr* /* charNode */) override {
+    // leaf
+  }
+  void visit(VarDecl* /* varDeclNode */) override {
     // leaf
   }
   void visit(BinOpExpr* binopNode) override;

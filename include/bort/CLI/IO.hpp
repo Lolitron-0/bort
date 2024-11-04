@@ -50,6 +50,13 @@ void emitWarning(const SourceFileIt& loc, size_t length,
   emitWarning(message, std::forward<Args>(args)...);
   underlineSource(stderr, loc, length, fmt::color::orange);
 }
+template <typename... Args>
+void emitWarning(const Token& tok,
+                 const fmt::format_string<Args...>& message,
+                 Args&&... args) {
+  emitWarning(tok.getLoc(), tok.getLength(), message,
+              std::forward<Args>(args)...);
+}
 
 template <typename... Args>
 void debugOut(const fmt::format_string<Args...>& message,
@@ -60,8 +67,11 @@ void debugOut(const fmt::format_string<Args...>& message,
 
 #ifdef NDEBUG
 #define DEBUG_OUT(...)
+#define DEBUG_OUT_MSG(...)
 #else
+// , ## __VA_ARGS__ is a GNU extension, so just use a different name
 #define DEBUG_OUT(message, ...) ::bort::debugOut((message), __VA_ARGS__)
+#define DEBUG_OUT_MSG(message, ...) ::bort::debugOut((message))
 #endif
 
 } // namespace bort

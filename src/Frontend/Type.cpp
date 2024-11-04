@@ -14,19 +14,20 @@ void Type::dump() const {
 
 auto VoidType::toString() const -> std::string {
   std::ostringstream ss;
-  ss << fmt::format(s_TypeStyle, "void");
+  ss << fmt::format(fmt::fg(fmt::color::white), "void");
   return ss.str();
 }
 
 auto IntType::toString() const -> std::string {
   std::ostringstream ss;
-  ss << fmt::format(s_TypeStyle, "int");
+  ss << fmt::format(fmt::fg(fmt::color::blue), "int");
   return ss.str();
 }
 
 auto CharType::toString() const -> std::string {
   std::ostringstream ss;
-  fmt::format(s_TypeStyle, "char");
+  // char color is chartreuse ʕ థᴥథʔ
+  ss << fmt::format(fmt::fg(fmt::color::chartreuse), "char");
   return ss.str();
 }
 

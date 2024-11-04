@@ -196,8 +196,8 @@ auto Lexer::lexPunctuator(SourceFileIt& pos) -> bool {
   for (const auto& punct : s_PunctuatorStrings) {
     if (startsWith(pos, punct)) {
       auto pucntKindOpt{ s_PunctuatorMapping.FindByFirst(punct) };
-      bort_assert(pucntKindOpt.has_value(), 
-             "Punctuator mapping and list somehow doesn't match");
+      bort_assert(pucntKindOpt.has_value(),
+                  "Punctuator mapping and list somehow doesn't match");
       m_Tokens->emplace_back(pucntKindOpt.value(), pos, punct.length());
       pos += punct.length();
       return true;

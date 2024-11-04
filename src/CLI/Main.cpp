@@ -15,8 +15,11 @@ auto main(int argc, char* argv[]) -> int {
       ("h,help", "Show help")
       ("E,preprocess", "Just preprocess file and dump it to stdout",
        cxxopts::value<bool>(frontendOptions.PreprocessorOnly))
+<<<<<<< HEAD
       ("dump-ast", "Dump AST to stderr",
        cxxopts::value<bool>(frontendOptions.DumpAST))
+=======
+>>>>>>> f2dc3643c89015cf91f66315601ef2ca9cf9fd7c
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 

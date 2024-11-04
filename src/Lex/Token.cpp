@@ -11,7 +11,7 @@ Token::Token(TokenKind kind, SourceFileIt loc, size_t length)
       m_Length{ length } {
 }
 
-TokenKind Token::getKind() const {
+auto Token::getKind() const -> TokenKind {
   return m_Kind;
 }
 

@@ -11,12 +11,16 @@ set(SOURCES
     src/CLI/IO.cpp
     src/Frontend/SourceFile.cpp
     src/Frontend/FrontendInstance.cpp
+<<<<<<< HEAD
     src/Frontend/Symbol.cpp
     src/Frontend/Type.cpp
+=======
+>>>>>>> f2dc3643c89015cf91f66315601ef2ca9cf9fd7c
     src/Lex/Lexer.cpp
     src/Lex/Preprocessor.cpp
     src/Lex/Token.cpp
     src/Lex/Utils.cpp
+<<<<<<< HEAD
     src/Parse/Parser.cpp
     src/AST/ASTNode.cpp
     src/AST/BinOpExpr.cpp
@@ -29,6 +33,9 @@ set(SOURCES
     src/AST/Visitors/ASTVisitor.cpp
     src/AST/Visitors/SymbolResolutionVisitor.cpp
     src/AST/Visitors/ASTPrinter.cpp)
+=======
+  )
+>>>>>>> f2dc3643c89015cf91f66315601ef2ca9cf9fd7c
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

@@ -76,15 +76,8 @@ if(CMAKE_VERSION VERSION_LESS "3.28.0")
     URL_MD5 893b5203b862eb9bbd08553e24ff146a
     DOWNLOAD_EXTRACT_TIMESTAMP ON)
 
-  FetchContent_GetProperties(Boost)
+  FetchContent_MakeAvailable(Boost)
 
-  if(NOT Boost_POPULATED)
-    FetchContent_Populate(Boost)
-
-    message(STATUS "Configuring Boost")
-    add_subdirectory(${Boost_SOURCE_DIR} ${Boost_BINARY_DIR} EXCLUDE_FROM_ALL)
-
-  endif()
 else()
   FetchContent_Declare(
     Boost

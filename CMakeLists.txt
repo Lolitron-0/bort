@@ -83,7 +83,7 @@ else()
     URL_MD5 893b5203b862eb9bbd08553e24ff146a
     DOWNLOAD_EXTRACT_TIMESTAMP ON EXCLUDE_FROM_ALL)
 
-  set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 endif()
 
+set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 FetchContent_MakeAvailable(Boost)

@@ -21,7 +21,6 @@ SourceFileInvalidExtension::SourceFileInvalidExtension(
 
 } // namespace exceptions
 
-// TODO: consider making things like this constexpr (hana or frozen)
 static const std::string SmallCFileExtension{ ".c" }; // NOLINT
 
 auto SourceFile::readSmallCFile(const SourceFileInfo& input)

@@ -2,6 +2,7 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
+#include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/CLI/IO.hpp"
 
 namespace bort::ast {
@@ -43,18 +44,11 @@ auto Scope::resolve(const std::string& name) -> Ref<Symbol> {
   return nullptr;
 }
 
-SymbolResolutionVisitor::SymbolResolutionVisitor(Ref<ASTRoot> ast)
-    : StructureAwareASTVisitor{ std::move(ast) },
-      m_CurrentScope{ makeRef<Scope>(nullptr, "Global") } {
+SymbolResolutionVisitor::SymbolResolutionVisitor()
+    : m_CurrentScope{ makeRef<Scope>(nullptr, "Global") } {
 }
 
-auto SymbolResolutionVisitor::create(Ref<ASTRoot> ast)
-    -> Ref<StructureAwareASTVisitor> {
-  return Ref<SymbolResolutionVisitor>{ new SymbolResolutionVisitor{
-      std::move(ast) } };
-}
-
-void SymbolResolutionVisitor::visit(VariableExpr* varNode) {
+void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
   if (varNode->isResolved()) {
     return;
   }
@@ -69,7 +63,7 @@ void SymbolResolutionVisitor::visit(VariableExpr* varNode) {
   markASTInvalid();
 }
 
-void SymbolResolutionVisitor::visit(VarDecl* varDeclNode) {
+void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
   try {
     define(varDeclNode->getVariable());
   } catch (const SymbolAlreadyDefined& e) {
@@ -82,10 +76,10 @@ void SymbolResolutionVisitor::visit(VarDecl* varDeclNode) {
   }
 }
 
-void SymbolResolutionVisitor::visit(Block* blockNode) {
+void SymbolResolutionVisitor::visit(const Ref<Block>& blockNode) {
   push();
   for (auto&& child : blockNode->getBody()) {
-    child->structureAwareVisit(shared_from_this());
+    genericVisit(child);
   }
   pop();
 }

@@ -26,8 +26,8 @@ auto consumeIdent(SourceFileIt& pos) -> std::string_view {
     return {};
   }
 
-  // TODO: actually there are more sophisticated rules in acceptable
-  // identifier characters, but we'll leave it for now
+  /// @todo actually there are more sophisticated rules in acceptable
+  /// identifier characters, but we'll leave it for now
   while (std::isalnum(*pos) || *pos == '_') {
     ++pos;
     ++length;

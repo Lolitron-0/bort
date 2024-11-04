@@ -22,7 +22,7 @@ public:
   [[nodiscard]] auto getTokens() const -> std::shared_ptr<TokenList>;
 
 private:
-  // TODO: return optional token and make non-member
+  /// @todo return optional token and make non-member
   auto lexNumericLiteral(SourceFileIt& pos) -> bool;
   auto lexIdentifier(SourceFileIt& pos) -> bool;
   auto lexStringLiteral(SourceFileIt& pos) -> bool;

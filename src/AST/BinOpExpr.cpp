@@ -1,15 +1,6 @@
 #include "bort/AST/BinOpExpr.hpp"
-#include "bort/AST/DumpCommons.hpp"
 
 namespace bort::ast {
-
-void BinOpExpr::dump(int depth) const {
-  ExpressionNode::dump(depth);
-  internal::dump(depth, "Op",
-                 Token::TokenNameMapping.Find(m_Op).value_or("UNKNOWN"));
-  internal::dump(depth, "LHS", m_Lhs.get());
-  internal::dump(depth, "RHS", m_Rhs.get());
-}
 
 void BinOpExpr::preOrderVisit(
     const std::shared_ptr<ASTVisitor>& visitor) {

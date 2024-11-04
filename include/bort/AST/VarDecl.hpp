@@ -20,9 +20,6 @@ public:
   void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
   void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
 
-protected:
-  void dump(int depth) const override;
-
 private:
   Ref<Variable> m_Variable;
 };

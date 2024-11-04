@@ -21,9 +21,6 @@ public:
 
   friend class ASTRoot;
 
-protected:
-  void dump(int depth) const override;
-
 private:
   std::vector<Ref<Node>> m_Body;
 };

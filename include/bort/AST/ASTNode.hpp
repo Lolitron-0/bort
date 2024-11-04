@@ -38,22 +38,10 @@ public:
       : m_Kind{ kind } {
   }
 
-  /// Dump AST to stderr, starting from this node as root
-  void dump() const {
-    dump(0);
-  }
-
   /// Applies operation for parent, then for children
   virtual void preOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
   /// Applies operation for children, then for parent
   virtual void postOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
-  /// \brief Handles special type of visitors
-  ///
-  /// Structure aware visitors act more like an AST pattern matching,
-  /// except they are a bit more low-level (more flexible but
-  /// boilerplate-prone) they can perform operation anywhere in the
-  /// tree. However such visitors need to continue traversal themselves.
-  void structureAwareVisit(const Ref<StructureAwareASTVisitor>& visitor);
 
   [[nodiscard]] auto getKind() const -> NodeKind {
     return m_Kind;
@@ -63,17 +51,12 @@ public:
   friend void internal::dump(int depth, std::string_view name, T value);
 
 protected:
-  virtual void dump(int depth) const;
-
   NodeKind m_Kind;
 };
 
 class FunctionDecl : public Node {
-  FunctionDecl();
-
 public:
-protected:
-  void dump(int depth) const override;
+  FunctionDecl();
 
 private:
   Ref<Function> m_Function;
@@ -126,11 +109,6 @@ public:
     return symbol;
   }
 #endif
-
-  using Node::dump;
-
-protected:
-  void dump(int depth) const override;
 
 private:
   std::vector<Ref<Node>> m_Children;

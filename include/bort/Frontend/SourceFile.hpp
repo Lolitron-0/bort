@@ -85,7 +85,7 @@ public:
     }
   }
 
-  // TODO: handle line markers here
+  /// @todo handle line markers here
   auto operator++() -> SourceFileIt& {
     if (m_File->getBuffer().at(m_Index) == '\n') {
       m_Line++;

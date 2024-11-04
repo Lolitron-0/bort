@@ -1,9 +1,11 @@
 #pragma once
 #include "bort/Basic/Ref.hpp"
 #include <memory>
+#include <utility>
 
 namespace bort::ast {
 
+class Node;
 class NumberExpr;
 class VariableExpr;
 class StringExpr;
@@ -13,12 +15,36 @@ class VarDecl;
 class Block;
 class ASTRoot;
 
-class ASTVisitor {
+class ASTVisitorBase {
 public:
-  explicit ASTVisitor(Ref<ASTRoot> ast)
-      : m_AST{ std::move(ast) } {
+  virtual ~ASTVisitorBase() = default;
+
+  [[nodiscard]] auto isASTInvalidated() const -> bool {
+    return m_ASTInvalidated;
   }
-  virtual ~ASTVisitor() = default;
+
+protected:
+  [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
+    return m_ASTRoot;
+  }
+  void setASTRoot(Ref<ASTRoot> ast) {
+    m_ASTRoot = std::move(ast);
+  }
+
+  void markASTInvalid() {
+    m_ASTInvalidated = true;
+  }
+
+private:
+  Ref<ASTRoot> m_ASTRoot{ nullptr };
+  bool m_ASTInvalidated{ false };
+};
+
+class ASTVisitor : public ASTVisitorBase {
+public:
+  explicit ASTVisitor(Ref<ASTRoot> rootNode) {
+    setASTRoot(std::move(rootNode));
+  }
 
   virtual void visit(ASTRoot* /* rootNode */) {
   }
@@ -36,54 +62,41 @@ public:
   }
   virtual void visit(VarDecl* /* blockNode */) {
   }
-
-  [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
-    return m_AST;
-  }
-  [[nodiscard]] auto isASTInvalidated() const -> bool {
-    return m_ASTInvalidated;
-  }
-
-protected:
-  void markASTInvalid() {
-    m_ASTInvalidated = true;
-  }
-
-private:
-  Ref<ASTRoot> m_AST;
-  bool m_ASTInvalidated{ false };
 };
 
-/// Base class of all SA visitors, non-overriden nodes simply continue
-/// traversal with no action
-class StructureAwareASTVisitor
-    : public ASTVisitor,
-      public std::enable_shared_from_this<StructureAwareASTVisitor> {
-protected:
-  explicit StructureAwareASTVisitor(Ref<ASTRoot> ast)
-      : ASTVisitor{ std::move(ast) } {
-  }
-
+/// \brief Base class of all SA visitors,
+///
+/// Structure aware visitors act more like an AST pattern matching,
+/// except they are a bit more low-level (more flexible but
+/// boilerplate-prone) they can perform operation anywhere in the
+/// tree. However such visitors need to continue traversal themselves. By
+/// default, non-overriden nodes simply continue traversal with no action.
+class StructureAwareASTVisitor : public ASTVisitorBase {
 public:
-  void visit(ASTRoot* rootNode) override;
+  void SAVisit(const Ref<ASTRoot>& node);
 
-  void visit(NumberExpr* /* numNode */) override {
+protected:
+  void genericVisit(const Ref<Node>& node);
+
+  virtual void visit(const Ref<ASTRoot>& rootNode);
+
+  virtual void visit(const Ref<NumberExpr>& /* numNode */) {
     // leaf
   }
-  void visit(VariableExpr* /* varNode */) override {
+  virtual void visit(const Ref<VariableExpr>& /* varNode */) {
     // leaf
   }
-  void visit(StringExpr* /* strNode */) override {
+  virtual void visit(const Ref<StringExpr>& /* strNode */) {
     // leaf
   }
-  void visit(CharExpr* /* charNode */) override {
+  virtual void visit(const Ref<CharExpr>& /* charNode */) {
     // leaf
   }
-  void visit(VarDecl* /* varDeclNode */) override {
+  virtual void visit(const Ref<VarDecl>& /* varDeclNode */) {
     // leaf
   }
-  void visit(BinOpExpr* binopNode) override;
-  void visit(Block* blockNode) override;
+  virtual void visit(const Ref<BinOpExpr>& binopNode);
+  virtual void visit(const Ref<Block>& blockNode);
 };
 
 } // namespace bort::ast

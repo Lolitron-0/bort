@@ -1,5 +1,4 @@
 #pragma once
-#include "bort/AST/ASTNode.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Symbol.hpp"
@@ -32,17 +31,15 @@ private:
 };
 
 class SymbolResolutionVisitor final : public StructureAwareASTVisitor {
-private:
-  explicit SymbolResolutionVisitor(Ref<ASTRoot> ast);
-
 public:
-  static auto create(Ref<ASTRoot> ast) -> Ref<StructureAwareASTVisitor>;
+  SymbolResolutionVisitor();
 
-  void visit(VariableExpr* varNode) override;
+protected:
+  void visit(const Ref<VariableExpr>& varNode) override;
 
-  void visit(VarDecl* varDeclNode) override;
+  void visit(const Ref<VarDecl>& varDeclNode) override;
 
-  void visit(Block* blockNode) override;
+  void visit(const Ref<Block>& blockNode) override;
 
 private:
   void push();

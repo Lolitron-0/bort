@@ -23,10 +23,7 @@ public:
     return m_Type;
   }
 
-  using Node::dump;
-
 protected:
-  void dump(int depth) const override;
   TypeRef m_Type;
 };
 

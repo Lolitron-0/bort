@@ -10,7 +10,6 @@ namespace bort {
 enum class ObjectKind {
   Variable,
   Function,
-  // TODO: typedef
   NUM_OBJECT_KINDS
 };
 
@@ -21,6 +20,7 @@ enum class ObjectKind {
 /// resolution is symbol shallowness: shallow symbols are just names by
 /// which actual symbol information will be retrieved later (in resolution
 /// process).
+/// @todo typedef symbols
 class Symbol {
 public:
   Symbol(ObjectKind kind, std::string name, bool shallow)

@@ -86,7 +86,7 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
         makeRef<Variable>(std::string{ identifierTok.getStringView() }));
   }
 
-  // TODO: parse function call
+  /// @todo parse function call
   return nullptr;
 }
 
@@ -221,12 +221,12 @@ auto Parser::parseBlock() -> Unique<ast::Block> {
     if (isTypename(curTok())) {
       auto type{ parseDeclspec() };
 
-      // TODO: if isFunc() - parse function, else
+      /// @todo if isFunc() - parse function, else
 
       child = parseVarDecl(type);
 
     } else {
-      // TODO: parse statement
+      /// @todo parse statement
       child = parseExpression();
     }
     if (!child) {

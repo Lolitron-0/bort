@@ -1,4 +1,5 @@
 #include "bort/Frontend/FrontendInstance.hpp"
+#include "bort/AST/Visitors/ASTPrinter.hpp"
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
@@ -23,7 +24,7 @@ void FrontendInstance::run() {
       std::shared_ptr<SourceFile> sourceFile{ SourceFile::readSmallCFile(
           input) };
 
-      // TODO preprocessing
+      /// @todo preprocessing
       if (m_CliOptions.PreprocessorOnly) {
         emitError("Preprocessing is not yet implemented");
         return;
@@ -34,17 +35,18 @@ void FrontendInstance::run() {
       Parser parser{ lexer.getTokens() };
       auto ast{ parser.buildAST() };
 
-      auto symbolResolveVisitor{ ast::SymbolResolutionVisitor::create(
-          ast) };
-      ast->structureAwareVisit(symbolResolveVisitor);
-      if (symbolResolveVisitor->isASTInvalidated()) {
+      ast::SymbolResolutionVisitor symbolResolveVisitor{};
+      symbolResolveVisitor.SAVisit(ast);
+      if (symbolResolveVisitor.isASTInvalidated()) {
         DEBUG_OUT_MSG("Symbol resolution pass failed. Aborting");
         return;
       }
 
-      ast->dump();
+      if (m_CliOptions.DumpAST) {
+        ast::ASTPrinter astPrinter{};
+        astPrinter.SAVisit(ast);
+      }
 
-      // TODO dump ast
     } catch (const exceptions::SourceFileReaderError& e) {
       emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());

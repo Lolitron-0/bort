@@ -1,19 +1,19 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(lldb) Launch",
-            "type": "lldb",
-            "request": "launch",
-            "program": "${workspaceFolder}/build/bort",
-            "args": ["${workspaceFolder}/tests/corpus/basic.c"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "runInTerminal": true,
-			"sudo": true
-        }
-
-
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(lldb) Launch",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/bort",
+      "args": [
+        "${workspaceFolder}/tests/corpus/expression.c"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "runInTerminal": true,
+      "sudo": true
+    }
+  ]
 }

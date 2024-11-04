@@ -85,7 +85,7 @@ public:
     }
   }
 
-  // TODO: handle line markers here
+  /// @todo handle line markers here
   auto operator++() -> SourceFileIt& {
     if (m_File->getBuffer().at(m_Index) == '\n') {
       m_Line++;
@@ -139,6 +139,10 @@ public:
       asBufIter() + static_cast<SourceFileIt::difference_type>(length)
     };
   };
+
+  [[nodiscard]] auto canAdd(size_t n) const -> bool {
+    return m_Index + n < m_File->getBuffer().size();
+  }
 
   auto operator*() const -> const char& {
     return m_File->getBuffer().at(m_Index);

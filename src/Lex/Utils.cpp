@@ -5,7 +5,10 @@ namespace bort {
 
 auto startsWith(const SourceFileIt& pos,
                 std::string_view prefix) -> bool {
-  // TODO: check overflow
+  if (!pos.canAdd(prefix.size())) {
+    return false;
+  }
+
   return std::equal(prefix.begin(), prefix.end(), pos.asBufIter());
 }
 
@@ -23,8 +26,8 @@ auto consumeIdent(SourceFileIt& pos) -> std::string_view {
     return {};
   }
 
-  // TODO: actually there are more sophisticated rules in acceptable
-  // identifier characters, but we'll leave it for now
+  /// @todo actually there are more sophisticated rules in acceptable
+  /// identifier characters, but we'll leave it for now
   while (std::isalnum(*pos) || *pos == '_') {
     ++pos;
     ++length;

@@ -1,5 +1,7 @@
 #pragma once
+#include "bort/Basic/Assert.hpp"
 #include "bort/Frontend/SourceFile.hpp"
+#include "cul/BiMap.hpp"
 #include <string_view>
 #include <type_traits>
 #include <variant>
@@ -22,20 +24,26 @@ public:
   [[nodiscard]] inline auto is(TokenKind kind) const -> bool {
     return m_Kind == kind;
   }
-  [[nodiscard]] inline auto isOneOf(TokenKind tk1,
-                                    TokenKind tk2) const -> bool {
+  [[nodiscard]] inline auto isNot(TokenKind kind) const -> bool {
+    return !is(kind);
+  }
+  [[nodiscard]] constexpr auto isOneOf(TokenKind tk1,
+                                       TokenKind tk2) const -> bool {
     return m_Kind == tk1 || m_Kind == tk2;
   }
   template <typename... TKs>
-  [[nodiscard]] auto isOneOf(TokenKind tk, TKs... other) const -> bool {
+  [[nodiscard]] constexpr auto isOneOf(TokenKind tk,
+                                       TKs... other) const -> bool {
     return is(tk) || isOneOf(other...);
   }
 
+  [[nodiscard]] auto getKind() const -> TokenKind;
   void setKind(TokenKind kind);
 
   [[nodiscard]] auto getLoc() const -> SourceFileIt;
 
-  [[nodiscard]] auto getString() const -> std::string_view;
+  [[nodiscard]] auto getStringView() const -> std::string_view;
+  [[nodiscard]] auto getLength() const -> size_t;
 
   template <typename T>
   void setLiteralValue(T&& value) {
@@ -46,6 +54,25 @@ public:
   auto visitLiteralValue(Func&& func) const {
     return std::visit(std::forward<Func>(func), m_LiteralValue);
   }
+
+  template <typename T>
+  auto getLiteralValue() const -> T {
+    auto&& result{ std::get<T>(m_LiteralValue) };
+    bort_assert(result, "Invalid literal type");
+    return result;
+  }
+
+  // clang-format off
+#undef TOK
+#define TOK(t) .Case(#t, TokenKind::t)
+  static constexpr cul::BiMap TokenNameMapping{
+    [](auto selector) {
+      return selector 
+#include "bort/Lex/Tokens.def"
+        ;
+    }
+  };
+  // clang-format on
 
 private:
   TokenKind m_Kind;

@@ -103,10 +103,10 @@ auto Lexer::lexIdentifier(SourceFileIt& pos) -> bool {
   }
 
   Token newTok{ TokenKind::Unknown, start, ident.size() };
-  auto kind{ s_IdentifierMapping.FindByFirst(newTok.getString()) };
+  auto kind{ s_IdentifierMapping.FindByFirst(newTok.getStringView()) };
   newTok.setKind(
       kind.value_or(TokenKind::Identifier)); // either keyword or name
-  m_Tokens.push_back(std::move(newTok));
+  m_Tokens->push_back(std::move(newTok));
   return true;
 }
 
@@ -124,8 +124,8 @@ auto Lexer::lexNumericLiteral(SourceFileIt& pos) -> bool {
     ++pos;
     ++length;
   }
-  m_Tokens.emplace_back(TokenKind::NumericLiteral, start, length);
-  m_Tokens.back().setLiteralValue(
+  m_Tokens->emplace_back(TokenKind::NumericLiteral, start, length);
+  m_Tokens->back().setLiteralValue(
       std::stoi(std::string{ start.getValue(length) }));
   return true;
 }
@@ -137,7 +137,7 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
   }
 
   ++pos;
-  std::string value{ *pos };
+  std::string value{};
 
   while (*pos != '"' && *pos != '\n') {
     if (*pos == '\\') {
@@ -156,9 +156,9 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
     throw LexerFatalError();
     return false;
   }
-  m_Tokens.emplace_back(TokenKind::StringLiteral, start,
-                        value.length() + 2); // plus quotes
-  m_Tokens.back().setLiteralValue(value);
+  m_Tokens->emplace_back(TokenKind::StringLiteral, start,
+                         value.length() + 2); // plus quotes
+  m_Tokens->back().setLiteralValue(value);
   return true;
 }
 
@@ -185,8 +185,8 @@ auto Lexer::lexCharLiteral(SourceFileIt& pos) -> bool {
   }
 
   ++pos; // consume last quote
-  m_Tokens.emplace_back(TokenKind::CharLiteral, start, length);
-  m_Tokens.back().setLiteralValue(value);
+  m_Tokens->emplace_back(TokenKind::CharLiteral, start, length);
+  m_Tokens->back().setLiteralValue(value);
   return true;
 }
 
@@ -196,15 +196,19 @@ auto Lexer::lexPunctuator(SourceFileIt& pos) -> bool {
   for (const auto& punct : s_PunctuatorStrings) {
     if (startsWith(pos, punct)) {
       auto pucntKindOpt{ s_PunctuatorMapping.FindByFirst(punct) };
-      assert(pucntKindOpt.has_value() &&
-             "Punctuator mapping and list somehow doesn't match");
-      m_Tokens.emplace_back(pucntKindOpt.value(), pos, punct.length());
+      bort_assert(pucntKindOpt.has_value(),
+                  "Punctuator mapping and list somehow doesn't match");
+      m_Tokens->emplace_back(pucntKindOpt.value(), pos, punct.length());
       pos += punct.length();
       return true;
     }
   }
 
   return false;
+}
+
+Lexer::Lexer() {
+  m_Tokens = std::make_shared<TokenList>();
 }
 
 void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
@@ -268,6 +272,12 @@ void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
     emitError(pos, 1, "Unknown token");
     throw LexerFatalError();
   }
+
+  m_Tokens->emplace_back(TokenKind::Eof, pos, 0);
+}
+
+auto Lexer::getTokens() const -> std::shared_ptr<TokenList> {
+  return m_Tokens;
 }
 
 LexerFatalError::LexerFatalError()

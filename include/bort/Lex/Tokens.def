@@ -45,7 +45,9 @@ PUNCT(Less,         "<")
 PUNCT(Greater,      ">")
 
 KEYWORD(int)
+KEYWORD(void)
 KEYWORD(char)
+KEYWORD(const)
 
 // Preprocessor
 PPTOK(define)

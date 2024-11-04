@@ -67,7 +67,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 message(STATUS "Fetching Boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
-set(BOOST_INCLUDE_LIBRARIES functional assert stacktrace range)
 
 if(CMAKE_VERSION VERSION_LESS "3.28.0")
   FetchContent_Declare(
@@ -75,14 +74,14 @@ if(CMAKE_VERSION VERSION_LESS "3.28.0")
     URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
     URL_MD5 893b5203b862eb9bbd08553e24ff146a
     DOWNLOAD_EXTRACT_TIMESTAMP ON)
-
-  FetchContent_MakeAvailable(Boost)
-
 else()
   FetchContent_Declare(
     Boost
     URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
     URL_MD5 893b5203b862eb9bbd08553e24ff146a
     DOWNLOAD_EXTRACT_TIMESTAMP ON EXCLUDE_FROM_ALL)
-  FetchContent_MakeAvailable(Boost)
+
+  set(BOOST_INCLUDE_LIBRARIES functional assert stacktrace range)
 endif()
+
+FetchContent_MakeAvailable(Boost)

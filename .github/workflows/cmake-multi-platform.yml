@@ -1,4 +1,4 @@
-name: Cross-platform
+name: Cross-platform build
 
 on:
   push:

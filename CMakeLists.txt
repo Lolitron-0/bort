@@ -69,6 +69,9 @@ add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
                         BOOST_STACKTRACE_USE_ADDR2LINE)
 
 if(${CMAKE_VERSION} VERSION_LESS "3.28.0")
+  message(
+    WARNING
+      "CMake version less than 3.28 (${CMAKE_VERSION}), building entire Boost")
   FetchContent_Declare(
     Boost
     URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz

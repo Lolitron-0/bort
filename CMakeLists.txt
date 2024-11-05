@@ -36,10 +36,16 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 include(FetchContent)
 
 # cxxopts
-add_subdirectory(thirdparty/cxxopts)
+message(STATUS "Fetching cxxopts")
+FetchContent_Declare(
+  cxxopts
+  GIT_REPOSITORY https://github.com/jarro2783/cxxopts
+  GIT_TAG 3bf268481da8208d171d8908e6491459de3651d7) # 3.2.0
+FetchContent_MakeAvailable(cxxopts)
 target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 
 # fmt
+message(STATUS "Fetching fmt")
 FetchContent_Declare(
   fmt
   GIT_REPOSITORY https://github.com/fmtlib/fmt
@@ -48,6 +54,7 @@ FetchContent_MakeAvailable(fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 
 # cul
+message(STATUS "Fetching cul")
 FetchContent_Declare(
   cul
   GIT_REPOSITORY https://github.com/Lolitron-0/cul.git
@@ -56,6 +63,7 @@ FetchContent_MakeAvailable(cul)
 target_link_libraries(${PROJECT_NAME} PRIVATE cul)
 
 # frozen
+message(STATUS "Fetching frozen")
 FetchContent_Declare(
   frozen
   GIT_REPOSITORY https://github.com/serge-sans-paille/frozen
@@ -64,12 +72,8 @@ FetchContent_MakeAvailable(frozen)
 target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 
 # boost
-message(STATUS "Fetching Boost (may take a while)")
+message(STATUS "Fetching boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER)
-
-if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_definitions(BOOST_STACKTRACE_USE_ADDR2LINE)
-endif()
 
 set(BOOST_ENABLE_CMAKE ON)
 set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
@@ -81,6 +85,5 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Boost)
 
-# add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
                                               Boost::stacktrace Boost::range)

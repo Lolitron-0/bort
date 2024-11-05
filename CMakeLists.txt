@@ -73,7 +73,13 @@ endif()
 
 set(Boost_ENABLE_CMAKE ON)
 set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
+FetchContent_Declare(
+  Boost
+  URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
+  URL_MD5 893b5203b862eb9bbd08553e24ff146a)
 
-add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)
+FetchContent_MakeAvailable(Boost)
+
+# add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
-                                              Boost::stacktrace Boost::range)
+                                              Boost::range)

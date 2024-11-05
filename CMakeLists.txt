@@ -72,3 +72,5 @@ set(Boost_ENABLE_CMAKE ON)
 set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 
 add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
+                                              Boost::stacktrace Boost::range)

@@ -1,6 +1,7 @@
 #include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/AST/Visitors/ASTPrinter.hpp"
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
+#include "bort/Basic/Assert.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Lexer.hpp"

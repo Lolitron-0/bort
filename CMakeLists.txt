@@ -65,8 +65,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 
 # boost
 message(STATUS "Fetching Boost (may take a while)")
-add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
-                        BOOST_STACKTRACE_USE_ADDR2LINE)
+add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER)
+
+if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  add_compile_definitions(BOOST_STACKTRACE_USE_ADDR2LINE)
+endif()
 
 set(Boost_ENABLE_CMAKE ON)
 set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)

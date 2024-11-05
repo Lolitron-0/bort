@@ -64,7 +64,7 @@ public:
   }
 };
 
-/// \brief Base class of all SA visitors,
+/// \brief Base class of all SA visitors
 ///
 /// Structure aware visitors act more like an AST pattern matching,
 /// except they are a bit more low-level (more flexible but

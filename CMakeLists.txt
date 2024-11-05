@@ -65,9 +65,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 
 # boost
 message(STATUS "Fetching Boost (may take a while)")
-add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER)
+add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER
+                        BOOST_STACKTRACE_USE_ADDR2LINE)
 
-set(BOOST_ENABLE_CMAKE ON)
+set(Boost_ENABLE_CMAKE ON)
+set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
+
 add_subdirectory(thirdparty/boost EXCLUDE_FROM_ALL)
-target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert Boost::stacktrace
-                                              Boost::range)

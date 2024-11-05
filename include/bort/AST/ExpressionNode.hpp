@@ -23,6 +23,10 @@ public:
     return m_Type;
   }
 
+  void setType(TypeRef type) {
+    m_Type = std::move(type);
+  }
+
 protected:
   TypeRef m_Type;
 };

@@ -38,11 +38,6 @@ public:
       : m_Kind{ kind } {
   }
 
-  /// Applies operation for parent, then for children
-  virtual void preOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
-  /// Applies operation for children, then for parent
-  virtual void postOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
-
   [[nodiscard]] auto getKind() const -> NodeKind {
     return m_Kind;
   }
@@ -90,9 +85,6 @@ public:
   void pushChild(Ref<Node> child) {
     m_Children.push_back(std::move(child));
   }
-
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
 
   template <std::derived_from<Node> T, typename... Args>
   auto registerNode(ASTDebugInfo dbg, Args&&... args) -> Unique<T> {

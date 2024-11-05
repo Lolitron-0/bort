@@ -17,9 +17,6 @@ public:
     return m_Variable;
   }
 
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
-
 private:
   Ref<Variable> m_Variable;
 };

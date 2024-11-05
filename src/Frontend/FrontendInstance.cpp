@@ -1,6 +1,7 @@
 #include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/AST/Visitors/ASTPrinter.hpp"
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
+#include "bort/AST/Visitors/TypePropagationVisitor.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
@@ -40,6 +41,13 @@ void FrontendInstance::run() {
       symbolResolveVisitor.SAVisit(ast);
       if (symbolResolveVisitor.isASTInvalidated()) {
         DEBUG_OUT_MSG("Symbol resolution pass failed. Aborting");
+        return;
+      }
+
+      ast::TypePropagationVisitor typePropagationVisitor{};
+      typePropagationVisitor.SAVisit(ast);
+      if (typePropagationVisitor.isASTInvalidated()) {
+        DEBUG_OUT_MSG("Type propagation pass failed. Aborting");
         return;
       }
 

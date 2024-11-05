@@ -59,6 +59,8 @@ auto Parser::parseNumberExpr() -> Unique<ast::NumberExpr> {
 auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
   bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
   consumeToken();
+
+
   auto result{ parseExpression() };
   if (!result) {
     return nullptr;

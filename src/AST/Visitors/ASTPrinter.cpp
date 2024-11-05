@@ -42,16 +42,6 @@ void ASTPrinter::printDepthPrefix() const {
              depthPrefix(m_Depth));
 }
 
-void ASTPrinter::dump(std::string_view name, const Ref<Node>& child) {
-  push();
-  printDepthPrefix();
-  fmt::print(stderr, fmt::fg(fmt::color::cyan), "{}:\n", name);
-  push();
-  genericVisit(child);
-  pop();
-  pop();
-}
-
 void ASTPrinter::dumpNodeInfo(const Ref<Node>& node) {
   printDepthPrefix();
   auto nodeName{ s_NodeKindNames.FindByFirst(node->getKind()) };

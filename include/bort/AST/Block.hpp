@@ -16,9 +16,6 @@ public:
     m_Body.push_back(std::move(child));
   }
 
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
-
   friend class ASTRoot;
 
 private:

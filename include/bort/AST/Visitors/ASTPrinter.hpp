@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include <concepts>
 #include <fmt/base.h>
 #include <fmt/color.h>
 #include <fmt/core.h>
@@ -27,7 +28,7 @@ private:
   void printDepthPrefix() const;
 
   template <typename T>
-  void dump(std::string_view name, T value) {
+  void dump(std::string_view name, T&& value) {
     push();
     printDepthPrefix();
     fmt::print(stderr, fmt::fg(fmt::color::orange), "{} = ", name);
@@ -35,9 +36,19 @@ private:
     pop();
   }
 
+  template <std::convertible_to<Ref<Node>> T>
+  void dump(std::string_view name, T&& value) {
+    push();
+    printDepthPrefix();
+    fmt::print(stderr, fmt::fg(fmt::color::cyan), "{}:\n", name);
+    push();
+    genericVisit(value);
+    pop();
+    pop();
+  }
+
   void dumpNodeInfo(const Ref<Node>& node);
   void dumpExprInfo(const Ref<ExpressionNode>& node);
-  void dump(std::string_view name, const Ref<Node>& child);
 
   int m_Depth{ 0 };
 };

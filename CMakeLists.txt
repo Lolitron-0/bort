@@ -36,7 +36,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 include(FetchContent)
 
 # cxxopts
-message(STATUS "Fetching cxxopts")
+message(STATUS "Fetching dependency: cxxopts")
 FetchContent_Declare(
   cxxopts
   GIT_REPOSITORY https://github.com/jarro2783/cxxopts
@@ -45,7 +45,7 @@ FetchContent_MakeAvailable(cxxopts)
 target_link_libraries(${PROJECT_NAME} PRIVATE cxxopts)
 
 # fmt
-message(STATUS "Fetching fmt")
+message(STATUS "Fetching dependency: fmt")
 FetchContent_Declare(
   fmt
   GIT_REPOSITORY https://github.com/fmtlib/fmt
@@ -54,7 +54,7 @@ FetchContent_MakeAvailable(fmt)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 
 # cul
-message(STATUS "Fetching cul")
+message(STATUS "Fetching dependency: cul")
 FetchContent_Declare(
   cul
   GIT_REPOSITORY https://github.com/Lolitron-0/cul.git
@@ -63,7 +63,7 @@ FetchContent_MakeAvailable(cul)
 target_link_libraries(${PROJECT_NAME} PRIVATE cul)
 
 # frozen
-message(STATUS "Fetching frozen")
+message(STATUS "Fetching dependency: frozen")
 FetchContent_Declare(
   frozen
   GIT_REPOSITORY https://github.com/serge-sans-paille/frozen
@@ -72,7 +72,7 @@ FetchContent_MakeAvailable(frozen)
 target_link_libraries(${PROJECT_NAME} PRIVATE frozen)
 
 # boost
-message(STATUS "Fetching boost (may take a while)")
+message(STATUS "Fetching dependency: boost (may take a while)")
 add_compile_definitions(BOOST_ENABLE_ASSERT_DEBUG_HANDLER)
 
 set(BOOST_ENABLE_CMAKE ON)

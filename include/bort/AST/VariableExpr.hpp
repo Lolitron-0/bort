@@ -28,9 +28,6 @@ public:
     m_Type = m_Variable->isShallow() ? nullptr : m_Variable->getType();
   }
 
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
-
   friend class ASTRoot;
 
 private:

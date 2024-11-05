@@ -29,7 +29,9 @@ public:
 protected:
   /// number -> {integer}
   auto parseNumberExpr() -> Unique<ast::NumberExpr>;
-  /// parenExpr -> '(' expression ')'
+  /// parenExpr \n
+  /// -> '(' expression ')' \n
+  /// @todo type-casts -> '(' declspec ')'
   auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   /// identifier \n
   /// -> identifier - variable \n

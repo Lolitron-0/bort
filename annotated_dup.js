@@ -2,10 +2,12 @@ var annotated_dup =
 [
     [ "bort", "namespacebort.html", [
       [ "ast", "namespacebort_1_1ast.html", [
+        [ "detail", "namespacebort_1_1ast_1_1detail.html", [
+          [ "TypePairHasher", "structbort_1_1ast_1_1detail_1_1TypePairHasher.html", "structbort_1_1ast_1_1detail_1_1TypePairHasher" ]
+        ] ],
         [ "ASTDebugInfo", "structbort_1_1ast_1_1ASTDebugInfo.html", "structbort_1_1ast_1_1ASTDebugInfo" ],
         [ "ASTPrinter", "classbort_1_1ast_1_1ASTPrinter.html", null ],
         [ "ASTRoot", "classbort_1_1ast_1_1ASTRoot.html", "classbort_1_1ast_1_1ASTRoot" ],
-        [ "ASTVisitor", "classbort_1_1ast_1_1ASTVisitor.html", "classbort_1_1ast_1_1ASTVisitor" ],
         [ "ASTVisitorBase", "classbort_1_1ast_1_1ASTVisitorBase.html", "classbort_1_1ast_1_1ASTVisitorBase" ],
         [ "BinOpExpr", "classbort_1_1ast_1_1BinOpExpr.html", "classbort_1_1ast_1_1BinOpExpr" ],
         [ "Block", "classbort_1_1ast_1_1Block.html", "classbort_1_1ast_1_1Block" ],
@@ -17,6 +19,7 @@ var annotated_dup =
         [ "StructureAwareASTVisitor", "classbort_1_1ast_1_1StructureAwareASTVisitor.html", "classbort_1_1ast_1_1StructureAwareASTVisitor" ],
         [ "SymbolAlreadyDefined", "classbort_1_1ast_1_1SymbolAlreadyDefined.html", "classbort_1_1ast_1_1SymbolAlreadyDefined" ],
         [ "SymbolResolutionVisitor", "classbort_1_1ast_1_1SymbolResolutionVisitor.html", "classbort_1_1ast_1_1SymbolResolutionVisitor" ],
+        [ "TypePropagationVisitor", "classbort_1_1ast_1_1TypePropagationVisitor.html", "classbort_1_1ast_1_1TypePropagationVisitor" ],
         [ "VarDecl", "classbort_1_1ast_1_1VarDecl.html", "classbort_1_1ast_1_1VarDecl" ],
         [ "VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", "classbort_1_1ast_1_1VariableExpr" ]
       ] ],

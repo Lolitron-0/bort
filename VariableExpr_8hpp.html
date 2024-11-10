@@ -98,45 +98,46 @@ $(document).ready(function(){initNavTree('VariableExpr_8hpp.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="ExpressionNode_8hpp_source.html">bort/AST/ExpressionNode.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Symbol_8hpp_source.html">bort/Frontend/Symbol.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for VariableExpr.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="VariableExpr_8hpp__incl.png" border="0" usemap="#ainclude_2bort_2AST_2VariableExpr_8hpp" alt=""/></div>
 <map name="ainclude_2bort_2AST_2VariableExpr_8hpp" id="ainclude_2bort_2AST_2VariableExpr_8hpp">
-<area shape="rect" title=" " alt="" coords="395,5,580,45"/>
-<area shape="rect" href="ExpressionNode_8hpp.html" title=" " alt="" coords="380,93,595,119"/>
-<area shape="rect" href="ASTNode_8hpp.html" title=" " alt="" coords="403,167,571,192"/>
-<area shape="rect" href="ASTDebugInfo_8hpp.html" title=" " alt="" coords="1208,240,1409,265"/>
-<area shape="rect" href="Assert_8hpp.html" title=" " alt="" coords="1007,387,1167,412"/>
-<area shape="rect" href="ASTVisitor_8hpp.html" title=" " alt="" coords="69,313,297,339"/>
-<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="5,387,145,412"/>
-<area shape="rect" title=" " alt="" coords="221,387,281,412"/>
-<area shape="rect" href="Symbol_8hpp.html" title=" " alt="" coords="565,240,756,265"/>
-<area shape="rect" title=" " alt="" coords="305,387,429,412"/>
-<area shape="rect" title=" " alt="" coords="1434,240,1514,265"/>
-<area shape="rect" href="Token_8hpp.html" title=" " alt="" coords="1462,313,1606,339"/>
-<area shape="rect" href="SourceFile_8hpp.html" title=" " alt="" coords="1242,387,1450,412"/>
-<area shape="rect" title=" " alt="" coords="1635,460,1732,485"/>
-<area shape="rect" title=" " alt="" coords="1525,387,1639,412"/>
-<area shape="rect" title=" " alt="" coords="1664,387,1756,412"/>
-<area shape="rect" title=" " alt="" coords="1780,387,1848,412"/>
-<area shape="rect" title=" " alt="" coords="1872,387,2020,412"/>
-<area shape="rect" title=" " alt="" coords="1042,460,1173,485"/>
-<area shape="rect" title=" " alt="" coords="525,460,684,485"/>
-<area shape="rect" title=" " alt="" coords="708,460,800,485"/>
-<area shape="rect" title=" " alt="" coords="824,460,913,485"/>
-<area shape="rect" title=" " alt="" coords="938,460,1018,485"/>
-<area shape="rect" title=" " alt="" coords="1279,460,1370,485"/>
-<area shape="rect" title=" " alt="" coords="1395,460,1500,485"/>
-<area shape="rect" title=" " alt="" coords="294,460,371,485"/>
-<area shape="rect" title=" " alt="" coords="1524,460,1611,485"/>
-<area shape="rect" title=" " alt="" coords="1197,460,1255,485"/>
-<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="646,313,817,339"/>
-<area shape="rect" title=" " alt="" coords="424,313,535,339"/>
-<area shape="rect" title=" " alt="" coords="559,313,621,339"/>
-<area shape="rect" title=" " alt="" coords="792,387,983,412"/>
-<area shape="rect" title=" " alt="" coords="505,387,571,412"/>
-<area shape="rect" title=" " alt="" coords="596,387,768,412"/>
+<area shape="rect" title=" " alt="" coords="776,5,961,45"/>
+<area shape="rect" href="ExpressionNode_8hpp.html" title=" " alt="" coords="689,93,904,119"/>
+<area shape="rect" href="Symbol_8hpp.html" title=" " alt="" coords="1151,167,1341,192"/>
+<area shape="rect" href="ASTNode_8hpp.html" title=" " alt="" coords="474,167,642,192"/>
+<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="711,240,882,265"/>
+<area shape="rect" href="ASTDebugInfo_8hpp.html" title=" " alt="" coords="169,313,371,339"/>
+<area shape="rect" href="Assert_8hpp.html" title=" " alt="" coords="1233,460,1393,485"/>
+<area shape="rect" href="ASTVisitor_8hpp.html" title=" " alt="" coords="253,240,481,265"/>
+<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="5,313,145,339"/>
+<area shape="rect" title=" " alt="" coords="395,313,455,339"/>
+<area shape="rect" title=" " alt="" coords="557,240,637,265"/>
+<area shape="rect" title=" " alt="" coords="479,313,603,339"/>
+<area shape="rect" href="Token_8hpp.html" title=" " alt="" coords="807,387,951,412"/>
+<area shape="rect" href="SourceFile_8hpp.html" title=" " alt="" coords="689,460,897,485"/>
+<area shape="rect" title=" " alt="" coords="904,533,1001,559"/>
+<area shape="rect" title=" " alt="" coords="550,460,665,485"/>
+<area shape="rect" title=" " alt="" coords="921,460,1013,485"/>
+<area shape="rect" title=" " alt="" coords="1089,460,1157,485"/>
+<area shape="rect" title=" " alt="" coords="377,460,525,485"/>
+<area shape="rect" title=" " alt="" coords="1443,533,1574,559"/>
+<area shape="rect" title=" " alt="" coords="1599,533,1757,559"/>
+<area shape="rect" title=" " alt="" coords="1109,533,1201,559"/>
+<area shape="rect" title=" " alt="" coords="1225,533,1315,559"/>
+<area shape="rect" title=" " alt="" coords="1339,533,1419,559"/>
+<area shape="rect" title=" " alt="" coords="789,533,879,559"/>
+<area shape="rect" title=" " alt="" coords="548,533,653,559"/>
+<area shape="rect" title=" " alt="" coords="301,533,378,559"/>
+<area shape="rect" title=" " alt="" coords="677,533,764,559"/>
+<area shape="rect" title=" " alt="" coords="1026,533,1085,559"/>
+<area shape="rect" title=" " alt="" coords="679,313,869,339"/>
+<area shape="rect" title=" " alt="" coords="894,313,961,339"/>
+<area shape="rect" title=" " alt="" coords="985,313,1157,339"/>
+<area shape="rect" title=" " alt="" coords="1335,240,1445,265"/>
+<area shape="rect" title=" " alt="" coords="1469,240,1532,265"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">

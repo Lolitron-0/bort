@@ -12,7 +12,7 @@ var searchData=
   ['bort_5fassert_9',['bort_assert',['../Assert_8hpp.html#aa4489bace96135f1181039034084a7dd',1,'Assert.hpp']]],
   ['bort_5fassert_5fnomsg_10',['bort_assert_nomsg',['../Assert_8hpp.html#ad5760d4d7800a20abeece97e2524301f',1,'Assert.hpp']]],
   ['buildast_11',['buildAST',['../classbort_1_1Parser.html#afb157746e64c69011b03bfc695454308',1,'bort::Parser']]],
-  ['detail_12',['detail',['../namespacebort_1_1detail.html',1,'bort']]],
+  ['detail_12',['detail',['../namespacebort_1_1ast_1_1detail.html',1,'bort::ast::detail'],['../namespacebort_1_1detail.html',1,'bort::detail']]],
   ['exceptions_13',['exceptions',['../namespacebort_1_1exceptions.html',1,'bort']]],
   ['internal_14',['internal',['../namespacebort_1_1ast_1_1internal.html',1,'bort::ast']]]
 ];

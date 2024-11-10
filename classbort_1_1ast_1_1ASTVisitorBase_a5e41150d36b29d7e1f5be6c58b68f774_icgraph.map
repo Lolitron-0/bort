@@ -1,6 +1,5 @@
 <map id="bort::ast::ASTVisitorBase::setASTRoot" name="bort::ast::ASTVisitorBase::setASTRoot">
-<area shape="rect" id="node1" title=" " alt="" coords="483,37,665,77"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1ASTVisitor.html#af25107bb3268bd11e1a079d058377911" title=" " alt="" coords="267,5,418,45"/>
-<area shape="rect" id="node3" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="251,69,435,109"/>
-<area shape="rect" id="node4" href="$structbort_1_1FrontendInstance.html#a51822d4c2a4bffbfefd15b4d21abd16b" title=" " alt="" coords="5,77,203,102"/>
+<area shape="rect" id="node1" title=" " alt="" coords="483,5,665,45"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="251,5,435,45"/>
+<area shape="rect" id="node3" href="$structbort_1_1FrontendInstance.html#a51822d4c2a4bffbfefd15b4d21abd16b" title=" " alt="" coords="5,13,203,38"/>
 </map>

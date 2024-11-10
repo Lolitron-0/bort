@@ -108,10 +108,11 @@ Inheritance diagram for bort::ast::StructureAwareASTVisitor:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1StructureAwareASTVisitor__inherit__graph.png" border="0" usemap="#abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map" alt="Inheritance graph"/></div>
 <map name="abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map" id="abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map">
-<area shape="rect" title="Base class of all SA visitors." alt="" coords="89,79,273,119"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="5,174,157,199"/>
-<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="181,167,384,207"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTVisitorBase.html" title=" " alt="" coords="90,5,273,31"/>
+<area shape="rect" title="Base class of all SA visitors." alt="" coords="236,55,420,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="493,5,645,31"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="468,55,671,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="473,119,665,159"/>
+<area shape="rect" href="classbort_1_1ast_1_1ASTVisitorBase.html" title=" " alt="" coords="5,63,188,88"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -150,6 +151,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a915940f62009f0b1fb7a9a463608269a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d4ab651eb66f87e5c43284078aa1a63"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a4d4ab651eb66f87e5c43284078aa1a63">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a> &gt; &amp;)</td></tr>
 <tr class="separator:a4d4ab651eb66f87e5c43284078aa1a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f05d34656b254ab8edc0e59d213e944"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8f05d34656b254ab8edc0e59d213e944">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">FunctionDecl</a> &gt; &amp;functionDeclNode)</td></tr>
+<tr class="separator:a8f05d34656b254ab8edc0e59d213e944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37de0b7cecbd40f718d9133f5c0e2490"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a37de0b7cecbd40f718d9133f5c0e2490">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1BinOpExpr.html">BinOpExpr</a> &gt; &amp;binopNode)</td></tr>
 <tr class="separator:a37de0b7cecbd40f718d9133f5c0e2490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaaa5eeb1ad6ce30399deb21149f2364"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#aeaaa5eeb1ad6ce30399deb21149f2364">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Block.html">Block</a> &gt; &amp;blockNode)</td></tr>
@@ -157,6 +160,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="inherit_header pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classbort_1_1ast_1_1ASTVisitorBase')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html">bort::ast::ASTVisitorBase</a></td></tr>
 <tr class="memitem:a239cccb37d033c2c8352f6bc7dc5262a inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a239cccb37d033c2c8352f6bc7dc5262a">getASTRef</a> () const -&gt; const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a> &gt; &amp;</td></tr>
 <tr class="separator:a239cccb37d033c2c8352f6bc7dc5262a inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e019ed10c4126f1459e61d627d58960 inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a6e019ed10c4126f1459e61d627d58960">getNodeDebugInfo</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Node.html">Node</a> &gt; &amp;node) const -&gt; <a class="el" href="structbort_1_1ast_1_1ASTDebugInfo.html">ASTDebugInfo</a></td></tr>
+<tr class="separator:a6e019ed10c4126f1459e61d627d58960 inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e41150d36b29d7e1f5be6c58b68f774 inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a5e41150d36b29d7e1f5be6c58b68f774">setASTRoot</a> (<a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a> &gt; ast)</td></tr>
 <tr class="separator:a5e41150d36b29d7e1f5be6c58b68f774 inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab56e7227502598883babf5798230709a inherit pro_methods_classbort_1_1ast_1_1ASTVisitorBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#ab56e7227502598883babf5798230709a">markASTInvalid</a> ()</td></tr>
@@ -164,7 +169,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class of all SA visitors. </p>
-<p>Structure aware visitors act more like an AST pattern matching, except they are a bit more low-level (more flexible but boilerplate-prone) they can perform operation anywhere in the tree. However such visitors need to continue traversal themselves. By default, non-overriden nodes simply continue traversal with no action. </p>
+<p>Structure aware visitors act more like an AST pattern matching, except they are a bit more low-level as they can perform operation anywhere during the tree traversal. By default, non-overriden nodes simply continue traversal with no action. Pre- and post-order visitors can be easily implemented (and even mixed) using this interface </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="addf9e2fefb082561bf134a9086f2baa7" name="addf9e2fefb082561bf134a9086f2baa7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#addf9e2fefb082561bf134a9086f2baa7">&#9670;&#160;</a></span>genericVisit()</h2>
@@ -252,7 +257,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="abb57e7bfa9332570a4e6c1731107116a" name="abb57e7bfa9332570a4e6c1731107116a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb57e7bfa9332570a4e6c1731107116a">&#9670;&#160;</a></span>visit() <span class="overload">[1/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abb57e7bfa9332570a4e6c1731107116a">&#9670;&#160;</a></span>visit() <span class="overload">[1/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -299,7 +304,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a37de0b7cecbd40f718d9133f5c0e2490" name="a37de0b7cecbd40f718d9133f5c0e2490"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37de0b7cecbd40f718d9133f5c0e2490">&#9670;&#160;</a></span>visit() <span class="overload">[2/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a37de0b7cecbd40f718d9133f5c0e2490">&#9670;&#160;</a></span>visit() <span class="overload">[2/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,7 +340,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="aeaaa5eeb1ad6ce30399deb21149f2364" name="aeaaa5eeb1ad6ce30399deb21149f2364"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeaaa5eeb1ad6ce30399deb21149f2364">&#9670;&#160;</a></span>visit() <span class="overload">[3/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaaa5eeb1ad6ce30399deb21149f2364">&#9670;&#160;</a></span>visit() <span class="overload">[3/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -373,7 +378,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a915940f62009f0b1fb7a9a463608269a" name="a915940f62009f0b1fb7a9a463608269a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a915940f62009f0b1fb7a9a463608269a">&#9670;&#160;</a></span>visit() <span class="overload">[4/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a915940f62009f0b1fb7a9a463608269a">&#9670;&#160;</a></span>visit() <span class="overload">[4/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -398,8 +403,44 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a8f05d34656b254ab8edc0e59d213e944" name="a8f05d34656b254ab8edc0e59d213e944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f05d34656b254ab8edc0e59d213e944">&#9670;&#160;</a></span>visit() <span class="overload">[5/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::ast::StructureAwareASTVisitor::visit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">FunctionDecl</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>functionDeclNode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1ast_1_1StructureAwareASTVisitor_a8f05d34656b254ab8edc0e59d213e944_cgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1StructureAwareASTVisitor_a8f05d34656b254ab8edc0e59d213e944_cgraph" alt=""/></div>
+<map name="aclassbort_1_1ast_1_1StructureAwareASTVisitor_a8f05d34656b254ab8edc0e59d213e944_cgraph" id="aclassbort_1_1ast_1_1StructureAwareASTVisitor_a8f05d34656b254ab8edc0e59d213e944_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,189,45"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="237,5,421,45"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="469,5,653,45"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="adcff1f6356414af9bb45c73f51d3f796" name="adcff1f6356414af9bb45c73f51d3f796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcff1f6356414af9bb45c73f51d3f796">&#9670;&#160;</a></span>visit() <span class="overload">[5/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adcff1f6356414af9bb45c73f51d3f796">&#9670;&#160;</a></span>visit() <span class="overload">[6/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -425,7 +466,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a8d16f5cbf55963493f01aee3e2a83dae" name="a8d16f5cbf55963493f01aee3e2a83dae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d16f5cbf55963493f01aee3e2a83dae">&#9670;&#160;</a></span>visit() <span class="overload">[6/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d16f5cbf55963493f01aee3e2a83dae">&#9670;&#160;</a></span>visit() <span class="overload">[7/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -451,7 +492,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a4d4ab651eb66f87e5c43284078aa1a63" name="a4d4ab651eb66f87e5c43284078aa1a63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d4ab651eb66f87e5c43284078aa1a63">&#9670;&#160;</a></span>visit() <span class="overload">[7/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d4ab651eb66f87e5c43284078aa1a63">&#9670;&#160;</a></span>visit() <span class="overload">[8/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -479,7 +520,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a0a508884e6bd59b4f7982f3c08f15abf" name="a0a508884e6bd59b4f7982f3c08f15abf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a508884e6bd59b4f7982f3c08f15abf">&#9670;&#160;</a></span>visit() <span class="overload">[8/8]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a508884e6bd59b4f7982f3c08f15abf">&#9670;&#160;</a></span>visit() <span class="overload">[9/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

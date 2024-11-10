@@ -6,6 +6,7 @@ var classbort_1_1ast_1_1StructureAwareASTVisitor =
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a37de0b7cecbd40f718d9133f5c0e2490", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#aeaaa5eeb1ad6ce30399deb21149f2364", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a915940f62009f0b1fb7a9a463608269a", null ],
+    [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8f05d34656b254ab8edc0e59d213e944", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#adcff1f6356414af9bb45c73f51d3f796", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8d16f5cbf55963493f01aee3e2a83dae", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a4d4ab651eb66f87e5c43284078aa1a63", null ],

@@ -2,10 +2,10 @@ var hierarchy =
 [
     [ "bort::ast::ASTDebugInfo", "structbort_1_1ast_1_1ASTDebugInfo.html", null ],
     [ "bort::ast::ASTVisitorBase", "classbort_1_1ast_1_1ASTVisitorBase.html", [
-      [ "bort::ast::ASTVisitor", "classbort_1_1ast_1_1ASTVisitor.html", null ],
       [ "bort::ast::StructureAwareASTVisitor", "classbort_1_1ast_1_1StructureAwareASTVisitor.html", [
         [ "bort::ast::ASTPrinter", "classbort_1_1ast_1_1ASTPrinter.html", null ],
-        [ "bort::ast::SymbolResolutionVisitor", "classbort_1_1ast_1_1SymbolResolutionVisitor.html", null ]
+        [ "bort::ast::SymbolResolutionVisitor", "classbort_1_1ast_1_1SymbolResolutionVisitor.html", null ],
+        [ "bort::ast::TypePropagationVisitor", "classbort_1_1ast_1_1TypePropagationVisitor.html", null ]
       ] ]
     ] ],
     [ "bort::FrontendInstance", "structbort_1_1FrontendInstance.html", null ],
@@ -50,5 +50,6 @@ var hierarchy =
       [ "bort::PointerType", "classbort_1_1PointerType.html", null ],
       [ "bort::VoidType", "classbort_1_1VoidType.html", null ]
     ] ],
+    [ "bort::ast::detail::TypePairHasher", "structbort_1_1ast_1_1detail_1_1TypePairHasher.html", null ],
     [ "bort::TypeRefHasher", "structbort_1_1TypeRefHasher.html", null ]
 ];

@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('classbort_1_1ast_1_1Node.html',''); in
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classbort_1_1ast_1_1Node-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">bort::ast::Node Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+  <div class="headertitle"><div class="title">bort::ast::Node Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -124,12 +124,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac726ef7c564c3e17ff10c856c613590b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae611e2df596896a6a14140a23e335207"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ae611e2df596896a6a14140a23e335207">Node</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind)</td></tr>
 <tr class="separator:ae611e2df596896a6a14140a23e335207"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d61ef0c6889b9481db6dfe549629269"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a1d61ef0c6889b9481db6dfe549629269">preOrderVisit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTVisitor.html">ASTVisitor</a> &gt; &amp;visitor)=0</td></tr>
-<tr class="memdesc:a1d61ef0c6889b9481db6dfe549629269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies operation for parent, then for children.  <br /></td></tr>
-<tr class="separator:a1d61ef0c6889b9481db6dfe549629269"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7be71cb2cd7023b0633a1367f5fe78d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a7be71cb2cd7023b0633a1367f5fe78d8">postOrderVisit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTVisitor.html">ASTVisitor</a> &gt; &amp;visitor)=0</td></tr>
-<tr class="memdesc:a7be71cb2cd7023b0633a1367f5fe78d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies operation for children, then for parent.  <br /></td></tr>
-<tr class="separator:a7be71cb2cd7023b0633a1367f5fe78d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42ce06cc2b5892ca12d5e820d8807a13"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a42ce06cc2b5892ca12d5e820d8807a13">getKind</a> () const -&gt; <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a></td></tr>
 <tr class="separator:a42ce06cc2b5892ca12d5e820d8807a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -219,66 +213,6 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7be71cb2cd7023b0633a1367f5fe78d8" name="a7be71cb2cd7023b0633a1367f5fe78d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7be71cb2cd7023b0633a1367f5fe78d8">&#9670;&#160;</a></span>postOrderVisit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void bort::ast::Node::postOrderVisit </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTVisitor.html">ASTVisitor</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>visitor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Applies operation for children, then for parent. </p>
-
-<p>Implemented in <a class="el" href="classbort_1_1ast_1_1ASTRoot.html#a206e0972a3840b8cb3f5f8a3f8a99d71">bort::ast::ASTRoot</a>, <a class="el" href="classbort_1_1ast_1_1BinOpExpr.html#a639654771e43a46a4ce12fac0bf777d6">bort::ast::BinOpExpr</a>, <a class="el" href="classbort_1_1ast_1_1Block.html#a3fa9e5e8a628c5ad4bb3c41447924728">bort::ast::Block</a>, <a class="el" href="classbort_1_1ast_1_1NumberExpr.html#ae1bbd94847fd972b4dcc9a564765b7bf">bort::ast::NumberExpr</a>, <a class="el" href="classbort_1_1ast_1_1VarDecl.html#a0a8fed6de9e6677bef2ce3f896c8404a">bort::ast::VarDecl</a>, and <a class="el" href="classbort_1_1ast_1_1VariableExpr.html#ac3ec10fa00d46091f28eddbdd1374c2c">bort::ast::VariableExpr</a>.</p>
-
-</div>
-</div>
-<a id="a1d61ef0c6889b9481db6dfe549629269" name="a1d61ef0c6889b9481db6dfe549629269"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d61ef0c6889b9481db6dfe549629269">&#9670;&#160;</a></span>preOrderVisit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void bort::ast::Node::preOrderVisit </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTVisitor.html">ASTVisitor</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>visitor</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Applies operation for parent, then for children. </p>
-
-<p>Implemented in <a class="el" href="classbort_1_1ast_1_1ASTRoot.html#aeeb48a8c90141ae102226d3cdfd3ca05">bort::ast::ASTRoot</a>, <a class="el" href="classbort_1_1ast_1_1BinOpExpr.html#a1d862824793bc38b5e7558bf70ee5cff">bort::ast::BinOpExpr</a>, <a class="el" href="classbort_1_1ast_1_1Block.html#a0b55320c86d7f8faba9cbd3e59d4589a">bort::ast::Block</a>, <a class="el" href="classbort_1_1ast_1_1NumberExpr.html#a4f66cfc2294ade222a37dfff3a1b0a8a">bort::ast::NumberExpr</a>, <a class="el" href="classbort_1_1ast_1_1VarDecl.html#a6b3c25a5f4a7fabb3cf22a81a66a1462">bort::ast::VarDecl</a>, and <a class="el" href="classbort_1_1ast_1_1VariableExpr.html#a3950e24fce426077db2f659d3104614a">bort::ast::VariableExpr</a>.</p>
 
 </div>
 </div>

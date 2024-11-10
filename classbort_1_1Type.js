@@ -5,5 +5,6 @@ var classbort_1_1Type =
     [ "dump", "classbort_1_1Type.html#a15513fe36f0b234a7aa6366c8ce51989", null ],
     [ "getKind", "classbort_1_1Type.html#ab936d4e079153ee96b3494c4afd129aa", null ],
     [ "getSizeof", "classbort_1_1Type.html#a211075dcfcd257ca883b311f58e44230", null ],
+    [ "is", "classbort_1_1Type.html#aceb4990aab71cdec86275002119694f6", null ],
     [ "toString", "classbort_1_1Type.html#aa459447fac8d0f8d2a52839d039acb54", null ]
 ];

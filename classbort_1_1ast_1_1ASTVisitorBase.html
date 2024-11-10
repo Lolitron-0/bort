@@ -105,11 +105,11 @@ Inheritance diagram for bort::ast::ASTVisitorBase:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1ASTVisitorBase__inherit__graph.png" border="0" usemap="#abort_1_1ast_1_1ASTVisitorBase_inherit__map" alt="Inheritance graph"/></div>
 <map name="abort_1_1ast_1_1ASTVisitorBase_inherit__map" id="abort_1_1ast_1_1ASTVisitorBase_inherit__map">
-<area shape="rect" title=" " alt="" coords="85,5,268,31"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTVisitor.html" title=" " alt="" coords="5,86,156,111"/>
-<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html" title="Base class of all SA visitors." alt="" coords="181,79,365,119"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="95,174,247,199"/>
-<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="271,167,474,207"/>
+<area shape="rect" title=" " alt="" coords="5,63,188,88"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html" title="Base class of all SA visitors." alt="" coords="236,55,420,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="493,5,645,31"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="468,55,671,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="473,119,665,159"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -124,6 +124,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a239cccb37d033c2c8352f6bc7dc5262a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a239cccb37d033c2c8352f6bc7dc5262a">getASTRef</a> () const -&gt; const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a> &gt; &amp;</td></tr>
 <tr class="separator:a239cccb37d033c2c8352f6bc7dc5262a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e019ed10c4126f1459e61d627d58960"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a6e019ed10c4126f1459e61d627d58960">getNodeDebugInfo</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Node.html">Node</a> &gt; &amp;node) const -&gt; <a class="el" href="structbort_1_1ast_1_1ASTDebugInfo.html">ASTDebugInfo</a></td></tr>
+<tr class="separator:a6e019ed10c4126f1459e61d627d58960"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e41150d36b29d7e1f5be6c58b68f774"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#a5e41150d36b29d7e1f5be6c58b68f774">setASTRoot</a> (<a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a> &gt; ast)</td></tr>
 <tr class="separator:a5e41150d36b29d7e1f5be6c58b68f774"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab56e7227502598883babf5798230709a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html#ab56e7227502598883babf5798230709a">markASTInvalid</a> ()</td></tr>
@@ -183,6 +185,41 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1ASTVisitorBase_a239cccb37d033c2c8352f6bc7dc5262a_icgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1ASTVisitorBase_a239cccb37d033c2c8352f6bc7dc5262a_icgraph" alt=""/></div>
 <map name="aclassbort_1_1ast_1_1ASTVisitorBase_a239cccb37d033c2c8352f6bc7dc5262a_icgraph" id="aclassbort_1_1ast_1_1ASTVisitorBase_a239cccb37d033c2c8352f6bc7dc5262a_icgraph">
+<area shape="rect" title=" " alt="" coords="256,5,439,45"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="5,5,208,45"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a6e019ed10c4126f1459e61d627d58960" name="a6e019ed10c4126f1459e61d627d58960"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e019ed10c4126f1459e61d627d58960">&#9670;&#160;</a></span>getNodeDebugInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::ast::ASTVisitorBase::getNodeDebugInfo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Node.html">Node</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>node</em></td><td>)</td>
+          <td> const -&gt; <a class="el" href="structbort_1_1ast_1_1ASTDebugInfo.html">ASTDebugInfo</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1ast_1_1ASTVisitorBase_a6e019ed10c4126f1459e61d627d58960_icgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1ASTVisitorBase_a6e019ed10c4126f1459e61d627d58960_icgraph" alt=""/></div>
+<map name="aclassbort_1_1ast_1_1ASTVisitorBase_a6e019ed10c4126f1459e61d627d58960_icgraph" id="aclassbort_1_1ast_1_1ASTVisitorBase_a6e019ed10c4126f1459e61d627d58960_icgraph">
 <area shape="rect" title=" " alt="" coords="256,5,439,45"/>
 <area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="5,5,208,45"/>
 </map>
@@ -277,17 +314,17 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1ASTVisitorBase_a5e41150d36b29d7e1f5be6c58b68f774_icgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1ASTVisitorBase_a5e41150d36b29d7e1f5be6c58b68f774_icgraph" alt=""/></div>
 <map name="aclassbort_1_1ast_1_1ASTVisitorBase_a5e41150d36b29d7e1f5be6c58b68f774_icgraph" id="aclassbort_1_1ast_1_1ASTVisitorBase_a5e41150d36b29d7e1f5be6c58b68f774_icgraph">
-<area shape="rect" title=" " alt="" coords="483,37,665,77"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTVisitor.html#af25107bb3268bd11e1a079d058377911" title=" " alt="" coords="267,5,418,45"/>
-<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="251,69,435,109"/>
-<area shape="rect" href="structbort_1_1FrontendInstance.html#a51822d4c2a4bffbfefd15b4d21abd16b" title=" " alt="" coords="5,77,203,102"/>
+<area shape="rect" title=" " alt="" coords="483,5,665,45"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="251,5,435,45"/>
+<area shape="rect" href="structbort_1_1FrontendInstance.html#a51822d4c2a4bffbfefd15b4d21abd16b" title=" " alt="" coords="5,13,203,38"/>
 </map>
 </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/bort/AST/Visitors/<a class="el" href="ASTVisitor_8hpp_source.html">ASTVisitor.hpp</a></li>
+<li>src/AST/Visitors/<a class="el" href="ASTVisitor_8cpp.html">ASTVisitor.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

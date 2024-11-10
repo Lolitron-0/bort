@@ -1,4 +1,5 @@
 <map id="bort::IntType::get" name="bort::IntType::get">
-<area shape="rect" id="node1" title=" " alt="" coords="252,5,384,31"/>
-<area shape="rect" id="node2" href="$classbort_1_1Parser.html#a9c357d971db1170ec535e8a9ac6712f5" title=" " alt="" coords="5,5,204,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="276,35,408,60"/>
+<area shape="rect" id="node2" href="$classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d" title=" " alt="" coords="17,5,216,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1ast_1_1TypePropagationVisitor.html#a4e830d9694aeddc47e250521434dfe46" title=" " alt="" coords="5,55,228,95"/>
 </map>

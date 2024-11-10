@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classbort_1_1ast_1_1Scope.html" title=" " alt="" coords="5,5,128,31"/>
+<area shape="rect" id="node1" href="$classbort_1_1ast_1_1Node.html" title=" " alt="" coords="5,104,124,129"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1ASTRoot.html" title=" " alt="" coords="197,5,336,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1ast_1_1Block.html" title=" " alt="" coords="207,55,327,80"/>
+<area shape="rect" id="node4" href="$classbort_1_1ast_1_1ExpressionNode.html" title=" " alt="" coords="172,104,361,129"/>
+<area shape="rect" id="node8" href="$classbort_1_1ast_1_1FunctionDecl.html" title=" " alt="" coords="183,153,351,179"/>
+<area shape="rect" id="node9" href="$classbort_1_1ast_1_1VarDecl.html" title=" " alt="" coords="199,203,334,228"/>
+<area shape="rect" id="node5" href="$classbort_1_1ast_1_1BinOpExpr.html" title=" " alt="" coords="417,55,569,80"/>
+<area shape="rect" id="node6" href="$classbort_1_1ast_1_1NumberExpr.html" title=" " alt="" coords="410,104,575,129"/>
+<area shape="rect" id="node7" href="$classbort_1_1ast_1_1VariableExpr.html" title=" " alt="" coords="409,153,576,179"/>
 </map>

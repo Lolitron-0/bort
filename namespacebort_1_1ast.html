@@ -102,6 +102,8 @@ $(document).ready(function(){initNavTree('namespacebort_1_1ast.html',''); initRe
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
+<tr class="memitem:namespacebort_1_1ast_1_1detail"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ast_1_1detail.html">detail</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacebort_1_1ast_1_1internal"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ast_1_1internal.html">internal</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -112,8 +114,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTPrinter.html">ASTPrinter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitor.html">ASTVisitor</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ASTVisitorBase.html">ASTVisitorBase</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +138,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html">SymbolResolutionVisitor</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1TypePropagationVisitor.html">TypePropagationVisitor</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1VariableExpr.html">VariableExpr</a></td></tr>
@@ -153,10 +155,11 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46">BinOpExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">VarDecl</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5">FunctionDecl</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2">Block</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">NUM_NODES</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">NUM_NODES</a>
 <br />
  }</td></tr>
 <tr class="separator:af477babacfc630db95da7ed465bfe37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +197,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8" name="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8"></a>CharExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46" name="af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46"></a>BinOpExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3" name="af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3"></a>VarDecl&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5" name="af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5"></a>FunctionDecl&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2" name="af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2"></a>Block&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29" name="af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29"></a>ASTRoot&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283" name="af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283"></a>NUM_NODES&#160;</td><td class="fielddoc"></td></tr>

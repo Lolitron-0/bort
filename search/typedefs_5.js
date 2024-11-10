@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['unique_0',['Unique',['../namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051',1,'bort']]]
+  ['tokenlist_0',['TokenList',['../namespacebort.html#a4af00cc48b3ce9c3520119afa0c6fd2d',1,'bort']]],
+  ['typeref_1',['TypeRef',['../namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039',1,'bort']]]
 ];

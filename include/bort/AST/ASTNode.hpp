@@ -3,7 +3,6 @@
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Ref.hpp"
-#include "bort/Frontend/Symbol.hpp"
 #include <concepts>
 #include <unordered_map>
 #include <utility>
@@ -26,6 +25,7 @@ enum class NodeKind {
   CharExpr,
   BinOpExpr,
   VarDecl,
+  FunctionDecl,
   Block,
   ASTRoot,
   NUM_NODES
@@ -47,15 +47,6 @@ public:
 
 protected:
   NodeKind m_Kind;
-};
-
-class FunctionDecl : public Node {
-public:
-  FunctionDecl();
-
-private:
-  Ref<Function> m_Function;
-  Ref<Block> m_Body;
 };
 
 /// This is an AST itself with some convenience methods related to whole

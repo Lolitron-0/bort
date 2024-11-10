@@ -28,6 +28,7 @@ set(SOURCES
     src/AST/VariableExpr.cpp
     src/AST/Visitors/ASTVisitor.cpp
     src/AST/Visitors/SymbolResolutionVisitor.cpp
+    src/AST/Visitors/TypePropagationVisitor.cpp
     src/AST/Visitors/ASTPrinter.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})

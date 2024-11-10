@@ -1,29 +1,35 @@
 #pragma once
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/Frontend/Type.hpp"
+#include <unordered_map>
 
 namespace bort::ast {
 
+namespace detail {
+struct TypePairHasher {
+  auto operator()(const std::pair<TypeKind, TypeKind>& pair) const
+      -> std::size_t;
+};
+} // namespace detail
+
 class TypePropagationVisitor : public StructureAwareASTVisitor {
+public:
+  using OpResultTypeMap =
+      std::unordered_map<std::pair<TypeKind, TypeKind>, TypeRef,
+                         detail::TypePairHasher>;
+  using OpPromotionTypeMap =
+      std::unordered_map<std::pair<TypeKind, TypeKind>, TypeRef,
+                         detail::TypePairHasher>;
+  TypePropagationVisitor();
+
 private:
-  void visit(const Ref<BinOpExpr>& binopNode) override {
-    StructureAwareASTVisitor::visit(binopNode);
+  void visit(const Ref<BinOpExpr>& binopNode) override;
 
-    auto lhsType {binopNode->getLhs()->getType()};
-    auto rhsType {binopNode->getRhs()->getType()};
-
-    if(!lhsType || !rhsType) {
-      // we failed somewhere else, so just skip this node
-      return;
-    }
-
-    if(lhsType->getSizeof() > rhsType->getSizeof()) {
-      binopNode->setType(lhsType);
-    }
-    else {
-      binopNode->setType(rhsType);
-    }
-  }
+  static OpResultTypeMap s_ArtithmeticOpResultTypeMap;
+  /// for pair {t1, t2}, shows how t1 needs to be promoted when op result
+  /// is t2
+  static OpPromotionTypeMap s_ArithmeticOpPromotionTypeMap;
 };
 
 } // namespace bort::ast

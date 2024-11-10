@@ -29,6 +29,10 @@ public:
     return m_Sizeof;
   };
 
+  [[nodiscard]] inline auto is(TypeKind kind) const -> bool {
+    return m_Kind == kind;
+  }
+
   void dump() const;
   [[nodiscard]] virtual auto toString() const -> std::string = 0;
 
@@ -48,7 +52,7 @@ using TypeRef = std::shared_ptr<Type>;
 struct TypeRefHasher {
   auto operator()(const ::bort::TypeRef& type) const noexcept
       -> std::size_t {
-    std::size_t seed = 0;
+    std::size_t seed{ 0 };
     boost::hash_combine(seed, type->getKind());
     boost::hash_combine(seed, type->getSizeof());
     return seed;

@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/Frontend/Symbol.hpp"
 
 namespace bort::ast {
 

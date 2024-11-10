@@ -80,16 +80,16 @@ public:
         m_ReturnType{ nullptr } {
   }
   Function(std::string name, TypeRef returnType,
-           std::initializer_list<TypeRef> argTypes)
+           std::vector<Variable> args)
       : Symbol{ ObjectKind::Function, std::move(name), false },
         m_ReturnType{ std::move(returnType) },
-        m_ArgTypes{ argTypes } {
+        m_Args{ std::move(args) } {
   }
 
   [[nodiscard]] auto toString() const -> std::string override;
 
 private:
   TypeRef m_ReturnType;
-  std::vector<TypeRef> m_ArgTypes;
+  std::vector<Variable> m_Args;
 };
 } // namespace bort

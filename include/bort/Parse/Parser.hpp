@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/AST/FunctionDecl.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Lexer.hpp"
@@ -52,16 +53,26 @@ protected:
       -> Unique<ast::ExpressionNode>;
   /// declspec -> ( 'int' | 'void' | 'char' ) ('*'...)
   /// @todo type qualifiers
-  auto parseDeclspec() -> Ref<Type>;
-  /// vardecl -> declspec identifier ';'
+  auto parseDeclspec() -> TypeRef;
+  /// declaration -> declspec (varDecl |  functionDecl)
+  auto parseDeclaration() -> Ref<ast::Node>;
+  /// varDecl -> identifier ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
-  auto parseVarDecl(const TypeRef& type) -> Ref<ast::VarDecl>;
+  auto parseVarDecl(const TypeRef& type,
+                    const Token& nameTok) -> Ref<ast::VarDecl>;
+  /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
+  auto parseFunctionDecl(const TypeRef& type,
+                         const Token& nameTok) -> Ref<ast::FunctionDecl>;
   /// block
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
 
 private:
-  [[nodiscard]] inline auto curTok() -> const Token& {
+  [[nodiscard]] auto isFunctionDecl() const -> bool;
+
+  [[nodiscard]] auto lookahead(uint32_t offset) const -> const Token&;
+
+  [[nodiscard]] inline auto curTok() const -> const Token& {
     return *m_CurTokIter;
   }
 

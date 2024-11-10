@@ -25,8 +25,8 @@ auto Function::toString() const -> std::string {
   ss << fmt::format(s_ObjectStyle, "Function: ");
   ss << m_ReturnType->toString();
   ss << fmt::format(" {}(", m_Name);
-  for (auto&& argTy : m_ArgTypes) {
-    ss << argTy->toString();
+  for (auto&& arg : m_Args) {
+    ss << arg.toString();
     ss << fmt::format(s_ObjectStyle, ",");
   }
   ss << fmt::format(s_ObjectStyle, ")");

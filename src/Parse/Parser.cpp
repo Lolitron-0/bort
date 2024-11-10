@@ -26,7 +26,7 @@ static constexpr auto s_BinopPrecedence{
 
 /// we do not support user defined aggregates or typedefs, so just check
 /// for builtin type or declspec
-static constexpr auto isTypename(const Token& tok) -> bool {
+static constexpr auto isTypenameStart(const Token& tok) -> bool {
   return tok.isOneOf(TokenKind::KW_const, TokenKind::KW_int,
                      TokenKind::KW_void, TokenKind::KW_char);
 }
@@ -37,7 +37,7 @@ auto Parser::buildAST() -> Ref<ast::ASTRoot> {
       break;
     }
 
-    Ref<ast::Block> node{ parseBlock() };
+    auto node{ parseDeclaration() };
     if (!node) {
       break;
     }
@@ -59,6 +59,7 @@ auto Parser::parseNumberExpr() -> Unique<ast::NumberExpr> {
 auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
   bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
   consumeToken();
+
   auto result{ parseExpression() };
   if (!result) {
     return nullptr;
@@ -155,8 +156,8 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
   }
 }
 
-auto Parser::parseDeclspec() -> Ref<Type> {
-  bort_assert(isTypename(curTok()), "Expected type name");
+auto Parser::parseDeclspec() -> TypeRef {
+  bort_assert(isTypenameStart(curTok()), "Expected type name");
   auto kind{ curTok().getKind() };
   consumeToken();
   Ref<Type> type;
@@ -185,17 +186,27 @@ auto Parser::parseDeclspec() -> Ref<Type> {
   return type;
 }
 
-auto Parser::parseVarDecl(const TypeRef& type) -> Ref<ast::VarDecl> {
+auto Parser::parseDeclaration() -> Ref<ast::Node> {
+  auto type{ parseDeclspec() };
   if (curTok().isNot(TokenKind::Identifier)) {
     emitError(curTok(), "Expected variable name");
     return nullptr;
   }
-  auto varNameTok{ curTok() };
+  auto nameTok{ curTok() };
   consumeToken();
 
-  std::string name{ varNameTok.getStringView() };
+  if (curTok().is(TokenKind::LParen)) {
+    return parseFunctionDecl(type, nameTok);
+  }
+
+  return parseVarDecl(type, nameTok);
+}
+
+auto Parser::parseVarDecl(const TypeRef& type,
+                          const Token& nameTok) -> Ref<ast::VarDecl> {
+  std::string name{ nameTok.getStringView() };
   auto node{ m_ASTRoot->registerNode<ast::VarDecl>(
-      ast::ASTDebugInfo{ varNameTok }, type, name) };
+      ast::ASTDebugInfo{ nameTok }, type, name) };
 
   if (curTok().isNot(TokenKind::Semicolon)) {
     emitError(curTok(), "Expected ';'");
@@ -204,10 +215,55 @@ auto Parser::parseVarDecl(const TypeRef& type) -> Ref<ast::VarDecl> {
   consumeToken();
 
   if (type->getKind() == TypeKind::Void) {
-    emitError(varNameTok, "Variable of incomplete type 'void'");
+    emitError(nameTok, "Variable of incomplete type 'void'");
     return nullptr;
   }
   return node;
+}
+
+auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
+    -> Ref<ast::FunctionDecl> {
+  bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
+  consumeToken();
+
+  std::string name{ nameTok.getStringView() };
+  std::vector<Variable> args;
+
+  while (curTok().isNot(TokenKind::RParen)) {
+    auto argType{ parseDeclspec() };
+
+    if (argType && argType->is(TypeKind::Void)) {
+      emitError(curTok(), "Parameter of incomplete type 'void'");
+      return nullptr;
+    }
+
+    if (curTok().isNot(TokenKind::Identifier)) {
+      emitError(curTok(), "All parameters should be named");
+      return nullptr;
+    }
+
+    auto argNameTok{ curTok() };
+    consumeToken();
+
+    if (curTok().isNot(TokenKind::Comma)) {
+      emitError(curTok(), "Expected ','");
+      return nullptr;
+    }
+    consumeToken();
+
+    args.emplace_back(std::string{ argNameTok.getStringView() }, argType);
+  }
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::LBrace)) {
+    emitError(curTok(),
+              "Expected '{}' (all functions must be definitions)", '{');
+    return nullptr;
+  }
+  auto block{ parseBlock() };
+  return m_ASTRoot->registerNode<ast::FunctionDecl>(
+      ast::ASTDebugInfo{ nameTok }, std::move(name), type,
+      std::move(args), std::move(block));
 }
 
 auto Parser::parseBlock() -> Unique<ast::Block> {
@@ -218,12 +274,8 @@ auto Parser::parseBlock() -> Unique<ast::Block> {
 
   Ref<ast::Node> child{ nullptr };
   while (!curTok().is(TokenKind::RBrace)) {
-    if (isTypename(curTok())) {
-      auto type{ parseDeclspec() };
-
-      /// @todo if isFunc() - parse function, else
-
-      child = parseVarDecl(type);
+    if (isTypenameStart(curTok())) {
+      child = parseDeclaration();
 
     } else {
       /// @todo parse statement
@@ -240,4 +292,9 @@ auto Parser::parseBlock() -> Unique<ast::Block> {
   return block;
 }
 
+auto Parser::lookahead(uint32_t offset) const -> const Token& {
+  auto iter{ m_CurTokIter };
+  std::advance(iter, offset);
+  return *iter;
+}
 } // namespace bort

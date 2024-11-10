@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
+#include "bort/Frontend/Symbol.hpp"
 
 namespace bort::ast {
 
@@ -16,9 +17,6 @@ public:
   [[nodiscard]] auto getVariable() -> Ref<Variable> {
     return m_Variable;
   }
-
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
 
 private:
   Ref<Variable> m_Variable;

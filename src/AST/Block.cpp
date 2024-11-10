@@ -2,17 +2,16 @@
 
 namespace bort::ast {
 
-void Block::preOrderVisit(const Ref<ASTVisitor>& visitor) {
-  visitor->visit(this);
-  for (auto&& child : m_Body) {
-    child->preOrderVisit(visitor);
-  }
+Block::Block()
+    : Node{ NodeKind::Block } {
 }
-void Block::postOrderVisit(const Ref<ASTVisitor>& visitor) {
-  for (auto&& child : m_Body) {
-    child->postOrderVisit(visitor);
-  }
-  visitor->visit(this);
+
+auto Block::getBody() const -> const std::vector<Ref<Node>>& {
+  return m_Body;
+}
+
+void Block::pushChild(Ref<Node> child) {
+  m_Body.push_back(std::move(child));
 }
 
 } // namespace bort::ast

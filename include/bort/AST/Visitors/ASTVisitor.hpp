@@ -1,6 +1,6 @@
 #pragma once
+#include "bort/AST/ASTDebugInfo.hpp"
 #include "bort/Basic/Ref.hpp"
-#include <memory>
 #include <utility>
 
 namespace bort::ast {
@@ -14,6 +14,7 @@ class BinOpExpr;
 class VarDecl;
 class Block;
 class ASTRoot;
+class FunctionDecl;
 
 class ASTVisitorBase {
 public:
@@ -27,6 +28,8 @@ protected:
   [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
     return m_ASTRoot;
   }
+  [[nodiscard]] auto getNodeDebugInfo(const Ref<Node>& node) const -> ASTDebugInfo;
+
   void setASTRoot(Ref<ASTRoot> ast) {
     m_ASTRoot = std::move(ast);
   }
@@ -40,37 +43,13 @@ private:
   bool m_ASTInvalidated{ false };
 };
 
-class ASTVisitor : public ASTVisitorBase {
-public:
-  explicit ASTVisitor(Ref<ASTRoot> rootNode) {
-    setASTRoot(std::move(rootNode));
-  }
-
-  virtual void visit(ASTRoot* /* rootNode */) {
-  }
-  virtual void visit(NumberExpr* /* numNode */) {
-  }
-  virtual void visit(VariableExpr* /* varNode */) {
-  }
-  virtual void visit(StringExpr* /* strNode */) {
-  }
-  virtual void visit(CharExpr* /* charNode */) {
-  }
-  virtual void visit(BinOpExpr* /* binopNode */) {
-  }
-  virtual void visit(Block* /* blockNode */) {
-  }
-  virtual void visit(VarDecl* /* blockNode */) {
-  }
-};
-
 /// \brief Base class of all SA visitors
 ///
 /// Structure aware visitors act more like an AST pattern matching,
-/// except they are a bit more low-level (more flexible but
-/// boilerplate-prone) they can perform operation anywhere in the
-/// tree. However such visitors need to continue traversal themselves. By
-/// default, non-overriden nodes simply continue traversal with no action.
+/// except they are a bit more low-level as they can perform operation
+/// anywhere during the tree traversal. By default, non-overriden nodes
+/// simply continue traversal with no action. Pre- and post-order visitors
+/// can be easily implemented (and even mixed) using this interface
 class StructureAwareASTVisitor : public ASTVisitorBase {
 public:
   void SAVisit(const Ref<ASTRoot>& node);
@@ -95,6 +74,7 @@ protected:
   virtual void visit(const Ref<VarDecl>& /* varDeclNode */) {
     // leaf
   }
+  virtual void visit(const Ref<FunctionDecl>& functionDeclNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);
   virtual void visit(const Ref<Block>& blockNode);
 };

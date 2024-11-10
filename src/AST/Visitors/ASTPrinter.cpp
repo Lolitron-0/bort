@@ -3,6 +3,7 @@
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -20,6 +21,7 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::CharExpr, "CharExpr")
       .Case(NodeKind::BinOpExpr, "BinOpExpr")
       .Case(NodeKind::VarDecl, "VarDecl")
+      .Case(NodeKind::FunctionDecl, "FunctionDecl")
       .Case(NodeKind::Block, "Block")
       .Case(NodeKind::ASTRoot, "ASTRoot");
 } };
@@ -40,16 +42,6 @@ static auto red(std::string_view str) -> std::string {
 void ASTPrinter::printDepthPrefix() const {
   fmt::print(stderr, fmt::fg(fmt::color::dark_gray), "{}",
              depthPrefix(m_Depth));
-}
-
-void ASTPrinter::dump(std::string_view name, const Ref<Node>& child) {
-  push();
-  printDepthPrefix();
-  fmt::print(stderr, fmt::fg(fmt::color::cyan), "{}:\n", name);
-  push();
-  genericVisit(child);
-  pop();
-  pop();
 }
 
 void ASTPrinter::dumpNodeInfo(const Ref<Node>& node) {
@@ -97,6 +89,11 @@ void ASTPrinter::visit(const Ref<VarDecl>& varDeclNode) {
   dumpNodeInfo(varDeclNode);
   dump("Name", varDeclNode->getVariable()->getName());
   dump("Type", varDeclNode->getVariable()->getType()->toString());
+}
+
+void ASTPrinter::visit(const Ref<FunctionDecl>& functionDeclNode) {
+  dumpNodeInfo(functionDeclNode);
+  dump("Body", functionDeclNode->getBody());
 }
 
 void ASTPrinter::visit(const Ref<BinOpExpr>& binopNode) {

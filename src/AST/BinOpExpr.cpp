@@ -2,17 +2,24 @@
 
 namespace bort::ast {
 
-void BinOpExpr::preOrderVisit(
-    const std::shared_ptr<ASTVisitor>& visitor) {
-  visitor->visit(this);
-  m_Lhs->preOrderVisit(visitor);
-  m_Rhs->preOrderVisit(visitor);
+BinOpExpr::BinOpExpr(Ref<ExpressionNode> lhs, Ref<ExpressionNode> rhs,
+                     TokenKind op)
+    : ExpressionNode{ NodeKind::BinOpExpr, nullptr },
+      m_Op{ op },
+      m_Lhs{ std::move(lhs) },
+      m_Rhs{ std::move(rhs) } {
 }
-void BinOpExpr::postOrderVisit(
-    const std::shared_ptr<ASTVisitor>& visitor) {
-  m_Lhs->postOrderVisit(visitor);
-  m_Rhs->postOrderVisit(visitor);
-  visitor->visit(this);
+
+auto BinOpExpr::getOp() const -> TokenKind {
+  return m_Op;
+}
+
+auto BinOpExpr::getLhs() -> Ref<ExpressionNode> {
+  return m_Lhs;
+}
+
+auto BinOpExpr::getRhs() -> Ref<ExpressionNode> {
+  return m_Rhs;
 }
 
 } // namespace bort::ast

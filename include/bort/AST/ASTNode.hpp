@@ -3,7 +3,6 @@
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Ref.hpp"
-#include "bort/Frontend/Symbol.hpp"
 #include <concepts>
 #include <unordered_map>
 #include <utility>
@@ -26,6 +25,7 @@ enum class NodeKind {
   CharExpr,
   BinOpExpr,
   VarDecl,
+  FunctionDecl,
   Block,
   ASTRoot,
   NUM_NODES
@@ -38,11 +38,6 @@ public:
       : m_Kind{ kind } {
   }
 
-  /// Applies operation for parent, then for children
-  virtual void preOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
-  /// Applies operation for children, then for parent
-  virtual void postOrderVisit(const Ref<ASTVisitor>& visitor) = 0;
-
   [[nodiscard]] auto getKind() const -> NodeKind {
     return m_Kind;
   }
@@ -52,15 +47,6 @@ public:
 
 protected:
   NodeKind m_Kind;
-};
-
-class FunctionDecl : public Node {
-public:
-  FunctionDecl();
-
-private:
-  Ref<Function> m_Function;
-  Ref<Block> m_Body;
 };
 
 /// This is an AST itself with some convenience methods related to whole
@@ -90,9 +76,6 @@ public:
   void pushChild(Ref<Node> child) {
     m_Children.push_back(std::move(child));
   }
-
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
 
   template <std::derived_from<Node> T, typename... Args>
   auto registerNode(ASTDebugInfo dbg, Args&&... args) -> Unique<T> {

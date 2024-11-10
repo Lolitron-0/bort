@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/Frontend/Symbol.hpp"
 
 namespace bort::ast {
 
@@ -27,9 +28,6 @@ public:
     m_Variable = std::move(variable);
     m_Type = m_Variable->isShallow() ? nullptr : m_Variable->getType();
   }
-
-  void preOrderVisit(const Ref<ASTVisitor>& visitor) override;
-  void postOrderVisit(const Ref<ASTVisitor>& visitor) override;
 
   friend class ASTRoot;
 

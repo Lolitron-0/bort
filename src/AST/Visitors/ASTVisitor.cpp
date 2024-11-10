@@ -2,6 +2,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -17,6 +18,11 @@ void StructureAwareASTVisitor::visit(const Ref<ASTRoot>& rootNode) {
 void StructureAwareASTVisitor::visit(const Ref<BinOpExpr>& binopNode) {
   genericVisit(binopNode->getLhs());
   genericVisit(binopNode->getRhs());
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<FunctionDecl>& functionDeclNode) {
+  genericVisit(functionDeclNode->getBody());
 }
 
 void StructureAwareASTVisitor::visit(const Ref<Block>& blockNode) {
@@ -48,6 +54,10 @@ void StructureAwareASTVisitor::genericVisit(const Ref<Node>& node) {
     bort_assert_nomsg(std::dynamic_pointer_cast<VarDecl>(node));
     visit(std::dynamic_pointer_cast<VarDecl>(node));
     break;
+  case NodeKind::FunctionDecl:
+    bort_assert_nomsg(std::dynamic_pointer_cast<FunctionDecl>(node));
+    visit(std::dynamic_pointer_cast<FunctionDecl>(node));
+    break;
   case NodeKind::Block:
     bort_assert_nomsg(std::dynamic_pointer_cast<Block>(node));
     visit(std::dynamic_pointer_cast<Block>(node));
@@ -60,6 +70,11 @@ void StructureAwareASTVisitor::genericVisit(const Ref<Node>& node) {
     bort_assert(false, "Not implemented");
     break;
   }
+}
+
+auto ASTVisitorBase::getNodeDebugInfo(const Ref<Node>& node) const
+    -> ASTDebugInfo {
+  return m_ASTRoot->getNodeDebugInfo(node);
 }
 
 } // namespace bort::ast

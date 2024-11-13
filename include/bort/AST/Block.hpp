@@ -3,7 +3,7 @@
 
 namespace bort::ast {
 
-class Block final : public Node {
+class Block final : public Statement {
   Block();
 
 public:

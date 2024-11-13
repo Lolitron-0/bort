@@ -3,7 +3,7 @@
 namespace bort::ast {
 
 Block::Block()
-    : Node{ NodeKind::Block } {
+    : Statement{ NodeKind::Block } {
 }
 
 auto Block::getBody() const -> const std::vector<Ref<Node>>& {

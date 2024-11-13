@@ -3,6 +3,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -62,12 +63,12 @@ auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
 
   auto result{ parseExpression() };
   if (!result) {
-    return nullptr;
+    return invalidNode();
   }
 
   if (curTok().isNot(TokenKind::RParen)) {
     emitError(curTok(), "Expected ')'");
-    return nullptr;
+    return invalidNode();
   }
 
   consumeToken();
@@ -88,7 +89,7 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
   }
 
   /// @todo parse function call
-  return nullptr;
+  return invalidNode();
 }
 
 auto Parser::parseValueExpression()
@@ -102,14 +103,14 @@ auto Parser::parseValueExpression()
     return parseNumberExpr();
   default:
     emitError(curTok(), "Expected value expression");
-    return nullptr;
+    return invalidNode();
   }
 }
 
 auto Parser::parseExpression() -> std::unique_ptr<ast::ExpressionNode> {
   auto lhs{ parseValueExpression() };
   if (!lhs) {
-    return nullptr;
+    return invalidNode();
   }
   return parseBinOpRhs(std::move(lhs));
 }
@@ -135,7 +136,7 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     consumeToken();
     auto rhs{ parseValueExpression() };
     if (!rhs) {
-      return nullptr;
+      return invalidNode();
     }
 
     // now: lhs binOp rhs unparsed
@@ -145,7 +146,7 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     if (tokPrecedence < nextPrecedence) {
       rhs = parseBinOpRhs(std::move(rhs), tokPrecedence + 1);
       if (!rhs) {
-        return nullptr;
+        return invalidNode();
       }
     }
 
@@ -186,11 +187,11 @@ auto Parser::parseDeclspec() -> TypeRef {
   return type;
 }
 
-auto Parser::parseDeclaration() -> Ref<ast::Node> {
+auto Parser::parseDeclaration() -> Ref<ast::Statement> {
   auto type{ parseDeclspec() };
   if (curTok().isNot(TokenKind::Identifier)) {
     emitError(curTok(), "Expected variable name");
-    return nullptr;
+    return invalidNode();
   }
   auto nameTok{ curTok() };
   consumeToken();
@@ -210,13 +211,13 @@ auto Parser::parseVarDecl(const TypeRef& type,
 
   if (curTok().isNot(TokenKind::Semicolon)) {
     emitError(curTok(), "Expected ';'");
-    return nullptr;
+    return invalidNode();
   }
   consumeToken();
 
   if (type->getKind() == TypeKind::Void) {
     emitError(nameTok, "Variable of incomplete type 'void'");
-    return nullptr;
+    return invalidNode();
   }
   return node;
 }
@@ -234,12 +235,12 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
 
     if (argType && argType->is(TypeKind::Void)) {
       emitError(curTok(), "Parameter of incomplete type 'void'");
-      return nullptr;
+      return invalidNode();
     }
 
     if (curTok().isNot(TokenKind::Identifier)) {
       emitError(curTok(), "All parameters should be named");
-      return nullptr;
+      return invalidNode();
     }
 
     auto argNameTok{ curTok() };
@@ -247,7 +248,7 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
 
     if (curTok().isNot(TokenKind::Comma)) {
       emitError(curTok(), "Expected ','");
-      return nullptr;
+      return invalidNode();
     }
     consumeToken();
 
@@ -258,12 +259,33 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
   if (curTok().isNot(TokenKind::LBrace)) {
     emitError(curTok(),
               "Expected '{}' (all functions must be definitions)", '{');
-    return nullptr;
+    return invalidNode();
   }
   auto block{ parseBlock() };
   return m_ASTRoot->registerNode<ast::FunctionDecl>(
       ast::ASTDebugInfo{ nameTok }, std::move(name), type,
       std::move(args), std::move(block));
+}
+
+auto Parser::parseStatement() -> Ref<ast::Statement> {
+  if (curTok().is(TokenKind::LBrace)) {
+    return parseBlock();
+  }
+
+  if (isTypenameStart(curTok())) {
+    return parseDeclaration();
+  }
+
+  // it's an expression statement
+  auto stmtTok{ curTok() };
+  auto expression{ parseExpression() };
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+  return m_ASTRoot->registerNode<ast::ExpressionStmt>(
+      ast::ASTDebugInfo{ stmtTok }, std::move(expression));
 }
 
 auto Parser::parseBlock() -> Unique<ast::Block> {
@@ -274,16 +296,7 @@ auto Parser::parseBlock() -> Unique<ast::Block> {
 
   Ref<ast::Node> child{ nullptr };
   while (!curTok().is(TokenKind::RBrace)) {
-    if (isTypenameStart(curTok())) {
-      child = parseDeclaration();
-
-    } else {
-      /// @todo parse statement
-      child = parseExpression();
-    }
-    if (!child) {
-      return nullptr;
-    }
+    child = parseStatement();
     block->pushChild(child);
   }
 

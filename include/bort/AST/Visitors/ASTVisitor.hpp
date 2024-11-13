@@ -15,6 +15,7 @@ class VarDecl;
 class Block;
 class ASTRoot;
 class FunctionDecl;
+class ExpressionStmt;
 
 class ASTVisitorBase {
 public:
@@ -28,7 +29,8 @@ protected:
   [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
     return m_ASTRoot;
   }
-  [[nodiscard]] auto getNodeDebugInfo(const Ref<Node>& node) const -> ASTDebugInfo;
+  [[nodiscard]] auto getNodeDebugInfo(const Ref<Node>& node) const
+      -> ASTDebugInfo;
 
   void setASTRoot(Ref<ASTRoot> ast) {
     m_ASTRoot = std::move(ast);
@@ -75,6 +77,7 @@ protected:
     // leaf
   }
   virtual void visit(const Ref<FunctionDecl>& functionDeclNode);
+  virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);
   virtual void visit(const Ref<Block>& blockNode);
 };

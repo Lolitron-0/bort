@@ -29,7 +29,7 @@ void FrontendInstance::run() {
       /// @todo preprocessing
       if (m_CliOptions.PreprocessorOnly) {
         emitError("Preprocessing is not yet implemented");
-        return;
+        continue;
       }
 
       Lexer lexer;
@@ -37,18 +37,22 @@ void FrontendInstance::run() {
       Parser parser{ lexer.getTokens() };
       auto ast{ parser.buildAST() };
 
+      if (parser.isASTInvalid()) {
+        continue;
+      }
+
       ast::SymbolResolutionVisitor symbolResolveVisitor{};
       symbolResolveVisitor.SAVisit(ast);
       if (symbolResolveVisitor.isASTInvalidated()) {
         DEBUG_OUT_MSG("Symbol resolution pass failed. Aborting");
-        return;
+        continue;
       }
 
       ast::TypePropagationVisitor typePropagationVisitor{};
       typePropagationVisitor.SAVisit(ast);
       if (typePropagationVisitor.isASTInvalidated()) {
         DEBUG_OUT_MSG("Type propagation pass failed. Aborting");
-        return;
+        continue;
       }
 
       if (m_CliOptions.DumpAST) {

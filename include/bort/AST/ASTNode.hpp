@@ -27,16 +27,19 @@ enum class NodeKind {
   VarDecl,
   FunctionDecl,
   Block,
+  ExpressionStmt,
   ASTRoot,
   NUM_NODES
 };
 
 class Node {
-public:
-  virtual ~Node() = default;
+protected:
   explicit Node(NodeKind kind)
       : m_Kind{ kind } {
   }
+
+public:
+  virtual ~Node() = default;
 
   [[nodiscard]] auto getKind() const -> NodeKind {
     return m_Kind;
@@ -45,8 +48,15 @@ public:
   template <typename T>
   friend void internal::dump(int depth, std::string_view name, T value);
 
-protected:
+private:
   NodeKind m_Kind;
+};
+
+class Statement : public Node {
+protected:
+  explicit Statement(NodeKind kind)
+      : Node{ kind } {
+  }
 };
 
 /// This is an AST itself with some convenience methods related to whole

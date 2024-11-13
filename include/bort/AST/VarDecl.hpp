@@ -4,9 +4,9 @@
 
 namespace bort::ast {
 
-class VarDecl final : public Node {
+class VarDecl final : public Statement {
   VarDecl(TypeRef type, std::string name)
-      : Node{ NodeKind::VarDecl },
+      : Statement{ NodeKind::VarDecl },
         m_Variable{ makeRef<Variable>(std::move(name),
                                       std::move(type)) } {
   }

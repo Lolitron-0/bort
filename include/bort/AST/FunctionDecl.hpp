@@ -4,10 +4,10 @@
 
 namespace bort::ast {
 
-class FunctionDecl : public Node {
+class FunctionDecl : public Statement {
   FunctionDecl(std::string name, TypeRef returnType,
                std::vector<Variable> args, Ref<Block> body)
-      : Node{ NodeKind::FunctionDecl },
+      : Statement{ NodeKind::FunctionDecl },
         m_FunctionSymbol{ makeRef<Function>(
             std::move(name), std::move(returnType), args) },
         m_Body{ std::move(body) } {

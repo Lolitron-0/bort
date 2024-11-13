@@ -2,6 +2,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
@@ -23,6 +24,11 @@ void StructureAwareASTVisitor::visit(const Ref<BinOpExpr>& binopNode) {
 void StructureAwareASTVisitor::visit(
     const Ref<FunctionDecl>& functionDeclNode) {
   genericVisit(functionDeclNode->getBody());
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<ExpressionStmt>& exprStmtNode) {
+  genericVisit(exprStmtNode->getExpression());
 }
 
 void StructureAwareASTVisitor::visit(const Ref<Block>& blockNode) {
@@ -57,6 +63,10 @@ void StructureAwareASTVisitor::genericVisit(const Ref<Node>& node) {
   case NodeKind::FunctionDecl:
     bort_assert_nomsg(std::dynamic_pointer_cast<FunctionDecl>(node));
     visit(std::dynamic_pointer_cast<FunctionDecl>(node));
+    break;
+  case NodeKind::ExpressionStmt:
+    bort_assert_nomsg(std::dynamic_pointer_cast<ExpressionStmt>(node));
+    visit(std::dynamic_pointer_cast<ExpressionStmt>(node));
     break;
   case NodeKind::Block:
     bort_assert_nomsg(std::dynamic_pointer_cast<Block>(node));

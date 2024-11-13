@@ -20,6 +20,7 @@ private:
   void visit(const Ref<CharExpr>& charNode) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
   void visit(const Ref<FunctionDecl>& functionDeclNode) override;
+  void visit(const Ref<ExpressionStmt>& expressionStmtNode) override;
   void visit(const Ref<BinOpExpr>& binopNode) override;
   void visit(const Ref<Block>& blockNode) override;
 

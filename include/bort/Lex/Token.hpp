@@ -13,9 +13,7 @@ enum class TokenKind {
 #include "bort/Lex/Tokens.def"
   NUM_TOKENS
 };
-
-class Token {
-public:
+class Token { public:
   using LiteralValue =
       std::variant<std::monostate, std::string, int, char>;
 

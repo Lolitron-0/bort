@@ -1,6 +1,5 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
-#include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <concepts>
@@ -9,7 +8,6 @@
 
 namespace bort::ast {
 
-class ASTVisitor;
 
 namespace internal {
 template <typename T>

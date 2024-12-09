@@ -29,7 +29,11 @@ set(SOURCES
     src/AST/Visitors/ASTVisitor.cpp
     src/AST/Visitors/SymbolResolutionVisitor.cpp
     src/AST/Visitors/TypePropagationVisitor.cpp
-    src/AST/Visitors/ASTPrinter.cpp)
+    src/AST/Visitors/ASTPrinter.cpp
+    src/IR/Value.cpp
+    src/IR/Instruction.cpp
+    src/IR/IRCodegen.cpp
+    src/IR/IRPrinter.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

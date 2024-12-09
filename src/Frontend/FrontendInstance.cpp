@@ -5,6 +5,8 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/SourceFile.hpp"
+#include "bort/IR/IRCodegen.hpp"
+#include "bort/IR/IRPrinter.hpp"
 #include "bort/Lex/Lexer.hpp"
 #include "bort/Parse/Parser.hpp"
 #include <memory>
@@ -41,6 +43,7 @@ void FrontendInstance::run() {
         continue;
       }
 
+      // @todo move to middle-end
       ast::SymbolResolutionVisitor symbolResolveVisitor{};
       symbolResolveVisitor.SAVisit(ast);
       if (symbolResolveVisitor.isASTInvalidated()) {
@@ -59,6 +62,13 @@ void FrontendInstance::run() {
         ast::ASTPrinter astPrinter{};
         astPrinter.SAVisit(ast);
       }
+
+      ir::IRCodegen irCodegen{};
+      irCodegen.codegen(ast);
+      auto IR{ irCodegen.takeInstructions() };
+
+      ir::IRPrinter irPrinter{};
+      irPrinter.print(IR);
 
     } catch (const exceptions::SourceFileReaderError& e) {
       emitError("{}", e.what());

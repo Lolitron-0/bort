@@ -2,6 +2,8 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/VarDecl.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Lexer.hpp"

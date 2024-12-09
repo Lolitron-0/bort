@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
+#include "bort/AST/Block.hpp"
 #include "bort/Frontend/Symbol.hpp"
 
 namespace bort::ast {

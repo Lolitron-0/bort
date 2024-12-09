@@ -38,7 +38,7 @@ auto Parser::buildAST() -> Ref<ast::ASTRoot> {
       break;
     }
 
-    auto node{ parseDeclaration() };
+    auto node{ parseStatement() };
     if (!node) {
       break;
     }

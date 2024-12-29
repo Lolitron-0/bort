@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/OpInst.hpp"
 
@@ -10,6 +11,7 @@ public:
 
 private:
   void visit(const Ref<OpInst>& opInst);
+  void visit(const Ref<AllocaInst>& allocaInst);
 };
 
 } // namespace bort::ir

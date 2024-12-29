@@ -1,6 +1,8 @@
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
+#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/Lex/Token.hpp"
 
@@ -22,19 +24,20 @@ auto IRCodegen::genericVisit(const Ref<ast::Node>& node) -> ValueRef {
 }
 
 auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
-  if (binOpNode->getOp() == TokenKind::Assign) {
-    /// @todo assign
-    return nullptr;
-  }
-
   auto lhs{ genericVisit(binOpNode->getLhs()) };
   auto rhs{ genericVisit(binOpNode->getRhs()) };
 
-  m_Instructions.push_back(
-      makeRef<OpInst>(binOpNode->getOp(),
-                      Value::create(binOpNode->getType(),
-                                    IRCodegen::genIncrementedName()),
-                      lhs, rhs));
+  if (binOpNode->getOp() == TokenKind::Assign) {
+    m_Instructions.push_back(
+        makeRef<MoveInst>(std::move(lhs), std::move(rhs)));
+    return m_Instructions.back();
+  }
+
+  m_Instructions.push_back(makeRef<OpInst>(
+      binOpNode->getOp(),
+      Value::createUnique(binOpNode->getType(),
+                          IRCodegen::genIncrementedName()),
+      lhs, rhs));
   return m_Instructions.back();
 }
 
@@ -44,7 +47,7 @@ auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
-  return Value::create(varNode->getType(), varNode->getVarName());
+  return Value::get(varNode->getVarName());
 }
 
 auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
@@ -55,7 +58,13 @@ auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
 }
 
 auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
-  return nullptr;
+  auto varSymbol{ varDeclNode->getVariable() };
+  ValueRef elementSize{ IntConstant::create(
+      static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
+  m_Instructions.push_back(
+      makeRef<AllocaInst>(varSymbol->getType(), varSymbol->getName(),
+                          elementSize, IntConstant::create(1)));
+  return m_Instructions.back();
 }
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
@@ -76,4 +85,11 @@ auto IRCodegen::visit(const Ref<ast::Block>& blockNode) -> ValueRef {
   return nullptr;
 }
 
+auto IRCodegen::visit(const Ref<ast::IfStmtNode>& ifStmtNode)
+    -> ValueRef {
+  genericVisit(ifStmtNode->getCondition());
+  genericVisit(ifStmtNode->getThenBlock());
+  genericVisit(ifStmtNode->getElseBlock());
+  return nullptr;
+}
 } // namespace bort::ir

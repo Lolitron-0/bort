@@ -8,7 +8,6 @@
 
 namespace bort::ast {
 
-
 namespace internal {
 template <typename T>
 void dump(int depth, std::string_view name, T value);
@@ -26,6 +25,7 @@ enum class NodeKind {
   FunctionDecl,
   Block,
   ExpressionStmt,
+  IfStmt,
   ASTRoot,
   NUM_NODES
 };

@@ -4,6 +4,7 @@
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/IfStmtNode.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -47,12 +48,16 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
     bort_assert_nomsg(std::dynamic_pointer_cast<Block>(node));
     return visit(std::dynamic_pointer_cast<Block>(node));
     break;
+  case NodeKind::IfStmt:
+    bort_assert_nomsg(std::dynamic_pointer_cast<IfStmtNode>(node));
+    return visit(std::dynamic_pointer_cast<IfStmtNode>(node));
+    break;
   case NodeKind::ASTRoot:
     bort_assert_nomsg(std::dynamic_pointer_cast<ASTRoot>(node));
     return visit(std::dynamic_pointer_cast<ASTRoot>(node));
     break;
   default:
-    bort_assert(false, "Not implemented");
+    bort_assert(false, "Generic visit not implemented for node");
     // unreachable, casting to root just for fun
     return visit(std::dynamic_pointer_cast<ASTRoot>(node));
     break;

@@ -65,9 +65,10 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
       s_ArtithmeticOpResultTypeMap[{ lhsTy->getKind(), rhsTy->getKind() }]
     };
     if (!opResultTy) {
-      emitError(getNodeDebugInfo(binopNode).token,
-                "Invalid operands to arithmetic expression: {}, {}",
-                lhsTy->toString(), rhsTy->toString());
+      Diagnostic::emitError(
+          getNodeDebugInfo(binopNode).token,
+          "Invalid operands to arithmetic expression: {}, {}",
+          lhsTy->toString(), rhsTy->toString());
       return;
     }
 
@@ -85,6 +86,8 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
     }
 
     binopNode->setType(opResultTy);
+  } else if (binopNode->isLogical()) {
+    binopNode->setType(IntType::get());
   }
 }
 

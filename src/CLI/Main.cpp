@@ -30,7 +30,7 @@ auto main(int argc, char* argv[]) -> int {
   }
 
   if (result.count("inputs") == 0) {
-    bort::emitError("No input files");
+    bort::Diagnostic::emitError("No input files");
     return 1;
   }
 

@@ -5,6 +5,10 @@ int main() {
   {
     char var;
     char cvar2;
+    cvar2 = var - 3;
+    if (var + cvar2 < 12) {
+      var = 1;
+    }
     var + cvar2 + cvar;
   }
 }

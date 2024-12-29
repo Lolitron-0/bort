@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/IfStmtNode.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
@@ -28,6 +29,7 @@ private:
   auto visit(const Ref<ast::ExpressionStmt>& expressionStmtNode)
       -> ValueRef;
   auto visit(const Ref<ast::Block>& blockNode) -> ValueRef;
+  auto visit(const Ref<ast::IfStmtNode>& ifStmtNode) -> ValueRef;
 
   static auto genIncrementedName() -> std::string;
 

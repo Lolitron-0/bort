@@ -2,6 +2,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/IfStmtNode.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/Basic/Ref.hpp"
@@ -73,12 +74,22 @@ protected:
   /// statement \n
   /// -> expression ';' \n
   /// -> block \n
+  /// -> ifStatement \n
   auto parseStatement() -> Ref<ast::Statement>;
   /// block
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
+  /// ifStatement -> 'if' parenExpr block (else block)?
+  auto parseIfStatement() -> Ref<ast::IfStmtNode>;
 
 private:
+  void disableDiagnostics() {
+    m_DiagnosticSilenced = true;
+  }
+  void enableDiagnostics() {
+    m_DiagnosticSilenced = false;
+  }
+
   [[nodiscard]] auto isFunctionDecl() const -> bool;
 
   [[nodiscard]] auto lookahead(uint32_t offset) const -> const Token&;
@@ -100,6 +111,7 @@ private:
   TokenList::const_iterator m_CurTokIter;
   Ref<ast::ASTRoot> m_ASTRoot;
   bool m_ASTInvalid{ false };
+  bool m_DiagnosticSilenced{ false };
 };
 
 } // namespace bort

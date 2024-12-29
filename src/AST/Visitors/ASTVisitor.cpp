@@ -35,6 +35,12 @@ void StructureAwareASTVisitor::visit(const Ref<Block>& blockNode) {
   }
 }
 
+void StructureAwareASTVisitor::visit(const Ref<IfStmtNode>& ifStmtNode) {
+  genericVisit(ifStmtNode->getCondition());
+  genericVisit(ifStmtNode->getThenBlock());
+  genericVisit(ifStmtNode->getElseBlock());
+}
+
 void StructureAwareASTVisitor::SAVisit(const Ref<ASTRoot>& node) {
   setASTRoot(node);
   genericVisit(node);

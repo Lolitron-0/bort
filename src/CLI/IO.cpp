@@ -3,8 +3,10 @@
 
 namespace bort {
 
-void underlineSource(FILE* out, const SourceFileIt& loc, size_t length,
-                     fmt::color color) {
+Diagnostic::Level Diagnostic::s_Level{ Level::All };
+
+void Diagnostic::underlineSource(FILE* out, const SourceFileIt& loc,
+                                 size_t length, fmt::color color) {
   fmt::print(out, "at {}:\n", loc.toString());
 
   fmt::println(out, "{}", loc.getCurrentLine());

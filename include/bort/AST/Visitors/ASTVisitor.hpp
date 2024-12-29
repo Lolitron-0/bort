@@ -16,6 +16,7 @@ class Block;
 class ASTRoot;
 class FunctionDecl;
 class ExpressionStmt;
+class IfStmtNode;
 
 class ASTVisitorBase {
 public:
@@ -80,6 +81,7 @@ protected:
   virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);
   virtual void visit(const Ref<Block>& blockNode);
+  virtual void visit(const Ref<IfStmtNode>& ifStmtNode);
 };
 
 } // namespace bort::ast

@@ -89,7 +89,8 @@ static auto decodeEscapedChar(const SourceFileIt& pos) -> char {
   case '\\':
     return '\\';
   default:
-    emitWarning(pos, 1, "Invalid escape sequence, ignoring '\\'");
+    Diagnostic::emitWarning(pos, 1,
+                            "Invalid escape sequence, ignoring '\\'");
     return *pos;
   }
 }
@@ -152,7 +153,7 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
   if (*pos == '"') {
     ++pos;
   } else {
-    emitError(start, value.length(), "Unclosed string literal");
+    Diagnostic::emitError(start, value.length(), "Unclosed string literal");
     throw LexerFatalError();
     return false;
   }
@@ -179,7 +180,7 @@ auto Lexer::lexCharLiteral(SourceFileIt& pos) -> bool {
   ++pos; // consume actual char
 
   if (*pos != '\'') {
-    emitError(start, length, "Unclosed character literal");
+    Diagnostic::emitError(start, length, "Unclosed character literal");
     throw LexerFatalError();
     return false;
   }
@@ -232,7 +233,7 @@ void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
       auto blockCommentEnd{ file->getBuffer().find_first_of(
           "*/", pos.getIndex()) };
       if (blockCommentEnd == std::string::npos) {
-        emitError(pos, 2, "Unterminated block comment");
+        Diagnostic::emitError(pos, 2, "Unterminated block comment");
       }
       pos += (blockCommentEnd - pos.getIndex() + 2);
       continue;
@@ -269,7 +270,7 @@ void Lexer::lex(const std::shared_ptr<SourceFile>& file) {
       continue;
     }
 
-    emitError(pos, 1, "Unknown token");
+    Diagnostic::emitError(pos, 1, "Unknown token");
     throw LexerFatalError();
   }
 

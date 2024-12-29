@@ -5,6 +5,7 @@
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/IfStmtNode.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -24,6 +25,7 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::VarDecl, "VarDecl")
       .Case(NodeKind::FunctionDecl, "FunctionDecl")
       .Case(NodeKind::ExpressionStmt, "ExpressionStmt")
+      .Case(NodeKind::IfStmt, "IfStmt")
       .Case(NodeKind::Block, "Block")
       .Case(NodeKind::ASTRoot, "ASTRoot");
 } };
@@ -124,6 +126,13 @@ void ASTPrinter::pop() {
 void ASTPrinter::visit(const Ref<ExpressionStmt>& expressionStmtNode) {
   dumpNodeInfo(expressionStmtNode);
   dump("Expression", expressionStmtNode->getExpression());
+}
+
+void ASTPrinter::visit(const Ref<IfStmtNode>& ifStmtNode) {
+  dumpNodeInfo(ifStmtNode);
+  dump("Condition", ifStmtNode->getCondition());
+  dump("Then", ifStmtNode->getThenBlock());
+  dump("Else", ifStmtNode->getElseBlock());
 }
 
 } // namespace bort::ast

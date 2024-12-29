@@ -10,6 +10,7 @@ protected:
 
 class IntConstant : public Constant {
 public:
+  /// @todo getOrCreate
   static auto create(int32_t value) -> Unique<IntConstant> {
     return Unique<IntConstant>(new IntConstant{ value });
   }

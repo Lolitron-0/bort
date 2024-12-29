@@ -30,7 +30,7 @@ void FrontendInstance::run() {
 
       /// @todo preprocessing
       if (m_CliOptions.PreprocessorOnly) {
-        emitError("Preprocessing is not yet implemented");
+        Diagnostic::emitError("Preprocessing is not yet implemented");
         continue;
       }
 
@@ -71,11 +71,11 @@ void FrontendInstance::run() {
       irPrinter.print(IR);
 
     } catch (const exceptions::SourceFileReaderError& e) {
-      emitError("{}", e.what());
+      Diagnostic::emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());
       continue;
     } catch (const FrontendFatalError& e) {
-      emitError("{}", e.what());
+      Diagnostic::emitError("{}", e.what());
       exit(1);
     }
   }

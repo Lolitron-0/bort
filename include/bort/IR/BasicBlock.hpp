@@ -1,20 +1,15 @@
 #pragma once
 #include "bort/IR/Instruction.hpp"
+#include "bort/IR/Value.hpp"
 #include <list>
 
 namespace bort::ir {
 
-class BasicBlock {
+class BasicBlock final : public Value {
 public:
   using InstList = std::list<Ref<Instruction>>;
 
-  explicit BasicBlock(std::string name)
-      : m_Name{ std::move(name) } {
-  }
-
-  [[nodiscard]] auto getName() const -> const std::string& {
-    return m_Name;
-  }
+  explicit BasicBlock(std::string name = "");
 
   void addInstruction(Ref<Instruction> instruction) {
     m_Instructions.push_back(std::move(instruction));
@@ -40,7 +35,7 @@ public:
 
 private:
   InstList m_Instructions;
-  std::string m_Name;
+  static size_t s_NameCounter;
 };
 
 } // namespace bort::ir

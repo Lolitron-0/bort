@@ -1,4 +1,5 @@
 #include "bort/IR/IRPrinter.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/IR/Instruction.hpp"
@@ -9,6 +10,7 @@
 #include "fmt/color.h"
 #include <fmt/base.h>
 #include <fmt/format.h>
+#include <memory>
 
 static constexpr auto s_InstColor(fmt::fg(fmt::color::blue_violet));
 static constexpr auto s_RegColor(fmt::fg(fmt::color::pale_golden_rod));
@@ -63,6 +65,9 @@ void IRPrinter::print(const Module& module) {
                      std::dynamic_pointer_cast<MoveInst>(inst) }) {
         fmt::println(stderr, "{} = {}", moveInst->getDestination(),
                      moveInst->getSrc());
+      } else if (auto branchInst{
+                     std::dynamic_pointer_cast<BranchInst>(inst) }) {
+        visit(branchInst);
       }
     }
   }
@@ -80,6 +85,17 @@ void IRPrinter::visit(const Ref<AllocaInst>& allocaInst) {
   fmt::println(stderr, "{} = {} {}, {}", allocaInst->getDestination(),
                styleInst("alloca"), allocaInst->getElementSize(),
                allocaInst->getNumElements());
+}
+
+void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
+  if (branchInst->isConditional()) {
+    fmt::println(stderr, "{} {}, {}", styleInst("br"),
+                 branchInst->getCondition(),
+                 branchInst->getTarget()->getName());
+  } else {
+    fmt::println(stderr, "{} {}", styleInst("br"),
+                 branchInst->getTarget()->getName());
+  }
 }
 
 } // namespace bort::ir

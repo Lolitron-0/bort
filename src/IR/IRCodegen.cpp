@@ -1,19 +1,17 @@
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
+#include "bort/Basic/Assert.hpp"
 #include "bort/IR/AllocaInst.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
+#include <memory>
 
 namespace bort::ir {
-
-auto IRCodegen::genIncrementedName() -> std::string {
-  static size_t nameCounter = 0;
-  return fmt::format("{}", nameCounter++);
-}
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
   genericVisit(ast);
@@ -81,11 +79,49 @@ auto IRCodegen::visit(const Ref<ast::Block>& blockNode) -> ValueRef {
   return nullptr;
 }
 
+/// if statement is expanded to:
+/// br condition L_true
+/// ; else block
+/// ...
+/// br L_end
+/// L_True:
+/// ; then block
+/// ...
+/// L_End:
 auto IRCodegen::visit(const Ref<ast::IfStmtNode>& ifStmtNode)
     -> ValueRef {
-  genericVisit(ifStmtNode->getCondition());
-  genericVisit(ifStmtNode->getThenBlock());
+  auto condition{ genericVisit(ifStmtNode->getCondition()) };
+
+  auto thenBr{ std::dynamic_pointer_cast<BranchInst>(
+      addInstruction(makeRef<BranchInst>(condition))) };
+  bort_assert_nomsg(thenBr);
+
+  pushBB();
+
   genericVisit(ifStmtNode->getElseBlock());
+  auto endBr{ std::dynamic_pointer_cast<BranchInst>(
+      addInstruction(makeRef<BranchInst>())) };
+  bort_assert_nomsg(endBr);
+
+  pushBB();
+  auto lastBBIt{ m_Module.getBasicBlocks().end() };
+  lastBBIt--;
+  thenBr->setTarget(&*lastBBIt);
+  genericVisit(ifStmtNode->getThenBlock());
+
+  pushBB();
+  lastBBIt = m_Module.getBasicBlocks().end();
+  lastBBIt--;
+  endBr->setTarget(&*lastBBIt);
   return nullptr;
 }
+
+auto IRCodegen::addInstruction(Ref<Instruction> instruction) -> ValueRef {
+  return m_Module.addInstruction(std::move(instruction));
+}
+
+void IRCodegen::pushBB(std::string name) {
+  m_Module.addBasicBlock(std::move(name));
+}
+
 } // namespace bort::ir

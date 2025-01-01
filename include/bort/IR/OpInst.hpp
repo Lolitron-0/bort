@@ -6,7 +6,7 @@
 
 namespace bort::ir {
 
-class OpInst : public Instruction {
+class OpInst final : public Instruction {
 public:
   OpInst(TokenKind op, ValueRef dst, ValueRef src1, ValueRef src2)
       : Instruction{ std::move(dst) },

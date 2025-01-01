@@ -8,7 +8,7 @@ protected:
   using Value::Value;
 };
 
-class IntConstant : public Constant {
+class IntConstant final : public Constant {
 public:
   /// @todo getOrCreate
   static auto create(int32_t value) -> Unique<IntConstant> {

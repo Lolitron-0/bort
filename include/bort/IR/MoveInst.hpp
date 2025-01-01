@@ -4,7 +4,7 @@
 
 namespace bort::ir {
 
-class MoveInst : public Instruction {
+class MoveInst final : public Instruction {
 public:
   explicit MoveInst(ValueRef dst, ValueRef src)
       : Instruction{ std::move(dst) },

@@ -7,7 +7,7 @@
 
 namespace bort::ir {
 
-class AllocaInst : public Instruction {
+class AllocaInst final : public Instruction {
 public:
   explicit AllocaInst(Ref<Variable> variable, ValueRef elementSize,
                       ValueRef numElements)

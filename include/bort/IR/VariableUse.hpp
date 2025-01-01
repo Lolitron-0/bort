@@ -3,7 +3,7 @@
 #include "bort/IR/Value.hpp"
 
 namespace bort::ir {
-class VariableUse : public Value {
+class VariableUse final : public Value {
 public:
   static auto createUnique(const Ref<Variable>& variable) -> ValueRef;
   static auto get(const Ref<Variable>& variable) -> ValueRef;

@@ -7,14 +7,14 @@
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Instruction.hpp"
+#include "bort/IR/Module.hpp"
 
 namespace bort::ir {
-using Module = std::list<BasicBlock>;
 
 class IRCodegen {
 public:
   [[nodiscard]] auto takeInstructions() -> Module {
-    return std::move(m_BasicBlocks);
+    return std::move(m_Module);
   }
 
   void codegen(const Ref<ast::ASTRoot>& ast);
@@ -33,18 +33,11 @@ private:
   auto visit(const Ref<ast::Block>& blockNode) -> ValueRef;
   auto visit(const Ref<ast::IfStmtNode>& ifStmtNode) -> ValueRef;
 
-  static auto genIncrementedName() -> std::string;
-  auto addInstruction(Ref<Instruction> instruction) -> ValueRef {
-    m_BasicBlocks.back().addInstruction(std::move(instruction));
-    return m_BasicBlocks.back().getInstructions().back();
-  }
-  void pushBB(std::string name = "") {
-    m_BasicBlocks.emplace_back(name.empty() ? "L" + genIncrementedName()
-                                            : std::move(name));
-  }
+  auto addInstruction(Ref<Instruction> instruction) -> ValueRef;
+  void pushBB(std::string name = "");
 
 private:
-  Module m_BasicBlocks;
+  Module m_Module;
 };
 
 } // namespace bort::ir

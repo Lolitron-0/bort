@@ -14,7 +14,7 @@ public:
   virtual ~Value() = default;
 
 
-  static auto get(std::string name) -> ValueRef;
+  // static auto get(std::string name) -> ValueRef;
 
   [[nodiscard]] auto getType() const -> const TypeRef& {
     return m_Type;

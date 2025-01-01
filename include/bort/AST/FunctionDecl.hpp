@@ -15,6 +15,7 @@ class FunctionDecl : public Statement {
   }
 
 public:
+  [[nodiscard]] auto getFunction() const -> Ref<Function> { return m_FunctionSymbol; }
   [[nodiscard]] auto getBody() const -> Ref<Block> {
     return m_Body;
   }

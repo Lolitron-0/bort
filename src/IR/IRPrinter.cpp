@@ -1,5 +1,6 @@
 #include "bort/IR/IRPrinter.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/IRCodegen.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -49,17 +50,20 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Greater, "sgt");
 } };
 
-void IRPrinter::print(const std::vector<Ref<Instruction>>& instructions) {
-  for (auto&& inst : instructions) {
-    if (auto opInst{ std::dynamic_pointer_cast<OpInst>(inst) }) {
-      visit(opInst);
-    } else if (auto allocaInst{
-                   std::dynamic_pointer_cast<AllocaInst>(inst) }) {
-      visit(allocaInst);
-    } else if (auto moveInst{
-                   std::dynamic_pointer_cast<MoveInst>(inst) }) {
-      fmt::println(stderr, "{} = {}", moveInst->getDestination(),
-                   moveInst->getSrc());
+void IRPrinter::print(const Module& module) {
+  for (auto&& BB : module) {
+    fmt::println(stderr, "{}:", BB.getName());
+    for (auto&& inst : BB) {
+      if (auto opInst{ std::dynamic_pointer_cast<OpInst>(inst) }) {
+        visit(opInst);
+      } else if (auto allocaInst{
+                     std::dynamic_pointer_cast<AllocaInst>(inst) }) {
+        visit(allocaInst);
+      } else if (auto moveInst{
+                     std::dynamic_pointer_cast<MoveInst>(inst) }) {
+        fmt::println(stderr, "{} = {}", moveInst->getDestination(),
+                     moveInst->getSrc());
+      }
     }
   }
 }

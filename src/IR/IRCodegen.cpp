@@ -4,6 +4,8 @@
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
+#include "bort/IR/Register.hpp"
+#include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 
 namespace bort::ir {
@@ -28,17 +30,13 @@ auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
   auto rhs{ genericVisit(binOpNode->getRhs()) };
 
   if (binOpNode->getOp() == TokenKind::Assign) {
-    m_Instructions.push_back(
+    return addInstruction(
         makeRef<MoveInst>(std::move(lhs), std::move(rhs)));
-    return m_Instructions.back();
   }
 
-  m_Instructions.push_back(makeRef<OpInst>(
-      binOpNode->getOp(),
-      Value::createUnique(binOpNode->getType(),
-                          IRCodegen::genIncrementedName()),
-      lhs, rhs));
-  return m_Instructions.back();
+  return addInstruction(
+      makeRef<OpInst>(binOpNode->getOp(),
+                      Register::create(binOpNode->getType()), lhs, rhs));
 }
 
 auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
@@ -47,7 +45,7 @@ auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
-  return Value::get(varNode->getVarName());
+  return VariableUse::get(varNode->getVariable());
 }
 
 auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
@@ -61,15 +59,13 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
   ValueRef elementSize{ IntConstant::create(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
-  m_Instructions.push_back(
-      makeRef<AllocaInst>(varSymbol->getType(), varSymbol->getName(),
-                          elementSize, IntConstant::create(1)));
-  return m_Instructions.back();
+  return addInstruction(makeRef<AllocaInst>(
+      std::move(varSymbol), elementSize, IntConstant::create(1)));
 }
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
     -> ValueRef {
-
+  pushBB(functionDeclNode->getFunction()->getName());
   return genericVisit(functionDeclNode->getBody());
 }
 

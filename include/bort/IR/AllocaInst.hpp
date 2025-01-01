@@ -1,17 +1,17 @@
 #pragma once
-#include <utility>
-
+#include "bort/Frontend/Symbol.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/Instruction.hpp"
+#include "bort/IR/VariableUse.hpp"
+#include <utility>
 
 namespace bort::ir {
 
 class AllocaInst : public Instruction {
 public:
-  explicit AllocaInst(TypeRef type, std::string name,
-                      ValueRef elementSize, ValueRef numElements)
-      : Instruction{ Value::createUnique(std::move(type),
-                                         std::move(name)) },
+  explicit AllocaInst(Ref<Variable> variable, ValueRef elementSize,
+                      ValueRef numElements)
+      : Instruction{ VariableUse::createUnique(std::move(variable)) },
         m_ElementSize{ std::move(elementSize) },
         m_NumElements{ std::move(numElements) } {
   }

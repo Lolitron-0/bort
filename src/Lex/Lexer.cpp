@@ -1,6 +1,5 @@
 #include "bort/Lex/Lexer.hpp"
 #include "bort/CLI/IO.hpp"
-#include "bort/Frontend/FrontendInstance.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Token.hpp"
 #include "bort/Lex/Utils.hpp"
@@ -153,7 +152,8 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
   if (*pos == '"') {
     ++pos;
   } else {
-    Diagnostic::emitError(start, value.length(), "Unclosed string literal");
+    Diagnostic::emitError(start, value.length(),
+                          "Unclosed string literal");
     throw LexerFatalError();
     return false;
   }
@@ -282,7 +282,7 @@ auto Lexer::getTokens() const -> std::shared_ptr<TokenList> {
 }
 
 LexerFatalError::LexerFatalError()
-    : FrontendFatalError{ "Lexer fatal failure. Aborting." } {
+    : FrontEndFatalError{ "Lexer fatal failure. Aborting." } {
 }
 
 } // namespace bort

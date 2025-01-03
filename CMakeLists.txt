@@ -30,6 +30,7 @@ set(SOURCES
     src/AST/Visitors/SymbolResolutionVisitor.cpp
     src/AST/Visitors/TypePropagationVisitor.cpp
     src/AST/Visitors/ASTPrinter.cpp
+    src/IR/MiddleEndInstance.cpp
     src/IR/Value.cpp
     src/IR/VariableUse.cpp
     src/IR/Instruction.cpp

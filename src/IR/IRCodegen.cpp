@@ -15,6 +15,7 @@ namespace bort::ir {
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
   genericVisit(ast);
+  m_Module.revalidateBasicBlocks();
 }
 
 auto IRCodegen::genericVisit(const Ref<ast::Node>& node) -> ValueRef {
@@ -92,32 +93,23 @@ auto IRCodegen::visit(const Ref<ast::IfStmtNode>& ifStmtNode)
     -> ValueRef {
   auto condition{ genericVisit(ifStmtNode->getCondition()) };
 
-  auto thenBr{ std::dynamic_pointer_cast<BranchInst>(
-      addInstruction(makeRef<BranchInst>(condition))) };
+  auto thenBr{ addInstruction(makeRef<BranchInst>(condition)) };
   bort_assert_nomsg(thenBr);
 
   pushBB();
-
   genericVisit(ifStmtNode->getElseBlock());
-  auto endBr{ std::dynamic_pointer_cast<BranchInst>(
-      addInstruction(makeRef<BranchInst>())) };
+  auto endBr{ addInstruction(makeRef<BranchInst>()) };
   bort_assert_nomsg(endBr);
 
   pushBB();
-  auto lastBBIt{ m_Module.getBasicBlocks().end() };
-  lastBBIt--;
+  auto lastBBIt{ m_Module.getLastBBIt() };
   thenBr->setTarget(&*lastBBIt);
   genericVisit(ifStmtNode->getThenBlock());
 
   pushBB();
-  lastBBIt = m_Module.getBasicBlocks().end();
-  lastBBIt--;
+  lastBBIt = m_Module.getLastBBIt();
   endBr->setTarget(&*lastBBIt);
   return nullptr;
-}
-
-auto IRCodegen::addInstruction(Ref<Instruction> instruction) -> ValueRef {
-  return m_Module.addInstruction(std::move(instruction));
 }
 
 void IRCodegen::pushBB(std::string name) {

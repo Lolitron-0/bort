@@ -13,14 +13,13 @@ class Value {
 public:
   virtual ~Value() = default;
 
-
   // static auto get(std::string name) -> ValueRef;
 
-  [[nodiscard]] auto getType() const -> const TypeRef& {
+  [[nodiscard]] auto getType() const -> TypeRef {
     return m_Type;
   }
 
-  [[nodiscard]] auto getName() const -> const std::string& {
+  [[nodiscard]] auto getName() const -> std::string {
     return m_Name;
   }
 

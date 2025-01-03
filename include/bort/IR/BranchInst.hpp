@@ -18,6 +18,7 @@ public:
   }
 
   [[nodiscard]] auto getTarget() const -> const BasicBlock* {
+    bort_assert(m_Target, "Target not set");
     return m_Target;
   }
 

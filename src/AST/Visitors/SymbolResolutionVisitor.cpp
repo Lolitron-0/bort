@@ -58,7 +58,7 @@ void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
     return;
   }
 
-  Diagnostic::emitError(getASTRef()->getNodeDebugInfo(varNode).token,
+  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(varNode).token,
                         "Unresolved variable: {}", varNode->getVarName());
   markASTInvalid();
 }
@@ -68,7 +68,7 @@ void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
     define(varDeclNode->getVariable());
   } catch (const SymbolAlreadyDefined& e) {
     Diagnostic::emitError(
-        getASTRef()->getNodeDebugInfo(varDeclNode).token, "{}", e.what());
+        getASTRoot()->getNodeDebugInfo(varDeclNode).token, "{}", e.what());
     auto prevSym{ resolve(varDeclNode->getVariable()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
     Diagnostic::emitWarning("Previously defined as: [ {} ]",

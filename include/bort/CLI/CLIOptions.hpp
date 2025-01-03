@@ -5,12 +5,13 @@
 namespace bort {
 
 /// @todo Glue all inputs to single output
-class FrontendOptions {
+class CLIOptions {
 public:
   std::vector<SourceFileInfo> InputFiles;
 
   bool PreprocessorOnly{ false };
   bool DumpAST{ false };
+  bool EmitIR{ false };
 };
 
 } // namespace bort

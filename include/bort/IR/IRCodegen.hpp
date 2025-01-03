@@ -8,6 +8,8 @@
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
+#include <memory>
+#include <type_traits>
 
 namespace bort::ir {
 
@@ -33,7 +35,12 @@ private:
   auto visit(const Ref<ast::Block>& blockNode) -> ValueRef;
   auto visit(const Ref<ast::IfStmtNode>& ifStmtNode) -> ValueRef;
 
-  auto addInstruction(Ref<Instruction> instruction) -> ValueRef;
+  template <typename T>
+    requires std::is_base_of_v<Instruction, T>
+  auto addInstruction(Ref<T> instruction) -> Ref<T> {
+    return std::dynamic_pointer_cast<T>(
+        m_Module.addInstruction(std::move(instruction)));
+  }
   void pushBB(std::string name = "");
 
 private:

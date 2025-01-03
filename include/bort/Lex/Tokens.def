@@ -53,6 +53,7 @@ KEYWORD(char)
 KEYWORD(const)
 KEYWORD(if)
 KEYWORD(else)
+KEYWORD(for)
 
 // Preprocessor
 PPTOK(define)

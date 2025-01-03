@@ -27,7 +27,7 @@ public:
   }
 
 protected:
-  [[nodiscard]] inline auto getASTRef() const -> const Ref<ASTRoot>& {
+  [[nodiscard]] inline auto getASTRoot() const -> const Ref<ASTRoot>& {
     return m_ASTRoot;
   }
   [[nodiscard]] auto getNodeDebugInfo(const Ref<Node>& node) const

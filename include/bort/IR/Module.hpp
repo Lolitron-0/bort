@@ -11,6 +11,18 @@ public:
     return m_BasicBlocks.back().getInstructions().back();
   }
 
+  void revalidateBasicBlocks() {
+    for (auto it{ m_BasicBlocks.begin() }; it != m_BasicBlocks.end();) {
+      /// last BB can be empty
+      if (it->getInstructions().empty() &&
+          ++decltype(it){ it } != m_BasicBlocks.end()) {
+        it = m_BasicBlocks.erase(it);
+      } else {
+        it++;
+      }
+    }
+  }
+
   void addBasicBlock(std::string name) {
     m_BasicBlocks.emplace_back(std::move(name));
   }
@@ -31,6 +43,11 @@ public:
   }
   [[nodiscard]] auto end() const {
     return m_BasicBlocks.end();
+  }
+  [[nodiscard]] auto getLastBBIt() const {
+    auto it{ m_BasicBlocks.end() };
+    it--;
+    return it;
   }
 
 private:

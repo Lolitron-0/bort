@@ -1,31 +1,36 @@
+#include "bort/CLI/CLIOptions.hpp"
 #include "bort/CLI/IO.hpp"
-#include "bort/Frontend/FrontendInstance.hpp"
-#include "bort/Frontend/FrontendOptions.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
+#include "bort/IR/IRCodegen.hpp"
+#include "bort/IR/IRPrinter.hpp"
+#include "bort/IR/MiddleEndInstance.hpp"
 #include <algorithm>
 #include <cxxopts.hpp>
 #include <iostream>
 
 auto main(int argc, char* argv[]) -> int {
 
-  bort::FrontendOptions frontendOptions;
+  bort::CLIOptions cliOptions;
 
-  cxxopts::Options cliOptions{ "bort", "Small-C to RISC-V compiler" };
+  cxxopts::Options cliParser{ "bort", "Small-C to RISC-V compiler" };
   // clang-format off
-  cliOptions.add_options()
+  cliParser.add_options()
       ("h,help", "Show help")
       ("E,preprocess", "Just preprocess file and dump it to stdout",
-       cxxopts::value<bool>(frontendOptions.PreprocessorOnly))
+       cxxopts::value<bool>(cliOptions.PreprocessorOnly))
       ("dump-ast", "Dump AST to stderr",
-       cxxopts::value<bool>(frontendOptions.DumpAST))
+       cxxopts::value<bool>(cliOptions.DumpAST))
+      ("emit-ir", "Dump IR to stderr",
+       cxxopts::value<bool>(cliOptions.EmitIR))
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 
-  cliOptions.parse_positional("inputs");
+  cliParser.parse_positional("inputs");
 
-  auto result{ cliOptions.parse(argc, argv) };
+  auto result{ cliParser.parse(argc, argv) };
 
   if (result.count("help")) {
-    std::cout << cliOptions.help() << std::endl;
+    std::cout << cliParser.help() << std::endl;
     return 0;
   }
 
@@ -37,13 +42,16 @@ auto main(int argc, char* argv[]) -> int {
   auto inputs{ result["inputs"].as<std::vector<std::string>>() };
 
   std::transform(inputs.begin(), inputs.end(),
-                 std::back_inserter(frontendOptions.InputFiles),
+                 std::back_inserter(cliOptions.InputFiles),
                  [](auto&& input) {
                    return bort::SourceFileInfo{ .Path = input };
                  });
 
-  bort::FrontendInstance frontend{ std::move(frontendOptions) };
-  frontend.run();
+  bort::FrontEndInstance frontend{ cliOptions };
+  auto ast{ frontend.run() };
+
+  bort::MiddleEndInstance middleEnd{ cliOptions, std::move(ast) };
+  auto IR{ middleEnd.run() };
 
   return 0;
 }

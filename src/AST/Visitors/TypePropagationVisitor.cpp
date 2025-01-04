@@ -1,6 +1,9 @@
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
+#include "bort/AST/NumberExpr.hpp"
+#include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/Type.hpp"
+#include "bort/Lex/Token.hpp"
 #include <boost/container_hash/hash_fwd.hpp>
 #include <frozen/unordered_map.h>
 
@@ -65,9 +68,10 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
       s_ArtithmeticOpResultTypeMap[{ lhsTy->getKind(), rhsTy->getKind() }]
     };
     if (!opResultTy) {
-      emitError(getNodeDebugInfo(binopNode).token,
-                "Invalid operands to arithmetic expression: {}, {}",
-                lhsTy->toString(), rhsTy->toString());
+      Diagnostic::emitError(
+          getNodeDebugInfo(binopNode).token,
+          "Invalid operands to arithmetic expression: {}, {}",
+          lhsTy->toString(), rhsTy->toString());
       return;
     }
 
@@ -85,6 +89,24 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
     }
 
     binopNode->setType(opResultTy);
+  } else if (binopNode->isLogical()) {
+    binopNode->setType(IntType::get());
+  } else if (binopNode->getOp() == TokenKind::Assign) {
+    auto lhsTy{ binopNode->getLhs()->getType() };
+    auto rhsTy{ binopNode->getRhs()->getType() };
+    binopNode->setType(lhsTy);
+    /// @todo properly check constant assignment overflow
+    if (lhsTy->getSizeof() < rhsTy->getSizeof()) {
+      if (isaRef<NumberExpr>(binopNode->getRhs())) {
+        DEBUG_OUT("Narrowing constant assignment: {} to {}",
+                  rhsTy->toString(), lhsTy->toString());
+        return;
+      }
+      Diagnostic::emitWarning(
+          getASTRoot()->getNodeDebugInfo(binopNode).token,
+          "Narrowing conversion from {} to {}", rhsTy->toString(),
+          lhsTy->toString());
+    }
   }
 }
 

@@ -44,11 +44,16 @@ PUNCT(TimesAssign,  "*=")
 PUNCT(DivAssign,    "/=")
 PUNCT(Less,         "<")
 PUNCT(Greater,      ">")
+PUNCT(LessEqual,    "<=")
+PUNCT(GreaterEqual, ">=")
 
 KEYWORD(int)
 KEYWORD(void)
 KEYWORD(char)
 KEYWORD(const)
+KEYWORD(if)
+KEYWORD(else)
+KEYWORD(for)
 
 // Preprocessor
 PPTOK(define)

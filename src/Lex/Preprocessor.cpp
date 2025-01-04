@@ -31,7 +31,7 @@ void Preprocessor::preprocess(const std::shared_ptr<SourceFile>& file) {
       auto blockCommentEnd{ file->getBuffer().find_first_of(
           "*/", pos.getIndex()) };
       if (blockCommentEnd == std::string::npos) {
-        emitError(pos, 2, "Unterminated block comment");
+        Diagnostic::emitError(pos, 2, "Unterminated block comment");
       }
       pos += (blockCommentEnd - pos.getIndex() + 2);
       file->getBuffer().erase(blockCommentStart.asBufIter(),
@@ -53,8 +53,9 @@ void Preprocessor::preprocess(const std::shared_ptr<SourceFile>& file) {
       if (macroKeyword == "define") {
         defineIdentifier(pos);
       } else {
-        emitError(macroLineStart, macroKeyword.length(),
-                  "Unknown preprocessor directive: {}", macroKeyword);
+        Diagnostic::emitError(macroLineStart, macroKeyword.length(),
+                              "Unknown preprocessor directive: {}",
+                              macroKeyword);
         continue;
       }
       file->getBuffer().erase(macroLineStart.asBufIter(),
@@ -95,9 +96,9 @@ void Preprocessor::defineIdentifier(SourceFileIt& pos) {
   skipSpacesSince(pos);
   auto macroDefinition{ readMacroDefitition(pos) };
   if (m_MacroDefinitions.contains(macroName)) {
-    emitWarning(macroNamePos, macroName.length(),
-                "Macro redefinition, previous body: {}",
-                m_MacroDefinitions[macroName]);
+    Diagnostic::emitWarning(macroNamePos, macroName.length(),
+                            "Macro redefinition, previous body: {}",
+                            m_MacroDefinitions[macroName]);
   }
   m_MacroDefinitions[macroName] = macroDefinition;
   DEBUG_OUT("define {} = {}", macroName, macroDefinition);

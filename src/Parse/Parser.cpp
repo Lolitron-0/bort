@@ -3,6 +3,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -16,12 +17,14 @@
 namespace bort {
 
 static constexpr auto s_BinopPrecedence{
-  frozen::make_unordered_map<TokenKind, int32_t>(
-      { { TokenKind::Plus, 20 },
-        { TokenKind::Minus, 20 },
-        { TokenKind::Star, 40 },
-        { TokenKind::Div, 40 },
-        { TokenKind::Less, 10 } })
+  frozen::make_unordered_map<TokenKind, int32_t>({
+      { TokenKind::Plus, 20 },
+      { TokenKind::Minus, 20 },
+      { TokenKind::Star, 40 },
+      { TokenKind::Div, 40 },
+      { TokenKind::Less, 10 },
+      { TokenKind::Assign, 5 },
+  })
 };
 
 /// we do not support user defined aggregates or typedefs, so just check
@@ -37,7 +40,7 @@ auto Parser::buildAST() -> Ref<ast::ASTRoot> {
       break;
     }
 
-    auto node{ parseDeclaration() };
+    auto node{ parseStatement() };
     if (!node) {
       break;
     }
@@ -62,12 +65,12 @@ auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
 
   auto result{ parseExpression() };
   if (!result) {
-    return nullptr;
+    return invalidNode();
   }
 
   if (curTok().isNot(TokenKind::RParen)) {
-    emitError(curTok(), "Expected ')'");
-    return nullptr;
+    Diagnostic::emitError(curTok(), "Expected ')'");
+    return invalidNode();
   }
 
   consumeToken();
@@ -88,7 +91,7 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
   }
 
   /// @todo parse function call
-  return nullptr;
+  return invalidNode();
 }
 
 auto Parser::parseValueExpression()
@@ -101,15 +104,15 @@ auto Parser::parseValueExpression()
   case TokenKind::NumericLiteral:
     return parseNumberExpr();
   default:
-    emitError(curTok(), "Expected value expression");
-    return nullptr;
+    Diagnostic::emitError(curTok(), "Expected value expression");
+    return invalidNode();
   }
 }
 
 auto Parser::parseExpression() -> std::unique_ptr<ast::ExpressionNode> {
   auto lhs{ parseValueExpression() };
   if (!lhs) {
-    return nullptr;
+    return invalidNode();
   }
   return parseBinOpRhs(std::move(lhs));
 }
@@ -135,7 +138,7 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     consumeToken();
     auto rhs{ parseValueExpression() };
     if (!rhs) {
-      return nullptr;
+      return invalidNode();
     }
 
     // now: lhs binOp rhs unparsed
@@ -145,7 +148,7 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     if (tokPrecedence < nextPrecedence) {
       rhs = parseBinOpRhs(std::move(rhs), tokPrecedence + 1);
       if (!rhs) {
-        return nullptr;
+        return invalidNode();
       }
     }
 
@@ -186,11 +189,11 @@ auto Parser::parseDeclspec() -> TypeRef {
   return type;
 }
 
-auto Parser::parseDeclaration() -> Ref<ast::Node> {
+auto Parser::parseDeclaration() -> Ref<ast::Statement> {
   auto type{ parseDeclspec() };
   if (curTok().isNot(TokenKind::Identifier)) {
-    emitError(curTok(), "Expected variable name");
-    return nullptr;
+    Diagnostic::emitError(curTok(), "Expected variable name");
+    return invalidNode();
   }
   auto nameTok{ curTok() };
   consumeToken();
@@ -209,14 +212,14 @@ auto Parser::parseVarDecl(const TypeRef& type,
       ast::ASTDebugInfo{ nameTok }, type, name) };
 
   if (curTok().isNot(TokenKind::Semicolon)) {
-    emitError(curTok(), "Expected ';'");
-    return nullptr;
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
   }
   consumeToken();
 
   if (type->getKind() == TypeKind::Void) {
-    emitError(nameTok, "Variable of incomplete type 'void'");
-    return nullptr;
+    Diagnostic::emitError(nameTok, "Variable of incomplete type 'void'");
+    return invalidNode();
   }
   return node;
 }
@@ -233,21 +236,22 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
     auto argType{ parseDeclspec() };
 
     if (argType && argType->is(TypeKind::Void)) {
-      emitError(curTok(), "Parameter of incomplete type 'void'");
-      return nullptr;
+      Diagnostic::emitError(curTok(),
+                            "Parameter of incomplete type 'void'");
+      return invalidNode();
     }
 
     if (curTok().isNot(TokenKind::Identifier)) {
-      emitError(curTok(), "All parameters should be named");
-      return nullptr;
+      Diagnostic::emitError(curTok(), "All parameters should be named");
+      return invalidNode();
     }
 
     auto argNameTok{ curTok() };
     consumeToken();
 
     if (curTok().isNot(TokenKind::Comma)) {
-      emitError(curTok(), "Expected ','");
-      return nullptr;
+      Diagnostic::emitError(curTok(), "Expected ','");
+      return invalidNode();
     }
     consumeToken();
 
@@ -256,14 +260,43 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
   consumeToken();
 
   if (curTok().isNot(TokenKind::LBrace)) {
-    emitError(curTok(),
-              "Expected '{}' (all functions must be definitions)", '{');
-    return nullptr;
+    Diagnostic::emitError(
+        curTok(), "Expected '{}' (all functions must be definitions)",
+        '{');
+    return invalidNode();
   }
   auto block{ parseBlock() };
   return m_ASTRoot->registerNode<ast::FunctionDecl>(
       ast::ASTDebugInfo{ nameTok }, std::move(name), type,
       std::move(args), std::move(block));
+}
+
+auto Parser::parseStatement() -> Ref<ast::Statement> {
+  if (curTok().is(TokenKind::LBrace)) {
+    return parseBlock();
+  }
+
+  if (isTypenameStart(curTok())) {
+    return parseDeclaration();
+  }
+
+  switch (curTok().getKind()) {
+  case TokenKind::KW_if:
+    return parseIfStatement();
+  default:
+    break;
+  }
+
+  // it's an expression statement
+  auto stmtTok{ curTok() };
+  auto expression{ parseExpression() };
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+  return m_ASTRoot->registerNode<ast::ExpressionStmt>(
+      ast::ASTDebugInfo{ stmtTok }, std::move(expression));
 }
 
 auto Parser::parseBlock() -> Unique<ast::Block> {
@@ -274,15 +307,12 @@ auto Parser::parseBlock() -> Unique<ast::Block> {
 
   Ref<ast::Node> child{ nullptr };
   while (!curTok().is(TokenKind::RBrace)) {
-    if (isTypenameStart(curTok())) {
-      child = parseDeclaration();
-
-    } else {
-      /// @todo parse statement
-      child = parseExpression();
-    }
-    if (!child) {
-      return nullptr;
+    child = parseStatement();
+    while (!child) {
+      consumeToken();
+      Diagnostic::setLevel(Diagnostic::Level::Silent);
+      child = parseStatement();
+      Diagnostic::setLevel(Diagnostic::Level::All);
     }
     block->pushChild(child);
   }
@@ -297,4 +327,31 @@ auto Parser::lookahead(uint32_t offset) const -> const Token& {
   std::advance(iter, offset);
   return *iter;
 }
+
+auto Parser::parseIfStatement() -> Ref<ast::IfStmtNode> {
+  bort_assert(curTok().is(TokenKind::KW_if), "Expected 'if'");
+  consumeToken();
+  if (curTok().isNot(TokenKind::LParen)) {
+    Diagnostic::emitError(curTok(), "Expected '('");
+    return invalidNode();
+  }
+  auto condition{ parseParenExpr() };
+
+  auto thenBlock{ parseBlock() };
+  Unique<ast::Block> elseBlock{ nullptr };
+  if (curTok().is(TokenKind::KW_else)) {
+    consumeToken();
+    elseBlock = parseBlock();
+  }
+
+  if (!elseBlock) {
+    elseBlock = m_ASTRoot->registerNode<ast::Block>(
+        ast::ASTDebugInfo{ curTok() });
+  }
+
+  return m_ASTRoot->registerNode<ast::IfStmtNode>(
+      ast::ASTDebugInfo{ curTok() }, std::move(condition),
+      std::move(thenBlock), std::move(elseBlock));
+}
+
 } // namespace bort

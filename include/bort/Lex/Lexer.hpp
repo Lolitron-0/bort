@@ -1,5 +1,5 @@
 #pragma once
-#include "bort/Frontend/FrontendInstance.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
 #include "bort/Frontend/SourceFile.hpp"
 #include "bort/Lex/Token.hpp"
 #include <list>
@@ -9,7 +9,7 @@ namespace bort {
 
 using TokenList = std::list<Token>;
 
-class LexerFatalError : public FrontendFatalError {
+class LexerFatalError : public FrontEndFatalError {
 public:
   LexerFatalError();
 };

@@ -29,7 +29,15 @@ set(SOURCES
     src/AST/Visitors/ASTVisitor.cpp
     src/AST/Visitors/SymbolResolutionVisitor.cpp
     src/AST/Visitors/TypePropagationVisitor.cpp
-    src/AST/Visitors/ASTPrinter.cpp)
+    src/AST/Visitors/ASTPrinter.cpp
+    src/IR/MiddleEndInstance.cpp
+    src/IR/Value.cpp
+    src/IR/VariableUse.cpp
+    src/IR/Instruction.cpp
+    src/IR/IRCodegen.cpp
+    src/IR/IRPrinter.cpp
+    src/IR/Label.cpp
+    src/IR/BasicBlock.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
@@ -81,8 +89,8 @@ set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 FetchContent_Declare(
   Boost
   URL https://github.com/boostorg/boost/releases/download/boost-1.86.0/boost-1.86.0-cmake.tar.xz
-      DOWNLOAD_EXTRACT_TIMESTAMP
-      ON)
+      # DOWNLOAD_EXTRACT_TIMESTAMP ON
+)
 
 FetchContent_MakeAvailable(Boost)
 

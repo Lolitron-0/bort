@@ -2,9 +2,13 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/IfStmtNode.hpp"
+#include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/VarDecl.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Lexer.hpp"
+#include <cstddef>
 
 namespace bort {
 
@@ -25,6 +29,10 @@ public:
   ///
   /// parses all top-level statements and populates AST root with them
   auto buildAST() -> Ref<ast::ASTRoot>;
+
+  [[nodiscard]] auto isASTInvalid() const -> bool {
+    return m_ASTInvalid;
+  }
 
   // for docs
 protected:
@@ -55,7 +63,7 @@ protected:
   /// @todo type qualifiers
   auto parseDeclspec() -> TypeRef;
   /// declaration -> declspec (varDecl |  functionDecl)
-  auto parseDeclaration() -> Ref<ast::Node>;
+  auto parseDeclaration() -> Ref<ast::Statement>;
   /// varDecl -> identifier ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
   auto parseVarDecl(const TypeRef& type,
@@ -63,17 +71,36 @@ protected:
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,
                          const Token& nameTok) -> Ref<ast::FunctionDecl>;
+  /// statement \n
+  /// -> expression ';' \n
+  /// -> block \n
+  /// -> ifStatement \n
+  auto parseStatement() -> Ref<ast::Statement>;
   /// block
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
+  /// ifStatement -> 'if' parenExpr block (else block)?
+  auto parseIfStatement() -> Ref<ast::IfStmtNode>;
 
 private:
+  void disableDiagnostics() {
+    m_DiagnosticSilenced = true;
+  }
+  void enableDiagnostics() {
+    m_DiagnosticSilenced = false;
+  }
+
   [[nodiscard]] auto isFunctionDecl() const -> bool;
 
   [[nodiscard]] auto lookahead(uint32_t offset) const -> const Token&;
 
   [[nodiscard]] inline auto curTok() const -> const Token& {
     return *m_CurTokIter;
+  }
+
+  [[nodiscard]] auto invalidNode() -> std::nullptr_t {
+    m_ASTInvalid = true;
+    return nullptr;
   }
 
   inline void consumeToken() {
@@ -83,6 +110,8 @@ private:
   Ref<TokenList> m_Tokens;
   TokenList::const_iterator m_CurTokIter;
   Ref<ast::ASTRoot> m_ASTRoot;
+  bool m_ASTInvalid{ false };
+  bool m_DiagnosticSilenced{ false };
 };
 
 } // namespace bort

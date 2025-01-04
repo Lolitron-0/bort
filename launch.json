@@ -7,6 +7,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/build/bort",
       "args": [
+        "--emit-ir",
         "${workspaceFolder}/tests/corpus/expression.c"
       ],
       "stopAtEntry": false,

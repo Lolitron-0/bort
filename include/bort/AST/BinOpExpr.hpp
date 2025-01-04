@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/Lex/Token.hpp"
 
 namespace bort::ast {
 
@@ -16,6 +17,10 @@ public:
     return m_Op == TokenKind::Plus || m_Op == TokenKind::Minus ||
            m_Op == TokenKind::Star || m_Op == TokenKind::Div ||
            m_Op == TokenKind::Amp || m_Op == TokenKind::Pipe;
+  }
+  [[nodiscard]] constexpr auto isLogical() const -> bool {
+    return m_Op == TokenKind::Less || m_Op == TokenKind::Greater ||
+           m_Op == TokenKind::Equals;
   }
 
   friend class ASTRoot;

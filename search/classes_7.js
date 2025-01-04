@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['node_0',['Node',['../classbort_1_1ast_1_1Node.html',1,'bort::ast']]],
-  ['numberexpr_1',['NumberExpr',['../classbort_1_1ast_1_1NumberExpr.html',1,'bort::ast']]]
+  ['label_0',['Label',['../classbort_1_1ir_1_1Label.html',1,'bort::ir']]],
+  ['lexer_1',['Lexer',['../classbort_1_1Lexer.html',1,'bort']]],
+  ['lexerfatalerror_2',['LexerFatalError',['../classbort_1_1LexerFatalError.html',1,'bort']]]
 ];

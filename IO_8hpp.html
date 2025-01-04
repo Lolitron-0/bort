@@ -92,9 +92,9 @@ $(document).ready(function(){initNavTree('IO_8hpp.html',''); initResizable(); })
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">IO.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -151,6 +151,11 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="IO_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Diagnostic.html">bort::Diagnostic</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacebort"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort.html">bort</a></td></tr>
@@ -158,36 +163,10 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:af7bb854bee8441150c2a4a16f365fc6b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IO_8hpp.html#af7bb854bee8441150c2a4a16f365fc6b">DEBUG_OUT</a>(message, ...)&#160;&#160;&#160;<a class="el" href="namespacebort.html#a52bc324fe256b3c2a3807bf847d15d38">::bort::debugOut</a>((message), __VA_ARGS__)</td></tr>
+<tr class="memitem:af7bb854bee8441150c2a4a16f365fc6b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IO_8hpp.html#af7bb854bee8441150c2a4a16f365fc6b">DEBUG_OUT</a>(message, ...)&#160;&#160;&#160;  <a class="el" href="classbort_1_1Diagnostic.html#a0730dc112aa8ae29eca49253a5691b97">::bort::Diagnostic::debugOut</a>((message), __VA_ARGS__)</td></tr>
 <tr class="separator:af7bb854bee8441150c2a4a16f365fc6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1635f4e0dbe072e9b4b73781c1998a34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IO_8hpp.html#a1635f4e0dbe072e9b4b73781c1998a34">DEBUG_OUT_MSG</a>(message, ...)&#160;&#160;&#160;<a class="el" href="namespacebort.html#a52bc324fe256b3c2a3807bf847d15d38">::bort::debugOut</a>((message))</td></tr>
+<tr class="memitem:a1635f4e0dbe072e9b4b73781c1998a34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IO_8hpp.html#a1635f4e0dbe072e9b4b73781c1998a34">DEBUG_OUT_MSG</a>(message, ...)&#160;&#160;&#160;  <a class="el" href="classbort_1_1Diagnostic.html#a0730dc112aa8ae29eca49253a5691b97">::bort::Diagnostic::debugOut</a>((message))</td></tr>
 <tr class="separator:a1635f4e0dbe072e9b4b73781c1998a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ac3c9b6d66c8bb10a8aeaab42c3297580"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ac3c9b6d66c8bb10a8aeaab42c3297580"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#ac3c9b6d66c8bb10a8aeaab42c3297580">bort::emitError</a> (const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:ac3c9b6d66c8bb10a8aeaab42c3297580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ad3e8052144b102e9f9262ac9749682"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort.html#a1ad3e8052144b102e9f9262ac9749682">bort::underlineSource</a> (FILE *out, const SourceFileIt &amp;loc, size_t length, fmt::color color)</td></tr>
-<tr class="separator:a1ad3e8052144b102e9f9262ac9749682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad40e4be9ac89dee068b2fafbe7fba37d"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ad40e4be9ac89dee068b2fafbe7fba37d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#ad40e4be9ac89dee068b2fafbe7fba37d">bort::emitWarning</a> (const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:ad40e4be9ac89dee068b2fafbe7fba37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62fba05828cb6f668e2203c2baf0dd03"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a62fba05828cb6f668e2203c2baf0dd03"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#a62fba05828cb6f668e2203c2baf0dd03">bort::emitError</a> (const SourceFileIt &amp;loc, size_t length, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:a62fba05828cb6f668e2203c2baf0dd03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab674b41dd0b87cb2084f57fc8a801fba"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ab674b41dd0b87cb2084f57fc8a801fba"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#ab674b41dd0b87cb2084f57fc8a801fba">bort::emitError</a> (const Token &amp;tok, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:ab674b41dd0b87cb2084f57fc8a801fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5731e8a14c95206597a972082758027"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:af5731e8a14c95206597a972082758027"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#af5731e8a14c95206597a972082758027">bort::emitWarning</a> (const SourceFileIt &amp;loc, size_t length, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:af5731e8a14c95206597a972082758027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4df49da98905e809c5f1c6c36119085"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:aa4df49da98905e809c5f1c6c36119085"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#aa4df49da98905e809c5f1c6c36119085">bort::emitWarning</a> (const Token &amp;tok, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:aa4df49da98905e809c5f1c6c36119085"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52bc324fe256b3c2a3807bf847d15d38"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a52bc324fe256b3c2a3807bf847d15d38"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#a52bc324fe256b3c2a3807bf847d15d38">bort::debugOut</a> (const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)</td></tr>
-<tr class="separator:a52bc324fe256b3c2a3807bf847d15d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="af7bb854bee8441150c2a4a16f365fc6b" name="af7bb854bee8441150c2a4a16f365fc6b"></a>
@@ -211,7 +190,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="namespacebort.html#a52bc324fe256b3c2a3807bf847d15d38">::bort::debugOut</a>((message), __VA_ARGS__)</td>
+          <td></td><td>&#160;&#160;&#160;  <a class="el" href="classbort_1_1Diagnostic.html#a0730dc112aa8ae29eca49253a5691b97">::bort::Diagnostic::debugOut</a>((message), __VA_ARGS__)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -239,7 +218,7 @@ Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="namespacebort.html#a52bc324fe256b3c2a3807bf847d15d38">::bort::debugOut</a>((message))</td>
+          <td></td><td>&#160;&#160;&#160;  <a class="el" href="classbort_1_1Diagnostic.html#a0730dc112aa8ae29eca49253a5691b97">::bort::Diagnostic::debugOut</a>((message))</td>
         </tr>
       </table>
 </div><div class="memdoc">

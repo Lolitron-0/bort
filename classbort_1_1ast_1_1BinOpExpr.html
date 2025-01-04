@@ -131,6 +131,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aca5f286f984d922c1d6f2a1347ec993c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdf50a1f0050143e4ff3eeea0bf4c090"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1BinOpExpr.html#abdf50a1f0050143e4ff3eeea0bf4c090">isArithmetic</a> () const -&gt; bool</td></tr>
 <tr class="separator:abdf50a1f0050143e4ff3eeea0bf4c090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d1b550abe79e5d403e7143cb20150b"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1BinOpExpr.html#ad2d1b550abe79e5d403e7143cb20150b">isLogical</a> () const -&gt; bool</td></tr>
+<tr class="separator:ad2d1b550abe79e5d403e7143cb20150b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classbort_1_1ast_1_1ExpressionNode"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classbort_1_1ast_1_1ExpressionNode')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">bort::ast::ExpressionNode</a></td></tr>
 <tr class="memitem:a3fce52477f037165b7199d1c28411883 inherit pub_methods_classbort_1_1ast_1_1ExpressionNode"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ExpressionNode.html#a3fce52477f037165b7199d1c28411883">isTypeResolved</a> () const -&gt; bool</td></tr>
 <tr class="separator:a3fce52477f037165b7199d1c28411883 inherit pub_methods_classbort_1_1ast_1_1ExpressionNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +143,6 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classbort_1_1ast_1_1Node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classbort_1_1ast_1_1Node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classbort_1_1ast_1_1Node.html">bort::ast::Node</a></td></tr>
 <tr class="memitem:ac726ef7c564c3e17ff10c856c613590b inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ac726ef7c564c3e17ff10c856c613590b">~Node</a> ()=default</td></tr>
 <tr class="separator:ac726ef7c564c3e17ff10c856c613590b inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae611e2df596896a6a14140a23e335207 inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ae611e2df596896a6a14140a23e335207">Node</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind)</td></tr>
-<tr class="separator:ae611e2df596896a6a14140a23e335207 inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42ce06cc2b5892ca12d5e820d8807a13 inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a42ce06cc2b5892ca12d5e820d8807a13">getKind</a> () const -&gt; <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a></td></tr>
 <tr class="separator:a42ce06cc2b5892ca12d5e820d8807a13 inherit pub_methods_classbort_1_1ast_1_1Node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -158,12 +158,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a00b4ef04f0bf633eb7b4fe241c1b3711 inherit pro_methods_classbort_1_1ast_1_1ExpressionNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7e358b185bb74770e27b9edfead9094 inherit pro_methods_classbort_1_1ast_1_1ExpressionNode"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ExpressionNode.html#ad7e358b185bb74770e27b9edfead9094">ExpressionNode</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind, <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type)</td></tr>
 <tr class="separator:ad7e358b185bb74770e27b9edfead9094 inherit pro_methods_classbort_1_1ast_1_1ExpressionNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classbort_1_1ast_1_1Node"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classbort_1_1ast_1_1Node')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classbort_1_1ast_1_1Node.html">bort::ast::Node</a></td></tr>
+<tr class="memitem:ae611e2df596896a6a14140a23e335207 inherit pro_methods_classbort_1_1ast_1_1Node"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ae611e2df596896a6a14140a23e335207">Node</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind)</td></tr>
+<tr class="separator:ae611e2df596896a6a14140a23e335207 inherit pro_methods_classbort_1_1ast_1_1Node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classbort_1_1ast_1_1ExpressionNode"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classbort_1_1ast_1_1ExpressionNode')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">bort::ast::ExpressionNode</a></td></tr>
 <tr class="memitem:a5af8299908fec84414bf20bbd02564c5 inherit pro_attribs_classbort_1_1ast_1_1ExpressionNode"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ExpressionNode.html#a5af8299908fec84414bf20bbd02564c5">m_Type</a></td></tr>
 <tr class="separator:a5af8299908fec84414bf20bbd02564c5 inherit pro_attribs_classbort_1_1ast_1_1ExpressionNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classbort_1_1ast_1_1Node"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classbort_1_1ast_1_1Node')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classbort_1_1ast_1_1Node.html">bort::ast::Node</a></td></tr>
-<tr class="memitem:a1badfa94f4a327161f078476fffb4fc1 inherit pro_attribs_classbort_1_1ast_1_1Node"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a1badfa94f4a327161f078476fffb4fc1">m_Kind</a></td></tr>
-<tr class="separator:a1badfa94f4a327161f078476fffb4fc1 inherit pro_attribs_classbort_1_1ast_1_1Node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7671f018bdf1a23e7dcf9ccee0545889" name="a7671f018bdf1a23e7dcf9ccee0545889"></a>
@@ -240,6 +240,31 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>bitwise operators </dd></dl>
+
+</div>
+</div>
+<a id="ad2d1b550abe79e5d403e7143cb20150b" name="ad2d1b550abe79e5d403e7143cb20150b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2d1b550abe79e5d403e7143cb20150b">&#9670;&#160;</a></span>isLogical()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto bort::ast::BinOpExpr::isLogical </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; bool </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

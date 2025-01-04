@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['path_0',['Path',['../structbort_1_1SourceFileInfo.html#a16aa88b52813d1027c546a6f7b817050',1,'bort::SourceFileInfo']]],
-  ['preprocessoronly_1',['PreprocessorOnly',['../classbort_1_1FrontendOptions.html#a2b44cd44d68593483a2bbfc584972c2e',1,'bort::FrontendOptions']]]
+  ['m_5fname_0',['m_Name',['../classbort_1_1Symbol.html#a37f6733d49e85e0bba87803118500454',1,'bort::Symbol']]],
+  ['m_5ftype_1',['m_Type',['../classbort_1_1ast_1_1ExpressionNode.html#a5af8299908fec84414bf20bbd02564c5',1,'bort::ast::ExpressionNode']]]
 ];

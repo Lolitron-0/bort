@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('classbort_1_1ast_1_1Node.html',''); in
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classbort_1_1ast_1_1Node-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">bort::ast::Node Class Reference</div></div>
@@ -106,15 +106,18 @@ Inheritance diagram for bort::ast::Node:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1Node__inherit__graph.png" border="0" usemap="#abort_1_1ast_1_1Node_inherit__map" alt="Inheritance graph"/></div>
 <map name="abort_1_1ast_1_1Node_inherit__map" id="abort_1_1ast_1_1Node_inherit__map">
-<area shape="rect" title=" " alt="" coords="5,104,124,129"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTRoot.html" title=" " alt="" coords="197,5,336,31"/>
-<area shape="rect" href="classbort_1_1ast_1_1Block.html" title=" " alt="" coords="207,55,327,80"/>
-<area shape="rect" href="classbort_1_1ast_1_1ExpressionNode.html" title=" " alt="" coords="172,104,361,129"/>
-<area shape="rect" href="classbort_1_1ast_1_1FunctionDecl.html" title=" " alt="" coords="183,153,351,179"/>
-<area shape="rect" href="classbort_1_1ast_1_1VarDecl.html" title=" " alt="" coords="199,203,334,228"/>
-<area shape="rect" href="classbort_1_1ast_1_1BinOpExpr.html" title=" " alt="" coords="417,55,569,80"/>
-<area shape="rect" href="classbort_1_1ast_1_1NumberExpr.html" title=" " alt="" coords="410,104,575,129"/>
-<area shape="rect" href="classbort_1_1ast_1_1VariableExpr.html" title=" " alt="" coords="409,153,576,179"/>
+<area shape="rect" title=" " alt="" coords="5,80,124,105"/>
+<area shape="rect" href="classbort_1_1ast_1_1ASTRoot.html" title=" " alt="" coords="197,31,336,56"/>
+<area shape="rect" href="classbort_1_1ast_1_1ExpressionNode.html" title=" " alt="" coords="172,80,361,105"/>
+<area shape="rect" href="classbort_1_1ast_1_1Statement.html" title=" " alt="" coords="191,227,343,252"/>
+<area shape="rect" href="classbort_1_1ast_1_1BinOpExpr.html" title=" " alt="" coords="427,5,579,31"/>
+<area shape="rect" href="classbort_1_1ast_1_1NumberExpr.html" title=" " alt="" coords="420,55,585,80"/>
+<area shape="rect" href="classbort_1_1ast_1_1VariableExpr.html" title=" " alt="" coords="419,104,586,129"/>
+<area shape="rect" href="classbort_1_1ast_1_1Block.html" title=" " alt="" coords="443,153,563,179"/>
+<area shape="rect" href="classbort_1_1ast_1_1ExpressionStmt.html" title=" " alt="" coords="409,203,596,228"/>
+<area shape="rect" href="classbort_1_1ast_1_1FunctionDecl.html" title=" " alt="" coords="419,252,587,277"/>
+<area shape="rect" href="classbort_1_1ast_1_1IfStmtNode.html" title=" " alt="" coords="423,301,582,327"/>
+<area shape="rect" href="classbort_1_1ast_1_1VarDecl.html" title=" " alt="" coords="435,351,570,376"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -122,15 +125,13 @@ Inheritance diagram for bort::ast::Node:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac726ef7c564c3e17ff10c856c613590b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ac726ef7c564c3e17ff10c856c613590b">~Node</a> ()=default</td></tr>
 <tr class="separator:ac726ef7c564c3e17ff10c856c613590b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae611e2df596896a6a14140a23e335207"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ae611e2df596896a6a14140a23e335207">Node</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind)</td></tr>
-<tr class="separator:ae611e2df596896a6a14140a23e335207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42ce06cc2b5892ca12d5e820d8807a13"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a42ce06cc2b5892ca12d5e820d8807a13">getKind</a> () const -&gt; <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a></td></tr>
 <tr class="separator:a42ce06cc2b5892ca12d5e820d8807a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a1badfa94f4a327161f078476fffb4fc1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#a1badfa94f4a327161f078476fffb4fc1">m_Kind</a></td></tr>
-<tr class="separator:a1badfa94f4a327161f078476fffb4fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ae611e2df596896a6a14140a23e335207"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html#ae611e2df596896a6a14140a23e335207">Node</a> (<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> kind)</td></tr>
+<tr class="separator:ae611e2df596896a6a14140a23e335207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -139,31 +140,6 @@ Friends</h2></td></tr>
 <tr class="separator:a8cc7c6382332136c5a38b332b3667146"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac726ef7c564c3e17ff10c856c613590b" name="ac726ef7c564c3e17ff10c856c613590b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac726ef7c564c3e17ff10c856c613590b">&#9670;&#160;</a></span>~Node()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bort::ast::Node::~Node </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae611e2df596896a6a14140a23e335207" name="ae611e2df596896a6a14140a23e335207"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae611e2df596896a6a14140a23e335207">&#9670;&#160;</a></span>Node()</h2>
 
@@ -183,7 +159,32 @@ Friends</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac726ef7c564c3e17ff10c856c613590b" name="ac726ef7c564c3e17ff10c856c613590b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac726ef7c564c3e17ff10c856c613590b">&#9670;&#160;</a></span>~Node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bort::ast::Node::~Node </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -255,29 +256,6 @@ template&lt;typename T &gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a1badfa94f4a327161f078476fffb4fc1" name="a1badfa94f4a327161f078476fffb4fc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1badfa94f4a327161f078476fffb4fc1">&#9670;&#160;</a></span>m_Kind</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> bort::ast::Node::m_Kind</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

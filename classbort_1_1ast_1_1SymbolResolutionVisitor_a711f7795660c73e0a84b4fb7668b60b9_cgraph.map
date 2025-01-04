@@ -1,5 +1,6 @@
 <map id="bort::ast::SymbolResolutionVisitor::visit" name="bort::ast::SymbolResolutionVisitor::visit">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,208,45"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="256,5,440,45"/>
-<area shape="rect" id="node3" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="488,5,672,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,208,95"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="256,55,440,95"/>
+<area shape="rect" id="node3" href="$namespacebort_1_1ast.html#a8ce8b2fe26c383c125e5fb8564586399" title="Driver for all AST walkers." alt="" coords="501,5,659,31"/>
+<area shape="rect" id="node4" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="488,55,672,95"/>
 </map>

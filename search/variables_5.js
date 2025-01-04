@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['token_0',['token',['../structbort_1_1ast_1_1ASTDebugInfo.html#a0dc4d431819758302e6013ae797f4705',1,'bort::ast::ASTDebugInfo']]],
-  ['tokennamemapping_1',['TokenNameMapping',['../classbort_1_1Token.html#aa1abf7eeca5d591a776701f00a2a3c63',1,'bort::Token']]]
+  ['path_0',['Path',['../structbort_1_1SourceFileInfo.html#a16aa88b52813d1027c546a6f7b817050',1,'bort::SourceFileInfo']]],
+  ['preprocessoronly_1',['PreprocessorOnly',['../classbort_1_1CLIOptions.html#a3b2ed831bc76b270def7525e3d2ce4ab',1,'bort::CLIOptions']]]
 ];

@@ -1,6 +1,7 @@
 var ASTNode_8hpp =
 [
     [ "bort::ast::Node", "classbort_1_1ast_1_1Node.html", "classbort_1_1ast_1_1Node" ],
+    [ "bort::ast::Statement", "classbort_1_1ast_1_1Statement.html", "classbort_1_1ast_1_1Statement" ],
     [ "bort::ast::ASTRoot", "classbort_1_1ast_1_1ASTRoot.html", "classbort_1_1ast_1_1ASTRoot" ],
     [ "NodeKind", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37a", [
       [ "NumberExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa255fe64b2da3568f43f01d987d77f282", null ],
@@ -11,6 +12,8 @@ var ASTNode_8hpp =
       [ "VarDecl", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3", null ],
       [ "FunctionDecl", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5", null ],
       [ "Block", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2", null ],
+      [ "ExpressionStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa3ba01edbf5b3bdc8de4483cdf2b4af47", null ],
+      [ "IfStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aad7f36bb6c6d04d8628bfa775f2159f29", null ],
       [ "ASTRoot", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29", null ],
       [ "NUM_NODES", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283", null ]
     ] ],

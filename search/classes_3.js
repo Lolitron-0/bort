@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['expressionnode_0',['ExpressionNode',['../classbort_1_1ast_1_1ExpressionNode.html',1,'bort::ast']]]
+  ['diagnostic_0',['Diagnostic',['../classbort_1_1Diagnostic.html',1,'bort']]]
 ];

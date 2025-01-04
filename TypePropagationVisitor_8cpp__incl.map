@@ -1,40 +1,42 @@
 <map id="src/AST/Visitors/TypePropagationVisitor.cpp" name="src/AST/Visitors/TypePropagationVisitor.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1182,5,1417,45"/>
-<area shape="rect" id="node2" href="$TypePropagationVisitor_8hpp.html" title=" " alt="" coords="1019,93,1262,133"/>
-<area shape="rect" id="node30" href="$Type_8hpp.html" title=" " alt="" coords="1219,328,1390,353"/>
-<area shape="rect" id="node34" href="$IO_8hpp.html" title=" " alt="" coords="428,475,547,500"/>
-<area shape="rect" id="node37" title=" " alt="" coords="1337,93,1499,133"/>
-<area shape="rect" id="node38" title=" " alt="" coords="1523,101,1705,126"/>
-<area shape="rect" id="node3" href="$BinOpExpr_8hpp.html" title=" " alt="" coords="958,181,1134,207"/>
-<area shape="rect" id="node25" href="$ASTVisitor_8hpp.html" title=" " alt="" coords="673,401,901,427"/>
-<area shape="rect" id="node29" title=" " alt="" coords="1132,401,1256,427"/>
-<area shape="rect" id="node4" href="$ExpressionNode_8hpp.html" title=" " alt="" coords="929,255,1144,280"/>
-<area shape="rect" id="node5" href="$ASTNode_8hpp.html" title=" " alt="" coords="911,328,1079,353"/>
-<area shape="rect" id="node6" href="$ASTDebugInfo_8hpp.html" title=" " alt="" coords="687,475,888,500"/>
-<area shape="rect" id="node8" href="$Assert_8hpp.html" title=" " alt="" coords="325,621,485,647"/>
-<area shape="rect" id="node26" href="$Ref_8hpp.html" title=" " alt="" coords="943,475,1083,500"/>
-<area shape="rect" id="node27" title=" " alt="" coords="1107,475,1167,500"/>
-<area shape="rect" id="node28" title=" " alt="" coords="926,401,1006,427"/>
-<area shape="rect" id="node7" href="$Token_8hpp.html" title=" " alt="" coords="785,548,929,573"/>
-<area shape="rect" id="node14" href="$SourceFile_8hpp.html" title=" " alt="" coords="567,621,775,647"/>
-<area shape="rect" id="node20" title=" " alt="" coords="1152,695,1249,720"/>
-<area shape="rect" id="node21" title=" " alt="" coords="799,621,914,647"/>
-<area shape="rect" id="node22" title=" " alt="" coords="939,621,1031,647"/>
-<area shape="rect" id="node23" title=" " alt="" coords="1055,621,1123,647"/>
-<area shape="rect" id="node24" title=" " alt="" coords="1147,621,1295,647"/>
-<area shape="rect" id="node9" title=" " alt="" coords="339,695,470,720"/>
-<area shape="rect" id="node10" title=" " alt="" coords="495,695,653,720"/>
-<area shape="rect" id="node11" title=" " alt="" coords="5,695,97,720"/>
-<area shape="rect" id="node12" title=" " alt="" coords="121,695,211,720"/>
-<area shape="rect" id="node13" title=" " alt="" coords="235,695,315,720"/>
-<area shape="rect" id="node15" title=" " alt="" coords="761,695,851,720"/>
-<area shape="rect" id="node16" title=" " alt="" coords="876,695,981,720"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1345,695,1422,720"/>
-<area shape="rect" id="node18" title=" " alt="" coords="1005,695,1092,720"/>
-<area shape="rect" id="node19" title=" " alt="" coords="678,695,737,720"/>
-<area shape="rect" id="node31" title=" " alt="" coords="1332,401,1523,427"/>
-<area shape="rect" id="node32" title=" " alt="" coords="1547,401,1614,427"/>
-<area shape="rect" id="node33" title=" " alt="" coords="1639,401,1811,427"/>
-<area shape="rect" id="node35" title=" " alt="" coords="448,548,540,573"/>
-<area shape="rect" id="node36" title=" " alt="" coords="319,548,424,573"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1144,5,1379,45"/>
+<area shape="rect" id="node2" href="$TypePropagationVisitor_8hpp.html" title=" " alt="" coords="703,93,945,133"/>
+<area shape="rect" id="node7" href="$Token_8hpp.html" title=" " alt="" coords="1088,475,1232,500"/>
+<area shape="rect" id="node29" href="$Type_8hpp.html" title=" " alt="" coords="851,328,1021,353"/>
+<area shape="rect" id="node34" href="$NumberExpr_8hpp.html" title=" " alt="" coords="1068,181,1257,207"/>
+<area shape="rect" id="node35" href="$Casts_8hpp.html" title=" " alt="" coords="5,328,160,353"/>
+<area shape="rect" id="node36" href="$IO_8hpp.html" title=" " alt="" coords="1457,401,1575,427"/>
+<area shape="rect" id="node39" title=" " alt="" coords="1383,93,1545,133"/>
+<area shape="rect" id="node40" title=" " alt="" coords="1569,101,1751,126"/>
+<area shape="rect" id="node3" href="$BinOpExpr_8hpp.html" title=" " alt="" coords="868,181,1044,207"/>
+<area shape="rect" id="node27" title=" " alt="" coords="703,401,827,427"/>
+<area shape="rect" id="node33" href="$ASTVisitor_8hpp.html" title=" " alt="" coords="185,328,413,353"/>
+<area shape="rect" id="node4" href="$ExpressionNode_8hpp.html" title=" " alt="" coords="859,255,1074,280"/>
+<area shape="rect" id="node5" href="$ASTNode_8hpp.html" title=" " alt="" coords="437,328,605,353"/>
+<area shape="rect" id="node6" href="$ASTDebugInfo_8hpp.html" title=" " alt="" coords="187,401,389,427"/>
+<area shape="rect" id="node8" href="$Assert_8hpp.html" title=" " alt="" coords="653,548,813,573"/>
+<area shape="rect" id="node25" href="$Ref_8hpp.html" title=" " alt="" coords="23,401,163,427"/>
+<area shape="rect" id="node26" title=" " alt="" coords="548,401,628,427"/>
+<area shape="rect" id="node28" title=" " alt="" coords="413,401,473,427"/>
+<area shape="rect" id="node14" href="$SourceFile_8hpp.html" title=" " alt="" coords="1512,548,1720,573"/>
+<area shape="rect" id="node20" title=" " alt="" coords="1322,621,1419,647"/>
+<area shape="rect" id="node21" title=" " alt="" coords="1103,548,1217,573"/>
+<area shape="rect" id="node22" title=" " alt="" coords="1242,548,1334,573"/>
+<area shape="rect" id="node23" title=" " alt="" coords="838,548,906,573"/>
+<area shape="rect" id="node24" title=" " alt="" coords="930,548,1078,573"/>
+<area shape="rect" id="node9" title=" " alt="" coords="499,621,629,647"/>
+<area shape="rect" id="node10" title=" " alt="" coords="654,621,813,647"/>
+<area shape="rect" id="node11" title=" " alt="" coords="981,621,1073,647"/>
+<area shape="rect" id="node12" title=" " alt="" coords="1171,621,1261,647"/>
+<area shape="rect" id="node13" title=" " alt="" coords="837,621,917,647"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1767,621,1857,647"/>
+<area shape="rect" id="node16" title=" " alt="" coords="1443,621,1549,647"/>
+<area shape="rect" id="node17" title=" " alt="" coords="323,621,400,647"/>
+<area shape="rect" id="node18" title=" " alt="" coords="1573,621,1659,647"/>
+<area shape="rect" id="node19" title=" " alt="" coords="1684,621,1743,647"/>
+<area shape="rect" id="node30" title=" " alt="" coords="1190,401,1381,427"/>
+<area shape="rect" id="node31" title=" " alt="" coords="903,401,969,427"/>
+<area shape="rect" id="node32" title=" " alt="" coords="994,401,1166,427"/>
+<area shape="rect" id="node37" title=" " alt="" coords="1511,475,1603,500"/>
+<area shape="rect" id="node38" title=" " alt="" coords="1627,475,1733,500"/>
 </map>

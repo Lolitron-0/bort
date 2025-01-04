@@ -97,24 +97,24 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <div class="textblock"><dl class="reflist">
 <dt>Member <a class="el" href="classbort_1_1ast_1_1BinOpExpr.html#abdf50a1f0050143e4ff3eeea0bf4c090">bort::ast::BinOpExpr::isArithmetic</a>  () const -&gt; bool</dt>
 <dd><a class="anchor" id="_todo000006"></a>bitwise operators  </dd>
-<dt>Member <a class="el" href="namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808">bort::consumeIdent</a>  (<a class="el" href="classbort_1_1SourceFileIt.html">SourceFileIt</a> &amp;pos) -&gt; std::string_view</dt>
-<dd><a class="anchor" id="_todo000003"></a>actually there are more sophisticated rules in acceptable identifier characters, but we'll leave it for now  </dd>
-<dt>Member <a class="el" href="structbort_1_1FrontendInstance.html#a51822d4c2a4bffbfefd15b4d21abd16b">bort::FrontendInstance::run</a>  ()</dt>
-<dd><a class="anchor" id="_todo000002"></a>preprocessing  </dd>
-<dt>Class <a class="el" href="classbort_1_1FrontendOptions.html">bort::FrontendOptions</a>  </dt>
+<dt>Class <a class="el" href="classbort_1_1CLIOptions.html">bort::CLIOptions</a>  </dt>
 <dd><a class="anchor" id="_todo000007"></a>Glue all inputs to single output  </dd>
+<dt>Member <a class="el" href="namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808">bort::consumeIdent</a>  (<a class="el" href="classbort_1_1SourceFileIt.html">SourceFileIt</a> &amp;pos) -&gt; std::string_view</dt>
+<dd><a class="anchor" id="_todo000004"></a>actually there are more sophisticated rules in acceptable identifier characters, but we'll leave it for now  </dd>
+<dt>Member <a class="el" href="structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb">bort::FrontEndInstance::run</a>  () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt; ast::ASTRoot &gt;</a></dt>
+<dd><a class="anchor" id="_todo000003"></a>preprocessing  </dd>
+<dt>Member <a class="el" href="classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf">bort::ir::IntConstant::create</a>  (int32_t value) -&gt; Unique&lt; IntConstant &gt;</dt>
+<dd><a class="anchor" id="_todo000010"></a>getOrCreate  </dd>
 <dt>Class <a class="el" href="classbort_1_1Parser.html">bort::Parser</a>  </dt>
-<dd><a class="anchor" id="_todo000011"></a>don't check null on error and then traverse, checking for null, to recieve more errors at once  </dd>
-<dt>Member <a class="el" href="classbort_1_1Parser.html#af251743fe093a8c859ba91389408044b">bort::Parser::parseBlock</a>  () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt; ast::Block &gt;</a></dt>
-<dd><a class="anchor" id="_todo000005"></a>parse statement  </dd>
+<dd><a class="anchor" id="_todo000012"></a>don't check null on error and then traverse, checking for null, to recieve more errors at once  </dd>
 <dt>Member <a class="el" href="classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d">bort::Parser::parseDeclspec</a>  () -&gt; TypeRef</dt>
-<dd><a class="anchor" id="_todo000013"></a>type qualifiers  </dd>
+<dd><a class="anchor" id="_todo000014"></a>type qualifiers  </dd>
 <dt>Member <a class="el" href="classbort_1_1Parser.html#ac4ae3cb710b01b46c39ebe6cb6e5c08b">bort::Parser::parseIdentifierExpr</a>  () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt; ast::ExpressionNode &gt;</a></dt>
-<dd><a class="anchor" id="_todo000004"></a>parse function call  </dd>
+<dd><a class="anchor" id="_todo000005"></a>parse function call  </dd>
 <dt>Member <a class="el" href="classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d">bort::Parser::parseParenExpr</a>  () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt; ast::ExpressionNode &gt;</a></dt>
-<dd><a class="anchor" id="_todo000012"></a>type-casts -&gt; '(' declspec ')'  </dd>
+<dd><a class="anchor" id="_todo000013"></a>type-casts -&gt; '(' declspec ')'  </dd>
 <dt>Member <a class="el" href="classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8">bort::Parser::parseVarDecl</a>  (const TypeRef &amp;type, const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt; ast::VarDecl &gt;</a></dt>
-<dd><a class="anchor" id="_todo000014"></a>declspec (identifier ('=' expr)?, ...) ';'  </dd>
+<dd><a class="anchor" id="_todo000015"></a>declspec (identifier ('=' expr)?, ...) ';'  </dd>
 <dt>Member <a class="el" href="classbort_1_1SourceFileIt.html#a73cceaf38ce0d369ebe8953d5328c43a">bort::SourceFileIt::operator++</a>  () -&gt; <a class="el" href="classbort_1_1SourceFileIt.html">SourceFileIt</a> &amp;</dt>
 <dd><a class="anchor" id="_todo000008"></a>handle line markers here  </dd>
 <dt>Class <a class="el" href="classbort_1_1Symbol.html">bort::Symbol</a>  </dt>

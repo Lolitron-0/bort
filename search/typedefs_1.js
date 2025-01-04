@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['literalvalue_0',['LiteralValue',['../classbort_1_1Token.html#af4087de3cbe873e7b895c051da6228d7',1,'bort::Token']]]
+  ['instlist_0',['InstList',['../classbort_1_1ir_1_1BasicBlock.html#aa86d30bb2fd96322196f1676417f5e67',1,'bort::ir::BasicBlock']]]
 ];

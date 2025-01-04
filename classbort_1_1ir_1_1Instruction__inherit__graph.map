@@ -1,0 +1,8 @@
+<map id="bort::ir::Instruction" name="bort::ir::Instruction">
+<area shape="rect" id="node1" title=" " alt="" coords="248,79,391,104"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1AllocaInst.html" title=" " alt="" coords="5,152,143,177"/>
+<area shape="rect" id="node4" href="$classbort_1_1ir_1_1BranchInst.html" title=" " alt="" coords="167,152,309,177"/>
+<area shape="rect" id="node5" href="$classbort_1_1ir_1_1MoveInst.html" title=" " alt="" coords="334,152,467,177"/>
+<area shape="rect" id="node6" href="$classbort_1_1ir_1_1OpInst.html" title=" " alt="" coords="491,152,606,177"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="265,5,374,31"/>
+</map>

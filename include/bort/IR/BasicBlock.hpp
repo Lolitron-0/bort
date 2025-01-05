@@ -5,14 +5,20 @@
 
 namespace bort::ir {
 
+using InstList = std::list<Ref<Instruction>>;
+using InstIter = InstList::iterator;
+
 class BasicBlock final : public Value {
 public:
-  using InstList = std::list<Ref<Instruction>>;
-
   explicit BasicBlock(std::string name = "");
 
   void addInstruction(Ref<Instruction> instruction) {
     m_Instructions.push_back(std::move(instruction));
+  }
+
+  void insertBefore(InstList::iterator pos,
+                    Ref<Instruction> instruction) {
+    m_Instructions.insert(pos, std::move(instruction));
   }
 
   [[nodiscard]] auto getInstructions() const -> const InstList& {

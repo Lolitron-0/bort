@@ -1,6 +1,5 @@
 #pragma once
 #include "bort/Basic/Assert.hpp"
-#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Instruction.hpp"
 
@@ -9,8 +8,10 @@ namespace bort::ir {
 class BranchInst final : public Instruction {
 public:
   explicit BranchInst(ValueRef condition = nullptr)
-      : Instruction{ VoidType::get() },
-        m_Condition{ std::move(condition) } {
+      : Instruction((condition ? 1 : 0)) {
+    if (condition) {
+      m_Operands[s_ConditionIdx] = std::move(condition);
+    }
   }
 
   void setTarget(const BasicBlock* block) {
@@ -22,18 +23,19 @@ public:
     return m_Target;
   }
 
-  [[nodiscard]] auto getCondition() const -> const ValueRef& {
+  [[nodiscard]] auto getCondition() const -> ValueRef {
     bort_assert(isConditional(), "getCondition on unconditional branch");
-    return m_Condition;
+    return getOperand(s_ConditionIdx);
   }
 
   [[nodiscard]] auto isConditional() const -> bool {
-    return m_Condition != nullptr;
+    return getNumOperands() > 0;
   }
 
 private:
+  static constexpr size_t s_ConditionIdx{ 0 };
+
   const BasicBlock* m_Target{ nullptr };
-  ValueRef m_Condition;
 };
 
 } // namespace bort::ir

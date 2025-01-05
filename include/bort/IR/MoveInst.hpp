@@ -7,16 +7,16 @@ namespace bort::ir {
 class MoveInst final : public Instruction {
 public:
   explicit MoveInst(ValueRef dst, ValueRef src)
-      : Instruction{ std::move(dst) },
-        m_Src{ std::move(src) } {
+      : Instruction{ 1, std::move(dst) } {
+    m_Operands[s_SrcIdx] = std::move(src);
   }
 
   [[nodiscard]] auto getSrc() const -> const ValueRef& {
-    return m_Src;
+    return m_Operands[s_SrcIdx];
   }
 
 private:
-  ValueRef m_Src;
+  static constexpr size_t s_SrcIdx{ 1 };
 };
 
 } // namespace bort::ir

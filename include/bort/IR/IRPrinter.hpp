@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/OpInst.hpp"
 

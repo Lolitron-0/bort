@@ -1,6 +1,7 @@
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 #include "bort/Basic/Assert.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Constant.hpp"
@@ -9,7 +10,6 @@
 #include "bort/IR/Register.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
-#include <memory>
 
 namespace bort::ir {
 
@@ -29,13 +29,15 @@ auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
   auto rhs{ genericVisit(binOpNode->getRhs()) };
 
   if (binOpNode->getOp() == TokenKind::Assign) {
-    return addInstruction(
-        makeRef<MoveInst>(std::move(lhs), std::move(rhs)));
+    auto newInst{ addInstruction(
+        makeRef<MoveInst>(std::move(lhs), std::move(rhs))) };
+    return newInst->getDestination();
   }
 
-  return addInstruction(
-      makeRef<OpInst>(binOpNode->getOp(),
-                      Register::create(binOpNode->getType()), lhs, rhs));
+  auto newInst{ addInstruction(makeRef<OpInst>(
+      binOpNode->getOp(), Register::getOrCreate(binOpNode->getType()),
+      lhs, rhs)) };
+  return newInst->getDestination();
 }
 
 auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
@@ -64,6 +66,9 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
     -> ValueRef {
+  /// @todo function types
+  m_Module.addFunction(VoidType::get(),
+                       functionDeclNode->getFunction()->getName());
   pushBB(functionDeclNode->getFunction()->getName());
   return genericVisit(functionDeclNode->getBody());
 }

@@ -1,5 +1,5 @@
 int main() {
-  char var;
+  int var;
   char cvar;
   if (var + cvar < 12) {
     var = 1;

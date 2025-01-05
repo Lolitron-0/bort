@@ -1,25 +1,28 @@
 #pragma once
 #include "bort/IR/Value.hpp"
+#include <vector>
 
 namespace bort::ir {
 
 class Instruction : public Value {
 public:
-  [[nodiscard]] auto getDestination() const -> ValueRef {
-    return m_Destination;
+  [[nodiscard]] auto getDestination() const -> ValueRef;
+
+  [[nodiscard]] auto getOperand(size_t index) const -> ValueRef;
+  [[nodiscard]] auto getNumOperands() const -> size_t {
+    return m_NumOperands;
   }
 
 protected:
-  explicit Instruction(ValueRef destination)
-      : Value{ destination->getType() },
-        m_Destination{ std::move(destination) } {
-  }
-  explicit Instruction(TypeRef type)
-      : Value{ std::move(type) } {
-  }
+  explicit Instruction(size_t numArgs, ValueRef destination);
+  explicit Instruction(size_t numArgs);
+
+  std::vector<ValueRef> m_Operands;
 
 private:
-  ValueRef m_Destination;
+  static constexpr size_t s_DestinationIdx{ 0 };
+
+  size_t m_NumOperands;
 };
 
 } // namespace bort::ir

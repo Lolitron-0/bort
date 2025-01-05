@@ -32,12 +32,14 @@ set(SOURCES
     src/AST/Visitors/ASTPrinter.cpp
     src/IR/MiddleEndInstance.cpp
     src/IR/Value.cpp
+    src/IR/ValueLoc.cpp
     src/IR/VariableUse.cpp
     src/IR/Instruction.cpp
     src/IR/IRCodegen.cpp
     src/IR/IRPrinter.cpp
-    src/IR/Label.cpp
-    src/IR/BasicBlock.cpp)
+    src/IR/BasicBlock.cpp
+    src/Codegen/RISCVCodegen.cpp
+    src/Codegen/Utils.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

@@ -4,6 +4,8 @@
 
 namespace bort::ir {
 
+using BBIter = std::list<BasicBlock>::iterator;
+
 class IRFunction : public Value {
 public:
   IRFunction(TypeRef type, std::string name)

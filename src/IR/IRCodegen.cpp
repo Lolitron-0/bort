@@ -10,6 +10,7 @@
 #include "bort/IR/Register.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
+#include "fmt/format.h"
 
 namespace bort::ir {
 
@@ -69,7 +70,7 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
   /// @todo function types
   m_Module.addFunction(VoidType::get(),
                        functionDeclNode->getFunction()->getName());
-  pushBB(functionDeclNode->getFunction()->getName());
+  pushBB("", functionDeclNode->getFunction()->getName());
   return genericVisit(functionDeclNode->getBody());
 }
 
@@ -101,23 +102,29 @@ auto IRCodegen::visit(const Ref<ast::IfStmtNode>& ifStmtNode)
   auto thenBr{ addInstruction(makeRef<BranchInst>(condition)) };
   bort_assert_nomsg(thenBr);
 
-  pushBB();
+  pushBB("_false");
   genericVisit(ifStmtNode->getElseBlock());
   auto endBr{ addInstruction(makeRef<BranchInst>()) };
   bort_assert_nomsg(endBr);
 
-  pushBB();
+  pushBB("_true");
   auto lastBBIt{ m_Module.getLastBBIt() };
   thenBr->setTarget(&*lastBBIt);
   genericVisit(ifStmtNode->getThenBlock());
 
-  pushBB();
+  pushBB("_end");
   lastBBIt = m_Module.getLastBBIt();
   endBr->setTarget(&*lastBBIt);
   return nullptr;
 }
 
-void IRCodegen::pushBB(std::string name) {
+void IRCodegen::pushBB(std::string postfix, std::string name) {
+  static int s_NameCounter{ 0 };
+  if (name.empty()) {
+    name = fmt::format(".L{}{}", s_NameCounter++, postfix);
+  } else {
+    name += postfix;
+  }
   m_Module.addBasicBlock(std::move(name));
 }
 

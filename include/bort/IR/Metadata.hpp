@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/Basic/Casts.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <ranges>
 #include <string>
@@ -32,7 +33,9 @@ public:
 
   template <MetadataClass T>
   auto get() -> T* {
-    auto node{ contains<T>() ? m_Registry.at(typeid(T)).get() : nullptr };
+    auto node{ contains<T>()
+                   ? dynCastRef<T>(m_Registry.at(typeid(T))).get()
+                   : nullptr };
     return node;
   }
 

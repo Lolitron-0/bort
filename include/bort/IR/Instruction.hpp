@@ -9,9 +9,10 @@ public:
   [[nodiscard]] auto getDestination() const -> ValueRef;
 
   [[nodiscard]] auto getOperand(size_t index) const -> ValueRef;
-  [[nodiscard]] auto getNumOperands() const -> size_t {
-    return m_NumOperands;
-  }
+  [[nodiscard]] auto getNumOperands() const -> size_t;
+
+  void setDestination(ValueRef value);
+  void setOperand(size_t index, ValueRef value);
 
 protected:
   explicit Instruction(size_t numArgs, ValueRef destination);

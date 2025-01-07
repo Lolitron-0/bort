@@ -1,10 +1,17 @@
 #pragma once
 #include "bort/CLI/CLIOptions.hpp"
+#include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/LoadInst.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Codegen/ValueLoc.hpp"
+#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Module.hpp"
+#include "bort/IR/MoveInst.hpp"
+#include "bort/IR/OpInst.hpp"
 #include "bort/IR/Value.hpp"
-#include "bort/IR/ValueLoc.hpp"
+#include <map>
 #include <unordered_set>
 #include <utility>
 
@@ -18,7 +25,15 @@ enum class GPR : uint8_t {
   t4,
   t5,
   t6,
-  s0,
+  a7,
+  a6,
+  a5,
+  a4,
+  a3,
+  a2,
+  a1,
+  a0,
+  // s0 - reserved
   s1,
   s2,
   s3,
@@ -30,26 +45,49 @@ enum class GPR : uint8_t {
   s9,
   s10,
   s11,
-  a0,
-  a1,
-  a2,
-  a3,
-  a4,
-  a5,
-  a6,
-  a7,
   COUNT
 };
 
 auto GPRToString(GPR gpr) -> std::string_view;
 
-using RVMachineRegister    = MachineRegister<GPR, GPRToString>;
+struct RVFuncAdditionalCode : public ir::Metadata {
+  std::string Prologue;
+  std::string Epilogue;
+
+  [[nodiscard]] auto toString() const -> std::string override;
+};
+
+struct RVInstInfo final : public ir::Metadata {
+  explicit RVInstInfo(std::string instName)
+      : InstName{ std::move(instName) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  std::string InstName;
+};
+
+class RVMachineRegister final : public MachineRegister {
+public:
+  static auto get(GPR gprId) -> Ref<RVMachineRegister>;
+
+  [[nodiscard]] auto getGPRId() const -> GPR {
+    return static_cast<GPR>(MachineRegister::getGPRId());
+  }
+
+private:
+  RVMachineRegister(GPR gprId, std::string name)
+      : MachineRegister(static_cast<int>(gprId), std::move(name)) {
+  }
+
+  static constexpr auto s_NumRegisters{ static_cast<size_t>(GPR::COUNT) };
+};
 using RVMachineRegisterRef = Ref<RVMachineRegister>;
 
 /// General note: for this type of IR, graph-coloring algorithm would be
 /// more preferable, but firstly I decided to quickly implement something
 /// more simple
-class Generator {
+class Generator : public InstructionVisitorBase {
 public:
   Generator(CLIOptions cliOptions, ir::Module& module)
       : m_Module{ module },
@@ -59,20 +97,30 @@ public:
   void generate();
 
 private:
-  void processInst(ir::InstIter it, ir::BasicBlock& bb);
+  void generateLoad(const Ref<ir::Operand>& op,
+                    const RVMachineRegisterRef& reg);
+  void generateStore(const Ref<ir::Operand>& op,
+                     const Ref<MachineRegister>& reg,
+                     const Ref<ValueLoc>& loc);
 
-  auto chooseUseReg(Ref<ir::Operand> op, ir::InstIter it,
-                    std::initializer_list<GPR> ignoreRegisters = {})
-      -> RVMachineRegisterRef;
+  void processInst();
+  void visit(const Ref<ir::OpInst>& opInst) override;
+  void visit(const Ref<ir::BranchInst>& brInst) override;
+  void visit(const Ref<ir::MoveInst>& mvInst) override;
+
+  auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
+      -> std::optional<RVMachineRegisterRef>;
+  auto chooseReadReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
+  auto chooseDstReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
   void reinitDescriptors(const ir::BasicBlock& bb);
-  void assignLocalVariablesOffsets();
+  void assignLocalOperandsOffsets();
+  void spillEndBB();
 
   ir::Module& m_Module;
   CLIOptions m_CLIOptions;
-  std::unordered_map<RVMachineRegisterRef,
-                     std::unordered_set<Ref<ir::Operand>>>
+  std::map<RVMachineRegisterRef, std::unordered_set<Ref<ir::Operand>>>
       m_RegisterContent;
-  std::unordered_map<Ref<ir::Operand>, std::unordered_set<Ref<ir::ValueLoc>>>
+  std::unordered_map<Ref<ir::Operand>, std::unordered_set<Ref<ValueLoc>>>
       m_OperandLocs;
 };
 

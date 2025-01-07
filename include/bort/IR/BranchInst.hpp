@@ -17,6 +17,9 @@ public:
   void setTarget(const BasicBlock* block) {
     m_Target = block;
   }
+  void setCondition(ValueRef condition) {
+    m_Operands[s_ConditionIdx] = std::move(condition);
+  }
 
   [[nodiscard]] auto getTarget() const -> const BasicBlock* {
     bort_assert(m_Target, "Target not set");

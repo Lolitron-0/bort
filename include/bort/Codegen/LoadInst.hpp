@@ -1,11 +1,13 @@
 #pragma once
+#include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/Instruction.hpp"
-#include "bort/IR/ValueLoc.hpp"
 
-namespace bort::ir {
-class LoadInst final : public Instruction {
+namespace bort::codegen {
+class LoadInst final : public ir::Instruction {
 public:
-  LoadInst(ValueRef destination, Ref<ValueLoc> loc, size_t bytes)
+  LoadInst(Ref<MachineRegister> destination, Ref<ValueLoc> loc,
+           size_t bytes)
       : Instruction{ 0, std::move(destination) },
         m_Loc{ std::move(loc) },
         m_Bytes{ bytes } {
@@ -23,4 +25,4 @@ private:
   Ref<ValueLoc> m_Loc;
   size_t m_Bytes; ///< 1 - lb, 4 - lw, ...
 };
-} // namespace bort::ir
+} // namespace bort::codegen

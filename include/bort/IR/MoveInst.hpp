@@ -15,6 +15,10 @@ public:
     return m_Operands[s_SrcIdx];
   }
 
+  void setSrc(ValueRef src) {
+    m_Operands[s_SrcIdx] = std::move(src);
+  }
+
 private:
   static constexpr size_t s_SrcIdx{ 1 };
 };

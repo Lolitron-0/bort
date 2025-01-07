@@ -5,7 +5,6 @@
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
-#include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include <memory>
@@ -41,7 +40,7 @@ private:
     return std::dynamic_pointer_cast<T>(
         m_Module.addInstruction(std::move(instruction)));
   }
-  void pushBB(std::string name = "");
+  void pushBB(std::string postfix = "", std::string name = "" );
 
 private:
   Module m_Module;

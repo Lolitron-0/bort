@@ -10,7 +10,7 @@ using InstIter = InstList::iterator;
 
 class BasicBlock final : public Value {
 public:
-  explicit BasicBlock(std::string name = "");
+  explicit BasicBlock(std::string name);
 
   void addInstruction(Ref<Instruction> instruction) {
     m_Instructions.push_back(std::move(instruction));

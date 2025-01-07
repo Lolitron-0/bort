@@ -27,4 +27,16 @@ Instruction::Instruction(size_t numArgs)
       m_Operands(numArgs),
       m_NumOperands{ numArgs } {
 }
+
+auto Instruction::getNumOperands() const -> size_t {
+  return m_NumOperands;
+}
+
+void Instruction::setDestination(ValueRef value) {
+  m_Operands[s_DestinationIdx] = std::move(value);
+}
+void Instruction::setOperand(size_t index, ValueRef value) {
+  bort_assert(index < m_NumOperands, "Index out of range");
+  m_Operands[index] = std::move(value);
+}
 } // namespace bort::ir

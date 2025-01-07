@@ -2,6 +2,7 @@
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/Metadata.hpp"
+#include <optional>
 
 namespace bort::ir {
 
@@ -34,9 +35,17 @@ public:
     return m_MDList->get<T>();
   }
 
+  template <MetadataClass T>
+  auto getMDNode() const -> const T* {
+    return m_MDList->get<T>();
+  }
+
   [[nodiscard]] auto getMDRange() const {
     return m_MDList->nodes();
   }
+
+  static auto formatValue(const ValueRef& value)
+      -> std::optional<std::string>;
 
 protected:
   explicit Value(TypeRef type, std::string name = "")

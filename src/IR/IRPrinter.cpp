@@ -27,31 +27,23 @@ static auto getMDClause(const Value& val) -> std::string {
 
   std::string res;
   for (auto&& md : val.getMDRange()) {
-    res += "!" + md->toString();
+    res += "!" + md->toString() + ", ";
   }
   return fmt::format(s_MDColor, "[{}]", std::move(res));
 }
 
-template <>
-struct fmt::formatter<bort::ir::ValueRef>
-    : fmt::formatter<std::string_view> {
-  auto format(const bort::ir::ValueRef& val,
-              format_context& ctx) const -> format_context::iterator {
-    if (auto constant =
-            std::dynamic_pointer_cast<bort::ir::IntConstant>(val)) {
-      return formatter<std::string_view>::format(
-          fmt::format(s_ConstColor, "{}", constant->getValue()), ctx);
-    } else if (bort::isaRef<bort::ir::Register>(val) ||
-               bort::isaRef<bort::ir ::VariableUse>(val)) {
-      return formatter<std::string_view>::format(
-          fmt::format(s_RegColor, "%{}{}", val->getName(),
-                      getMDClause(*val)),
-          ctx);
-    }
-    bort_assert(false, "Can't format Value");
-    return ctx.out();
+auto formatValueColored(const bort::ir::ValueRef& val) -> std::string {
+  if (auto constant = dynCastRef<bort::ir::IntConstant>(val)) {
+    return fmt::format(s_ConstColor, "{}", constant->getValue());
   }
-};
+  if (bort::isaRef<bort::ir::Register>(val) ||
+      bort::isaRef<bort::ir ::VariableUse>(val)) {
+    return fmt::format(s_RegColor, "%{}{}", val->getName(),
+                       getMDClause(*val));
+  }
+  // bort_assert(false, "Can't format Value");
+  return "UNK";
+}
 
 template <typename T>
 static auto styleInst(T&& name) {
@@ -69,7 +61,7 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
 
 void IRPrinter::print(const Module& module) {
   for (auto&& func : module) {
-    fmt::print(stderr, s_MDColor, "{} ", getMDClause(func));
+    fmt::print(stderr, s_MDColor, "function {}\n", getMDClause(func));
     for (auto&& BB : func) {
       fmt::println(stderr, "{}:", BB.getName());
       for (auto&& inst : BB) {
@@ -78,11 +70,15 @@ void IRPrinter::print(const Module& module) {
         } else if (auto allocaInst{ dynCastRef<AllocaInst>(inst) }) {
           visit(allocaInst);
         } else if (auto moveInst{ dynCastRef<MoveInst>(inst) }) {
-          fmt::println(stderr, "{} = {}", moveInst->getDestination(),
-                       moveInst->getSrc());
+          fmt::print(stderr, "{} = {}",
+                     formatValueColored(moveInst->getDestination()),
+                     formatValueColored(moveInst->getSrc()));
         } else if (auto branchInst{ dynCastRef<BranchInst>(inst) }) {
           visit(branchInst);
+        } else {
+          continue;
         }
+        fmt::print(stderr, "; {}\n", getMDClause(*inst));
       }
     }
   }
@@ -91,24 +87,28 @@ void IRPrinter::print(const Module& module) {
 void IRPrinter::visit(const Ref<OpInst>& opInst) {
   bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),
               "OpInst name not added");
-  fmt::println(stderr, "{} = {} {}, {}", opInst->getDestination(),
-               styleInst(s_OpInstNames.Find(opInst->getOp()).value()),
-               opInst->getSrc1(), opInst->getSrc2());
+  fmt::print(stderr, "{} = {} {}, {}",
+             formatValueColored(opInst->getDestination()),
+             styleInst(s_OpInstNames.Find(opInst->getOp()).value()),
+             formatValueColored(opInst->getSrc1()),
+             formatValueColored(opInst->getSrc2()));
 }
 
 void IRPrinter::visit(const Ref<AllocaInst>& allocaInst) {
-  fmt::println(stderr, "{} = {} {}, {}", allocaInst->getDestination(),
-               styleInst("alloca"), allocaInst->getElementSize(),
-               allocaInst->getNumElements());
+  fmt::print(stderr, "{} = {} {}, {}",
+             formatValueColored(allocaInst->getDestination()),
+             styleInst("alloca"),
+             formatValueColored(allocaInst->getElementSize()),
+             formatValueColored(allocaInst->getNumElements()));
 }
 
 void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
   if (branchInst->isConditional()) {
-    fmt::println(stderr, "{} {}, {}", styleInst("br"),
-                 branchInst->getCondition(),
-                 branchInst->getTarget()->getName());
+    fmt::print(stderr, "{} {}, {}", styleInst("br"),
+               formatValueColored(branchInst->getCondition()),
+               branchInst->getTarget()->getName());
   } else {
-    fmt::println(stderr, "{} {}", styleInst("br"),
-                 branchInst->getTarget()->getName());
+    fmt::print(stderr, "{} {}", styleInst("br"),
+               branchInst->getTarget()->getName());
   }
 }

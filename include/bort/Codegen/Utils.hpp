@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
 
@@ -13,6 +14,9 @@ public:
 };
 
 auto getUniqueOperands(const ir::IRFunction& func)
+    -> std::vector<Ref<ir::Operand>>;
+
+auto getUniqueOperands(const ir::BasicBlock& block)
     -> std::vector<Ref<ir::Operand>>;
 
 } // namespace bort::codegen

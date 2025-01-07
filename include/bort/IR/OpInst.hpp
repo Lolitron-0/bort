@@ -11,8 +11,8 @@ public:
   OpInst(TokenKind op, ValueRef dst, ValueRef src1, ValueRef src2)
       : Instruction{ 2, std::move(dst) },
         m_Op(op) {
-          m_Operands[s_Src1Idx] = std::move(src1);
-          m_Operands[s_Src2Idx] = std::move(src2);
+    m_Operands[s_Src1Idx] = std::move(src1);
+    m_Operands[s_Src2Idx] = std::move(src2);
   }
 
   [[nodiscard]] auto getOp() const -> TokenKind {
@@ -23,6 +23,13 @@ public:
   }
   [[nodiscard]] auto getSrc2() const -> ValueRef {
     return getOperand(s_Src2Idx);
+  }
+
+  void setSrc1(ValueRef value) {
+    m_Operands[s_Src1Idx] = std::move(value);
+  }
+  void setSrc2(ValueRef value) {
+    m_Operands[s_Src2Idx] = std::move(value);
   }
 
 private:

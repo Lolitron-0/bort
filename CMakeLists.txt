@@ -36,8 +36,12 @@ set(SOURCES
     src/IR/Instruction.cpp
     src/IR/IRCodegen.cpp
     src/IR/IRPrinter.cpp
-    src/IR/Label.cpp
-    src/IR/BasicBlock.cpp)
+    src/IR/BasicBlock.cpp
+    src/Codegen/RISCVCodegen.cpp
+    src/Codegen/RISCVPrinter.cpp
+    src/Codegen/InstructionVisitor.cpp
+    src/Codegen/Utils.cpp
+    src/Codegen/ValueLoc.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

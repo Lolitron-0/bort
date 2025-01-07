@@ -1,7 +1,9 @@
 int main() {
-  char var;
+  int var;
+  var = 1;
   char cvar;
-  if (var + cvar < 12) {
+  cvar = 1;
+  if (var + cvar < 2) {
     var = 1;
   } else {
     var  = 2;

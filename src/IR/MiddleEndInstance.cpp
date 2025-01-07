@@ -1,4 +1,6 @@
 #include "bort/IR/MiddleEndInstance.hpp"
+#include "bort/Codegen/RISCVCodegen.hpp"
+#include "bort/Codegen/RISCVPrinter.hpp"
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/IR/IRPrinter.hpp"
 #include "bort/IR/Module.hpp"
@@ -20,6 +22,17 @@ auto MiddleEndInstance::run() -> ir::Module {
     ir::IRPrinter irPrinter{};
     irPrinter.print(IR);
   }
+
+  codegen::rv::Generator riscvCodegen{ m_CLIOptions, IR };
+  riscvCodegen.generate();
+
+  std::cerr << "\n=== After codegen ===\n\n";
+  ir::IRPrinter irPrinter{};
+  irPrinter.print(IR);
+
+  codegen::rv::Printer riscvPrinter{ std::cerr };
+  riscvPrinter.run(IR);
+
   return IR;
 }
 

@@ -1,6 +1,7 @@
 ---
  Checks: "*,
   -google-readability-todo,\
+  -google-build-using-namespace,\
   -altera-*,\
   -fuchsia-*,\
   -llvm-header-guard,\

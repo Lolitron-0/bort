@@ -1,6 +1,7 @@
 var namespacebort =
 [
     [ "ast", "namespacebort_1_1ast.html", "namespacebort_1_1ast" ],
+    [ "codegen", "namespacebort_1_1codegen.html", "namespacebort_1_1codegen" ],
     [ "detail", "namespacebort_1_1detail.html", [
       [ "CountPunctuators", "namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda", [
         [ "value", "namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0edaa2063c1608d6e0baf80249c42e2be5804", null ]
@@ -55,6 +56,8 @@ var namespacebort =
       [ "NUM_TYPES", "namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2a34b297af0d2f4a6024a59d0d3a318026", null ]
     ] ],
     [ "consumeIdent", "namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808", null ],
+    [ "dynCast", "namespacebort.html#ada3e097e6a71de1a50cf79bb94994a97", null ],
+    [ "dynCastRef", "namespacebort.html#aa410f87769168b4a597988ed74c20987", null ],
     [ "isaRef", "namespacebort.html#addfec3adfed8b9b48effeeafaae80c9f", null ],
     [ "makeRef", "namespacebort.html#a0702b0dbaa29be4dbbbbdba07c3dbf63", null ],
     [ "makeUnique", "namespacebort.html#a1c5afa1baa8673228e41a0ecb1614f60", null ],

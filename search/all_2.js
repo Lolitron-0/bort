@@ -12,8 +12,10 @@ var searchData=
   ['constant_9',['Constant',['../structbort_1_1ir_1_1Constant.html',1,'bort::ir']]],
   ['constant_2ehpp_10',['Constant.hpp',['../Constant_8hpp.html',1,'']]],
   ['consumeident_11',['consumeIdent',['../namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808',1,'bort']]],
-  ['countpunctuators_12',['CountPunctuators',['../namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda',1,'bort::detail']]],
-  ['countpunctuators_5fv_13',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]],
-  ['create_14',['create',['../classbort_1_1ir_1_1Register.html#a863498922f61bcbe485ff952348cd667',1,'bort::ir::Register::create()'],['../classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf',1,'bort::ir::IntConstant::create()']]],
-  ['createunique_15',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
+  ['contains_12',['contains',['../classbort_1_1ir_1_1MDList.html#ab5a70952888d7f9104b207cca289fa94',1,'bort::ir::MDList']]],
+  ['count_13',['COUNT',['../namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d',1,'bort::codegen::rv']]],
+  ['countpunctuators_14',['CountPunctuators',['../namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda',1,'bort::detail']]],
+  ['countpunctuators_5fv_15',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]],
+  ['create_16',['create',['../classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf',1,'bort::ir::IntConstant']]],
+  ['createunique_17',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
 ];

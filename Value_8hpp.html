@@ -100,21 +100,28 @@ $(document).ready(function(){initNavTree('Value_8hpp.html',''); initResizable();
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="Ref_8hpp_source.html">bort/Basic/Ref.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Type_8hpp_source.html">bort/Frontend/Type.hpp</a>&quot;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &quot;<a class="el" href="Metadata_8hpp_source.html">bort/IR/Metadata.hpp</a>&quot;</code><br />
+<code>#include &lt;optional&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Value.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="Value_8hpp__incl.png" border="0" usemap="#ainclude_2bort_2IR_2Value_8hpp" alt=""/></div>
 <map name="ainclude_2bort_2IR_2Value_8hpp" id="ainclude_2bort_2IR_2Value_8hpp">
-<area shape="rect" title=" " alt="" coords="333,5,517,31"/>
-<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="110,79,250,104"/>
-<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="340,79,511,104"/>
-<area shape="rect" title=" " alt="" coords="694,152,818,177"/>
-<area shape="rect" title=" " alt="" coords="5,152,83,177"/>
-<area shape="rect" title=" " alt="" coords="107,152,298,177"/>
-<area shape="rect" title=" " alt="" coords="323,152,389,177"/>
-<area shape="rect" title=" " alt="" coords="414,152,586,177"/>
-<area shape="rect" title=" " alt="" coords="610,152,670,177"/>
+<area shape="rect" title=" " alt="" coords="773,5,957,31"/>
+<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="787,225,927,251"/>
+<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="305,79,475,104"/>
+<area shape="rect" href="Metadata_8hpp.html" title=" " alt="" coords="845,79,1004,104"/>
+<area shape="rect" title=" " alt="" coords="1029,79,1103,104"/>
+<area shape="rect" title=" " alt="" coords="818,299,895,324"/>
+<area shape="rect" title=" " alt="" coords="141,152,332,177"/>
+<area shape="rect" title=" " alt="" coords="357,152,423,177"/>
+<area shape="rect" title=" " alt="" coords="448,152,620,177"/>
+<area shape="rect" title=" " alt="" coords="644,152,768,177"/>
+<area shape="rect" title=" " alt="" coords="5,152,65,177"/>
+<area shape="rect" href="Casts_8hpp.html" title=" " alt="" coords="1179,152,1334,177"/>
+<area shape="rect" title=" " alt="" coords="894,152,961,177"/>
+<area shape="rect" title=" " alt="" coords="985,152,1043,177"/>
+<area shape="rect" title=" " alt="" coords="1068,152,1155,177"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -122,30 +129,42 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="Value_8hpp__dep__incl.png" border="0" usemap="#ainclude_2bort_2IR_2Value_8hppdep" alt=""/></div>
 <map name="ainclude_2bort_2IR_2Value_8hppdep" id="ainclude_2bort_2IR_2Value_8hppdep">
-<area shape="rect" title=" " alt="" coords="1250,5,1434,31"/>
-<area shape="rect" href="BasicBlock_8hpp.html" title=" " alt="" coords="425,159,643,185"/>
-<area shape="rect" href="IRPrinter_8cpp.html" title=" " alt="" coords="927,401,1071,427"/>
-<area shape="rect" href="Module_8hpp.html" title=" " alt="" coords="5,240,201,265"/>
-<area shape="rect" href="Constant_8hpp.html" title=" " alt="" coords="1345,321,1552,346"/>
-<area shape="rect" href="Instruction_8hpp.html" title=" " alt="" coords="897,79,1115,104"/>
-<area shape="rect" href="OpInst_8hpp.html" title=" " alt="" coords="1012,240,1203,265"/>
-<area shape="rect" href="Register_8hpp.html" title=" " alt="" coords="1481,79,1683,104"/>
-<area shape="rect" href="VariableUse_8hpp.html" title=" " alt="" coords="1775,152,1949,192"/>
-<area shape="rect" href="Value_8cpp.html" title=" " alt="" coords="1758,79,1883,104"/>
-<area shape="rect" href="BranchInst_8hpp.html" title=" " alt="" coords="719,240,936,265"/>
-<area shape="rect" href="IRCodegen_8hpp.html" title=" " alt="" coords="441,321,659,346"/>
-<area shape="rect" href="Label_8hpp.html" title=" " alt="" coords="225,240,408,265"/>
-<area shape="rect" href="BasicBlock_8cpp.html" title=" " alt="" coords="433,240,593,265"/>
-<area shape="rect" href="IRPrinter_8hpp.html" title=" " alt="" coords="683,321,886,346"/>
-<area shape="rect" href="IRCodegen_8cpp.html" title=" " alt="" coords="1536,401,1695,427"/>
-<area shape="rect" href="Main_8cpp.html" title=" " alt="" coords="486,401,614,427"/>
-<area shape="rect" href="MiddleEndInstance_8cpp.html" title=" " alt="" coords="159,401,371,427"/>
-<area shape="rect" href="Label_8cpp.html" title=" " alt="" coords="292,321,416,346"/>
-<area shape="rect" href="MiddleEndInstance_8hpp.html" title=" " alt="" coords="80,313,268,353"/>
-<area shape="rect" href="AllocaInst_8hpp.html" title=" " alt="" coords="1487,240,1699,265"/>
-<area shape="rect" href="MoveInst_8hpp.html" title=" " alt="" coords="1113,321,1321,346"/>
-<area shape="rect" href="Instruction_8cpp.html" title=" " alt="" coords="1044,159,1203,185"/>
-<area shape="rect" href="VariableUse_8cpp.html" title=" " alt="" coords="1776,240,1943,265"/>
+<area shape="rect" title=" " alt="" coords="2348,5,2532,31"/>
+<area shape="rect" href="MachineRegister_8hpp.html" title=" " alt="" coords="612,79,775,119"/>
+<area shape="rect" href="RISCVCodegen_8hpp.html" title=" " alt="" coords="1069,431,1229,471"/>
+<area shape="rect" href="RISCVCodegen_8cpp.html" title=" " alt="" coords="2195,519,2424,544"/>
+<area shape="rect" href="RISCVPrinter_8cpp.html" title=" " alt="" coords="529,519,743,544"/>
+<area shape="rect" href="BasicBlock_8hpp.html" title=" " alt="" coords="1479,174,1697,199"/>
+<area shape="rect" href="Codegen_2Utils_8cpp.html" title=" " alt="" coords="173,438,336,463"/>
+<area shape="rect" href="IRPrinter_8cpp.html" title=" " alt="" coords="2699,438,2843,463"/>
+<area shape="rect" href="Module_8hpp.html" title=" " alt="" coords="1558,262,1754,287"/>
+<area shape="rect" href="Constant_8hpp.html" title=" " alt="" coords="3537,350,3743,375"/>
+<area shape="rect" href="Value_8cpp.html" title=" " alt="" coords="4005,438,4131,463"/>
+<area shape="rect" href="Instruction_8hpp.html" title=" " alt="" coords="2145,86,2362,111"/>
+<area shape="rect" href="OpInst_8hpp.html" title=" " alt="" coords="2507,262,2698,287"/>
+<area shape="rect" href="Register_8hpp.html" title=" " alt="" coords="3870,350,4071,375"/>
+<area shape="rect" href="VariableUse_8hpp.html" title=" " alt="" coords="3576,167,3749,207"/>
+<area shape="rect" href="LoadInst_8hpp.html" title=" " alt="" coords="613,255,773,295"/>
+<area shape="rect" href="StoreInst_8hpp.html" title=" " alt="" coords="797,255,957,295"/>
+<area shape="rect" href="ValueLoc_8hpp.html" title=" " alt="" coords="445,167,605,207"/>
+<area shape="rect" href="InstructionVisitorBase_8hpp.html" title=" " alt="" coords="1203,343,1400,383"/>
+<area shape="rect" href="RISCVPrinter_8hpp.html" title=" " alt="" coords="1304,431,1464,471"/>
+<area shape="rect" href="InstructionVisitor_8cpp.html" title=" " alt="" coords="1539,438,1781,463"/>
+<area shape="rect" href="MiddleEndInstance_8cpp.html" title=" " alt="" coords="1495,519,1707,544"/>
+<area shape="rect" href="ValueLoc_8cpp.html" title=" " alt="" coords="246,262,437,287"/>
+<area shape="rect" href="Codegen_2Utils_8hpp.html" title=" " alt="" coords="816,343,976,383"/>
+<area shape="rect" href="BranchInst_8hpp.html" title=" " alt="" coords="2266,262,2483,287"/>
+<area shape="rect" href="BasicBlock_8cpp.html" title=" " alt="" coords="1323,262,1483,287"/>
+<area shape="rect" href="IRPrinter_8hpp.html" title=" " alt="" coords="2437,350,2640,375"/>
+<area shape="rect" href="InstructionTypeList_8hpp.html" title=" " alt="" coords="3019,343,3208,383"/>
+<area shape="rect" href="IRCodegen_8cpp.html" title=" " alt="" coords="3034,438,3193,463"/>
+<area shape="rect" href="Main_8cpp.html" title=" " alt="" coords="2093,438,2221,463"/>
+<area shape="rect" href="IRCodegen_8hpp.html" title=" " alt="" coords="2093,350,2312,375"/>
+<area shape="rect" href="MiddleEndInstance_8hpp.html" title=" " alt="" coords="1830,343,2018,383"/>
+<area shape="rect" href="AllocaInst_8hpp.html" title=" " alt="" coords="3053,262,3265,287"/>
+<area shape="rect" href="MoveInst_8hpp.html" title=" " alt="" coords="1983,262,2191,287"/>
+<area shape="rect" href="Instruction_8cpp.html" title=" " alt="" coords="2317,174,2475,199"/>
+<area shape="rect" href="VariableUse_8cpp.html" title=" " alt="" coords="3577,262,3743,287"/>
 </map>
 </div>
 </div>
@@ -154,6 +173,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html">bort::ir::Value</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Operand.html">bort::ir::Operand</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>

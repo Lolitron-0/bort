@@ -105,6 +105,8 @@ $(document).ready(function(){initNavTree('namespacebort.html',''); initResizable
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacebort_1_1ast"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ast.html">ast</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacebort_1_1codegen"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html">codegen</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacebort_1_1detail"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1detail.html">detail</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacebort_1_1exceptions"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1exceptions.html">exceptions</a></td></tr>
@@ -210,6 +212,12 @@ Functions</h2></td></tr>
 <tr class="memitem:addfec3adfed8b9b48effeeafaae80c9f"><td class="memTemplParams" colspan="2">template&lt;typename T1 , typename T2 &gt; </td></tr>
 <tr class="memitem:addfec3adfed8b9b48effeeafaae80c9f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#addfec3adfed8b9b48effeeafaae80c9f">isaRef</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; T2 &gt; &amp;obj) -&gt; bool</td></tr>
 <tr class="separator:addfec3adfed8b9b48effeeafaae80c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa410f87769168b4a597988ed74c20987"><td class="memTemplParams" colspan="2">template&lt;typename T1 , typename T2 &gt; </td></tr>
+<tr class="memitem:aa410f87769168b4a597988ed74c20987"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#aa410f87769168b4a597988ed74c20987">dynCastRef</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; T2 &gt; &amp;obj) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; T1 &gt;</td></tr>
+<tr class="separator:aa410f87769168b4a597988ed74c20987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada3e097e6a71de1a50cf79bb94994a97"><td class="memTemplParams" colspan="2">template&lt;typename T1 , typename T2 &gt; </td></tr>
+<tr class="memitem:ada3e097e6a71de1a50cf79bb94994a97"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#ada3e097e6a71de1a50cf79bb94994a97">dynCast</a> (T2 *obj) -&gt; T1 *</td></tr>
+<tr class="separator:ada3e097e6a71de1a50cf79bb94994a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0702b0dbaa29be4dbbbbdba07c3dbf63"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:a0702b0dbaa29be4dbbbbdba07c3dbf63"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebort.html#a0702b0dbaa29be4dbbbbdba07c3dbf63">makeRef</a> (Args &amp;&amp;... args) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; T &gt;</td></tr>
 <tr class="separator:a0702b0dbaa29be4dbbbbdba07c3dbf63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -395,7 +403,7 @@ template&lt;typename T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>actually there are more sophisticated rules in acceptable identifier characters, but we'll leave it for now </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>actually there are more sophisticated rules in acceptable identifier characters, but we'll leave it for now </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -405,6 +413,46 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb" title=" " alt="" coords="5,5,145,45"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="ada3e097e6a71de1a50cf79bb94994a97" name="ada3e097e6a71de1a50cf79bb94994a97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada3e097e6a71de1a50cf79bb94994a97">&#9670;&#160;</a></span>dynCast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T1 , typename T2 &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::dynCast </td>
+          <td>(</td>
+          <td class="paramtype">T2 *&#160;</td>
+          <td class="paramname"><em>obj</em></td><td>)</td>
+          <td> -&gt; T1* </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa410f87769168b4a597988ed74c20987" name="aa410f87769168b4a597988ed74c20987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa410f87769168b4a597988ed74c20987">&#9670;&#160;</a></span>dynCastRef()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T1 , typename T2 &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::dynCastRef </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; T2 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>obj</em></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;T1&gt; </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

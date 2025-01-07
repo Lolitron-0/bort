@@ -92,18 +92,17 @@ $(document).ready(function(){initNavTree('IRPrinter_8cpp.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">IRPrinter.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="IRPrinter_8hpp_source.html">bort/IR/IRPrinter.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Casts_8hpp_source.html">bort/Basic/Casts.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="BranchInst_8hpp_source.html">bort/IR/BranchInst.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Constant_8hpp_source.html">bort/IR/Constant.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="IRCodegen_8hpp_source.html">bort/IR/IRCodegen.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="Instruction_8hpp_source.html">bort/IR/Instruction.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="MoveInst_8hpp_source.html">bort/IR/MoveInst.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="OpInst_8hpp_source.html">bort/IR/OpInst.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Register_8hpp_source.html">bort/IR/Register.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Value_8hpp_source.html">bort/IR/Value.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="Token_8hpp_source.html">bort/Lex/Token.hpp</a>&quot;</code><br />
 <code>#include &quot;fmt/color.h&quot;</code><br />
@@ -115,71 +114,92 @@ Include dependency graph for IRPrinter.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="IRPrinter_8cpp__incl.png" border="0" usemap="#asrc_2IR_2IRPrinter_8cpp" alt=""/></div>
 <map name="asrc_2IR_2IRPrinter_8cpp" id="asrc_2IR_2IRPrinter_8cpp">
-<area shape="rect" title=" " alt="" coords="893,5,1037,31"/>
-<area shape="rect" href="IRPrinter_8hpp.html" title=" " alt="" coords="661,79,813,104"/>
-<area shape="rect" title=" " alt="" coords="5,592,97,617"/>
-<area shape="rect" title=" " alt="" coords="1771,592,1849,617"/>
-<area shape="rect" href="Instruction_8hpp.html" title=" " alt="" coords="711,299,877,324"/>
-<area shape="rect" href="Value_8hpp.html" title=" " alt="" coords="815,372,949,397"/>
-<area shape="rect" href="BranchInst_8hpp.html" title=" " alt="" coords="323,152,489,177"/>
-<area shape="rect" href="OpInst_8hpp.html" title=" " alt="" coords="1054,225,1193,251"/>
-<area shape="rect" href="Token_8hpp.html" title=" " alt="" coords="1649,445,1793,471"/>
-<area shape="rect" title=" " alt="" coords="2259,592,2364,617"/>
-<area shape="rect" href="Constant_8hpp.html" title=" " alt="" coords="887,79,1042,104"/>
-<area shape="rect" href="IRCodegen_8hpp.html" title=" " alt="" coords="1423,79,1589,104"/>
-<area shape="rect" href="MoveInst_8hpp.html" title=" " alt="" coords="771,225,929,251"/>
-<area shape="rect" title=" " alt="" coords="2388,79,2480,104"/>
-<area shape="rect" href="AllocaInst_8hpp.html" title=" " alt="" coords="191,225,352,251"/>
-<area shape="rect" href="Module_8hpp.html" title=" " alt="" coords="667,152,812,177"/>
-<area shape="rect" href="Symbol_8hpp.html" title=" " alt="" coords="284,372,475,397"/>
-<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="763,445,934,471"/>
-<area shape="rect" title=" " alt="" coords="1163,519,1223,544"/>
-<area shape="rect" href="VariableUse_8hpp.html" title=" " alt="" coords="292,299,467,324"/>
-<area shape="rect" href="Assert_8hpp.html" title=" " alt="" coords="277,519,437,544"/>
-<area shape="rect" title=" " alt="" coords="122,592,253,617"/>
-<area shape="rect" title=" " alt="" coords="277,592,436,617"/>
-<area shape="rect" title=" " alt="" coords="460,592,549,617"/>
-<area shape="rect" title=" " alt="" coords="574,592,654,617"/>
-<area shape="rect" title=" " alt="" coords="657,519,848,544"/>
-<area shape="rect" title=" " alt="" coords="873,519,939,544"/>
-<area shape="rect" title=" " alt="" coords="461,519,633,544"/>
-<area shape="rect" title=" " alt="" coords="1015,519,1139,544"/>
-<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="1397,445,1537,471"/>
-<area shape="rect" href="BasicBlock_8hpp.html" title=" " alt="" coords="478,225,646,251"/>
-<area shape="rect" title=" " alt="" coords="643,299,686,324"/>
-<area shape="rect" href="SourceFile_8hpp.html" title=" " alt="" coords="1937,519,2145,544"/>
-<area shape="rect" title=" " alt="" coords="1873,592,1971,617"/>
-<area shape="rect" title=" " alt="" coords="1482,519,1597,544"/>
-<area shape="rect" title=" " alt="" coords="2169,519,2261,544"/>
-<area shape="rect" title=" " alt="" coords="1621,519,1689,544"/>
-<area shape="rect" title=" " alt="" coords="1713,519,1861,544"/>
-<area shape="rect" title=" " alt="" coords="1995,592,2086,617"/>
-<area shape="rect" title=" " alt="" coords="2111,592,2197,617"/>
-<area shape="rect" href="ASTNode_8hpp.html" title=" " alt="" coords="1381,299,1549,324"/>
-<area shape="rect" href="BinOpExpr_8hpp.html" title=" " alt="" coords="1727,152,1903,177"/>
-<area shape="rect" href="IfStmtNode_8hpp.html" title=" " alt="" coords="1520,152,1703,177"/>
-<area shape="rect" href="NumberExpr_8hpp.html" title=" " alt="" coords="1306,152,1495,177"/>
-<area shape="rect" href="VariableExpr_8hpp.html" title=" " alt="" coords="1091,152,1281,177"/>
-<area shape="rect" href="ASTVisitor_8hpp.html" title=" " alt="" coords="1599,299,1827,324"/>
-<area shape="rect" href="ASTDebugInfo_8hpp.html" title=" " alt="" coords="1620,372,1821,397"/>
-<area shape="rect" title=" " alt="" coords="1363,372,1443,397"/>
-<area shape="rect" href="ExpressionNode_8hpp.html" title=" " alt="" coords="1281,225,1496,251"/>
-<area shape="rect" href="Block_8hpp.html" title=" " alt="" coords="1520,225,1665,251"/>
+<area shape="rect" title=" " alt="" coords="1211,5,1355,31"/>
+<area shape="rect" href="IRPrinter_8hpp.html" title=" " alt="" coords="817,79,969,104"/>
+<area shape="rect" title=" " alt="" coords="35,445,127,471"/>
+<area shape="rect" title=" " alt="" coords="1630,665,1707,691"/>
+<area shape="rect" href="Value_8hpp.html" title=" " alt="" coords="935,372,1069,397"/>
+<area shape="rect" href="Casts_8hpp.html" title=" " alt="" coords="1591,519,1746,544"/>
+<area shape="rect" href="BranchInst_8hpp.html" title=" " alt="" coords="629,152,796,177"/>
+<area shape="rect" href="OpInst_8hpp.html" title=" " alt="" coords="993,225,1131,251"/>
+<area shape="rect" href="Token_8hpp.html" title=" " alt="" coords="1433,299,1577,324"/>
+<area shape="rect" title=" " alt="" coords="2004,445,2109,471"/>
+<area shape="rect" href="Constant_8hpp.html" title=" " alt="" coords="1091,79,1246,104"/>
+<area shape="rect" href="MoveInst_8hpp.html" title=" " alt="" coords="79,225,237,251"/>
+<area shape="rect" href="Register_8hpp.html" title=" " alt="" coords="1257,299,1408,324"/>
+<area shape="rect" title=" " alt="" coords="2237,79,2329,104"/>
+<area shape="rect" href="AllocaInst_8hpp.html" title=" " alt="" coords="444,152,605,177"/>
+<area shape="rect" href="Module_8hpp.html" title=" " alt="" coords="820,152,965,177"/>
+<area shape="rect" href="Symbol_8hpp.html" title=" " alt="" coords="363,299,553,324"/>
+<area shape="rect" title=" " alt="" coords="247,519,307,544"/>
+<area shape="rect" href="Instruction_8hpp.html" title=" " alt="" coords="629,299,796,324"/>
+<area shape="rect" href="VariableUse_8hpp.html" title=" " alt="" coords="449,225,624,251"/>
+<area shape="rect" href="Assert_8hpp.html" title=" " alt="" coords="378,372,538,397"/>
+<area shape="rect" href="Type_8hpp.html" title=" " alt="" coords="813,445,983,471"/>
+<area shape="rect" title=" " alt="" coords="243,372,353,397"/>
+<area shape="rect" title=" " alt="" coords="1154,519,1213,544"/>
+<area shape="rect" title=" " alt="" coords="797,372,860,397"/>
+<area shape="rect" title=" " alt="" coords="423,445,554,471"/>
+<area shape="rect" title=" " alt="" coords="579,445,737,471"/>
+<area shape="rect" title=" " alt="" coords="205,445,295,471"/>
+<area shape="rect" title=" " alt="" coords="319,445,399,471"/>
+<area shape="rect" title=" " alt="" coords="791,519,981,544"/>
+<area shape="rect" title=" " alt="" coords="451,519,518,544"/>
+<area shape="rect" title=" " alt="" coords="543,519,715,544"/>
+<area shape="rect" title=" " alt="" coords="1005,519,1129,544"/>
+<area shape="rect" href="Ref_8hpp.html" title=" " alt="" coords="1484,592,1624,617"/>
+<area shape="rect" href="Metadata_8hpp.html" title=" " alt="" coords="1221,445,1380,471"/>
+<area shape="rect" title=" " alt="" coords="1058,445,1133,471"/>
+<area shape="rect" title=" " alt="" coords="1237,519,1303,544"/>
+<area shape="rect" title=" " alt="" coords="1328,519,1415,544"/>
+<area shape="rect" href="BasicBlock_8hpp.html" title=" " alt="" coords="750,225,918,251"/>
+<area shape="rect" title=" " alt="" coords="821,299,863,324"/>
+<area shape="rect" href="SourceFile_8hpp.html" title=" " alt="" coords="1663,372,1871,397"/>
+<area shape="rect" title=" " alt="" coords="1879,445,1976,471"/>
+<area shape="rect" title=" " alt="" coords="1895,372,2010,397"/>
+<area shape="rect" title=" " alt="" coords="1283,372,1375,397"/>
+<area shape="rect" title=" " alt="" coords="1399,372,1467,397"/>
+<area shape="rect" title=" " alt="" coords="1491,372,1639,397"/>
+<area shape="rect" title=" " alt="" coords="1706,445,1797,471"/>
+<area shape="rect" title=" " alt="" coords="1595,445,1681,471"/>
+<area shape="rect" title=" " alt="" coords="1143,372,1258,397"/>
 </map>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4.html">fmt::formatter&lt; bort::ir::ValueRef &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacebort"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort.html">bort</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacebort_1_1ir"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html">bort::ir</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a03fda0fb1403961a873b333be1b208a2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="IRPrinter_8cpp.html#a03fda0fb1403961a873b333be1b208a2">formatValueColored</a> (const <a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">bort::ir::ValueRef</a> &amp;val) -&gt; std::string</td></tr>
+<tr class="separator:a03fda0fb1403961a873b333be1b208a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a03fda0fb1403961a873b333be1b208a2" name="a03fda0fb1403961a873b333be1b208a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03fda0fb1403961a873b333be1b208a2">&#9670;&#160;</a></span>formatValueColored()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto formatValueColored </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">bort::ir::ValueRef</a> &amp;&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td> -&gt; std::string </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="IRPrinter_8cpp_a03fda0fb1403961a873b333be1b208a2_icgraph.png" border="0" usemap="#aIRPrinter_8cpp_a03fda0fb1403961a873b333be1b208a2_icgraph" alt=""/></div>
+<map name="aIRPrinter_8cpp_a03fda0fb1403961a873b333be1b208a2_icgraph" id="aIRPrinter_8cpp_a03fda0fb1403961a873b333be1b208a2_icgraph">
+<area shape="rect" title=" " alt="" coords="439,13,591,38"/>
+<area shape="rect" href="classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2" title=" " alt="" coords="261,5,391,45"/>
+<area shape="rect" href="classbort_1_1MiddleEndInstance.html#aa59af09863f386ae6bd8bf195bf1a07d" title=" " alt="" coords="5,13,213,38"/>
+</map>
+</div>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

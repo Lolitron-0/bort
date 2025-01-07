@@ -26,6 +26,26 @@ var annotated_dup =
         [ "VarDecl", "classbort_1_1ast_1_1VarDecl.html", "classbort_1_1ast_1_1VarDecl" ],
         [ "VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", "classbort_1_1ast_1_1VariableExpr" ]
       ] ],
+      [ "codegen", "namespacebort_1_1codegen.html", [
+        [ "rv", "namespacebort_1_1codegen_1_1rv.html", [
+          [ "FrameOffset", "structbort_1_1codegen_1_1rv_1_1FrameOffset.html", "structbort_1_1codegen_1_1rv_1_1FrameOffset" ],
+          [ "Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],
+          [ "InstructionChoiceVisitor", "classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html", null ],
+          [ "PreprocessVisitor", "classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html", null ],
+          [ "Printer", "classbort_1_1codegen_1_1rv_1_1Printer.html", "classbort_1_1codegen_1_1rv_1_1Printer" ],
+          [ "RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode" ],
+          [ "RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
+          [ "RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ]
+        ] ],
+        [ "FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", "classbort_1_1codegen_1_1FrameInfo" ],
+        [ "InstructionVisitorBase", "classbort_1_1codegen_1_1InstructionVisitorBase.html", "classbort_1_1codegen_1_1InstructionVisitorBase" ],
+        [ "LoadInst", "classbort_1_1codegen_1_1LoadInst.html", "classbort_1_1codegen_1_1LoadInst" ],
+        [ "MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", "classbort_1_1codegen_1_1MachineRegister" ],
+        [ "RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", "classbort_1_1codegen_1_1RegisterLoc" ],
+        [ "StackLoc", "classbort_1_1codegen_1_1StackLoc.html", "classbort_1_1codegen_1_1StackLoc" ],
+        [ "StoreInst", "classbort_1_1codegen_1_1StoreInst.html", "classbort_1_1codegen_1_1StoreInst" ],
+        [ "ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", "classbort_1_1codegen_1_1ValueLoc" ]
+      ] ],
       [ "exceptions", "namespacebort_1_1exceptions.html", [
         [ "SourceFileFailedToOpen", "classbort_1_1exceptions_1_1SourceFileFailedToOpen.html", "classbort_1_1exceptions_1_1SourceFileFailedToOpen" ],
         [ "SourceFileInvalidExtension", "classbort_1_1exceptions_1_1SourceFileInvalidExtension.html", "classbort_1_1exceptions_1_1SourceFileInvalidExtension" ],
@@ -39,10 +59,13 @@ var annotated_dup =
         [ "Instruction", "classbort_1_1ir_1_1Instruction.html", "classbort_1_1ir_1_1Instruction" ],
         [ "IntConstant", "classbort_1_1ir_1_1IntConstant.html", "classbort_1_1ir_1_1IntConstant" ],
         [ "IRCodegen", "classbort_1_1ir_1_1IRCodegen.html", "classbort_1_1ir_1_1IRCodegen" ],
+        [ "IRFunction", "classbort_1_1ir_1_1IRFunction.html", "classbort_1_1ir_1_1IRFunction" ],
         [ "IRPrinter", "classbort_1_1ir_1_1IRPrinter.html", "classbort_1_1ir_1_1IRPrinter" ],
-        [ "Label", "classbort_1_1ir_1_1Label.html", "classbort_1_1ir_1_1Label" ],
+        [ "MDList", "classbort_1_1ir_1_1MDList.html", "classbort_1_1ir_1_1MDList" ],
+        [ "Metadata", "structbort_1_1ir_1_1Metadata.html", "structbort_1_1ir_1_1Metadata" ],
         [ "Module", "classbort_1_1ir_1_1Module.html", "classbort_1_1ir_1_1Module" ],
         [ "MoveInst", "classbort_1_1ir_1_1MoveInst.html", "classbort_1_1ir_1_1MoveInst" ],
+        [ "Operand", "classbort_1_1ir_1_1Operand.html", "classbort_1_1ir_1_1Operand" ],
         [ "OpInst", "classbort_1_1ir_1_1OpInst.html", "classbort_1_1ir_1_1OpInst" ],
         [ "Register", "classbort_1_1ir_1_1Register.html", null ],
         [ "Value", "classbort_1_1ir_1_1Value.html", "classbort_1_1ir_1_1Value" ],
@@ -71,8 +94,5 @@ var annotated_dup =
       [ "TypeRefHasher", "structbort_1_1TypeRefHasher.html", "structbort_1_1TypeRefHasher" ],
       [ "Variable", "classbort_1_1Variable.html", "classbort_1_1Variable" ],
       [ "VoidType", "classbort_1_1VoidType.html", "classbort_1_1VoidType" ]
-    ] ],
-    [ "fmt", null, [
-      [ "formatter< bort::ir::ValueRef >", "structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4.html", "structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4" ]
     ] ]
 ];

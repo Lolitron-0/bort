@@ -25,7 +25,10 @@ var searchData=
   ['preprocessor_2ecpp_22',['Preprocessor.cpp',['../Preprocessor_8cpp.html',1,'']]],
   ['preprocessor_2ehpp_23',['Preprocessor.hpp',['../Preprocessor_8hpp.html',1,'']]],
   ['preprocessoronly_24',['PreprocessorOnly',['../classbort_1_1CLIOptions.html#a3b2ed831bc76b270def7525e3d2ce4ab',1,'bort::CLIOptions']]],
-  ['print_25',['print',['../classbort_1_1ir_1_1IRPrinter.html#ad2620b881883e305fbc2b9f6abc788a3',1,'bort::ir::IRPrinter']]],
-  ['punct_26',['PUNCT',['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp'],['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp'],['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp']]],
-  ['pushchild_27',['pushChild',['../classbort_1_1ast_1_1ASTRoot.html#a584787ab370e287adcdfc08f893a76b6',1,'bort::ast::ASTRoot::pushChild()'],['../classbort_1_1ast_1_1Block.html#a1b9ba9e7c2021edd49b1c17cae2f7d75',1,'bort::ast::Block::pushChild()']]]
+  ['preprocessvisitor_25',['PreprocessVisitor',['../classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html',1,'bort::codegen::rv']]],
+  ['print_26',['print',['../classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2',1,'bort::ir::IRPrinter']]],
+  ['printer_27',['Printer',['../classbort_1_1codegen_1_1rv_1_1Printer.html',1,'bort::codegen::rv::Printer'],['../classbort_1_1codegen_1_1rv_1_1Printer.html#a0dd45e602ab0d43db058477aa88bb3f7',1,'bort::codegen::rv::Printer::Printer()']]],
+  ['prologue_28',['Prologue',['../structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html#a88dfe08b17ebc48cf03a65db96e55c3d',1,'bort::codegen::rv::RVFuncAdditionalCode']]],
+  ['punct_29',['PUNCT',['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp'],['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp'],['../Lexer_8cpp.html#aaf1fa69a8a118790e2e5af50110f97a9',1,'PUNCT():&#160;Lexer.cpp']]],
+  ['pushchild_30',['pushChild',['../classbort_1_1ast_1_1ASTRoot.html#a584787ab370e287adcdfc08f893a76b6',1,'bort::ast::ASTRoot::pushChild()'],['../classbort_1_1ast_1_1Block.html#a1b9ba9e7c2021edd49b1c17cae2f7d75',1,'bort::ast::Block::pushChild()']]]
 ];

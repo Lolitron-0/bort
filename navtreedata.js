@@ -36,6 +36,7 @@ var NAVTREE =
         [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
     ] ],
+    [ "Concepts", "concepts.html", "concepts" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -63,9 +64,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ASTDebugInfo_8hpp.html",
-"classbort_1_1MiddleEndInstance.html#aa59af09863f386ae6bd8bf195bf1a07d",
-"classbort_1_1ast_1_1FunctionDecl.html#aacdf282d39e9e87f06a3923a349f6fca",
-"dir_02856a190fd8db6d92c58ac936b1a988.html"
+"VariableUse_8cpp.html",
+"classbort_1_1ast_1_1ASTRoot.html#a70fe3b51a86e080253bb3299c95c8db3",
+"classbort_1_1codegen_1_1rv_1_1Generator.html",
+"functions_func_p.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

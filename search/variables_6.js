@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['token_0',['token',['../structbort_1_1ast_1_1ASTDebugInfo.html#a0dc4d431819758302e6013ae797f4705',1,'bort::ast::ASTDebugInfo']]],
-  ['tokennamemapping_1',['TokenNameMapping',['../classbort_1_1Token.html#aa1abf7eeca5d591a776701f00a2a3c63',1,'bort::Token']]]
+  ['offset_0',['Offset',['../structbort_1_1codegen_1_1rv_1_1FrameOffset.html#aa79c61a899be5890376f68237290be4a',1,'bort::codegen::rv::FrameOffset']]]
 ];

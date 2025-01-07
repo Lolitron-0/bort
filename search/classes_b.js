@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['parser_0',['Parser',['../classbort_1_1Parser.html',1,'bort']]],
-  ['pointertype_1',['PointerType',['../classbort_1_1PointerType.html',1,'bort']]],
-  ['preprocessor_2',['Preprocessor',['../classbort_1_1Preprocessor.html',1,'bort']]]
+  ['operand_0',['Operand',['../classbort_1_1ir_1_1Operand.html',1,'bort::ir']]],
+  ['opinst_1',['OpInst',['../classbort_1_1ir_1_1OpInst.html',1,'bort::ir']]]
 ];

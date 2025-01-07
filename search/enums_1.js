@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['level_0',['Level',['../classbort_1_1Diagnostic.html#af0d93216469a2d6564e74d06e44bfca2',1,'bort::Diagnostic']]]
+  ['gpr_0',['GPR',['../namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248',1,'bort::codegen::rv']]]
 ];

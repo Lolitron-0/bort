@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['value_0',['Value',['../classbort_1_1ir_1_1Value.html',1,'bort::ir']]],
-  ['vardecl_1',['VarDecl',['../classbort_1_1ast_1_1VarDecl.html',1,'bort::ast']]],
-  ['variable_2',['Variable',['../classbort_1_1Variable.html',1,'bort']]],
-  ['variableexpr_3',['VariableExpr',['../classbort_1_1ast_1_1VariableExpr.html',1,'bort::ast']]],
-  ['variableuse_4',['VariableUse',['../classbort_1_1ir_1_1VariableUse.html',1,'bort::ir']]],
-  ['voidtype_5',['VoidType',['../classbort_1_1VoidType.html',1,'bort']]]
+  ['token_0',['Token',['../classbort_1_1Token.html',1,'bort']]],
+  ['type_1',['Type',['../classbort_1_1Type.html',1,'bort']]],
+  ['typepairhasher_2',['TypePairHasher',['../structbort_1_1ast_1_1detail_1_1TypePairHasher.html',1,'bort::ast::detail']]],
+  ['typepropagationvisitor_3',['TypePropagationVisitor',['../classbort_1_1ast_1_1TypePropagationVisitor.html',1,'bort::ast']]],
+  ['typerefhasher_4',['TypeRefHasher',['../structbort_1_1TypeRefHasher.html',1,'bort']]]
 ];

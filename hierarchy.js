@@ -10,14 +10,23 @@ var hierarchy =
     ] ],
     [ "bort::CLIOptions", "classbort_1_1CLIOptions.html", null ],
     [ "bort::Diagnostic", "classbort_1_1Diagnostic.html", null ],
-    [ "fmt::formatter", null, [
-      [ "fmt::formatter< bort::ir::ValueRef >", "structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4.html", null ]
-    ] ],
     [ "bort::FrontEndInstance", "structbort_1_1FrontEndInstance.html", null ],
+    [ "bort::codegen::InstructionVisitorBase", "classbort_1_1codegen_1_1InstructionVisitorBase.html", [
+      [ "bort::codegen::rv::Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", null ],
+      [ "bort::codegen::rv::InstructionChoiceVisitor", "classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html", null ],
+      [ "bort::codegen::rv::PreprocessVisitor", "classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html", null ],
+      [ "bort::codegen::rv::Printer", "classbort_1_1codegen_1_1rv_1_1Printer.html", null ]
+    ] ],
     [ "bort::ir::IRCodegen", "classbort_1_1ir_1_1IRCodegen.html", null ],
     [ "bort::ir::IRPrinter", "classbort_1_1ir_1_1IRPrinter.html", null ],
-    [ "bort::ir::Label", "classbort_1_1ir_1_1Label.html", null ],
     [ "bort::Lexer", "classbort_1_1Lexer.html", null ],
+    [ "bort::ir::MDList", "classbort_1_1ir_1_1MDList.html", null ],
+    [ "bort::ir::Metadata", "structbort_1_1ir_1_1Metadata.html", [
+      [ "bort::codegen::FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", null ],
+      [ "bort::codegen::rv::FrameOffset", "structbort_1_1codegen_1_1rv_1_1FrameOffset.html", null ],
+      [ "bort::codegen::rv::RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", null ],
+      [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", null ]
+    ] ],
     [ "bort::MiddleEndInstance", "classbort_1_1MiddleEndInstance.html", null ],
     [ "bort::ir::Module", "classbort_1_1ir_1_1Module.html", null ],
     [ "bort::ast::Node", "classbort_1_1ast_1_1Node.html", [
@@ -66,17 +75,29 @@ var hierarchy =
     [ "bort::ast::detail::TypePairHasher", "structbort_1_1ast_1_1detail_1_1TypePairHasher.html", null ],
     [ "bort::TypeRefHasher", "structbort_1_1TypeRefHasher.html", null ],
     [ "bort::ir::Value", "classbort_1_1ir_1_1Value.html", [
+      [ "bort::codegen::MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", [
+        [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", null ]
+      ] ],
       [ "bort::ir::BasicBlock", "classbort_1_1ir_1_1BasicBlock.html", null ],
       [ "bort::ir::Constant", "structbort_1_1ir_1_1Constant.html", [
         [ "bort::ir::IntConstant", "classbort_1_1ir_1_1IntConstant.html", null ]
       ] ],
+      [ "bort::ir::IRFunction", "classbort_1_1ir_1_1IRFunction.html", null ],
       [ "bort::ir::Instruction", "classbort_1_1ir_1_1Instruction.html", [
+        [ "bort::codegen::LoadInst", "classbort_1_1codegen_1_1LoadInst.html", null ],
+        [ "bort::codegen::StoreInst", "classbort_1_1codegen_1_1StoreInst.html", null ],
         [ "bort::ir::AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", null ],
         [ "bort::ir::BranchInst", "classbort_1_1ir_1_1BranchInst.html", null ],
         [ "bort::ir::MoveInst", "classbort_1_1ir_1_1MoveInst.html", null ],
         [ "bort::ir::OpInst", "classbort_1_1ir_1_1OpInst.html", null ]
       ] ],
-      [ "bort::ir::Register", "classbort_1_1ir_1_1Register.html", null ],
-      [ "bort::ir::VariableUse", "classbort_1_1ir_1_1VariableUse.html", null ]
+      [ "bort::ir::Operand", "classbort_1_1ir_1_1Operand.html", [
+        [ "bort::ir::Register", "classbort_1_1ir_1_1Register.html", null ],
+        [ "bort::ir::VariableUse", "classbort_1_1ir_1_1VariableUse.html", null ]
+      ] ]
+    ] ],
+    [ "bort::codegen::ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", [
+      [ "bort::codegen::RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", null ],
+      [ "bort::codegen::StackLoc", "classbort_1_1codegen_1_1StackLoc.html", null ]
     ] ]
 ];

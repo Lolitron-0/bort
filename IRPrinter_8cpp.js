@@ -1,4 +1,4 @@
 var IRPrinter_8cpp =
 [
-    [ "fmt::formatter< bort::ir::ValueRef >", "structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4.html", "structfmt_1_1formatter_3_01bort_1_1ir_1_1ValueRef_01_4" ]
+    [ "formatValueColored", "IRPrinter_8cpp.html#a03fda0fb1403961a873b333be1b208a2", null ]
 ];

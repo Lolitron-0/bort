@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['opinst_0',['OpInst',['../classbort_1_1ir_1_1OpInst.html',1,'bort::ir']]]
+  ['node_0',['Node',['../classbort_1_1ast_1_1Node.html',1,'bort::ast']]],
+  ['numberexpr_1',['NumberExpr',['../classbort_1_1ast_1_1NumberExpr.html',1,'bort::ast']]]
 ];

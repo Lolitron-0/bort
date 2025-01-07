@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('namespacebort_1_1ir.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">bort::ir Namespace Reference</div></div>
 </div><!--header-->
@@ -114,13 +115,19 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1IRCodegen.html">IRCodegen</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1IRFunction.html">IRFunction</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1IRPrinter.html">IRPrinter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Label.html">Label</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1MDList.html">MDList</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1ir_1_1Metadata.html">Metadata</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html">Module</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1MoveInst.html">MoveInst</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1OpInst.html">OpInst</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,12 +138,81 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1VariableUse.html">VariableUse</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="conceptbort_1_1ir_1_1MetadataClass.html">MetadataClass</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a4fb4f2e56a2e279b96f73d48b0e37c50"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html#a4fb4f2e56a2e279b96f73d48b0e37c50">InstList</a> = std::list&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a> &gt; &gt;</td></tr>
+<tr class="separator:a4fb4f2e56a2e279b96f73d48b0e37c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e1290e1b450a52a1ac250e44cfb139d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html#a8e1290e1b450a52a1ac250e44cfb139d">InstIter</a> = InstList::iterator</td></tr>
+<tr class="separator:a8e1290e1b450a52a1ac250e44cfb139d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19ea1796caaa8a80c2a53d91178a838b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html#a19ea1796caaa8a80c2a53d91178a838b">InstructionTypeList</a> = cul::typelist::TypeList&lt; <a class="el" href="classbort_1_1ir_1_1AllocaInst.html">AllocaInst</a>, <a class="el" href="classbort_1_1ir_1_1BranchInst.html">BranchInst</a>, <a class="el" href="classbort_1_1ir_1_1OpInst.html">OpInst</a>, LoadInst &gt;</td></tr>
+<tr class="separator:a19ea1796caaa8a80c2a53d91178a838b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac565eb272d59200400828301cd6f488e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html#ac565eb272d59200400828301cd6f488e">BBIter</a> = std::list&lt; <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> &gt;::iterator</td></tr>
+<tr class="separator:ac565eb272d59200400828301cd6f488e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9308ede5f2c490398d69276e803ef19"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> = <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Value.html">Value</a> &gt;</td></tr>
 <tr class="separator:ad9308ede5f2c490398d69276e803ef19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a id="ac565eb272d59200400828301cd6f488e" name="ac565eb272d59200400828301cd6f488e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac565eb272d59200400828301cd6f488e">&#9670;&#160;</a></span>BBIter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacebort_1_1ir.html#ac565eb272d59200400828301cd6f488e">bort::ir::BBIter</a> = typedef std::list&lt;<a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a>&gt;::iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e1290e1b450a52a1ac250e44cfb139d" name="a8e1290e1b450a52a1ac250e44cfb139d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e1290e1b450a52a1ac250e44cfb139d">&#9670;&#160;</a></span>InstIter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacebort_1_1ir.html#a8e1290e1b450a52a1ac250e44cfb139d">bort::ir::InstIter</a> = typedef InstList::iterator</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fb4f2e56a2e279b96f73d48b0e37c50" name="a4fb4f2e56a2e279b96f73d48b0e37c50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fb4f2e56a2e279b96f73d48b0e37c50">&#9670;&#160;</a></span>InstList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacebort_1_1ir.html#a4fb4f2e56a2e279b96f73d48b0e37c50">bort::ir::InstList</a> = typedef std::list&lt;<a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a19ea1796caaa8a80c2a53d91178a838b" name="a19ea1796caaa8a80c2a53d91178a838b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19ea1796caaa8a80c2a53d91178a838b">&#9670;&#160;</a></span>InstructionTypeList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacebort_1_1ir.html#a19ea1796caaa8a80c2a53d91178a838b">bort::ir::InstructionTypeList</a> = typedef cul::typelist::TypeList&lt;<a class="el" href="classbort_1_1ir_1_1AllocaInst.html">AllocaInst</a>, <a class="el" href="classbort_1_1ir_1_1BranchInst.html">BranchInst</a>, <a class="el" href="classbort_1_1ir_1_1OpInst.html">OpInst</a>, LoadInst&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ad9308ede5f2c490398d69276e803ef19" name="ad9308ede5f2c490398d69276e803ef19"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9308ede5f2c490398d69276e803ef19">&#9670;&#160;</a></span>ValueRef</h2>
 

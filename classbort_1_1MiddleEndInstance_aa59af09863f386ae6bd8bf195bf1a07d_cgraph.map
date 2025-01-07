@@ -1,6 +1,13 @@
 <map id="bort::MiddleEndInstance::run" name="bort::MiddleEndInstance::run">
-<area shape="rect" id="node1" title=" " alt="" coords="5,45,213,70"/>
-<area shape="rect" id="node2" href="$classbort_1_1ir_1_1IRCodegen.html#a8311e73ed0badecf1e91f698f892f32d" title=" " alt="" coords="261,5,404,45"/>
-<area shape="rect" id="node4" href="$classbort_1_1ir_1_1IRPrinter.html#ad2620b881883e305fbc2b9f6abc788a3" title=" " alt="" coords="268,69,397,109"/>
-<area shape="rect" id="node3" href="$classbort_1_1ir_1_1Module.html#a5bf30a789c437e86edce89f29dcc66ef" title=" " alt="" coords="452,5,647,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,226,213,251"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1IRCodegen.html#a8311e73ed0badecf1e91f698f892f32d" title=" " alt="" coords="267,60,409,100"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1rv_1_1Generator.html#ad414584e8752cb5ccea6d8e4dfcf2c59" title=" " alt="" coords="261,177,415,217"/>
+<area shape="rect" id="node9" href="$classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2" title=" " alt="" coords="273,251,403,291"/>
+<area shape="rect" id="node11" href="$classbort_1_1codegen_1_1rv_1_1Printer.html#a3b596ae1ad9dfc30ea5a1c28f2f2928d" title=" " alt="" coords="269,333,407,373"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1Module.html#a5bf30a789c437e86edce89f29dcc66ef" title=" " alt="" coords="463,5,657,45"/>
+<area shape="rect" id="node5" href="$classbort_1_1ir_1_1IRFunction.html#a3b691fef19f15f3499de31d9b85ff99a" title=" " alt="" coords="489,69,631,109"/>
+<area shape="rect" id="node6" href="$classbort_1_1ir_1_1IRFunction.html#a99c3936df5b7120da2344899db132966" title=" " alt="" coords="473,134,647,159"/>
+<area shape="rect" id="node7" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda" title=" " alt="" coords="705,235,893,275"/>
+<area shape="rect" id="node8" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#a1757384345b105717927b0fdc4944a40" title=" " alt="" coords="466,235,654,275"/>
+<area shape="rect" id="node10" href="$IRPrinter_8cpp.html#a03fda0fb1403961a873b333be1b208a2" title=" " alt="" coords="484,299,636,325"/>
 </map>

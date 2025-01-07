@@ -108,8 +108,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5bf30a789c437e86edce89f29dcc66ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87d0e6b90e86f8dc037f2ad5e194b1db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#a87d0e6b90e86f8dc037f2ad5e194b1db">addBasicBlock</a> (std::string name)</td></tr>
 <tr class="separator:a87d0e6b90e86f8dc037f2ad5e194b1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2c3fab4b9db950fd759e37ca930f717"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#af2c3fab4b9db950fd759e37ca930f717">getBasicBlocks</a> () const -&gt; const std::list&lt; <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> &gt; &amp;</td></tr>
-<tr class="separator:af2c3fab4b9db950fd759e37ca930f717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca4a02e8aa75499f28bd9031b611dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#abca4a02e8aa75499f28bd9031b611dc4">addFunction</a> (<a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, std::string name)</td></tr>
+<tr class="separator:abca4a02e8aa75499f28bd9031b611dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ce66d254384a37265e883a64c8f4a95"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#a3ce66d254384a37265e883a64c8f4a95">begin</a> ()</td></tr>
 <tr class="separator:a3ce66d254384a37265e883a64c8f4a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460554bb745c1a9d56b0279ed057d812"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#a460554bb745c1a9d56b0279ed057d812">end</a> ()</td></tr>
@@ -120,6 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ace815695853f179952be8c64ca0888c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab37fbb9623b769964fabd92cecf672ac"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#ab37fbb9623b769964fabd92cecf672ac">getLastBBIt</a> () const</td></tr>
 <tr class="separator:ab37fbb9623b769964fabd92cecf672ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac6f7dbf0b39c194280c7bb8c565606"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Module.html#a3ac6f7dbf0b39c194280c7bb8c565606">getLastBBIt</a> ()</td></tr>
+<tr class="separator:a3ac6f7dbf0b39c194280c7bb8c565606"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a87d0e6b90e86f8dc037f2ad5e194b1db" name="a87d0e6b90e86f8dc037f2ad5e194b1db"></a>
@@ -137,6 +139,42 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abca4a02e8aa75499f28bd9031b611dc4" name="abca4a02e8aa75499f28bd9031b611dc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abca4a02e8aa75499f28bd9031b611dc4">&#9670;&#160;</a></span>addFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::ir::Module::addFunction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -274,8 +312,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af2c3fab4b9db950fd759e37ca930f717" name="af2c3fab4b9db950fd759e37ca930f717"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2c3fab4b9db950fd759e37ca930f717">&#9670;&#160;</a></span>getBasicBlocks()</h2>
+<a id="a3ac6f7dbf0b39c194280c7bb8c565606" name="a3ac6f7dbf0b39c194280c7bb8c565606"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ac6f7dbf0b39c194280c7bb8c565606">&#9670;&#160;</a></span>getLastBBIt() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,10 +322,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto bort::ir::Module::getBasicBlocks </td>
+          <td class="memname">auto bort::ir::Module::getLastBBIt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const -&gt; const std::list&lt;<a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a>&gt;&amp; </td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -300,7 +338,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab37fbb9623b769964fabd92cecf672ac" name="ab37fbb9623b769964fabd92cecf672ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab37fbb9623b769964fabd92cecf672ac">&#9670;&#160;</a></span>getLastBBIt()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab37fbb9623b769964fabd92cecf672ac">&#9670;&#160;</a></span>getLastBBIt() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

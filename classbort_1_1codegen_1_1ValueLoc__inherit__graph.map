@@ -1,0 +1,5 @@
+<map id="bort::codegen::ValueLoc" name="bort::codegen::ValueLoc">
+<area shape="rect" id="node1" title=" " alt="" coords="119,5,297,31"/>
+<area shape="rect" id="node2" href="$classbort_1_1codegen_1_1RegisterLoc.html" title="Register location." alt="" coords="5,79,200,104"/>
+<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1StackLoc.html" title=" " alt="" coords="225,79,402,104"/>
+</map>

@@ -1,0 +1,13 @@
+<map id="include/bort/Codegen/ValueLoc.hpp" name="include/bort/Codegen/ValueLoc.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="388,5,548,45"/>
+<area shape="rect" id="node2" href="$LoadInst_8hpp.html" title=" " alt="" coords="296,93,456,133"/>
+<area shape="rect" id="node4" href="$RISCVCodegen_8hpp.html" title=" " alt="" coords="208,269,368,309"/>
+<area shape="rect" id="node5" href="$RISCVCodegen_8cpp.html" title=" " alt="" coords="5,357,235,383"/>
+<area shape="rect" id="node6" href="$RISCVPrinter_8cpp.html" title=" " alt="" coords="690,357,905,383"/>
+<area shape="rect" id="node10" href="$StoreInst_8hpp.html" title=" " alt="" coords="480,93,640,133"/>
+<area shape="rect" id="node11" href="$ValueLoc_8cpp.html" title=" " alt="" coords="945,101,1135,126"/>
+<area shape="rect" id="node3" href="$InstructionVisitorBase_8hpp.html" title=" " alt="" coords="325,181,523,221"/>
+<area shape="rect" id="node8" href="$RISCVPrinter_8hpp.html" title=" " alt="" coords="659,269,819,309"/>
+<area shape="rect" id="node9" href="$InstructionVisitor_8cpp.html" title=" " alt="" coords="392,277,635,302"/>
+<area shape="rect" id="node7" href="$MiddleEndInstance_8cpp.html" title=" " alt="" coords="386,357,598,383"/>
+</map>

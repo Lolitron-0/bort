@@ -1,0 +1,38 @@
+var RISCVCodegen_8hpp =
+[
+    [ "bort::codegen::rv::RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode" ],
+    [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
+    [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
+    [ "bort::codegen::rv::Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],
+    [ "RVMachineRegisterRef", "RISCVCodegen_8hpp.html#af53baca35254c91295c5504b75f3abbd", null ],
+    [ "GPR", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248", [
+      [ "t0", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840", null ],
+      [ "t1", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a83f1535f99ab0bf4e9d02dfd85d3e3f7", null ],
+      [ "t2", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0f826a89cf68c399c5f4cf320c1a5842", null ],
+      [ "t3", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0b8854ad38f0a6c65807928d28195609", null ],
+      [ "t4", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a1051527638b9da6fe99e4242795a10ea", null ],
+      [ "t5", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248adf2184f4b46de3ddf02f74fb03810020", null ],
+      [ "t6", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248aa77cca9bd375665b36f4239eeda0c996", null ],
+      [ "a7", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248ac692562238d8c12c32434c50b96d56ae", null ],
+      [ "a6", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248af74dd50cfec0f8549406fee6191d2f8d", null ],
+      [ "a5", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a32cfe6c19200b67afb7c3d0e1c43eadb", null ],
+      [ "a4", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a894f782a148b33af1e39a0efed952d69", null ],
+      [ "a3", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a9d607a663f3e9b0a90c3c8d4426640dc", null ],
+      [ "a2", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a693a9fdd4c2fd0700968fba0d07ff3c0", null ],
+      [ "a1", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a8a8bb7cd343aa2ad99b7d762030857a2", null ],
+      [ "a0", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a5640486daa6880d667b76c958820361a", null ],
+      [ "s1", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a8ddf878039b70767c4a5bcf4f0c4f65e", null ],
+      [ "s2", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248afac989447cad2edbc89fbcba70003b36", null ],
+      [ "s3", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248ac0828e0381730befd1f7a025057c74fb", null ],
+      [ "s4", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a7e7cb6814b74d6596098fc80127569a5", null ],
+      [ "s5", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a437f57809f82b9e2947f70fd488eb536", null ],
+      [ "s6", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a425db905039f7a6559ce1115efa7d397", null ],
+      [ "s7", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a9d7115b42254d59b82440ebe8084927f", null ],
+      [ "s8", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a3e8d88fdd85d7153525e0647cdd97686", null ],
+      [ "s9", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222", null ],
+      [ "s10", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1", null ],
+      [ "s11", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248ae744f97eb579be2c86132824e8f4787e", null ],
+      [ "COUNT", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d", null ]
+    ] ],
+    [ "GPRToString", "RISCVCodegen_8hpp.html#a6d137422a11c24b8ab25694dcf172a79", null ]
+];

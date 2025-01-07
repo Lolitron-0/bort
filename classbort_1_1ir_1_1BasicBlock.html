@@ -92,7 +92,6 @@ $(document).ready(function(){initNavTree('classbort_1_1ir_1_1BasicBlock.html',''
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classbort_1_1ir_1_1BasicBlock-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">bort::ir::BasicBlock Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
@@ -119,18 +118,15 @@ Collaboration diagram for bort::ir::BasicBlock:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:aa86d30bb2fd96322196f1676417f5e67"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#aa86d30bb2fd96322196f1676417f5e67">InstList</a> = std::list&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a> &gt; &gt;</td></tr>
-<tr class="separator:aa86d30bb2fd96322196f1676417f5e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2a428581cafa67d571412fd4cb688186"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#a2a428581cafa67d571412fd4cb688186">BasicBlock</a> (std::string name=&quot;&quot;)</td></tr>
-<tr class="separator:a2a428581cafa67d571412fd4cb688186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a419242604dcd8252d1493683acb1c0b4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#a419242604dcd8252d1493683acb1c0b4">BasicBlock</a> (std::string name)</td></tr>
+<tr class="separator:a419242604dcd8252d1493683acb1c0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a521f67cff9c23aa3a90183e29f40c128"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#a521f67cff9c23aa3a90183e29f40c128">addInstruction</a> (<a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a> &gt; instruction)</td></tr>
 <tr class="separator:a521f67cff9c23aa3a90183e29f40c128"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5ce4c7776c8413c557a48f0462a082e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#ae5ce4c7776c8413c557a48f0462a082e">getInstructions</a> () const -&gt; const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html#aa86d30bb2fd96322196f1676417f5e67">InstList</a> &amp;</td></tr>
+<tr class="memitem:a52a35e9ea9a2272747de9aecc27ea6b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#a52a35e9ea9a2272747de9aecc27ea6b8">insertBefore</a> (InstList::iterator pos, <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a> &gt; instruction)</td></tr>
+<tr class="separator:a52a35e9ea9a2272747de9aecc27ea6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5ce4c7776c8413c557a48f0462a082e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#ae5ce4c7776c8413c557a48f0462a082e">getInstructions</a> () const -&gt; const <a class="el" href="namespacebort_1_1ir.html#a4fb4f2e56a2e279b96f73d48b0e37c50">InstList</a> &amp;</td></tr>
 <tr class="separator:ae5ce4c7776c8413c557a48f0462a082e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d9bc5f89a449b6b9fb98ce348cd36d4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BasicBlock.html#a0d9bc5f89a449b6b9fb98ce348cd36d4">begin</a> ()</td></tr>
 <tr class="separator:a0d9bc5f89a449b6b9fb98ce348cd36d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,31 +143,30 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa644f6bf4d42ff5ac7c6e30675c61024 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a0b921c886fb6dff8aeff982afef205 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a9a0b921c886fb6dff8aeff982afef205">getName</a> () const -&gt; std::string</td></tr>
 <tr class="separator:a9a0b921c886fb6dff8aeff982afef205 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03078c9d2ca075225ec798915037672a inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplParams" colspan="2">template&lt;MetadataClass T&gt; </td></tr>
+<tr class="memitem:a03078c9d2ca075225ec798915037672a inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a03078c9d2ca075225ec798915037672a">addMDNode</a> (T data)</td></tr>
+<tr class="separator:a03078c9d2ca075225ec798915037672a inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fcf63619a38ede92ab1aca6e4812077 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplParams" colspan="2">template&lt;MetadataClass T&gt; </td></tr>
+<tr class="memitem:a0fcf63619a38ede92ab1aca6e4812077 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a0fcf63619a38ede92ab1aca6e4812077">getMDNode</a> () -&gt; T *</td></tr>
+<tr class="separator:a0fcf63619a38ede92ab1aca6e4812077 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e942aa0040b46c9bb211e5f04cd2f41 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplParams" colspan="2">template&lt;MetadataClass T&gt; </td></tr>
+<tr class="memitem:a9e942aa0040b46c9bb211e5f04cd2f41 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a9e942aa0040b46c9bb211e5f04cd2f41">getMDNode</a> () const -&gt; const T *</td></tr>
+<tr class="separator:a9e942aa0040b46c9bb211e5f04cd2f41 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad31171ee6ebe3561f61df73cb63a34 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a8ad31171ee6ebe3561f61df73cb63a34">getMDRange</a> () const</td></tr>
+<tr class="separator:a8ad31171ee6ebe3561f61df73cb63a34 inherit pub_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classbort_1_1ir_1_1Value"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classbort_1_1ir_1_1Value')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classbort_1_1ir_1_1Value.html">bort::ir::Value</a></td></tr>
+<tr class="memitem:a94c6147d43613639fac94edceca8e3ad inherit pub_static_methods_classbort_1_1ir_1_1Value"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#a94c6147d43613639fac94edceca8e3ad">formatValue</a> (const <a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> &amp;value) -&gt; std::optional&lt; std::string &gt;</td></tr>
+<tr class="separator:a94c6147d43613639fac94edceca8e3ad inherit pub_static_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classbort_1_1ir_1_1Value"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classbort_1_1ir_1_1Value')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classbort_1_1ir_1_1Value.html">bort::ir::Value</a></td></tr>
 <tr class="memitem:af2d204e3b89d425ff871337b30268c82 inherit pro_methods_classbort_1_1ir_1_1Value"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1Value.html#af2d204e3b89d425ff871337b30268c82">Value</a> (<a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, std::string name=&quot;&quot;)</td></tr>
 <tr class="separator:af2d204e3b89d425ff871337b30268c82 inherit pro_methods_classbort_1_1ir_1_1Value"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aa86d30bb2fd96322196f1676417f5e67" name="aa86d30bb2fd96322196f1676417f5e67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa86d30bb2fd96322196f1676417f5e67">&#9670;&#160;</a></span>InstList</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="classbort_1_1ir_1_1BasicBlock.html#aa86d30bb2fd96322196f1676417f5e67">bort::ir::BasicBlock::InstList</a> =  std::list&lt;<a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a>&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2a428581cafa67d571412fd4cb688186" name="a2a428581cafa67d571412fd4cb688186"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a428581cafa67d571412fd4cb688186">&#9670;&#160;</a></span>BasicBlock()</h2>
+<a id="a419242604dcd8252d1493683acb1c0b4" name="a419242604dcd8252d1493683acb1c0b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a419242604dcd8252d1493683acb1c0b4">&#9670;&#160;</a></span>BasicBlock()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +178,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">bort::ir::BasicBlock::BasicBlock </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;&quot;</code></td><td>)</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -336,7 +331,43 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">auto bort::ir::BasicBlock::getInstructions </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const -&gt; const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html#aa86d30bb2fd96322196f1676417f5e67">InstList</a>&amp; </td>
+          <td> const -&gt; const <a class="el" href="namespacebort_1_1ir.html#a4fb4f2e56a2e279b96f73d48b0e37c50">InstList</a>&amp; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a52a35e9ea9a2272747de9aecc27ea6b8" name="a52a35e9ea9a2272747de9aecc27ea6b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52a35e9ea9a2272747de9aecc27ea6b8">&#9670;&#160;</a></span>insertBefore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::ir::BasicBlock::insertBefore </td>
+          <td>(</td>
+          <td class="paramtype">InstList::iterator&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">Instruction</a> &gt;&#160;</td>
+          <td class="paramname"><em>instruction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>

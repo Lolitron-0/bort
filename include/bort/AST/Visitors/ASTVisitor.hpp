@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <utility>
 
@@ -16,7 +17,7 @@ class Block;
 class ASTRoot;
 class FunctionDecl;
 class ExpressionStmt;
-class IfStmtNode;
+class IfStmt;
 
 class ASTVisitorBase {
 public:
@@ -81,7 +82,8 @@ protected:
   virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);
   virtual void visit(const Ref<Block>& blockNode);
-  virtual void visit(const Ref<IfStmtNode>& ifStmtNode);
+  virtual void visit(const Ref<IfStmt>& ifStmtNode);
+  virtual void visit(const Ref<WhileStmt>& whileStmtNode);
 };
 
 } // namespace bort::ast

@@ -3,6 +3,7 @@
 #include "bort/Basic/Casts.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
 #include "bort/Codegen/LoadInst.hpp"
+#include "bort/Codegen/MachineRegister.hpp"
 #include "bort/Codegen/StoreInst.hpp"
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
@@ -82,9 +83,12 @@ private:
   }
 
   void visit(const Ref<ir::BranchInst>& brInst) override {
-    RVInstInfo info{ "bnez" };
-    if (!brInst->isConditional()) {
-      info.InstName = "j";
+    RVInstInfo info{ "j" };
+    if (brInst->isConditional()) {
+      info.InstName = "bnez";
+      if (brInst->isNegated()) {
+        info.InstName = "beqz";
+      }
     }
 
     brInst->addMDNode(std::move(info));
@@ -92,7 +96,7 @@ private:
 
   void visit(const Ref<ir::MoveInst>& mvInst) override {
     RVInstInfo info{ "li" };
-    if (isaRef<Operand>(mvInst->getSrc())) {
+    if (isaRef<MachineRegister>(mvInst->getSrc())) {
       info.InstName = "mv";
     }
 
@@ -303,10 +307,19 @@ void Generator::generate() {
       reinitDescriptors(bb);
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
-        if (++InstIter{ m_CurrentInstIter } == bb.end()) {
+        auto isLast{ ++InstIter{ m_CurrentInstIter } == bb.end() };
+        auto isBranch{ isaRef<BranchInst>(*m_CurrentInstIter) };
+        if (isLast && isBranch) {
+          // spill before branch
           spillEndBB();
         }
         genericVisit(*m_CurrentInstIter);
+        if (isLast && !isBranch) {
+          // spill after other
+          m_CurrentInstIter++;
+          spillEndBB();
+          break;
+        }
       }
     }
   }

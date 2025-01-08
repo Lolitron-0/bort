@@ -7,6 +7,7 @@
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/CLI/IO.hpp"
@@ -283,6 +284,8 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
   switch (curTok().getKind()) {
   case TokenKind::KW_if:
     return parseIfStatement();
+  case TokenKind::KW_while:
+    return parseWhileStatement();
   default:
     break;
   }
@@ -328,8 +331,9 @@ auto Parser::lookahead(uint32_t offset) const -> const Token& {
   return *iter;
 }
 
-auto Parser::parseIfStatement() -> Ref<ast::IfStmtNode> {
+auto Parser::parseIfStatement() -> Ref<ast::IfStmt> {
   bort_assert(curTok().is(TokenKind::KW_if), "Expected 'if'");
+  auto ifTok{ curTok() };
   consumeToken();
   if (curTok().isNot(TokenKind::LParen)) {
     Diagnostic::emitError(curTok(), "Expected '('");
@@ -349,9 +353,25 @@ auto Parser::parseIfStatement() -> Ref<ast::IfStmtNode> {
         ast::ASTDebugInfo{ curTok() });
   }
 
-  return m_ASTRoot->registerNode<ast::IfStmtNode>(
-      ast::ASTDebugInfo{ curTok() }, std::move(condition),
+  return m_ASTRoot->registerNode<ast::IfStmt>(
+      ast::ASTDebugInfo{ ifTok }, std::move(condition),
       std::move(thenBlock), std::move(elseBlock));
+}
+
+auto Parser::parseWhileStatement() -> Ref<ast::WhileStmt> {
+  bort_assert(curTok().is(TokenKind::KW_while), "Expected 'while'");
+  auto whileTok{ curTok() };
+  consumeToken();
+  if (curTok().isNot(TokenKind::LParen)) {
+    Diagnostic::emitError(curTok(), "Expected '('");
+    return invalidNode();
+  }
+  auto condition{ parseParenExpr() };
+  auto body{ parseBlock() };
+
+  return m_ASTRoot->registerNode<ast::WhileStmt>(
+      ast::ASTDebugInfo{ whileTok }, std::move(condition),
+      std::move(body));
 }
 
 } // namespace bort

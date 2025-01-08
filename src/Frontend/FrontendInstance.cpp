@@ -37,7 +37,9 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
       auto ast{ parser.buildAST() };
 
       if (parser.isASTInvalid()) {
-        continue;
+        throw FrontEndFatalError{ fmt::format(
+            "Fatal error parsing {}, build stopped",
+            input.Path.string()) };
       }
 
       ast::SymbolResolutionVisitor symbolResolveVisitor{};

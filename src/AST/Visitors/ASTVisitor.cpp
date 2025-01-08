@@ -35,7 +35,7 @@ void StructureAwareASTVisitor::visit(const Ref<Block>& blockNode) {
   }
 }
 
-void StructureAwareASTVisitor::visit(const Ref<IfStmtNode>& ifStmtNode) {
+void StructureAwareASTVisitor::visit(const Ref<IfStmt>& ifStmtNode) {
   genericVisit(ifStmtNode->getCondition());
   genericVisit(ifStmtNode->getThenBlock());
   genericVisit(ifStmtNode->getElseBlock());
@@ -57,4 +57,9 @@ auto ASTVisitorBase::getNodeDebugInfo(const Ref<Node>& node) const
   return m_ASTRoot->getNodeDebugInfo(node);
 }
 
+void StructureAwareASTVisitor::visit(
+    const Ref<WhileStmt>& whileStmtNode) {
+  genericVisit(whileStmtNode->getCondition());
+  genericVisit(whileStmtNode->getBody());
+};
 } // namespace bort::ast

@@ -13,7 +13,9 @@ enum class TokenKind {
 #include "bort/Lex/Tokens.def"
   NUM_TOKENS
 };
-class Token { public:
+
+class Token {
+public:
   using LiteralValue =
       std::variant<std::monostate, std::string, int, char>;
 
@@ -55,8 +57,7 @@ class Token { public:
 
   template <typename T>
   auto getLiteralValue() const -> T {
-    auto&& result{ std::get<T>(m_LiteralValue) };
-    bort_assert(result, "Invalid literal type");
+    auto result{ std::get<T>(m_LiteralValue) };
     return result;
   }
 

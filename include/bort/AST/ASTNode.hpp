@@ -26,6 +26,7 @@ enum class NodeKind {
   Block,
   ExpressionStmt,
   IfStmt,
+  WhileStmt,
   ASTRoot,
   NUM_NODES
 };

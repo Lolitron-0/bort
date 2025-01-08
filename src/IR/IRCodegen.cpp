@@ -95,8 +95,7 @@ auto IRCodegen::visit(const Ref<ast::Block>& blockNode) -> ValueRef {
 /// ; then block
 /// ...
 /// L_End:
-auto IRCodegen::visit(const Ref<ast::IfStmtNode>& ifStmtNode)
-    -> ValueRef {
+auto IRCodegen::visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef {
   auto condition{ genericVisit(ifStmtNode->getCondition()) };
 
   auto thenBr{ addInstruction(makeRef<BranchInst>(condition)) };
@@ -126,6 +125,24 @@ void IRCodegen::pushBB(std::string postfix, std::string name) {
     name += postfix;
   }
   m_Module.addBasicBlock(std::move(name));
+}
+
+auto IRCodegen::visit(const Ref<ast::WhileStmt>& whileStmtNode)
+    -> ValueRef {
+  pushBB("_cond");
+  auto& condBB{ *m_Module.getLastBBIt() };
+  auto condition{ genericVisit(whileStmtNode->getCondition()) };
+
+  auto endBr{ addInstruction(makeRef<BranchInst>(condition, true)) };
+
+  pushBB("_body");
+  genericVisit(whileStmtNode->getBody());
+  auto loopBr{ addInstruction(makeRef<BranchInst>()) };
+  loopBr->setTarget(&condBB);
+
+  pushBB("_end");
+  endBr->setTarget(&*m_Module.getLastBBIt());
+  return nullptr;
 }
 
 } // namespace bort::ir

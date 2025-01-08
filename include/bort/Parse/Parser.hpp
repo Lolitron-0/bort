@@ -2,9 +2,10 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionDecl.hpp"
-#include "bort/AST/IfStmtNode.hpp"
+#include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Lexer.hpp"
@@ -80,7 +81,9 @@ protected:
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
   /// ifStatement -> 'if' parenExpr block (else block)?
-  auto parseIfStatement() -> Ref<ast::IfStmtNode>;
+  auto parseIfStatement() -> Ref<ast::IfStmt>;
+  /// whileStatement -> 'while' parenExpr block
+  auto parseWhileStatement() -> Ref<ast::WhileStmt>;
 
 private:
   void disableDiagnostics() {

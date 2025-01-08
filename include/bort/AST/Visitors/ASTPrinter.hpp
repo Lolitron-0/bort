@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include <concepts>
 #include <fmt/base.h>
 #include <fmt/color.h>
@@ -23,7 +24,8 @@ private:
   void visit(const Ref<ExpressionStmt>& expressionStmtNode) override;
   void visit(const Ref<BinOpExpr>& binopNode) override;
   void visit(const Ref<Block>& blockNode) override;
-  void visit(const Ref<IfStmtNode>& ifStmtNode) override;
+  void visit(const Ref<IfStmt>& ifStmtNode) override;
+  void visit(const Ref<WhileStmt>& whileStmtNode) override;
 
   void push();
   void pop();

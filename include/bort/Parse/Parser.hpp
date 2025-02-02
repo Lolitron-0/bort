@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
@@ -64,14 +65,17 @@ protected:
   /// @todo type qualifiers
   auto parseDeclspec() -> TypeRef;
   /// declaration -> declspec (varDecl |  functionDecl)
-  auto parseDeclaration() -> Ref<ast::Statement>;
-  /// varDecl -> identifier ';'
+  auto parseDeclarationStatement() -> Ref<ast::Statement>;
+  /// varDecl -> declspec identifier ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
   auto parseVarDecl(const TypeRef& type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,
                          const Token& nameTok) -> Ref<ast::FunctionDecl>;
+  /// functionCallExpr -> nameTok '(' (declspec identifier, ...) ')'
+  auto parseFunctionCallExpr(const Token& nameTok)
+      -> Unique<ast::FunctionCallExpr>;
   /// statement \n
   /// -> expression ';' \n
   /// -> block \n
@@ -101,7 +105,7 @@ private:
     return *m_CurTokIter;
   }
 
-  [[nodiscard]] auto invalidNode() -> std::nullptr_t {
+  auto invalidNode() -> std::nullptr_t {
     m_ASTInvalid = true;
     return nullptr;
   }

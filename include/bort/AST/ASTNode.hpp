@@ -23,6 +23,7 @@ enum class NodeKind {
   BinOpExpr,
   VarDecl,
   FunctionDecl,
+  FunctionCallExpr,
   Block,
   ExpressionStmt,
   IfStmt,

@@ -20,6 +20,9 @@ public:
     return m_BasicBlocks.erase(it);
   }
 
+  auto getEntryBlock() -> BasicBlock& {
+    return m_BasicBlocks.front();
+  }
   auto back() -> BasicBlock& {
     return m_BasicBlocks.back();
   }

@@ -38,6 +38,7 @@ static auto formatValueLoc(const Ref<ValueLoc>& VL) -> std::string {
 }
 
 void Printer::run(ir::Module& module) {
+  printHeader();
   for (auto&& func : module) {
     bool firstBlock{ true };
     const auto* AC{ func.getMDNode<RVFuncAdditionalCode>() };
@@ -102,6 +103,21 @@ void Printer::visit(const Ref<StoreInst>& storeInst) {
   fmt::println(m_Stream, "{} {}, {}", II->InstName,
                formatMachineValue(storeInst->getSource()),
                formatValueLoc(storeInst->getLoc()));
+}
+
+void Printer::visit(const Ref<ir::CallInst>& callInst) {
+  auto* II{ callInst->getMDNode<RVInstInfo>() };
+  // function name being actual function entry block needs checking but
+  // ...
+  fmt::println(m_Stream, "{} {}", II->InstName,
+               callInst->getFunction()->getName());
+}
+
+void Printer::printHeader() {
+  fmt::println(m_Stream, R"(
+.globl main
+.text
+)");
 }
 
 } // namespace bort::codegen::rv

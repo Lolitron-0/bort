@@ -3,6 +3,7 @@
 #include "bort/Codegen/StoreInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
@@ -29,6 +30,8 @@ private:
   virtual void visit(const Ref<StoreInst>& /* storeInst */) {
   }
   virtual void visit(const Ref<ir::BranchInst>& /* brInst */) {
+  }
+  virtual void visit(const Ref<ir::CallInst>& /* callInst */) {
   }
 
 protected:

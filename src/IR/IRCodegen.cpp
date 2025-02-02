@@ -4,6 +4,7 @@
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -67,7 +68,9 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
     -> ValueRef {
-  /// @todo function types
+  for (auto&& paramVar : functionDeclNode->getFunction()->getArgs()) {
+    VariableUse::createUnique(paramVar);
+  }
   m_Module.addFunction(VoidType::get(),
                        functionDeclNode->getFunction()->getName());
   pushBB("", functionDeclNode->getFunction()->getName());
@@ -143,6 +146,23 @@ auto IRCodegen::visit(const Ref<ast::WhileStmt>& whileStmtNode)
   pushBB("_end");
   endBr->setTarget(&*m_Module.getLastBBIt());
   return nullptr;
+}
+
+auto IRCodegen::visit(const Ref<ast::FunctionCallExpr>& funcCallExpr)
+    -> ValueRef {
+  std::vector<ValueRef> args;
+  for (const auto& argExpr : funcCallExpr->getArgs()) {
+    args.push_back(genericVisit(argExpr));
+  }
+  auto function{ funcCallExpr->getFunction() };
+  if (function->getReturnType()->is(TypeKind::Void)) {
+    addInstruction(makeRef<CallInst>(function, std::move(args)));
+    return nullptr;
+  }
+  auto callInst{ addInstruction(makeRef<CallInst>(
+      function, Register::getOrCreate(function->getReturnType()),
+      std::move(args))) };
+  return callInst->getDestination();
 }
 
 } // namespace bort::ir

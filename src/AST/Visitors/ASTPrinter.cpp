@@ -24,6 +24,7 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::BinOpExpr, "BinOpExpr")
       .Case(NodeKind::VarDecl, "VarDecl")
       .Case(NodeKind::FunctionDecl, "FunctionDecl")
+      .Case(NodeKind::FunctionCallExpr, "FunctionCallExpr")
       .Case(NodeKind::ExpressionStmt, "ExpressionStmt")
       .Case(NodeKind::IfStmt, "IfStmt")
       .Case(NodeKind::WhileStmt, "WhileStmt")
@@ -92,12 +93,12 @@ void ASTPrinter::visit(const Ref<CharExpr>& /*charNode*/) {
 
 void ASTPrinter::visit(const Ref<VarDecl>& varDeclNode) {
   dumpNodeInfo(varDeclNode);
-  dump("Name", varDeclNode->getVariable()->getName());
-  dump("Type", varDeclNode->getVariable()->getType()->toString());
+  dump("Variable", varDeclNode->getVariable()->toString());
 }
 
 void ASTPrinter::visit(const Ref<FunctionDecl>& functionDeclNode) {
   dumpNodeInfo(functionDeclNode);
+  dump("Function", functionDeclNode->getFunction()->toString());
   dump("Body", functionDeclNode->getBody());
 }
 
@@ -140,6 +141,17 @@ void ASTPrinter::visit(const Ref<WhileStmt>& whileStmtNode) {
   dumpNodeInfo(whileStmtNode);
   dump("Condition", whileStmtNode->getCondition());
   dump("Body", whileStmtNode->getBody());
+}
+
+void ASTPrinter::visit(const Ref<FunctionCallExpr>& functionCallExpr) {
+  dumpNodeInfo(functionCallExpr);
+  dump("Function",
+       functionCallExpr->getFunction()->getName() +
+           (functionCallExpr->isResolved() ? "" : red(" (unresolved)")));
+  for (auto&& it :
+       functionCallExpr->getArgs() | boost::adaptors::indexed()) {
+    dump(fmt::format("Arg #{}", it.index()), it.value());
+  }
 }
 
 } // namespace bort::ast

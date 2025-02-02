@@ -1,6 +1,7 @@
 #include "bort/IR/IRPrinter.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -75,6 +76,8 @@ void IRPrinter::print(const Module& module) {
                      formatValueColored(moveInst->getSrc()));
         } else if (auto branchInst{ dynCastRef<BranchInst>(inst) }) {
           visit(branchInst);
+        } else if (auto callInst{ dynCastRef<CallInst>(inst) }) {
+          visit(callInst);
         } else {
           continue;
         }
@@ -110,5 +113,19 @@ void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
   } else {
     fmt::print(stderr, "{} {}", styleInst("br"),
                branchInst->getTarget()->getName());
+  }
+}
+
+void bort::ir::IRPrinter::visit(const Ref<CallInst>& callInst) {
+  if (!callInst->isVoid()) {
+    fmt::print(stderr,
+               "{} = ", formatValueColored(callInst->getDestination()));
+  }
+
+  fmt::print(stderr, "{} {}", styleInst("call"),
+             callInst->getFunction()->getName());
+
+  for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
+    fmt::print(stderr, ", {}", formatValueColored(callInst->getArg(i)));
   }
 }

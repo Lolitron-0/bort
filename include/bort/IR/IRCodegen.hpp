@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/VariableExpr.hpp"
@@ -35,6 +36,7 @@ private:
   auto visit(const Ref<ast::Block>& blockNode) -> ValueRef;
   auto visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef;
   auto visit(const Ref<ast::WhileStmt>& whileStmtNode) -> ValueRef;
+  auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>

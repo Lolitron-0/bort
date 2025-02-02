@@ -62,4 +62,12 @@ void StructureAwareASTVisitor::visit(
   genericVisit(whileStmtNode->getCondition());
   genericVisit(whileStmtNode->getBody());
 };
+
+void StructureAwareASTVisitor::visit(
+    const Ref<FunctionCallExpr>& functionCallNode) {
+  for (auto&& arg : functionCallNode->getArgs()) {
+    genericVisit(arg);
+  }
+}
+
 } // namespace bort::ast

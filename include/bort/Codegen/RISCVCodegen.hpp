@@ -7,6 +7,7 @@
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -106,6 +107,7 @@ private:
   void processInst();
   void visit(const Ref<ir::OpInst>& opInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
+  void visit(const Ref<ir::CallInst>& callInst) override;
   void visit(const Ref<ir::MoveInst>& mvInst) override;
 
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)

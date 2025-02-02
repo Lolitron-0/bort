@@ -3,6 +3,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
@@ -41,6 +42,10 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
   case NodeKind::FunctionDecl:
     bort_assert_nomsg(dynCastRef<FunctionDecl>(node));
     return visit(dynCastRef<FunctionDecl>(node));
+    break;
+  case NodeKind::FunctionCallExpr:
+    bort_assert_nomsg(dynCastRef<FunctionCallExpr>(node));
+    return visit(dynCastRef<FunctionCallExpr>(node));
     break;
   case NodeKind::ExpressionStmt:
     bort_assert_nomsg(dynCastRef<ExpressionStmt>(node));

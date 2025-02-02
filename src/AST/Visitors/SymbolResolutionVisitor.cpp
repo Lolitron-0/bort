@@ -3,6 +3,7 @@
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
 
 namespace bort::ast {
@@ -29,7 +30,7 @@ auto Scope::getName() const -> std::optional<std::string> {
 
 void Scope::define(const Ref<Symbol>& symbol) {
   if (m_SymbolMap.contains(symbol->getName())) {
-    throw SymbolAlreadyDefined{ symbol->getName() };
+    throw SymbolAlreadyDefinedError{ symbol->getName() };
   }
   m_SymbolMap[symbol->getName()] = symbol;
 }
@@ -66,9 +67,10 @@ void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
 void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
   try {
     define(varDeclNode->getVariable());
-  } catch (const SymbolAlreadyDefined& e) {
+  } catch (const SymbolAlreadyDefinedError& e) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(varDeclNode).token, "{}", e.what());
+        getASTRoot()->getNodeDebugInfo(varDeclNode).token, "{}",
+        e.what());
     auto prevSym{ resolve(varDeclNode->getVariable()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
     Diagnostic::emitWarning("Previously defined as: [ {} ]",
@@ -83,6 +85,67 @@ void SymbolResolutionVisitor::visit(const Ref<Block>& blockNode) {
     genericVisit(child);
   }
   pop();
+}
+
+void SymbolResolutionVisitor::visit(
+    const Ref<FunctionDecl>& functionDeclNode) {
+  try {
+    define(functionDeclNode->getFunction());
+  } catch (const SymbolAlreadyDefinedError& e) {
+    Diagnostic::emitError(
+        getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
+        e.what());
+    auto prevSym{ resolve(functionDeclNode->getFunction()->getName()) };
+    bort_assert(prevSym, "define/resolve mismatch");
+    Diagnostic::emitWarning("Previously defined as: [ {} ]",
+                            prevSym->toString());
+    markASTInvalid();
+  }
+
+  auto function{ functionDeclNode->getFunction() };
+  push(function->getName());
+  for (auto&& paramVar : function->getArgs()) {
+    try {
+      define(paramVar);
+    } catch (const SymbolAlreadyDefinedError& e) {
+      Diagnostic::emitError(
+          getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
+          e.what());
+      auto prevSym{ resolve(paramVar->getName()) };
+      bort_assert(prevSym, "define/resolve mismatch");
+      Diagnostic::emitWarning("Previously defined as: [ {} ]",
+                              prevSym->toString());
+      markASTInvalid();
+    }
+  }
+
+  genericVisit(functionDeclNode->getBody());
+  pop();
+}
+
+void SymbolResolutionVisitor::visit(
+    const Ref<FunctionCallExpr>& functionCallExpr) {
+  if (functionCallExpr->isResolved()) {
+    return;
+  }
+
+  auto symbol = resolve(functionCallExpr->getFunction()->getName());
+  if (!symbol) {
+    Diagnostic::emitError(
+        getASTRoot()->getNodeDebugInfo(functionCallExpr).token,
+        "Unresolved function: {}",
+        functionCallExpr->getFunction()->getName());
+    markASTInvalid();
+    return;
+  }
+
+  bort_assert(isaRef<Function>(symbol),
+              "Function resolved in something else");
+  functionCallExpr->setFunction(dynCastRef<Function>(symbol));
+
+  for (auto&& arg : functionCallExpr->getArgs()) {
+    genericVisit(arg);
+  }
 }
 
 void SymbolResolutionVisitor::push() {
@@ -108,7 +171,9 @@ auto SymbolResolutionVisitor::resolve(const std::string& name)
   return m_CurrentScope->resolve(name);
 }
 
-SymbolAlreadyDefined::SymbolAlreadyDefined(const std::string& name)
+SymbolAlreadyDefinedError::SymbolAlreadyDefinedError(
+    const std::string& name)
     : std::runtime_error{ fmt::format("Redifinition of {}", name) } {
 }
+
 } // namespace bort::ast

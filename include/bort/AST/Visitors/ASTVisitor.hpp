@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <utility>
@@ -84,6 +85,7 @@ protected:
   virtual void visit(const Ref<Block>& blockNode);
   virtual void visit(const Ref<IfStmt>& ifStmtNode);
   virtual void visit(const Ref<WhileStmt>& whileStmtNode);
+  virtual void visit(const Ref<FunctionCallExpr>& /* functionCallNode */);
 };
 
 } // namespace bort::ast

@@ -1,6 +1,7 @@
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
+#include "bort/CLI/IO.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
 #include "bort/Codegen/LoadInst.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
@@ -10,6 +11,7 @@
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Metadata.hpp"
@@ -117,6 +119,11 @@ private:
       info.InstName = "sb";
     }
     storeInst->addMDNode(std::move(info));
+  }
+
+  void visit(const Ref<CallInst>& callInst) override {
+    RVInstInfo info{ "call" };
+    callInst->addMDNode(std::move(info));
   }
 };
 
@@ -424,6 +431,42 @@ void Generator::visit(const Ref<ir::MoveInst>& mvInst) {
   m_OperandLocs[dstOp] = { makeRef<RegisterLoc>(dstReg) };
 
   mvInst->setDestination(std::move(dstReg));
+}
+
+void Generator::visit(const Ref<ir::CallInst>& callInst) {
+  static constexpr std::array s_ArgRegisters{ GPR::a0, GPR::a1, GPR::a2,
+                                              GPR::a3, GPR::a4, GPR::a5,
+                                              GPR::a6, GPR::a7 };
+  int argRegN{ 0 };
+  for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
+    auto arg{ callInst->getArg(i) };
+    auto argOp{ dynCastRef<Operand>(arg) };
+
+    if (argRegN == s_ArgRegisters.size()) {
+      bort_assert(false,
+                  "Too many arguments, memory args not implemented");
+    }
+
+    auto argReg{ RVMachineRegister::get(s_ArgRegisters.at(argRegN++)) };
+    if (argOp && !m_RegisterContent[argReg].contains(argOp)) {
+      generateLoad(argOp, argReg);
+    } else if (!argOp) {
+      // it is immediate
+      m_CurrentBBIter->insertBefore(m_CurrentInstIter,
+                                    makeRef<MoveInst>(argReg, arg));
+    }
+    callInst->setArg(i, std::move(argReg));
+  }
+
+  if (callInst->isVoid()) {
+    return;
+  }
+
+  auto dstOp{ dynCastRef<Operand>(callInst->getDestination()) };
+  auto dstReg{ RVMachineRegister::get(GPR::a0) };
+  m_RegisterContent[dstReg] = { dstOp };
+  m_OperandLocs[dstOp]      = { makeRef<RegisterLoc>(dstReg) };
+  callInst->setDestination(std::move(dstReg));
 }
 
 void Generator::reinitDescriptors(const BasicBlock& bb) {

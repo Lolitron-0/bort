@@ -10,5 +10,5 @@ exe_suffix = sys.argv[2] if len(sys.argv) > 2 else ''
 
 for file in corpus_dir.glob('*.c'):
     result = subprocess.run(
-        [Path(build_dir) / 'bort', '--dump-ast', '--emit-ir', file])
+        [Path(build_dir) / ('bort'+exe_suffix), '--dump-ast', '--emit-ir', file])
     print(f"{GREEN+'OK' if result.returncode == 0 else RED + 'FAIL'} {file}{NC}\n")

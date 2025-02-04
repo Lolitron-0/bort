@@ -8,11 +8,13 @@ build_dir = Path(sys.argv[1])
 corpus_dir = root / 'tests/corpus'
 exe_suffix = sys.argv[2] if len(sys.argv) > 2 else ''
 
-for file in build_dir.glob("*"):
-    print(file)
+arg0 = build_dir / ('bort'+exe_suffix)
+for file in build_dir.rglob("*"):
+    if file.name == 'bort'+exe_suffix:
+        arg0 = file
+        break
 
 for file in corpus_dir.glob('*.c'):
-    arg0 = build_dir / ('bort'+exe_suffix)
     print(arg0)
     result = subprocess.run(
         [arg0, '--dump-ast', '--emit-ir', file])

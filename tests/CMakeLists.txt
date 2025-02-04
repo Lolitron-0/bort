@@ -21,4 +21,4 @@ find_package(Python REQUIRED COMPONENTS Interpreter)
 set(SMOKE_PROJECT_NAME ${PROJECT_NAME}_smoke)
 add_test(NAME ${SMOKE_PROJECT_NAME}
          COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/smoke.py
-         ${CMAKE_BINARY_DIR} ${CMAKE_EXECUTABLE_SUFFIX})
+                 ${CMAKE_BINARY_DIR} "${CMAKE_EXECUTABLE_SUFFIX}")

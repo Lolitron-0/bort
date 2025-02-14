@@ -1,6 +1,6 @@
 int foo(int a, int b) {
   int x;
-  if (a > b) {
+  if (a & b) {
     x = 4;
     return x;
   } else {

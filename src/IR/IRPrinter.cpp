@@ -58,7 +58,9 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Star, "mul")
       .Case(TokenKind::Div, "div")
       .Case(TokenKind::Less, "slt")
-      .Case(TokenKind::Greater, "sgt");
+      .Case(TokenKind::Greater, "sgt")
+      .Case(TokenKind::Amp, "and")
+      .Case(TokenKind::Pipe, "or");
 } };
 
 void IRPrinter::print(const Module& module) {

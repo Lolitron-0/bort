@@ -55,7 +55,9 @@ private:
         opInst->setOperand(i, newIRReg);
       }
 
-      if (opInst->getOp() == TokenKind::Plus) {
+      if (opInst->getOp() == TokenKind::Plus ||
+          opInst->getOp() == TokenKind::Amp ||
+          opInst->getOp() == TokenKind::Pipe) {
         // add can be immediate
         break;
       }
@@ -72,7 +74,9 @@ private:
           .Case(TokenKind::Star, "mul")
           .Case(TokenKind::Div, "div")
           .Case(TokenKind::Less, "slt")
-          .Case(TokenKind::Greater, "sgt");
+          .Case(TokenKind::Greater, "sgt")
+          .Case(TokenKind::Amp, "and")
+          .Case(TokenKind::Pipe, "or");
     } };
 
     bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),

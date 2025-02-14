@@ -31,6 +31,8 @@ static constexpr auto s_BinopPrecedence{
       { TokenKind::Greater, 10 },
       { TokenKind::LessEqual, 10 },
       { TokenKind::GreaterEqual, 10 },
+      { TokenKind::Amp, 9 },
+      { TokenKind::Pipe, 8 },
       { TokenKind::Assign, 5 },
   })
 };

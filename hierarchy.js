@@ -24,7 +24,7 @@ var hierarchy =
     [ "bort::ir::Metadata", "structbort_1_1ir_1_1Metadata.html", [
       [ "bort::codegen::FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", null ],
       [ "bort::codegen::rv::FrameOffset", "structbort_1_1codegen_1_1rv_1_1FrameOffset.html", null ],
-      [ "bort::codegen::rv::RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", null ],
+      [ "bort::codegen::rv::RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", null ],
       [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", null ]
     ] ],
     [ "bort::MiddleEndInstance", "classbort_1_1MiddleEndInstance.html", null ],
@@ -33,6 +33,7 @@ var hierarchy =
       [ "bort::ast::ASTRoot", "classbort_1_1ast_1_1ASTRoot.html", null ],
       [ "bort::ast::ExpressionNode", "classbort_1_1ast_1_1ExpressionNode.html", [
         [ "bort::ast::BinOpExpr", "classbort_1_1ast_1_1BinOpExpr.html", null ],
+        [ "bort::ast::FunctionCallExpr", "classbort_1_1ast_1_1FunctionCallExpr.html", null ],
         [ "bort::ast::NumberExpr", "classbort_1_1ast_1_1NumberExpr.html", null ],
         [ "bort::ast::VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", null ]
       ] ],
@@ -40,8 +41,10 @@ var hierarchy =
         [ "bort::ast::Block", "classbort_1_1ast_1_1Block.html", null ],
         [ "bort::ast::ExpressionStmt", "classbort_1_1ast_1_1ExpressionStmt.html", null ],
         [ "bort::ast::FunctionDecl", "classbort_1_1ast_1_1FunctionDecl.html", null ],
-        [ "bort::ast::IfStmtNode", "classbort_1_1ast_1_1IfStmtNode.html", null ],
-        [ "bort::ast::VarDecl", "classbort_1_1ast_1_1VarDecl.html", null ]
+        [ "bort::ast::IfStmt", "classbort_1_1ast_1_1IfStmt.html", null ],
+        [ "bort::ast::ReturnStmt", "classbort_1_1ast_1_1ReturnStmt.html", null ],
+        [ "bort::ast::VarDecl", "classbort_1_1ast_1_1VarDecl.html", null ],
+        [ "bort::ast::WhileStmt", "classbort_1_1ast_1_1WhileStmt.html", null ]
       ] ]
     ] ],
     [ "bort::Parser", "classbort_1_1Parser.html", null ],
@@ -50,7 +53,7 @@ var hierarchy =
       [ "bort::FrontEndFatalError", "classbort_1_1FrontEndFatalError.html", [
         [ "bort::LexerFatalError", "classbort_1_1LexerFatalError.html", null ]
       ] ],
-      [ "bort::ast::SymbolAlreadyDefined", "classbort_1_1ast_1_1SymbolAlreadyDefined.html", null ],
+      [ "bort::ast::SymbolAlreadyDefinedError", "classbort_1_1ast_1_1SymbolAlreadyDefinedError.html", null ],
       [ "bort::exceptions::SourceFileReaderError", "classbort_1_1exceptions_1_1SourceFileReaderError.html", [
         [ "bort::exceptions::SourceFileFailedToOpen", "classbort_1_1exceptions_1_1SourceFileFailedToOpen.html", null ],
         [ "bort::exceptions::SourceFileInvalidExtension", "classbort_1_1exceptions_1_1SourceFileInvalidExtension.html", null ]
@@ -88,8 +91,10 @@ var hierarchy =
         [ "bort::codegen::StoreInst", "classbort_1_1codegen_1_1StoreInst.html", null ],
         [ "bort::ir::AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", null ],
         [ "bort::ir::BranchInst", "classbort_1_1ir_1_1BranchInst.html", null ],
+        [ "bort::ir::CallInst", "classbort_1_1ir_1_1CallInst.html", null ],
         [ "bort::ir::MoveInst", "classbort_1_1ir_1_1MoveInst.html", null ],
-        [ "bort::ir::OpInst", "classbort_1_1ir_1_1OpInst.html", null ]
+        [ "bort::ir::OpInst", "classbort_1_1ir_1_1OpInst.html", null ],
+        [ "bort::ir::RetInst", "classbort_1_1ir_1_1RetInst.html", null ]
       ] ],
       [ "bort::ir::Operand", "classbort_1_1ir_1_1Operand.html", [
         [ "bort::ir::Register", "classbort_1_1ir_1_1Register.html", null ],

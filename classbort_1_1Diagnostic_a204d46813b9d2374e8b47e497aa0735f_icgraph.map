@@ -1,16 +1,20 @@
 <map id="bort::Diagnostic::emitError" name="bort::Diagnostic::emitError">
-<area shape="rect" id="node1" title=" " alt="" coords="523,304,717,329"/>
+<area shape="rect" id="node1" title=" " alt="" coords="523,435,717,460"/>
 <area shape="rect" id="node2" href="$classbort_1_1Diagnostic.html#a67e3f1913f7587772106fbf4a1d58493" title=" " alt="" coords="265,5,460,31"/>
 <area shape="rect" id="node3" href="$classbort_1_1Lexer.html#a14345f0c345442df35b847bd5a6f1bf3" title=" " alt="" coords="303,55,422,80"/>
 <area shape="rect" id="node4" href="$structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="5,80,203,105"/>
 <area shape="rect" id="node5" href="$Main_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title=" " alt="" coords="335,156,390,181"/>
-<area shape="rect" id="node6" href="$classbort_1_1Parser.html#a3f2b6f6380d5dedcc9be3543270ec53e" title="declaration &#45;&gt; declspec (varDecl | functionDecl)" alt="" coords="255,205,470,231"/>
-<area shape="rect" id="node7" href="$classbort_1_1Parser.html#a6fbac845679c8fdcd86f3d919b9e57f1" title="functionDecl &#45;&gt; identifier &#39;(&#39; (declspec ident, ...) &#39;)&#39; block" alt="" coords="251,255,475,280"/>
-<area shape="rect" id="node8" href="$classbort_1_1Parser.html#aa41bceed8a9814ecb5f0c1c6d70b7254" title="ifStatement &#45;&gt; &#39;if&#39; parenExpr block (else block)?" alt="" coords="254,304,471,329"/>
-<area shape="rect" id="node9" href="$classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d" title=" " alt="" coords="260,353,465,379"/>
-<area shape="rect" id="node10" href="$classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc" title=" " alt="" coords="259,403,467,428"/>
-<area shape="rect" id="node11" href="$classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe" title=" " alt="" coords="275,453,451,493"/>
-<area shape="rect" id="node12" href="$classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8" title=" " alt="" coords="267,517,458,543"/>
-<area shape="rect" id="node13" href="$classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb" title=" " alt="" coords="293,567,433,607"/>
-<area shape="rect" id="node14" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="261,631,464,671"/>
+<area shape="rect" id="node6" href="$classbort_1_1Parser.html#a7db06bcc778d3fefe57d7b7289d16bb2" title="declaration &#45;&gt; declspec (varDecl | functionDecl)" alt="" coords="255,206,470,246"/>
+<area shape="rect" id="node7" href="$classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d" title=" " alt="" coords="263,271,462,296"/>
+<area shape="rect" id="node8" href="$classbort_1_1Parser.html#a3bf5182ad1703feb75bd46a80aa56f20" title="functionCallExpr &#45;&gt; nameTok &#39;(&#39; (declspec identifier, ...) &#39;)&#39;" alt="" coords="265,321,460,361"/>
+<area shape="rect" id="node9" href="$classbort_1_1Parser.html#a6fbac845679c8fdcd86f3d919b9e57f1" title="functionDecl &#45;&gt; identifier &#39;(&#39; (declspec ident, ...) &#39;)&#39; block" alt="" coords="251,385,475,411"/>
+<area shape="rect" id="node10" href="$classbort_1_1Parser.html#a00e81996a34f0f7c3be98f922f0a4f1a" title="ifStatement &#45;&gt; &#39;if&#39; parenExpr block (else block)?" alt="" coords="254,435,471,460"/>
+<area shape="rect" id="node11" href="$classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d" title=" " alt="" coords="260,484,465,509"/>
+<area shape="rect" id="node12" href="$classbort_1_1Parser.html#ad7fb31030c6b199bc0e09e329bbb5443" title="returnStatement &#45;&gt; &#39;return&#39; (expr)? &#39;;&#39;" alt="" coords="271,534,454,574"/>
+<area shape="rect" id="node13" href="$classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc" title=" " alt="" coords="259,599,467,624"/>
+<area shape="rect" id="node14" href="$classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe" title=" " alt="" coords="275,649,451,689"/>
+<area shape="rect" id="node15" href="$classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8" title=" " alt="" coords="267,713,458,739"/>
+<area shape="rect" id="node16" href="$classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb" title="whileStatement &#45;&gt; &#39;while&#39; parenExpr block" alt="" coords="274,763,451,803"/>
+<area shape="rect" id="node17" href="$classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb" title=" " alt="" coords="293,827,433,867"/>
+<area shape="rect" id="node18" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="261,891,464,931"/>
 </map>

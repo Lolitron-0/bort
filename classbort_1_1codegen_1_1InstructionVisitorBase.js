@@ -4,5 +4,6 @@ var classbort_1_1codegen_1_1InstructionVisitorBase =
     [ "genericVisit", "classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda", null ],
     [ "run", "classbort_1_1codegen_1_1InstructionVisitorBase.html#a1757384345b105717927b0fdc4944a40", null ],
     [ "m_CurrentBBIter", "classbort_1_1codegen_1_1InstructionVisitorBase.html#a4718343c4d17e97564d2ef3bc8829f75", null ],
+    [ "m_CurrentFuncIter", "classbort_1_1codegen_1_1InstructionVisitorBase.html#a3d7ba4e44f753c5ac32ab395af961277", null ],
     [ "m_CurrentInstIter", "classbort_1_1codegen_1_1InstructionVisitorBase.html#a1c3873307335785fe4e5a9bbc75b876c", null ]
 ];

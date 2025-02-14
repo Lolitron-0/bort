@@ -97,29 +97,35 @@ $(document).ready(function(){initNavTree('IRPrinter_8hpp_source.html',''); initR
 <a href="IRPrinter_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="AllocaInst_8hpp.html">bort/IR/AllocaInst.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="BranchInst_8hpp.html">bort/IR/BranchInst.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Module_8hpp.html">bort/IR/Module.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="OpInst_8hpp.html">bort/IR/OpInst.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ir.html">bort::ir</a> {</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="CallInst_8hpp.html">bort/IR/CallInst.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="Module_8hpp.html">bort/IR/Module.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="OpInst_8hpp.html">bort/IR/OpInst.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="RetInst_8hpp.html">bort/IR/RetInst.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IRPrinter.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ir_1_1IRPrinter.html">IRPrinter</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2">print</a>(<span class="keyword">const</span> <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">Module</a>&amp; module);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;OpInst&gt;</a>&amp; opInst);</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;AllocaInst&gt;</a>&amp; allocaInst);</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;BranchInst&gt;</a>&amp; branchInst);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace bort::ir</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ir.html">bort::ir</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IRPrinter.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ir_1_1IRPrinter.html">IRPrinter</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2">print</a>(<span class="keyword">const</span> <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">Module</a>&amp; module);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;OpInst&gt;</a>&amp; opInst);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;AllocaInst&gt;</a>&amp; allocaInst);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;BranchInst&gt;</a>&amp; branchInst);</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;CallInst&gt;</a>&amp; callInst);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keywordtype">void</span> visit(<span class="keyword">const</span> <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;RetInst&gt;</a>&amp; retInst);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <span class="comment">// namespace bort::ir</span></div>
 <div class="ttc" id="aAllocaInst_8hpp_html"><div class="ttname"><a href="AllocaInst_8hpp.html">AllocaInst.hpp</a></div></div>
 <div class="ttc" id="aBranchInst_8hpp_html"><div class="ttname"><a href="BranchInst_8hpp.html">BranchInst.hpp</a></div></div>
+<div class="ttc" id="aCallInst_8hpp_html"><div class="ttname"><a href="CallInst_8hpp.html">CallInst.hpp</a></div></div>
 <div class="ttc" id="aModule_8hpp_html"><div class="ttname"><a href="Module_8hpp.html">Module.hpp</a></div></div>
 <div class="ttc" id="aOpInst_8hpp_html"><div class="ttname"><a href="OpInst_8hpp.html">OpInst.hpp</a></div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1IRPrinter_html"><div class="ttname"><a href="classbort_1_1ir_1_1IRPrinter.html">bort::ir::IRPrinter</a></div><div class="ttdef"><b>Definition:</b> IRPrinter.hpp:9</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1IRPrinter_html_aaa07a3c7e31ca148aaa22ca209df7da2"><div class="ttname"><a href="classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2">bort::ir::IRPrinter::print</a></div><div class="ttdeci">void print(const Module &amp;module)</div><div class="ttdef"><b>Definition:</b> IRPrinter.cpp:62</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1Module_html"><div class="ttname"><a href="classbort_1_1ir_1_1Module.html">bort::ir::Module</a></div><div class="ttdef"><b>Definition:</b> Module.hpp:45</div></div>
+<div class="ttc" id="aRetInst_8hpp_html"><div class="ttname"><a href="RetInst_8hpp.html">RetInst.hpp</a></div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1IRPrinter_html"><div class="ttname"><a href="classbort_1_1ir_1_1IRPrinter.html">bort::ir::IRPrinter</a></div><div class="ttdef"><b>Definition:</b> IRPrinter.hpp:11</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1IRPrinter_html_aaa07a3c7e31ca148aaa22ca209df7da2"><div class="ttname"><a href="classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2">bort::ir::IRPrinter::print</a></div><div class="ttdeci">void print(const Module &amp;module)</div><div class="ttdef"><b>Definition:</b> IRPrinter.cpp:66</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1Module_html"><div class="ttname"><a href="classbort_1_1ir_1_1Module.html">bort::ir::Module</a></div><div class="ttdef"><b>Definition:</b> Module.hpp:64</div></div>
 <div class="ttc" id="anamespacebort_1_1ir_html"><div class="ttname"><a href="namespacebort_1_1ir.html">bort::ir</a></div><div class="ttdef"><b>Definition:</b> ValueLoc.cpp:5</div></div>
 <div class="ttc" id="anamespacebort_html_acd1b1c718ad9eb9764e2a02eb6724e61"><div class="ttname"><a href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">bort::Ref</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; Ref</div><div class="ttdef"><b>Definition:</b> Ref.hpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->

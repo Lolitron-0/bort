@@ -3,6 +3,7 @@ var namespacebort_1_1ir =
     [ "AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", "classbort_1_1ir_1_1AllocaInst" ],
     [ "BasicBlock", "classbort_1_1ir_1_1BasicBlock.html", "classbort_1_1ir_1_1BasicBlock" ],
     [ "BranchInst", "classbort_1_1ir_1_1BranchInst.html", "classbort_1_1ir_1_1BranchInst" ],
+    [ "CallInst", "classbort_1_1ir_1_1CallInst.html", "classbort_1_1ir_1_1CallInst" ],
     [ "Constant", "structbort_1_1ir_1_1Constant.html", "structbort_1_1ir_1_1Constant" ],
     [ "Instruction", "classbort_1_1ir_1_1Instruction.html", "classbort_1_1ir_1_1Instruction" ],
     [ "IntConstant", "classbort_1_1ir_1_1IntConstant.html", "classbort_1_1ir_1_1IntConstant" ],
@@ -16,12 +17,13 @@ var namespacebort_1_1ir =
     [ "Operand", "classbort_1_1ir_1_1Operand.html", "classbort_1_1ir_1_1Operand" ],
     [ "OpInst", "classbort_1_1ir_1_1OpInst.html", "classbort_1_1ir_1_1OpInst" ],
     [ "Register", "classbort_1_1ir_1_1Register.html", null ],
+    [ "RetInst", "classbort_1_1ir_1_1RetInst.html", "classbort_1_1ir_1_1RetInst" ],
     [ "Value", "classbort_1_1ir_1_1Value.html", "classbort_1_1ir_1_1Value" ],
     [ "VariableUse", "classbort_1_1ir_1_1VariableUse.html", null ],
     [ "MetadataClass", "conceptbort_1_1ir_1_1MetadataClass.html", null ],
     [ "BBIter", "namespacebort_1_1ir.html#ac565eb272d59200400828301cd6f488e", null ],
     [ "InstIter", "namespacebort_1_1ir.html#a8e1290e1b450a52a1ac250e44cfb139d", null ],
     [ "InstList", "namespacebort_1_1ir.html#a4fb4f2e56a2e279b96f73d48b0e37c50", null ],
-    [ "InstructionTypeList", "namespacebort_1_1ir.html#a19ea1796caaa8a80c2a53d91178a838b", null ],
+    [ "IRFuncIter", "namespacebort_1_1ir.html#aac7200f4608a87ca4af189d9d06e5215", null ],
     [ "ValueRef", "namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19", null ]
 ];

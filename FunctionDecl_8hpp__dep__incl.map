@@ -1,10 +1,12 @@
 <map id="include/bort/AST/FunctionDecl.hpp" name="include/bort/AST/FunctionDecl.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="327,5,514,45"/>
-<area shape="rect" id="node2" href="$AST_2Visitors_2Utils_8hpp.html" title=" " alt="" coords="238,93,419,133"/>
-<area shape="rect" id="node3" href="$ASTVisitor_8cpp.html" title=" " alt="" coords="5,181,225,207"/>
-<area shape="rect" id="node5" href="$Parser_8hpp.html" title=" " alt="" coords="465,93,603,133"/>
-<area shape="rect" id="node8" href="$ASTPrinter_8cpp.html" title=" " alt="" coords="627,101,849,126"/>
-<area shape="rect" id="node4" href="$IRCodegen_8cpp.html" title=" " alt="" coords="249,181,408,207"/>
-<area shape="rect" id="node6" href="$FrontendInstance_8cpp.html" title=" " alt="" coords="433,181,678,207"/>
-<area shape="rect" id="node7" href="$Parser_8cpp.html" title=" " alt="" coords="703,181,853,207"/>
+<area shape="rect" id="node1" title=" " alt="" coords="621,5,808,45"/>
+<area shape="rect" id="node2" href="$SymbolResolutionVisitor_8hpp.html" title=" " alt="" coords="291,93,504,133"/>
+<area shape="rect" id="node5" href="$AST_2Visitors_2Utils_8hpp.html" title=" " alt="" coords="752,93,933,133"/>
+<area shape="rect" id="node6" href="$ASTVisitor_8cpp.html" title=" " alt="" coords="719,189,939,214"/>
+<area shape="rect" id="node8" href="$Parser_8hpp.html" title=" " alt="" coords="539,93,677,133"/>
+<area shape="rect" id="node10" href="$ASTPrinter_8cpp.html" title=" " alt="" coords="957,101,1179,126"/>
+<area shape="rect" id="node3" href="$SymbolResolutionVisitor_8cpp.html" title=" " alt="" coords="5,181,251,221"/>
+<area shape="rect" id="node4" href="$FrontendInstance_8cpp.html" title=" " alt="" coords="275,189,520,214"/>
+<area shape="rect" id="node7" href="$IRCodegen_8cpp.html" title=" " alt="" coords="963,189,1122,214"/>
+<area shape="rect" id="node9" href="$Parser_8cpp.html" title=" " alt="" coords="545,189,695,214"/>
 </map>

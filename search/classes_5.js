@@ -5,5 +5,6 @@ var searchData=
   ['frontendfatalerror_2',['FrontEndFatalError',['../classbort_1_1FrontEndFatalError.html',1,'bort']]],
   ['frontendinstance_3',['FrontEndInstance',['../structbort_1_1FrontEndInstance.html',1,'bort']]],
   ['function_4',['Function',['../classbort_1_1Function.html',1,'bort']]],
-  ['functiondecl_5',['FunctionDecl',['../classbort_1_1ast_1_1FunctionDecl.html',1,'bort::ast']]]
+  ['functioncallexpr_5',['FunctionCallExpr',['../classbort_1_1ast_1_1FunctionCallExpr.html',1,'bort::ast']]],
+  ['functiondecl_6',['FunctionDecl',['../classbort_1_1ast_1_1FunctionDecl.html',1,'bort::ast']]]
 ];

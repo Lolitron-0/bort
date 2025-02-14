@@ -112,7 +112,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1rv_1_1Printer.html">Printer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html">RVFuncAdditionalCode</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html">RVFuncPrologueEpilogue</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1codegen_1_1rv_1_1RVInstInfo.html">RVInstInfo</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,39 +127,48 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a3e90a2b8f3bc1e06ec3135fd869ea248"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248">GPR</a> : uint8_t { <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840">t0</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248abd2ef9f4bd77488d5d4d16049379d4bc">VALUE_REGS_START</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840">t0</a> = VALUE_REGS_START
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a83f1535f99ab0bf4e9d02dfd85d3e3f7">t1</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0f826a89cf68c399c5f4cf320c1a5842">t2</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0b8854ad38f0a6c65807928d28195609">t3</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a1051527638b9da6fe99e4242795a10ea">t4</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0b8854ad38f0a6c65807928d28195609">t3</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a1051527638b9da6fe99e4242795a10ea">t4</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248adf2184f4b46de3ddf02f74fb03810020">t5</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248aa77cca9bd375665b36f4239eeda0c996">t6</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248ac692562238d8c12c32434c50b96d56ae">a7</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248af74dd50cfec0f8549406fee6191d2f8d">a6</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248ac692562238d8c12c32434c50b96d56ae">a7</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248af74dd50cfec0f8549406fee6191d2f8d">a6</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a32cfe6c19200b67afb7c3d0e1c43eadb">a5</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a894f782a148b33af1e39a0efed952d69">a4</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a9d607a663f3e9b0a90c3c8d4426640dc">a3</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a693a9fdd4c2fd0700968fba0d07ff3c0">a2</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a9d607a663f3e9b0a90c3c8d4426640dc">a3</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a693a9fdd4c2fd0700968fba0d07ff3c0">a2</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a8a8bb7cd343aa2ad99b7d762030857a2">a1</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a5640486daa6880d667b76c958820361a">a0</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a8ddf878039b70767c4a5bcf4f0c4f65e">s1</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248afac989447cad2edbc89fbcba70003b36">s2</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a8ddf878039b70767c4a5bcf4f0c4f65e">s1</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248afac989447cad2edbc89fbcba70003b36">s2</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248ac0828e0381730befd1f7a025057c74fb">s3</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a7e7cb6814b74d6596098fc80127569a5">s4</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a437f57809f82b9e2947f70fd488eb536">s5</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a425db905039f7a6559ce1115efa7d397">s6</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a437f57809f82b9e2947f70fd488eb536">s5</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a425db905039f7a6559ce1115efa7d397">s6</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a9d7115b42254d59b82440ebe8084927f">s7</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a3e8d88fdd85d7153525e0647cdd97686">s8</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222">s9</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1">s10</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222">s9</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1">s10</a>
 , <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248ae744f97eb579be2c86132824e8f4787e">s11</a>
-, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d">COUNT</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a3233ee44c6fced34d74fc7cd9cc8634b">VALUE_REGS_END</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0314a08a582d120250ab7c85928127ce">SPECIAL_REGS_START</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a1952a01898073d1e561b9b4f2e42cbd7">sp</a> = SPECIAL_REGS_START
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248adb26ee047a4c86fbd2fba73503feccb6">ra</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0666f0acdeed38d4cd9084ade1739498">fp</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a7f86922f42bf176ec322bede6d0a6092">SPECIAL_REGS_END</a>
+, <a class="el" href="namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248af6b961f21138e2dc84a843fdfee0d59b">NUM_REGS</a>
 <br />
  }</td></tr>
 <tr class="separator:a3e90a2b8f3bc1e06ec3135fd869ea248"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,7 +216,8 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840" name="a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840"></a>t0&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248abd2ef9f4bd77488d5d4d16049379d4bc" name="a3e90a2b8f3bc1e06ec3135fd869ea248abd2ef9f4bd77488d5d4d16049379d4bc"></a>VALUE_REGS_START&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840" name="a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840"></a>t0&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a83f1535f99ab0bf4e9d02dfd85d3e3f7" name="a3e90a2b8f3bc1e06ec3135fd869ea248a83f1535f99ab0bf4e9d02dfd85d3e3f7"></a>t1&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a0f826a89cf68c399c5f4cf320c1a5842" name="a3e90a2b8f3bc1e06ec3135fd869ea248a0f826a89cf68c399c5f4cf320c1a5842"></a>t2&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a0b8854ad38f0a6c65807928d28195609" name="a3e90a2b8f3bc1e06ec3135fd869ea248a0b8854ad38f0a6c65807928d28195609"></a>t3&#160;</td><td class="fielddoc"></td></tr>
@@ -233,7 +243,13 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222" name="a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222"></a>s9&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1" name="a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1"></a>s10&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248ae744f97eb579be2c86132824e8f4787e" name="a3e90a2b8f3bc1e06ec3135fd869ea248ae744f97eb579be2c86132824e8f4787e"></a>s11&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d" name="a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d"></a>COUNT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a3233ee44c6fced34d74fc7cd9cc8634b" name="a3e90a2b8f3bc1e06ec3135fd869ea248a3233ee44c6fced34d74fc7cd9cc8634b"></a>VALUE_REGS_END&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a0314a08a582d120250ab7c85928127ce" name="a3e90a2b8f3bc1e06ec3135fd869ea248a0314a08a582d120250ab7c85928127ce"></a>SPECIAL_REGS_START&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a1952a01898073d1e561b9b4f2e42cbd7" name="a3e90a2b8f3bc1e06ec3135fd869ea248a1952a01898073d1e561b9b4f2e42cbd7"></a>sp&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248adb26ee047a4c86fbd2fba73503feccb6" name="a3e90a2b8f3bc1e06ec3135fd869ea248adb26ee047a4c86fbd2fba73503feccb6"></a>ra&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a0666f0acdeed38d4cd9084ade1739498" name="a3e90a2b8f3bc1e06ec3135fd869ea248a0666f0acdeed38d4cd9084ade1739498"></a>fp&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248a7f86922f42bf176ec322bede6d0a6092" name="a3e90a2b8f3bc1e06ec3135fd869ea248a7f86922f42bf176ec322bede6d0a6092"></a>SPECIAL_REGS_END&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a3e90a2b8f3bc1e06ec3135fd869ea248af6b961f21138e2dc84a843fdfee0d59b" name="a3e90a2b8f3bc1e06ec3135fd869ea248af6b961f21138e2dc84a843fdfee0d59b"></a>NUM_REGS&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>

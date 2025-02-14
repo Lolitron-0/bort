@@ -12,6 +12,6 @@ var searchData=
   ['storeinst_9',['StoreInst',['../classbort_1_1codegen_1_1StoreInst.html',1,'bort::codegen']]],
   ['structureawareastvisitor_10',['StructureAwareASTVisitor',['../classbort_1_1ast_1_1StructureAwareASTVisitor.html',1,'bort::ast']]],
   ['symbol_11',['Symbol',['../classbort_1_1Symbol.html',1,'bort']]],
-  ['symbolalreadydefined_12',['SymbolAlreadyDefined',['../classbort_1_1ast_1_1SymbolAlreadyDefined.html',1,'bort::ast']]],
+  ['symbolalreadydefinederror_12',['SymbolAlreadyDefinedError',['../classbort_1_1ast_1_1SymbolAlreadyDefinedError.html',1,'bort::ast']]],
   ['symbolresolutionvisitor_13',['SymbolResolutionVisitor',['../classbort_1_1ast_1_1SymbolResolutionVisitor.html',1,'bort::ast']]]
 ];

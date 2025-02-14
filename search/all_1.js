@@ -17,7 +17,7 @@ var searchData=
   ['bort_14',['bort',['../namespacebort.html',1,'']]],
   ['bort_5fassert_15',['bort_assert',['../Assert_8hpp.html#aa4489bace96135f1181039034084a7dd',1,'Assert.hpp']]],
   ['bort_5fassert_5fnomsg_16',['bort_assert_nomsg',['../Assert_8hpp.html#ad5760d4d7800a20abeece97e2524301f',1,'Assert.hpp']]],
-  ['branchinst_17',['BranchInst',['../classbort_1_1ir_1_1BranchInst.html',1,'bort::ir::BranchInst'],['../classbort_1_1ir_1_1BranchInst.html#af8b35ca944c8403b3edad472deb76b5c',1,'bort::ir::BranchInst::BranchInst()']]],
+  ['branchinst_17',['BranchInst',['../classbort_1_1ir_1_1BranchInst.html',1,'bort::ir::BranchInst'],['../classbort_1_1ir_1_1BranchInst.html#a00c7dcd404b06661f107c5722c355168',1,'bort::ir::BranchInst::BranchInst()']]],
   ['branchinst_2ehpp_18',['BranchInst.hpp',['../BranchInst_8hpp.html',1,'']]],
   ['buildast_19',['buildAST',['../classbort_1_1Parser.html#afb157746e64c69011b03bfc695454308',1,'bort::Parser']]],
   ['codegen_20',['codegen',['../namespacebort_1_1codegen.html',1,'bort']]],

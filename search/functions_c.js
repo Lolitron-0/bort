@@ -1,21 +1,11 @@
 var searchData=
 [
-  ['parsebinoprhs_0',['parseBinOpRhs',['../classbort_1_1Parser.html#aba766a2729ed3aa3a3c4e2bb01488535',1,'bort::Parser']]],
-  ['parseblock_1',['parseBlock',['../classbort_1_1Parser.html#af251743fe093a8c859ba91389408044b',1,'bort::Parser']]],
-  ['parsedeclaration_2',['parseDeclaration',['../classbort_1_1Parser.html#a3f2b6f6380d5dedcc9be3543270ec53e',1,'bort::Parser']]],
-  ['parsedeclspec_3',['parseDeclspec',['../classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d',1,'bort::Parser']]],
-  ['parseexpression_4',['parseExpression',['../classbort_1_1Parser.html#a1651c188de3b53cbc54eb9be4ec422b1',1,'bort::Parser']]],
-  ['parsefunctiondecl_5',['parseFunctionDecl',['../classbort_1_1Parser.html#a6fbac845679c8fdcd86f3d919b9e57f1',1,'bort::Parser']]],
-  ['parseidentifierexpr_6',['parseIdentifierExpr',['../classbort_1_1Parser.html#ac4ae3cb710b01b46c39ebe6cb6e5c08b',1,'bort::Parser']]],
-  ['parseifstatement_7',['parseIfStatement',['../classbort_1_1Parser.html#aa41bceed8a9814ecb5f0c1c6d70b7254',1,'bort::Parser']]],
-  ['parsenumberexpr_8',['parseNumberExpr',['../classbort_1_1Parser.html#a402efd67a175b34e36c27b8819b65326',1,'bort::Parser']]],
-  ['parseparenexpr_9',['parseParenExpr',['../classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d',1,'bort::Parser']]],
-  ['parser_10',['Parser',['../classbort_1_1Parser.html#af42ae854eddea33b4b116346538da17a',1,'bort::Parser']]],
-  ['parsestatement_11',['parseStatement',['../classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc',1,'bort::Parser']]],
-  ['parsevalueexpression_12',['parseValueExpression',['../classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe',1,'bort::Parser']]],
-  ['parsevardecl_13',['parseVarDecl',['../classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8',1,'bort::Parser']]],
-  ['preprocess_14',['preprocess',['../classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb',1,'bort::Preprocessor']]],
-  ['print_15',['print',['../classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2',1,'bort::ir::IRPrinter']]],
-  ['printer_16',['Printer',['../classbort_1_1codegen_1_1rv_1_1Printer.html#a0dd45e602ab0d43db058477aa88bb3f7',1,'bort::codegen::rv::Printer']]],
-  ['pushchild_17',['pushChild',['../classbort_1_1ast_1_1ASTRoot.html#a584787ab370e287adcdfc08f893a76b6',1,'bort::ast::ASTRoot::pushChild()'],['../classbort_1_1ast_1_1Block.html#a1b9ba9e7c2021edd49b1c17cae2f7d75',1,'bort::ast::Block::pushChild()']]]
+  ['const_5fiterator_0',['const_iterator',['../classbort_1_1SourceFileIt.html#a0682355c28475aded3c530abea509ca9',1,'bort::SourceFileIt']]],
+  ['operator_20bool_1',['operator bool',['../classbort_1_1SourceFileIt.html#a839a8c909dc897b3c35d06cceb34f5cc',1,'bort::SourceFileIt']]],
+  ['operator_28_29_2',['operator()',['../structbort_1_1ast_1_1detail_1_1TypePairHasher.html#ad4f922029ded1362e71ec5e1a544bc42',1,'bort::ast::detail::TypePairHasher::operator()()'],['../structbort_1_1TypeRefHasher.html#a8f6ac9826ff940454c5454c7ada4c8be',1,'bort::TypeRefHasher::operator()()']]],
+  ['operator_2a_3',['operator*',['../classbort_1_1SourceFileIt.html#a260f133f80e5be64abf04ed502cf3a17',1,'bort::SourceFileIt']]],
+  ['operator_2b_2b_4',['operator++',['../classbort_1_1SourceFileIt.html#a73cceaf38ce0d369ebe8953d5328c43a',1,'bort::SourceFileIt::operator++() -&gt; SourceFileIt &amp;'],['../classbort_1_1SourceFileIt.html#a313323d9d5f6b6d46acc7c6e2c7c01df',1,'bort::SourceFileIt::operator++(int) -&gt; SourceFileIt']]],
+  ['operator_2b_3d_5',['operator+=',['../classbort_1_1SourceFileIt.html#aeea7567bdda365131c1fd324d740cd32',1,'bort::SourceFileIt']]],
+  ['opinst_6',['OpInst',['../classbort_1_1ir_1_1OpInst.html#a48d5273ceb23c7d8021a581bec7d7e14',1,'bort::ir::OpInst']]],
+  ['string_7',['string',['../classbort_1_1SourceFileIt.html#aab21f68f9d3ffe1322de0b41dfd07da7',1,'bort::SourceFileIt']]]
 ];

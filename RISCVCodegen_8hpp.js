@@ -1,11 +1,12 @@
 var RISCVCodegen_8hpp =
 [
-    [ "bort::codegen::rv::RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode" ],
+    [ "bort::codegen::rv::RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue" ],
     [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
     [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
     [ "bort::codegen::rv::Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],
     [ "RVMachineRegisterRef", "RISCVCodegen_8hpp.html#af53baca35254c91295c5504b75f3abbd", null ],
     [ "GPR", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248", [
+      [ "VALUE_REGS_START", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248abd2ef9f4bd77488d5d4d16049379d4bc", null ],
       [ "t0", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a809d4580aaed41565abc38d58f77f840", null ],
       [ "t1", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a83f1535f99ab0bf4e9d02dfd85d3e3f7", null ],
       [ "t2", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0f826a89cf68c399c5f4cf320c1a5842", null ],
@@ -32,7 +33,13 @@ var RISCVCodegen_8hpp =
       [ "s9", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a03e04301b15a7969eae9d94821cc8222", null ],
       [ "s10", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a2b3357d90b70edb1773bba13390166c1", null ],
       [ "s11", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248ae744f97eb579be2c86132824e8f4787e", null ],
-      [ "COUNT", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a4905ac9d6a22bdfc1ae096094ce6248d", null ]
+      [ "VALUE_REGS_END", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a3233ee44c6fced34d74fc7cd9cc8634b", null ],
+      [ "SPECIAL_REGS_START", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0314a08a582d120250ab7c85928127ce", null ],
+      [ "sp", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a1952a01898073d1e561b9b4f2e42cbd7", null ],
+      [ "ra", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248adb26ee047a4c86fbd2fba73503feccb6", null ],
+      [ "fp", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0666f0acdeed38d4cd9084ade1739498", null ],
+      [ "SPECIAL_REGS_END", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248a7f86922f42bf176ec322bede6d0a6092", null ],
+      [ "NUM_REGS", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248af6b961f21138e2dc84a843fdfee0d59b", null ]
     ] ],
     [ "GPRToString", "RISCVCodegen_8hpp.html#a6d137422a11c24b8ab25694dcf172a79", null ]
 ];

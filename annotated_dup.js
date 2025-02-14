@@ -13,18 +13,21 @@ var annotated_dup =
         [ "Block", "classbort_1_1ast_1_1Block.html", "classbort_1_1ast_1_1Block" ],
         [ "ExpressionNode", "classbort_1_1ast_1_1ExpressionNode.html", "classbort_1_1ast_1_1ExpressionNode" ],
         [ "ExpressionStmt", "classbort_1_1ast_1_1ExpressionStmt.html", "classbort_1_1ast_1_1ExpressionStmt" ],
+        [ "FunctionCallExpr", "classbort_1_1ast_1_1FunctionCallExpr.html", "classbort_1_1ast_1_1FunctionCallExpr" ],
         [ "FunctionDecl", "classbort_1_1ast_1_1FunctionDecl.html", "classbort_1_1ast_1_1FunctionDecl" ],
-        [ "IfStmtNode", "classbort_1_1ast_1_1IfStmtNode.html", "classbort_1_1ast_1_1IfStmtNode" ],
+        [ "IfStmt", "classbort_1_1ast_1_1IfStmt.html", "classbort_1_1ast_1_1IfStmt" ],
         [ "Node", "classbort_1_1ast_1_1Node.html", "classbort_1_1ast_1_1Node" ],
         [ "NumberExpr", "classbort_1_1ast_1_1NumberExpr.html", "classbort_1_1ast_1_1NumberExpr" ],
+        [ "ReturnStmt", "classbort_1_1ast_1_1ReturnStmt.html", "classbort_1_1ast_1_1ReturnStmt" ],
         [ "Scope", "classbort_1_1ast_1_1Scope.html", "classbort_1_1ast_1_1Scope" ],
         [ "Statement", "classbort_1_1ast_1_1Statement.html", "classbort_1_1ast_1_1Statement" ],
         [ "StructureAwareASTVisitor", "classbort_1_1ast_1_1StructureAwareASTVisitor.html", "classbort_1_1ast_1_1StructureAwareASTVisitor" ],
-        [ "SymbolAlreadyDefined", "classbort_1_1ast_1_1SymbolAlreadyDefined.html", "classbort_1_1ast_1_1SymbolAlreadyDefined" ],
+        [ "SymbolAlreadyDefinedError", "classbort_1_1ast_1_1SymbolAlreadyDefinedError.html", "classbort_1_1ast_1_1SymbolAlreadyDefinedError" ],
         [ "SymbolResolutionVisitor", "classbort_1_1ast_1_1SymbolResolutionVisitor.html", "classbort_1_1ast_1_1SymbolResolutionVisitor" ],
         [ "TypePropagationVisitor", "classbort_1_1ast_1_1TypePropagationVisitor.html", "classbort_1_1ast_1_1TypePropagationVisitor" ],
         [ "VarDecl", "classbort_1_1ast_1_1VarDecl.html", "classbort_1_1ast_1_1VarDecl" ],
-        [ "VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", "classbort_1_1ast_1_1VariableExpr" ]
+        [ "VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", "classbort_1_1ast_1_1VariableExpr" ],
+        [ "WhileStmt", "classbort_1_1ast_1_1WhileStmt.html", "classbort_1_1ast_1_1WhileStmt" ]
       ] ],
       [ "codegen", "namespacebort_1_1codegen.html", [
         [ "rv", "namespacebort_1_1codegen_1_1rv.html", [
@@ -33,7 +36,7 @@ var annotated_dup =
           [ "InstructionChoiceVisitor", "classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html", null ],
           [ "PreprocessVisitor", "classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html", null ],
           [ "Printer", "classbort_1_1codegen_1_1rv_1_1Printer.html", "classbort_1_1codegen_1_1rv_1_1Printer" ],
-          [ "RVFuncAdditionalCode", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode.html", "structbort_1_1codegen_1_1rv_1_1RVFuncAdditionalCode" ],
+          [ "RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue" ],
           [ "RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
           [ "RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ]
         ] ],
@@ -55,6 +58,7 @@ var annotated_dup =
         [ "AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", "classbort_1_1ir_1_1AllocaInst" ],
         [ "BasicBlock", "classbort_1_1ir_1_1BasicBlock.html", "classbort_1_1ir_1_1BasicBlock" ],
         [ "BranchInst", "classbort_1_1ir_1_1BranchInst.html", "classbort_1_1ir_1_1BranchInst" ],
+        [ "CallInst", "classbort_1_1ir_1_1CallInst.html", "classbort_1_1ir_1_1CallInst" ],
         [ "Constant", "structbort_1_1ir_1_1Constant.html", "structbort_1_1ir_1_1Constant" ],
         [ "Instruction", "classbort_1_1ir_1_1Instruction.html", "classbort_1_1ir_1_1Instruction" ],
         [ "IntConstant", "classbort_1_1ir_1_1IntConstant.html", "classbort_1_1ir_1_1IntConstant" ],
@@ -68,6 +72,7 @@ var annotated_dup =
         [ "Operand", "classbort_1_1ir_1_1Operand.html", "classbort_1_1ir_1_1Operand" ],
         [ "OpInst", "classbort_1_1ir_1_1OpInst.html", "classbort_1_1ir_1_1OpInst" ],
         [ "Register", "classbort_1_1ir_1_1Register.html", null ],
+        [ "RetInst", "classbort_1_1ir_1_1RetInst.html", "classbort_1_1ir_1_1RetInst" ],
         [ "Value", "classbort_1_1ir_1_1Value.html", "classbort_1_1ir_1_1Value" ],
         [ "VariableUse", "classbort_1_1ir_1_1VariableUse.html", null ]
       ] ],

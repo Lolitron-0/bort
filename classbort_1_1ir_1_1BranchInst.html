@@ -122,8 +122,8 @@ Collaboration diagram for bort::ir::BranchInst:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af8b35ca944c8403b3edad472deb76b5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#af8b35ca944c8403b3edad472deb76b5c">BranchInst</a> (<a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> condition=nullptr)</td></tr>
-<tr class="separator:af8b35ca944c8403b3edad472deb76b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00c7dcd404b06661f107c5722c355168"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#a00c7dcd404b06661f107c5722c355168">BranchInst</a> (<a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> condition=nullptr, bool negate=false)</td></tr>
+<tr class="separator:a00c7dcd404b06661f107c5722c355168"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32a56b31fcf7e3b112429fe5fe235d08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#a32a56b31fcf7e3b112429fe5fe235d08">setTarget</a> (const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> *block)</td></tr>
 <tr class="separator:a32a56b31fcf7e3b112429fe5fe235d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4e2107a565aae486b20a441bd62673b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#af4e2107a565aae486b20a441bd62673b">setCondition</a> (<a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> condition)</td></tr>
@@ -132,6 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae72daf5f6cb9255760174572c4cb7955"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac67fe2a33bc0093040bfcdf5d374d1c9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#ac67fe2a33bc0093040bfcdf5d374d1c9">getCondition</a> () const -&gt; <a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a></td></tr>
 <tr class="separator:ac67fe2a33bc0093040bfcdf5d374d1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc017274f52d5405268501962d53b51d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#abc017274f52d5405268501962d53b51d">isNegated</a> () const -&gt; bool</td></tr>
+<tr class="separator:abc017274f52d5405268501962d53b51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac84dd5f419ab191ece5210e905c2cf3d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ir_1_1BranchInst.html#ac84dd5f419ab191ece5210e905c2cf3d">isConditional</a> () const -&gt; bool</td></tr>
 <tr class="separator:ac84dd5f419ab191ece5210e905c2cf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classbort_1_1ir_1_1Instruction"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classbort_1_1ir_1_1Instruction')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classbort_1_1ir_1_1Instruction.html">bort::ir::Instruction</a></td></tr>
@@ -182,8 +184,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:accda685ce94dbb4fa59cce94a25043e3 inherit pro_attribs_classbort_1_1ir_1_1Instruction"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af8b35ca944c8403b3edad472deb76b5c" name="af8b35ca944c8403b3edad472deb76b5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8b35ca944c8403b3edad472deb76b5c">&#9670;&#160;</a></span>BranchInst()</h2>
+<a id="a00c7dcd404b06661f107c5722c355168" name="a00c7dcd404b06661f107c5722c355168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00c7dcd404b06661f107c5722c355168">&#9670;&#160;</a></span>BranchInst()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,8 +197,18 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">bort::ir::BranchInst::BranchInst </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a>&#160;</td>
-          <td class="paramname"><em>condition</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"><em>condition</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>negate</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -306,8 +318,44 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ir_1_1BranchInst_ac84dd5f419ab191ece5210e905c2cf3d_icgraph.png" border="0" usemap="#aclassbort_1_1ir_1_1BranchInst_ac84dd5f419ab191ece5210e905c2cf3d_icgraph" alt=""/></div>
 <map name="aclassbort_1_1ir_1_1BranchInst_ac84dd5f419ab191ece5210e905c2cf3d_icgraph" id="aclassbort_1_1ir_1_1BranchInst_ac84dd5f419ab191ece5210e905c2cf3d_icgraph">
-<area shape="rect" title=" " alt="" coords="196,5,339,45"/>
+<area shape="rect" title=" " alt="" coords="196,37,339,77"/>
 <area shape="rect" href="classbort_1_1ir_1_1BranchInst.html#ac67fe2a33bc0093040bfcdf5d374d1c9" title=" " alt="" coords="5,5,148,45"/>
+<area shape="rect" href="classbort_1_1ir_1_1BranchInst.html#abc017274f52d5405268501962d53b51d" title=" " alt="" coords="5,69,148,109"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="abc017274f52d5405268501962d53b51d" name="abc017274f52d5405268501962d53b51d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc017274f52d5405268501962d53b51d">&#9670;&#160;</a></span>isNegated()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::ir::BranchInst::isNegated </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; bool </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1ir_1_1BranchInst_abc017274f52d5405268501962d53b51d_cgraph.png" border="0" usemap="#aclassbort_1_1ir_1_1BranchInst_abc017274f52d5405268501962d53b51d_cgraph" alt=""/></div>
+<map name="aclassbort_1_1ir_1_1BranchInst_abc017274f52d5405268501962d53b51d_cgraph" id="aclassbort_1_1ir_1_1BranchInst_abc017274f52d5405268501962d53b51d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,148,45"/>
+<area shape="rect" href="classbort_1_1ir_1_1BranchInst.html#ac84dd5f419ab191ece5210e905c2cf3d" title=" " alt="" coords="196,5,339,45"/>
+<area shape="rect" href="classbort_1_1ir_1_1Instruction.html#ac489d94fd094cd2510a4b24f830fd06e" title=" " alt="" coords="387,5,531,45"/>
 </map>
 </div>
 

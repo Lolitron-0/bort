@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ifstmtnode_0',['IfStmtNode',['../classbort_1_1ast_1_1IfStmtNode.html',1,'bort::ast']]],
+  ['ifstmt_0',['IfStmt',['../classbort_1_1ast_1_1IfStmt.html',1,'bort::ast']]],
   ['instruction_1',['Instruction',['../classbort_1_1ir_1_1Instruction.html',1,'bort::ir']]],
   ['instructionchoicevisitor_2',['InstructionChoiceVisitor',['../classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html',1,'bort::codegen::rv']]],
   ['instructionvisitorbase_3',['InstructionVisitorBase',['../classbort_1_1codegen_1_1InstructionVisitorBase.html',1,'bort::codegen']]],

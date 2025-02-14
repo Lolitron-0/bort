@@ -1,7 +1,8 @@
 <map id="bort::codegen::rv::Generator::generate" name="bort::codegen::rv::Generator::generate">
-<area shape="rect" id="node1" title=" " alt="" coords="5,88,159,128"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,113,159,153"/>
 <area shape="rect" id="node2" href="$classbort_1_1ir_1_1IRFunction.html#a3b691fef19f15f3499de31d9b85ff99a" title=" " alt="" coords="230,5,371,45"/>
 <area shape="rect" id="node3" href="$classbort_1_1ir_1_1IRFunction.html#a99c3936df5b7120da2344899db132966" title=" " alt="" coords="214,70,387,95"/>
-<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda" title=" " alt="" coords="443,143,631,183"/>
-<area shape="rect" id="node5" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#a1757384345b105717927b0fdc4944a40" title=" " alt="" coords="207,171,395,211"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda" title=" " alt="" coords="443,168,631,208"/>
+<area shape="rect" id="node5" href="$namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480" title=" " alt="" coords="207,171,394,197"/>
+<area shape="rect" id="node6" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#a1757384345b105717927b0fdc4944a40" title=" " alt="" coords="207,221,395,261"/>
 </map>

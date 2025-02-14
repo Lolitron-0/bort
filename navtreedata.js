@@ -64,10 +64,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ASTDebugInfo_8hpp.html",
-"VariableUse_8cpp.html",
-"classbort_1_1ast_1_1ASTRoot.html#a70fe3b51a86e080253bb3299c95c8db3",
-"classbort_1_1codegen_1_1rv_1_1Generator.html",
-"functions_func_p.html"
+"Type_8hpp_source.html",
+"classbort_1_1Type.html#ab936d4e079153ee96b3494c4afd129aa",
+"classbort_1_1ast_1_1WhileStmt.html#a78bff11dc0684c6121a36adf3aa0b237",
+"classbort_1_1ir_1_1MoveInst.html",
+"namespacemembers_enum.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

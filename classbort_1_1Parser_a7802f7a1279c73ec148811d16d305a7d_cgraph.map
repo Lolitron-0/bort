@@ -1,7 +1,8 @@
 <map id="bort::Parser::parseDeclspec" name="bort::Parser::parseDeclspec">
-<area shape="rect" id="node1" title=" " alt="" coords="5,80,204,105"/>
-<area shape="rect" id="node2" href="$classbort_1_1CharType.html#ace23df476f6beb7eaa641d7084cebd02" title=" " alt="" coords="260,5,405,31"/>
-<area shape="rect" id="node3" href="$classbort_1_1IntType.html#a0e3a5aa8d4e6fb359625c1fe76907375" title=" " alt="" coords="267,55,399,80"/>
-<area shape="rect" id="node4" href="$classbort_1_1VoidType.html#a2d7e6ae475ecafe8c9fe1991c7fd6d62" title=" " alt="" coords="261,104,404,129"/>
-<area shape="rect" id="node5" href="$classbort_1_1PointerType.html#a7afe4d6512e958e5301b667319479688" title=" " alt="" coords="252,153,413,179"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,104,204,129"/>
+<area shape="rect" id="node2" href="$classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="252,5,447,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1CharType.html#ace23df476f6beb7eaa641d7084cebd02" title=" " alt="" coords="277,55,422,80"/>
+<area shape="rect" id="node4" href="$classbort_1_1IntType.html#a0e3a5aa8d4e6fb359625c1fe76907375" title=" " alt="" coords="283,104,415,129"/>
+<area shape="rect" id="node5" href="$classbort_1_1VoidType.html#a2d7e6ae475ecafe8c9fe1991c7fd6d62" title=" " alt="" coords="278,153,421,179"/>
+<area shape="rect" id="node6" href="$classbort_1_1PointerType.html#a7afe4d6512e958e5301b667319479688" title=" " alt="" coords="269,203,430,228"/>
 </map>

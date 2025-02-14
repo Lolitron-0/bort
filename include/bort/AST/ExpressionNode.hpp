@@ -17,7 +17,7 @@ public:
 
   void setType(TypeRef type);
 
-protected:
+private:
   TypeRef m_Type;
 };
 

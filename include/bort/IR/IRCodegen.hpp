@@ -1,10 +1,13 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
-#include "bort/AST/IfStmtNode.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
+#include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include <memory>
@@ -32,7 +35,10 @@ private:
   auto visit(const Ref<ast::ExpressionStmt>& expressionStmtNode)
       -> ValueRef;
   auto visit(const Ref<ast::Block>& blockNode) -> ValueRef;
-  auto visit(const Ref<ast::IfStmtNode>& ifStmtNode) -> ValueRef;
+  auto visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef;
+  auto visit(const Ref<ast::WhileStmt>& whileStmtNode) -> ValueRef;
+  auto visit(const Ref<ast::ReturnStmt>& returnStmt) -> ValueRef;
+  auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>
@@ -40,10 +46,11 @@ private:
     return std::dynamic_pointer_cast<T>(
         m_Module.addInstruction(std::move(instruction)));
   }
-  void pushBB(std::string postfix = "", std::string name = "" );
+  void pushBB(std::string postfix = "", std::string name = "");
 
 private:
   Module m_Module;
+  Ref<ast::ASTRoot> m_ASTRoot;
 };
 
 } // namespace bort::ir

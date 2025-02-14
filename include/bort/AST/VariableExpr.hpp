@@ -5,12 +5,9 @@
 namespace bort::ast {
 
 class VariableExpr final : public ExpressionNode {
-  explicit VariableExpr(const Ref<Symbol>& variable)
+  explicit VariableExpr(Ref<Variable> variable)
       : ExpressionNode{ NodeKind::VariableExpr } {
-    bort_assert((variable->getKind() == ObjectKind::Variable),
-                "Variable expr got not variable object");
-    m_Variable = std::dynamic_pointer_cast<Variable>(variable);
-    m_Type = m_Variable->isShallow() ? nullptr : m_Variable->getType();
+    setVariable(std::move(variable));
   }
 
 public:
@@ -26,7 +23,7 @@ public:
   }
   void setVariable(Ref<Variable> variable) {
     m_Variable = std::move(variable);
-    m_Type = m_Variable->isShallow() ? nullptr : m_Variable->getType();
+    setType(m_Variable->isShallow() ? nullptr : m_Variable->getType());
   }
 
   friend class ASTRoot;

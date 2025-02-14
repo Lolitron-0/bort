@@ -4,6 +4,7 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 
 namespace bort::ast {
@@ -35,7 +36,7 @@ void StructureAwareASTVisitor::visit(const Ref<Block>& blockNode) {
   }
 }
 
-void StructureAwareASTVisitor::visit(const Ref<IfStmtNode>& ifStmtNode) {
+void StructureAwareASTVisitor::visit(const Ref<IfStmt>& ifStmtNode) {
   genericVisit(ifStmtNode->getCondition());
   genericVisit(ifStmtNode->getThenBlock());
   genericVisit(ifStmtNode->getElseBlock());
@@ -55,6 +56,24 @@ void StructureAwareASTVisitor::genericVisit(const Ref<Node>& node) {
 auto ASTVisitorBase::getNodeDebugInfo(const Ref<Node>& node) const
     -> ASTDebugInfo {
   return m_ASTRoot->getNodeDebugInfo(node);
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<WhileStmt>& whileStmtNode) {
+  genericVisit(whileStmtNode->getCondition());
+  genericVisit(whileStmtNode->getBody());
+};
+
+void StructureAwareASTVisitor::visit(
+    const Ref<FunctionCallExpr>& functionCallNode) {
+  for (auto&& arg : functionCallNode->getArgs()) {
+    genericVisit(arg);
+  }
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<ReturnStmt>& returnStmtNode) {
+  genericVisit(returnStmtNode->getExpression());
 }
 
 } // namespace bort::ast

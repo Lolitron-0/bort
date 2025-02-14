@@ -7,7 +7,7 @@ namespace bort::ast {
 
 class FunctionDecl : public Statement {
   FunctionDecl(std::string name, TypeRef returnType,
-               std::vector<Variable> args, Ref<Block> body)
+               std::vector<Ref<Variable>> args, Ref<Block> body)
       : Statement{ NodeKind::FunctionDecl },
         m_FunctionSymbol{ makeRef<Function>(
             std::move(name), std::move(returnType), args) },
@@ -15,7 +15,9 @@ class FunctionDecl : public Statement {
   }
 
 public:
-  [[nodiscard]] auto getFunction() const -> Ref<Function> { return m_FunctionSymbol; }
+  [[nodiscard]] auto getFunction() const -> Ref<Function> {
+    return m_FunctionSymbol;
+  }
   [[nodiscard]] auto getBody() const -> Ref<Block> {
     return m_Body;
   }

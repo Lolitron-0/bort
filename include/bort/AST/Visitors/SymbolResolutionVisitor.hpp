@@ -1,4 +1,6 @@
 #pragma once
+#include "bort/AST/FunctionCallExpr.hpp"
+#include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Symbol.hpp"
@@ -8,9 +10,9 @@
 
 namespace bort::ast {
 
-class SymbolAlreadyDefined : public std::runtime_error {
+class SymbolAlreadyDefinedError : public std::runtime_error {
 public:
-  explicit SymbolAlreadyDefined(const std::string& name);
+  explicit SymbolAlreadyDefinedError(const std::string& name);
 };
 
 class Scope {
@@ -36,10 +38,10 @@ public:
 
 protected:
   void visit(const Ref<VariableExpr>& varNode) override;
-
   void visit(const Ref<VarDecl>& varDeclNode) override;
-
   void visit(const Ref<Block>& blockNode) override;
+  void visit(const Ref<FunctionDecl>& functionDeclNode) override;
+  void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
 
 private:
   void push();

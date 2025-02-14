@@ -5,9 +5,9 @@
 
 namespace bort::ast {
 
-class IfStmtNode : public Statement {
+class IfStmt : public Statement {
 public:
-  IfStmtNode(Ref<ExpressionNode> condition, Ref<Block> thenBlock,
+  IfStmt(Ref<ExpressionNode> condition, Ref<Block> thenBlock,
              Ref<Block> elseBlock)
       : Statement{ NodeKind::IfStmt },
         m_Condition{ std::move(condition) },

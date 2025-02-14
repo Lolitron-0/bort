@@ -1,10 +1,12 @@
 #include "bort/IR/IRPrinter.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
+#include "bort/IR/RetInst.hpp"
 #include "bort/IR/Value.hpp"
 #include "bort/Lex/Token.hpp"
 #include "fmt/color.h"
@@ -56,7 +58,9 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Star, "mul")
       .Case(TokenKind::Div, "div")
       .Case(TokenKind::Less, "slt")
-      .Case(TokenKind::Greater, "sgt");
+      .Case(TokenKind::Greater, "sgt")
+      .Case(TokenKind::Amp, "and")
+      .Case(TokenKind::Pipe, "or");
 } };
 
 void IRPrinter::print(const Module& module) {
@@ -75,6 +79,10 @@ void IRPrinter::print(const Module& module) {
                      formatValueColored(moveInst->getSrc()));
         } else if (auto branchInst{ dynCastRef<BranchInst>(inst) }) {
           visit(branchInst);
+        } else if (auto callInst{ dynCastRef<CallInst>(inst) }) {
+          visit(callInst);
+        } else if (auto retInst{ dynCastRef<RetInst>(inst) }) {
+          visit(retInst);
         } else {
           continue;
         }
@@ -110,5 +118,26 @@ void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
   } else {
     fmt::print(stderr, "{} {}", styleInst("br"),
                branchInst->getTarget()->getName());
+  }
+}
+
+void bort::ir::IRPrinter::visit(const Ref<CallInst>& callInst) {
+  if (!callInst->isVoid()) {
+    fmt::print(stderr,
+               "{} = ", formatValueColored(callInst->getDestination()));
+  }
+
+  fmt::print(stderr, "{} {}", styleInst("call"),
+             callInst->getFunction()->getName());
+
+  for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
+    fmt::print(stderr, ", {}", formatValueColored(callInst->getArg(i)));
+  }
+}
+
+void bort::ir::IRPrinter::visit(const Ref<RetInst>& retInst) {
+  fmt::print(stderr, "{}", styleInst("ret"));
+  if (retInst->hasValue()) {
+    fmt::print(stderr, " {}", formatValueColored(retInst->getValue()));
   }
 }

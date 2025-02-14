@@ -23,9 +23,12 @@ enum class NodeKind {
   BinOpExpr,
   VarDecl,
   FunctionDecl,
+  FunctionCallExpr,
   Block,
   ExpressionStmt,
   IfStmt,
+  WhileStmt,
+  ReturnStmt,
   ASTRoot,
   NUM_NODES
 };

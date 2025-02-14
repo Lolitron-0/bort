@@ -1,6 +1,8 @@
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/BranchInst.hpp"
+#include "bort/IR/RetInst.hpp"
 #include "bort/IR/Value.hpp"
 #include <fmt/format.h>
 #include <ranges>
@@ -51,6 +53,10 @@ auto getUniqueOperands(const BasicBlock& block)
 
 auto FrameInfo::toString() const -> std::string {
   return fmt::format("frame_info .size={} .vars={}", Size, NumVariables);
+}
+
+auto isJumpInst(const Ref<ir::Instruction>& inst) -> bool {
+  return isaRef<RetInst>(inst) || isaRef<BranchInst>(inst);
 }
 
 } // namespace bort::codegen

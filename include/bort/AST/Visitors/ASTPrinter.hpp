@@ -23,7 +23,10 @@ private:
   void visit(const Ref<ExpressionStmt>& expressionStmtNode) override;
   void visit(const Ref<BinOpExpr>& binopNode) override;
   void visit(const Ref<Block>& blockNode) override;
-  void visit(const Ref<IfStmtNode>& ifStmtNode) override;
+  void visit(const Ref<IfStmt>& ifStmtNode) override;
+  void visit(const Ref<WhileStmt>& whileStmtNode) override;
+  void visit(const Ref<ReturnStmt>& returnStmtNode) override;
+  void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
 
   void push();
   void pop();

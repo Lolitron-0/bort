@@ -37,7 +37,9 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
       auto ast{ parser.buildAST() };
 
       if (parser.isASTInvalid()) {
-        continue;
+        throw FrontEndFatalError{ fmt::format(
+            "Fatal error parsing {}, build stopped",
+            input.Path.string()) };
       }
 
       ast::SymbolResolutionVisitor symbolResolveVisitor{};
@@ -64,7 +66,7 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
     } catch (const exceptions::SourceFileReaderError& e) {
       Diagnostic::emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());
-      continue;
+      throw FrontEndFatalError{ "Fatal error reading input file" };
     } catch (const FrontEndFatalError& e) {
       Diagnostic::emitError("{}", e.what());
       exit(1);

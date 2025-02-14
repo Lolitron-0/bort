@@ -4,12 +4,15 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
-#include "bort/AST/IfStmtNode.hpp"
+#include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Assert.hpp"
 #include <boost/range/adaptors.hpp>
 #include <cul/BiMap.hpp>
@@ -24,8 +27,11 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::BinOpExpr, "BinOpExpr")
       .Case(NodeKind::VarDecl, "VarDecl")
       .Case(NodeKind::FunctionDecl, "FunctionDecl")
+      .Case(NodeKind::FunctionCallExpr, "FunctionCallExpr")
       .Case(NodeKind::ExpressionStmt, "ExpressionStmt")
       .Case(NodeKind::IfStmt, "IfStmt")
+      .Case(NodeKind::WhileStmt, "WhileStmt")
+      .Case(NodeKind::ReturnStmt, "ReturnStmt")
       .Case(NodeKind::Block, "Block")
       .Case(NodeKind::ASTRoot, "ASTRoot");
 } };
@@ -91,12 +97,12 @@ void ASTPrinter::visit(const Ref<CharExpr>& /*charNode*/) {
 
 void ASTPrinter::visit(const Ref<VarDecl>& varDeclNode) {
   dumpNodeInfo(varDeclNode);
-  dump("Name", varDeclNode->getVariable()->getName());
-  dump("Type", varDeclNode->getVariable()->getType()->toString());
+  dump("Variable", varDeclNode->getVariable()->toString());
 }
 
 void ASTPrinter::visit(const Ref<FunctionDecl>& functionDeclNode) {
   dumpNodeInfo(functionDeclNode);
+  dump("Function", functionDeclNode->getFunction()->toString());
   dump("Body", functionDeclNode->getBody());
 }
 
@@ -128,11 +134,32 @@ void ASTPrinter::visit(const Ref<ExpressionStmt>& expressionStmtNode) {
   dump("Expression", expressionStmtNode->getExpression());
 }
 
-void ASTPrinter::visit(const Ref<IfStmtNode>& ifStmtNode) {
+void ASTPrinter::visit(const Ref<IfStmt>& ifStmtNode) {
   dumpNodeInfo(ifStmtNode);
   dump("Condition", ifStmtNode->getCondition());
   dump("Then", ifStmtNode->getThenBlock());
   dump("Else", ifStmtNode->getElseBlock());
 }
 
+void ASTPrinter::visit(const Ref<WhileStmt>& whileStmtNode) {
+  dumpNodeInfo(whileStmtNode);
+  dump("Condition", whileStmtNode->getCondition());
+  dump("Body", whileStmtNode->getBody());
+}
+
+void ASTPrinter::visit(const Ref<FunctionCallExpr>& functionCallExpr) {
+  dumpNodeInfo(functionCallExpr);
+  dump("Function",
+       functionCallExpr->getFunction()->getName() +
+           (functionCallExpr->isResolved() ? "" : red(" (unresolved)")));
+  for (auto&& it :
+       functionCallExpr->getArgs() | boost::adaptors::indexed()) {
+    dump(fmt::format("Arg #{}", it.index()), it.value());
+  }
+}
+
+void ASTPrinter::visit(const Ref<ReturnStmt>& returnStmtNode) {
+  dumpNodeInfo(returnStmtNode);
+  dump("Expression", returnStmtNode->getExpression());
+}
 } // namespace bort::ast

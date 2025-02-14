@@ -100,3 +100,5 @@ FetchContent_MakeAvailable(Boost)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
                                               Boost::stacktrace Boost::range)
+
+add_subdirectory(tests)

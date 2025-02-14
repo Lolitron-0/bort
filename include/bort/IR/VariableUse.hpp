@@ -3,6 +3,8 @@
 #include "bort/IR/Value.hpp"
 
 namespace bort::ir {
+/// @brief Operand wrapper that represents usage of a variable in
+/// instruction
 class VariableUse final : public Operand {
 public:
   static auto createUnique(const Ref<Variable>& variable) -> ValueRef;

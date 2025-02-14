@@ -7,6 +7,7 @@
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/CallInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -18,7 +19,8 @@
 namespace bort::codegen::rv {
 
 enum class GPR : uint8_t {
-  t0,
+  VALUE_REGS_START,
+  t0 = VALUE_REGS_START,
   t1,
   t2,
   t3,
@@ -45,14 +47,22 @@ enum class GPR : uint8_t {
   s9,
   s10,
   s11,
-  COUNT
+  VALUE_REGS_END,
+  SPECIAL_REGS_START,
+  sp = SPECIAL_REGS_START,
+  ra,
+  fp,
+  SPECIAL_REGS_END,
+  NUM_REGS = (VALUE_REGS_END - VALUE_REGS_START) +
+             (SPECIAL_REGS_END - SPECIAL_REGS_START)
 };
 
 auto GPRToString(GPR gpr) -> std::string_view;
 
-struct RVFuncAdditionalCode : public ir::Metadata {
+struct RVFuncPrologueEpilogue : public ir::Metadata {
   std::string Prologue;
   std::string Epilogue;
+  ir::BasicBlock* EpilogueBB;
 
   [[nodiscard]] auto toString() const -> std::string override;
 };
@@ -79,8 +89,6 @@ private:
   RVMachineRegister(GPR gprId, std::string name)
       : MachineRegister(static_cast<int>(gprId), std::move(name)) {
   }
-
-  static constexpr auto s_NumRegisters{ static_cast<size_t>(GPR::COUNT) };
 };
 using RVMachineRegisterRef = Ref<RVMachineRegister>;
 
@@ -106,6 +114,8 @@ private:
   void processInst();
   void visit(const Ref<ir::OpInst>& opInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
+  void visit(const Ref<ir::CallInst>& callInst) override;
+  void visit(const Ref<ir::RetInst>& retInst) override;
   void visit(const Ref<ir::MoveInst>& mvInst) override;
 
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)

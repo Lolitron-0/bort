@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/Basic/Assert.hpp"
+#include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Type.hpp"
 #include <initializer_list>
 #include <string>
@@ -80,7 +81,7 @@ public:
         m_ReturnType{ nullptr } {
   }
   Function(std::string name, TypeRef returnType,
-           std::vector<Variable> args)
+           std::vector<Ref<Variable>> args)
       : Symbol{ ObjectKind::Function, std::move(name), false },
         m_ReturnType{ std::move(returnType) },
         m_Args{ std::move(args) } {
@@ -88,8 +89,19 @@ public:
 
   [[nodiscard]] auto toString() const -> std::string override;
 
+  [[nodiscard]] auto getReturnType() const -> TypeRef {
+    bort_assert(!isShallow(), "Type access on shallow symbol");
+    return m_ReturnType;
+  }
+
+  [[nodiscard]] auto getArgs() const
+      -> const std::vector<Ref<Variable>>& {
+    bort_assert(!isShallow(), "Arg access on shallow symbol");
+    return m_Args;
+  }
+
 private:
   TypeRef m_ReturnType;
-  std::vector<Variable> m_Args;
+  std::vector<Ref<Variable>> m_Args;
 };
 } // namespace bort

@@ -14,7 +14,6 @@ enum class TypeKind {
   Char,
   Pointer,
   Array,
-  // Function, Maybe TODO
   NUM_TYPES
 };
 

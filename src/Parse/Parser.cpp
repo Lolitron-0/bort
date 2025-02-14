@@ -3,13 +3,18 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/Symbol.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Token.hpp"
 #include <frozen/unordered_map.h>
@@ -23,6 +28,11 @@ static constexpr auto s_BinopPrecedence{
       { TokenKind::Star, 40 },
       { TokenKind::Div, 40 },
       { TokenKind::Less, 10 },
+      { TokenKind::Greater, 10 },
+      { TokenKind::LessEqual, 10 },
+      { TokenKind::GreaterEqual, 10 },
+      { TokenKind::Amp, 9 },
+      { TokenKind::Pipe, 8 },
       { TokenKind::Assign, 5 },
   })
 };
@@ -90,8 +100,7 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
         makeRef<Variable>(std::string{ identifierTok.getStringView() }));
   }
 
-  /// @todo parse function call
-  return invalidNode();
+  return parseFunctionCallExpr(identifierTok);
 }
 
 auto Parser::parseValueExpression()
@@ -161,11 +170,11 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
 
 auto Parser::parseDeclspec() -> TypeRef {
   bort_assert(isTypenameStart(curTok()), "Expected type name");
-  auto kind{ curTok().getKind() };
+  auto typeTok{ curTok() };
   consumeToken();
   Ref<Type> type;
 
-  switch (kind) {
+  switch (typeTok.getKind()) {
   case TokenKind::KW_int:
     type = IntType::get();
     break;
@@ -178,7 +187,8 @@ auto Parser::parseDeclspec() -> TypeRef {
   case TokenKind::KW_const:
     bort_assert(false, "Not implemented");
   default:
-    bort_assert(false, "Unreachable");
+    Diagnostic::emitError(typeTok, "Expected type name");
+    return invalidNode();
   }
 
   while (curTok().is(TokenKind::Star)) {
@@ -189,7 +199,7 @@ auto Parser::parseDeclspec() -> TypeRef {
   return type;
 }
 
-auto Parser::parseDeclaration() -> Ref<ast::Statement> {
+auto Parser::parseDeclarationStatement() -> Ref<ast::Statement> {
   auto type{ parseDeclspec() };
   if (curTok().isNot(TokenKind::Identifier)) {
     Diagnostic::emitError(curTok(), "Expected variable name");
@@ -230,7 +240,7 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
   consumeToken();
 
   std::string name{ nameTok.getStringView() };
-  std::vector<Variable> args;
+  std::vector<Ref<Variable>> args;
 
   while (curTok().isNot(TokenKind::RParen)) {
     auto argType{ parseDeclspec() };
@@ -249,13 +259,17 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
     auto argNameTok{ curTok() };
     consumeToken();
 
-    if (curTok().isNot(TokenKind::Comma)) {
-      Diagnostic::emitError(curTok(), "Expected ','");
+    if (!curTok().isOneOf(TokenKind::Comma, TokenKind::RParen)) {
+      Diagnostic::emitError(curTok(), "Expected ',' or ')'");
       return invalidNode();
     }
-    consumeToken();
+    // rparen will be consumed later on
+    if (curTok().is(TokenKind::Comma)) {
+      consumeToken();
+    }
 
-    args.emplace_back(std::string{ argNameTok.getStringView() }, argType);
+    args.push_back(makeRef<Variable>(
+        std::string{ argNameTok.getStringView() }, argType));
   }
   consumeToken();
 
@@ -271,18 +285,50 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
       std::move(args), std::move(block));
 }
 
+auto Parser::parseFunctionCallExpr(const Token& nameTok)
+    -> Unique<ast::FunctionCallExpr> {
+  bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
+  consumeToken();
+
+  std::string funcName{ nameTok.getStringView() };
+  std::vector<Ref<ast::ExpressionNode>> args;
+  while (curTok().isNot(TokenKind::RParen)) {
+    args.emplace_back(parseExpression());
+
+    if (curTok().is(TokenKind::RParen)) {
+      break;
+    }
+
+    if (curTok().isNot(TokenKind::Comma)) {
+      Diagnostic::emitError(curTok(), "Expected ','");
+      return invalidNode();
+    }
+    consumeToken();
+  }
+
+  // consume RParen
+  consumeToken();
+  return m_ASTRoot->registerNode<ast::FunctionCallExpr>(
+      ast::ASTDebugInfo{ nameTok }, makeRef<Function>(funcName),
+      std::move(args));
+}
+
 auto Parser::parseStatement() -> Ref<ast::Statement> {
   if (curTok().is(TokenKind::LBrace)) {
     return parseBlock();
   }
 
   if (isTypenameStart(curTok())) {
-    return parseDeclaration();
+    return parseDeclarationStatement();
   }
 
   switch (curTok().getKind()) {
   case TokenKind::KW_if:
     return parseIfStatement();
+  case TokenKind::KW_while:
+    return parseWhileStatement();
+  case TokenKind::KW_return:
+    return parseReturnStatement();
   default:
     break;
   }
@@ -328,8 +374,9 @@ auto Parser::lookahead(uint32_t offset) const -> const Token& {
   return *iter;
 }
 
-auto Parser::parseIfStatement() -> Ref<ast::IfStmtNode> {
+auto Parser::parseIfStatement() -> Ref<ast::IfStmt> {
   bort_assert(curTok().is(TokenKind::KW_if), "Expected 'if'");
+  auto ifTok{ curTok() };
   consumeToken();
   if (curTok().isNot(TokenKind::LParen)) {
     Diagnostic::emitError(curTok(), "Expected '('");
@@ -349,9 +396,44 @@ auto Parser::parseIfStatement() -> Ref<ast::IfStmtNode> {
         ast::ASTDebugInfo{ curTok() });
   }
 
-  return m_ASTRoot->registerNode<ast::IfStmtNode>(
-      ast::ASTDebugInfo{ curTok() }, std::move(condition),
+  return m_ASTRoot->registerNode<ast::IfStmt>(
+      ast::ASTDebugInfo{ ifTok }, std::move(condition),
       std::move(thenBlock), std::move(elseBlock));
+}
+
+auto Parser::parseWhileStatement() -> Ref<ast::WhileStmt> {
+  bort_assert(curTok().is(TokenKind::KW_while), "Expected 'while'");
+  auto whileTok{ curTok() };
+  consumeToken();
+  if (curTok().isNot(TokenKind::LParen)) {
+    Diagnostic::emitError(curTok(), "Expected '('");
+    return invalidNode();
+  }
+  auto condition{ parseParenExpr() };
+  auto body{ parseBlock() };
+
+  return m_ASTRoot->registerNode<ast::WhileStmt>(
+      ast::ASTDebugInfo{ whileTok }, std::move(condition),
+      std::move(body));
+}
+
+auto Parser::parseReturnStatement() -> Ref<ast::ReturnStmt> {
+  bort_assert(curTok().is(TokenKind::KW_return), "Expected 'return'");
+
+  auto kwTok{ curTok() };
+  consumeToken();
+  Ref<ast::ExpressionNode> expr{ nullptr };
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    expr = parseExpression();
+  }
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::ReturnStmt>({ kwTok }, expr);
 }
 
 } // namespace bort

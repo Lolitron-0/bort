@@ -25,6 +25,7 @@ private:
   void visit(const Ref<Block>& blockNode) override;
   void visit(const Ref<IfStmt>& ifStmtNode) override;
   void visit(const Ref<WhileStmt>& whileStmtNode) override;
+  void visit(const Ref<ReturnStmt>& returnStmtNode) override;
   void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
 
   void push();

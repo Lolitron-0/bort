@@ -5,6 +5,7 @@
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Ref.hpp"
@@ -88,6 +89,8 @@ protected:
   auto parseIfStatement() -> Ref<ast::IfStmt>;
   /// whileStatement -> 'while' parenExpr block
   auto parseWhileStatement() -> Ref<ast::WhileStmt>;
+  /// returnStatement -> 'return' (expr)? ';'
+  auto parseReturnStatement() -> Ref<ast::ReturnStmt>;
 
 private:
   void disableDiagnostics() {

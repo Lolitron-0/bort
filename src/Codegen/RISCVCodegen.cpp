@@ -19,6 +19,7 @@
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
+#include "bort/IR/RetInst.hpp"
 #include "bort/IR/Value.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
@@ -34,7 +35,7 @@ using namespace bort::ir;
 
 namespace bort::codegen::rv {
 
-auto RVFuncAdditionalCode::toString() const -> std::string {
+auto RVFuncPrologueEpilogue::toString() const -> std::string {
   return fmt::format("rv_code <...>");
 }
 
@@ -140,18 +141,26 @@ struct FrameOffset : public Metadata {
 };
 
 auto RVMachineRegister::get(GPR gprId) -> Ref<RVMachineRegister> {
-  static std::array<Ref<RVMachineRegister>, s_NumRegisters> s_Registry;
+  static std::unordered_map<GPR, Ref<RVMachineRegister>> s_Registry;
   static bool s_RegistryInitialized{ false };
   if (!s_RegistryInitialized) {
-    for (int i{ 0 }; i < s_NumRegisters; i++) {
+    for (int i{ static_cast<int>(GPR::VALUE_REGS_START) };
+         i != static_cast<int>(GPR::VALUE_REGS_END); i++) {
       GPR reg{ static_cast<GPR>(i) };
-      s_Registry.at(i) = Ref<RVMachineRegister>{ new RVMachineRegister{
+      s_Registry[reg] = Ref<RVMachineRegister>{ new RVMachineRegister{
+          reg, std::string{ GPRToString(reg) } } };
+    }
+
+    for (int i{ static_cast<int>(GPR::SPECIAL_REGS_START) };
+         i != static_cast<int>(GPR::SPECIAL_REGS_END); i++) {
+      GPR reg{ static_cast<GPR>(i) };
+      s_Registry[reg] = Ref<RVMachineRegister>{ new RVMachineRegister{
           reg, std::string{ GPRToString(reg) } } };
     }
     s_RegistryInitialized = true;
   }
 
-  return s_Registry.at(static_cast<int>(gprId));
+  return s_Registry.at(gprId);
 }
 
 auto Generator::tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
@@ -232,7 +241,10 @@ static constexpr cul::BiMap s_GPRStrings{ [](auto selector) {
       .Case(GPR::s8, "s8")
       .Case(GPR::s9, "s9")
       .Case(GPR::s10, "s10")
-      .Case(GPR::s11, "s11");
+      .Case(GPR::s11, "s11")
+      .Case(GPR::sp, "sp")
+      .Case(GPR::ra, "ra")
+      .Case(GPR::fp, "fp");
 } };
 
 auto GPRToString(GPR gpr) -> std::string_view {
@@ -285,7 +297,8 @@ void Generator::spillEndBB() {
 static void attachAdditionalCode(IRFunction& func) {
   static size_t returnLabelCounter{ 0 };
   auto* frameInfo{ func.getMDNode<FrameInfo>() };
-  RVFuncAdditionalCode functionPrologueEpilogue;
+  /// TODO: move to ret inst
+  RVFuncPrologueEpilogue functionPrologueEpilogue;
   functionPrologueEpilogue.Prologue =
       fmt::format("addi sp, sp, -{}\nsw ra, {}(sp)\nsw fp, "
                   "{}(sp)\naddi fp, sp, {}\n",
@@ -296,17 +309,31 @@ static void attachAdditionalCode(IRFunction& func) {
   if (func.getName() == "main") {
     retCode = "li a7, 10\necall\n";
   }
-  functionPrologueEpilogue.Epilogue = fmt::format(
-      ".L{}_ret:\nlw ra, {}(sp)\nlw fp, {}(sp)\naddi sp, sp, {}\n{}\n",
-      returnLabelCounter++, frameInfo->Size - 4, frameInfo->Size - 8,
-      frameInfo->Size, retCode);
+  auto retLabel = fmt::format(".L{}_ret", returnLabelCounter++);
+  auto* retBB{ func.addBB(retLabel) };
+  functionPrologueEpilogue.EpilogueBB = retBB;
+  retBB->addInstruction(
+      makeRef<LoadInst>(RVMachineRegister::get(GPR::ra),
+                        makeRef<StackLoc>(frameInfo->Size - 4),
+                        IntType::get()->getSizeof()));
+  retBB->addInstruction(
+      makeRef<LoadInst>(RVMachineRegister::get(GPR::fp),
+                        makeRef<StackLoc>(frameInfo->Size - 8),
+                        IntType::get()->getSizeof()));
+  retBB->addInstruction(
+      makeRef<OpInst>(TokenKind::Plus, RVMachineRegister::get(GPR::sp),
+                      RVMachineRegister::get(GPR::sp),
+                      IntConstant::create(frameInfo->Size)));
+  functionPrologueEpilogue.Epilogue = fmt::format("{}\n\n", retCode);
   func.addMDNode(functionPrologueEpilogue);
 }
 
 void Generator::generate() {
   PreprocessVisitor().run(m_Module);
   assignLocalOperandsOffsets();
-  for (auto&& func : m_Module) {
+  for (m_CurrentFuncIter = m_Module.begin();
+       m_CurrentFuncIter != m_Module.end(); m_CurrentFuncIter++) {
+    auto& func{ *m_CurrentFuncIter };
     attachAdditionalCode(func);
     for (m_CurrentBBIter = func.begin(); m_CurrentBBIter != func.end();
          m_CurrentBBIter++) {
@@ -315,13 +342,13 @@ void Generator::generate() {
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
         auto isLast{ ++InstIter{ m_CurrentInstIter } == bb.end() };
-        auto isBranch{ isaRef<BranchInst>(*m_CurrentInstIter) };
-        if (isLast && isBranch) {
+        auto isJump{ isJumpInst(*m_CurrentInstIter) };
+        if (isLast && isJump) {
           // spill before branch
           spillEndBB();
         }
         genericVisit(*m_CurrentInstIter);
-        if (isLast && !isBranch) {
+        if (isLast && !isJump) {
           // spill after other
           m_CurrentInstIter++;
           spillEndBB();
@@ -338,9 +365,26 @@ void Generator::generateLoad(const Ref<ir::Operand>& op,
   m_RegisterContent[reg].clear();
   m_RegisterContent[reg].insert(op);
 
+  auto oldRegLocIt{ std::ranges::find_if(
+      m_OperandLocs[op], [](const auto& loc) {
+        return loc->getKind() == LocationKind::Register;
+      }) };
+
   auto newLoc{ makeRef<RegisterLoc>(reg) };
   m_OperandLocs[op].insert(newLoc);
 
+  // if we found op in other register just move it to new one
+  if (oldRegLocIt != m_OperandLocs[op].end()) {
+    auto oldRegLoc{ dynCastRef<RegisterLoc>(*oldRegLocIt) };
+    bort_assert(oldRegLoc,
+                "Location has type Register and is not RegisterLoc");
+    m_CurrentBBIter->insertBefore(
+        m_CurrentInstIter,
+        makeRef<MoveInst>(reg, oldRegLoc->getRegister()));
+    return;
+  }
+
+  // otherwise load from memory
   auto memoryLocIt{ std::ranges::find_if_not(
       m_OperandLocs[op], [](const auto& loc) {
         return loc->getKind() == LocationKind::Register;
@@ -469,8 +513,38 @@ void Generator::visit(const Ref<ir::CallInst>& callInst) {
   callInst->setDestination(std::move(dstReg));
 }
 
+void Generator::visit(const Ref<ir::RetInst>& retInst) {
+
+  if (retInst->hasValue()) {
+    auto reg{ RVMachineRegister::get(GPR::a0) };
+
+    if (auto op{ dynCastRef<Operand>(retInst->getValue()) }) {
+      if (!m_RegisterContent[reg].contains(op)) {
+        generateLoad(op, reg);
+      }
+    } else {
+      // it's immediate
+      m_CurrentBBIter->insertBefore(
+          m_CurrentInstIter,
+          makeRef<MoveInst>(RVMachineRegister::get(GPR::a0),
+                            retInst->getValue()));
+    }
+
+    retInst->setValue(std::move(reg));
+  }
+
+  auto& curFunc{ *m_CurrentFuncIter };
+  auto* prologueEpilogueInfo{
+    curFunc.getMDNode<RVFuncPrologueEpilogue>()
+  };
+  auto brToRet{ makeRef<BranchInst>() };
+  brToRet->setTarget(prologueEpilogueInfo->EpilogueBB);
+  m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(brToRet));
+}
+
 void Generator::reinitDescriptors(const BasicBlock& bb) {
-  for (int i{ 0 }; i < static_cast<int>(GPR::COUNT); i++) {
+  for (int i{ static_cast<int>(GPR::VALUE_REGS_START) };
+       i != static_cast<int>(GPR::VALUE_REGS_END); i++) {
     m_RegisterContent[RVMachineRegister::get(static_cast<GPR>(i))]
         .clear();
   }

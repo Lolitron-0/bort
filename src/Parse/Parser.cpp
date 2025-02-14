@@ -3,9 +3,11 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
@@ -323,6 +325,8 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
     return parseIfStatement();
   case TokenKind::KW_while:
     return parseWhileStatement();
+  case TokenKind::KW_return:
+    return parseReturnStatement();
   default:
     break;
   }
@@ -409,6 +413,25 @@ auto Parser::parseWhileStatement() -> Ref<ast::WhileStmt> {
   return m_ASTRoot->registerNode<ast::WhileStmt>(
       ast::ASTDebugInfo{ whileTok }, std::move(condition),
       std::move(body));
+}
+
+auto Parser::parseReturnStatement() -> Ref<ast::ReturnStmt> {
+  bort_assert(curTok().is(TokenKind::KW_return), "Expected 'return'");
+
+  auto kwTok{ curTok() };
+  consumeToken();
+  Ref<ast::ExpressionNode> expr{ nullptr };
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    expr = parseExpression();
+  }
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::ReturnStmt>({ kwTok }, expr);
 }
 
 } // namespace bort

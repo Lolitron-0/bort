@@ -1,19 +1,32 @@
 #pragma once
+#include "bort/Basic/Assert.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Value.hpp"
+#include <algorithm>
 
 namespace bort::ir {
 
-using BBIter = std::list<BasicBlock>::iterator;
-
 class IRFunction : public Value {
 public:
-  IRFunction(TypeRef type, std::string name)
-      : Value{ std::move(type), std::move(name) } {
+  explicit IRFunction(std::string name)
+      : Value{ VoidType::get(), std::move(name) } {
   }
 
-  void addBB(std::string name) {
+  auto addBB(std::string name) -> BasicBlock* {
     m_BasicBlocks.emplace_back(std::move(name));
+    return &m_BasicBlocks.back();
+  }
+
+  [[nodiscard]] auto getBB(std::string name) -> BasicBlock* {
+    auto it{ std::find_if(m_BasicBlocks.begin(), m_BasicBlocks.end(),
+                          [&name](const auto& bb) {
+                            return bb.getName() == name;
+                          }) };
+    if (it == m_BasicBlocks.end()) {
+      return nullptr;
+    }
+    return &*it;
   }
 
   auto erase(std::list<BasicBlock>::iterator it) {
@@ -45,6 +58,9 @@ private:
   std::list<BasicBlock> m_BasicBlocks;
 };
 
+using BBIter     = std::list<BasicBlock>::iterator;
+using IRFuncIter = std::list<IRFunction>::iterator;
+
 class Module {
 public:
   auto addInstruction(Ref<Instruction> instruction) -> ValueRef {
@@ -71,8 +87,8 @@ public:
     m_Functions.back().addBB(std::move(name));
   }
 
-  void addFunction(TypeRef type, std::string name) {
-    m_Functions.emplace_back(std::move(type), std::move(name));
+  void addFunction(std::string name) {
+    m_Functions.emplace_back(std::move(name));
   }
 
   [[nodiscard]] auto begin() {
@@ -89,6 +105,12 @@ public:
   }
   [[nodiscard]] auto getLastBBIt() const {
     auto it{ m_Functions.back().end() };
+    it--;
+    return it;
+  }
+
+  [[nodiscard]] auto getLastFunctionIt() const {
+    auto it{ m_Functions.end() };
     it--;
     return it;
   }

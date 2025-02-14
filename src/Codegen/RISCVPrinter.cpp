@@ -41,7 +41,7 @@ void Printer::run(ir::Module& module) {
   printHeader();
   for (auto&& func : module) {
     bool firstBlock{ true };
-    const auto* AC{ func.getMDNode<RVFuncAdditionalCode>() };
+    const auto* AC{ func.getMDNode<RVFuncPrologueEpilogue>() };
     fmt::println(m_Stream, "{}:", func.begin()->getName());
     /// @todo this is bad af, better make another structure
     fmt::print(m_Stream, "{}", AC->Prologue);

@@ -4,6 +4,7 @@
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/OpInst.hpp"
+#include "bort/IR/RetInst.hpp"
 
 namespace bort::ir {
 
@@ -16,6 +17,7 @@ private:
   void visit(const Ref<AllocaInst>& allocaInst);
   void visit(const Ref<BranchInst>& branchInst);
   void visit(const Ref<CallInst>& callInst);
+  void visit(const Ref<RetInst>& retInst);
 };
 
 } // namespace bort::ir

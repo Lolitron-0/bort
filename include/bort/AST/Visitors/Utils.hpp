@@ -7,6 +7,7 @@
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
@@ -62,6 +63,10 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
   case NodeKind::WhileStmt:
     bort_assert_nomsg(dynCastRef<WhileStmt>(node));
     return visit(dynCastRef<WhileStmt>(node));
+    break;
+  case NodeKind::ReturnStmt:
+    bort_assert_nomsg(dynCastRef<ReturnStmt>(node));
+    return visit(dynCastRef<ReturnStmt>(node));
     break;
   case NodeKind::ASTRoot:
     bort_assert_nomsg(dynCastRef<ASTRoot>(node));

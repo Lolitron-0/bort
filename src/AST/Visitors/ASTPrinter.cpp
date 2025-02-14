@@ -4,12 +4,15 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
+#include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Assert.hpp"
 #include <boost/range/adaptors.hpp>
 #include <cul/BiMap.hpp>
@@ -28,6 +31,7 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::ExpressionStmt, "ExpressionStmt")
       .Case(NodeKind::IfStmt, "IfStmt")
       .Case(NodeKind::WhileStmt, "WhileStmt")
+      .Case(NodeKind::ReturnStmt, "ReturnStmt")
       .Case(NodeKind::Block, "Block")
       .Case(NodeKind::ASTRoot, "ASTRoot");
 } };
@@ -154,4 +158,8 @@ void ASTPrinter::visit(const Ref<FunctionCallExpr>& functionCallExpr) {
   }
 }
 
+void ASTPrinter::visit(const Ref<ReturnStmt>& returnStmtNode) {
+  dumpNodeInfo(returnStmtNode);
+  dump("Expression", returnStmtNode->getExpression());
+}
 } // namespace bort::ast

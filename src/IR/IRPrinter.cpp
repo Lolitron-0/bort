@@ -6,6 +6,7 @@
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
+#include "bort/IR/RetInst.hpp"
 #include "bort/IR/Value.hpp"
 #include "bort/Lex/Token.hpp"
 #include "fmt/color.h"
@@ -78,6 +79,8 @@ void IRPrinter::print(const Module& module) {
           visit(branchInst);
         } else if (auto callInst{ dynCastRef<CallInst>(inst) }) {
           visit(callInst);
+        } else if (auto retInst{ dynCastRef<RetInst>(inst) }) {
+          visit(retInst);
         } else {
           continue;
         }
@@ -127,5 +130,12 @@ void bort::ir::IRPrinter::visit(const Ref<CallInst>& callInst) {
 
   for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
     fmt::print(stderr, ", {}", formatValueColored(callInst->getArg(i)));
+  }
+}
+
+void bort::ir::IRPrinter::visit(const Ref<RetInst>& retInst) {
+  fmt::print(stderr, "{}", styleInst("ret"));
+  if (retInst->hasValue()) {
+    fmt::print(stderr, " {}", formatValueColored(retInst->getValue()));
   }
 }

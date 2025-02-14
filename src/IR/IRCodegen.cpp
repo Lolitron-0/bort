@@ -1,6 +1,8 @@
 #include "bort/IR/IRCodegen.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 #include "bort/Basic/Assert.hpp"
+#include "bort/Basic/Casts.hpp"
+#include "bort/CLI/IO.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
@@ -9,13 +11,16 @@
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
+#include "bort/IR/RetInst.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 #include "fmt/format.h"
+#include <algorithm>
 
 namespace bort::ir {
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
+  m_ASTRoot = ast;
   genericVisit(ast);
   m_Module.revalidateBasicBlocks();
 }
@@ -71,10 +76,31 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
   for (auto&& paramVar : functionDeclNode->getFunction()->getArgs()) {
     VariableUse::createUnique(paramVar);
   }
-  m_Module.addFunction(VoidType::get(),
-                       functionDeclNode->getFunction()->getName());
+  m_Module.addFunction(functionDeclNode->getFunction()->getName());
   pushBB("", functionDeclNode->getFunction()->getName());
-  return genericVisit(functionDeclNode->getBody());
+  genericVisit(functionDeclNode->getBody());
+
+  bool seenRet{ std::count_if(m_Module.getLastBBIt()->begin(),
+                              m_Module.getLastBBIt()->end(),
+                              [](const auto& inst) {
+                                return isaRef<RetInst>(inst);
+                              }) > 0 };
+  bool voidFunc{ m_Module.getLastFunctionIt()->getType() ==
+                 VoidType::get() };
+
+  if (!voidFunc && !seenRet) {
+    Diagnostic::emitWarning(
+        m_ASTRoot->getNodeDebugInfo(functionDeclNode).token,
+        "Non-void function does not return a value");
+  }
+
+  // well, we need to check it somewhere...
+  if (voidFunc && !seenRet &&
+      functionDeclNode->getFunction()->getName() != "main") {
+    addInstruction(makeRef<RetInst>());
+  }
+
+  return nullptr;
 }
 
 auto IRCodegen::visit(const Ref<ast::ExpressionStmt>& expressionStmtNode)
@@ -163,6 +189,16 @@ auto IRCodegen::visit(const Ref<ast::FunctionCallExpr>& funcCallExpr)
       function, Register::getOrCreate(function->getReturnType()),
       std::move(args))) };
   return callInst->getDestination();
+}
+
+auto IRCodegen::visit(const Ref<ast::ReturnStmt>& returnStmt)
+    -> ValueRef {
+  ValueRef returnValue{ nullptr };
+  if (returnStmt->hasExpression()) {
+    returnValue = genericVisit(returnStmt->getExpression());
+  }
+  auto retInst{ addInstruction(makeRef<RetInst>(returnValue)) };
+  return nullptr;
 }
 
 } // namespace bort::ir

@@ -1,7 +1,5 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
-#include "bort/AST/FunctionCallExpr.hpp"
-#include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <utility>
 
@@ -17,8 +15,11 @@ class VarDecl;
 class Block;
 class ASTRoot;
 class FunctionDecl;
+class FunctionCallExpr;
 class ExpressionStmt;
 class IfStmt;
+class WhileStmt;
+class ReturnStmt;
 
 class ASTVisitorBase {
 public:
@@ -85,6 +86,7 @@ protected:
   virtual void visit(const Ref<Block>& blockNode);
   virtual void visit(const Ref<IfStmt>& ifStmtNode);
   virtual void visit(const Ref<WhileStmt>& whileStmtNode);
+  virtual void visit(const Ref<ReturnStmt>& returnStmtNode);
   virtual void visit(const Ref<FunctionCallExpr>& /* functionCallNode */);
 };
 

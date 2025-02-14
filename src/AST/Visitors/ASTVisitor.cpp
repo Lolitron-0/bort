@@ -4,6 +4,7 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 
 namespace bort::ast {
@@ -68,6 +69,11 @@ void StructureAwareASTVisitor::visit(
   for (auto&& arg : functionCallNode->getArgs()) {
     genericVisit(arg);
   }
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<ReturnStmt>& returnStmtNode) {
+  genericVisit(returnStmtNode->getExpression());
 }
 
 } // namespace bort::ast

@@ -3,6 +3,7 @@
 #include "bort/Codegen/StoreInst.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/RetInst.hpp"
 
 using namespace bort::ir;
 
@@ -22,6 +23,8 @@ void InstructionVisitorBase::genericVisit(
     visit(brInst);
   } else if (auto callInst{ dynCastRef<ir::CallInst>(inst) }) {
     visit(callInst);
+  } else if (auto retInst{ dynCastRef<ir::RetInst>(inst) }) {
+    visit(retInst);
   } else if (auto allocaInst{ dynCastRef<ir::AllocaInst>(inst) }) {
     ///
   } else {

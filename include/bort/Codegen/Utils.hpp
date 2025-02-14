@@ -19,4 +19,6 @@ auto getUniqueOperands(const ir::IRFunction& func)
 auto getUniqueOperands(const ir::BasicBlock& block)
     -> std::vector<Ref<ir::Operand>>;
 
+auto isJumpInst(const Ref<ir::Instruction>& inst) -> bool;
+
 } // namespace bort::codegen

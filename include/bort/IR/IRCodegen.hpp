@@ -8,6 +8,7 @@
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/AST/WhileStmt.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include <memory>
@@ -39,6 +40,9 @@ private:
   auto visit(const Ref<ast::WhileStmt>& whileStmtNode) -> ValueRef;
   auto visit(const Ref<ast::ReturnStmt>& returnStmt) -> ValueRef;
   auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
+
+  auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
+                              bool negate = false) -> Ref<BranchInst>;
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>

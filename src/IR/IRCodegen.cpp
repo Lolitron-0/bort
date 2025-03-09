@@ -1,4 +1,6 @@
 #include "bort/IR/IRCodegen.hpp"
+#include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
@@ -14,10 +16,57 @@
 #include "bort/IR/RetInst.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
+#include "cul/BiMap.hpp"
 #include "fmt/format.h"
 #include <algorithm>
 
 namespace bort::ir {
+
+auto IRCodegen::genBranchFromCondition(
+    const Ref<ast::ExpressionNode>& cond,
+    bool negate) -> Ref<BranchInst> {
+  static constexpr cul::BiMap s_NegationTable{ [](auto&& selector) {
+    return selector.Case(TokenKind::Equals, TokenKind::NotEquals)
+        .Case(TokenKind::Greater, TokenKind::LessEqual)
+        .Case(TokenKind::Less, TokenKind::GreaterEqual);
+  } };
+
+  ValueRef lhs{ nullptr };
+  ValueRef rhs{ nullptr };
+  TokenKind mode{ TokenKind::NotEquals };
+
+  if (auto binOpCond{ dynCastRef<ast::BinOpExpr>(cond) }) {
+    switch (binOpCond->getOp()) {
+    case TokenKind::Equals:
+    case TokenKind::NotEquals:
+    case TokenKind::Greater:
+    case TokenKind::GreaterEqual:
+    case TokenKind::Less:
+    case TokenKind::LessEqual:
+      mode = binOpCond->getOp();
+      lhs  = genericVisit(binOpCond->getLhs());
+      rhs  = genericVisit(binOpCond->getRhs());
+      break;
+    default:
+      break;
+    }
+  }
+  if (!lhs && !rhs) {
+    lhs = genericVisit(cond);
+    rhs = IntConstant::getOrCreate(0);
+  }
+
+  if (negate) {
+    auto negModeOpt{ s_NegationTable.FindByFirst(mode) };
+    if (!negModeOpt) {
+      negModeOpt = s_NegationTable.FindBySecond(mode);
+    }
+    bort_assert(negModeOpt, "Negation table is incomplete");
+    mode = *negModeOpt;
+  }
+
+  return makeRef<BranchInst>(std::move(lhs), std::move(rhs), mode);
+}
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
   m_ASTRoot = ast;
@@ -49,7 +98,7 @@ auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
     -> ValueRef {
-  return IntConstant::create(numberNode->getValue());
+  return IntConstant::getOrCreate(numberNode->getValue());
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
@@ -65,10 +114,10 @@ auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
-  ValueRef elementSize{ IntConstant::create(
+  ValueRef elementSize{ IntConstant::getOrCreate(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
   return addInstruction(makeRef<AllocaInst>(
-      std::move(varSymbol), elementSize, IntConstant::create(1)));
+      std::move(varSymbol), elementSize, IntConstant::getOrCreate(1)));
 }
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
@@ -125,9 +174,9 @@ auto IRCodegen::visit(const Ref<ast::Block>& blockNode) -> ValueRef {
 /// ...
 /// L_End:
 auto IRCodegen::visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef {
-  auto condition{ genericVisit(ifStmtNode->getCondition()) };
 
-  auto thenBr{ addInstruction(makeRef<BranchInst>(condition)) };
+  auto thenBr{ addInstruction(
+      genBranchFromCondition(ifStmtNode->getCondition())) };
   bort_assert_nomsg(thenBr);
 
   pushBB("_false");
@@ -160,9 +209,9 @@ auto IRCodegen::visit(const Ref<ast::WhileStmt>& whileStmtNode)
     -> ValueRef {
   pushBB("_cond");
   auto& condBB{ *m_Module.getLastBBIt() };
-  auto condition{ genericVisit(whileStmtNode->getCondition()) };
 
-  auto endBr{ addInstruction(makeRef<BranchInst>(condition, true)) };
+  auto endBr{ addInstruction(
+      genBranchFromCondition(whileStmtNode->getCondition(), true)) };
 
   pushBB("_body");
   genericVisit(whileStmtNode->getBody());

@@ -23,6 +23,7 @@
 #include "bort/IR/Value.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
+#include "cul/BiMap.hpp"
 #include <algorithm>
 #include <cul/cul.hpp>
 #include <fmt/format.h>
@@ -41,6 +42,10 @@ auto RVFuncPrologueEpilogue::toString() const -> std::string {
 
 auto RVInstInfo::toString() const -> std::string {
   return fmt::format("rv_ii .inst_name={}", InstName);
+}
+
+auto RVBranchInfo::toString() const -> std::string {
+  return fmt::format("rv_bri .is_single_op={}", IsSingleOp);
 }
 
 class PreprocessVisitor : public InstructionVisitorBase {
@@ -62,6 +67,38 @@ private:
         break;
       }
     }
+  }
+
+  void visit(const Ref<ir::BranchInst>& brInst) override {
+    if (!brInst->isConditional()) {
+      return;
+    }
+
+    RVBranchInfo info{ false };
+    auto [lhs, rhs]{ brInst->getOperands() };
+    if (auto lhsConst{ dynCastRef<Constant>(lhs) }) {
+      auto newIRReg{ Register::getOrCreate(lhsConst->getType()) };
+      m_CurrentBBIter->insertBefore(
+          m_CurrentInstIter, makeRef<MoveInst>(newIRReg, lhsConst));
+      lhs = newIRReg;
+    }
+
+    if (auto rhsConst{ dynCastRef<Constant>(rhs) }) {
+      if (auto rhsInt{ dynCastRef<IntConstant>(rhsConst) }) {
+        if (rhsInt->getValue() == 0) {
+          info.IsSingleOp = true;
+          rhs             = nullptr;
+        }
+      } else {
+        auto newIRReg{ Register::getOrCreate(rhsConst->getType()) };
+        m_CurrentBBIter->insertBefore(
+            m_CurrentInstIter, makeRef<MoveInst>(newIRReg, rhsConst));
+        rhs = newIRReg;
+      }
+    }
+
+    brInst->setOperands(lhs, rhs);
+    brInst->addMDNode(info);
   }
 };
 
@@ -90,11 +127,25 @@ private:
   }
 
   void visit(const Ref<ir::BranchInst>& brInst) override {
+    static constexpr cul::BiMap s_BranchModePostfix{ [](auto&& selector) {
+      return selector.Case(TokenKind::Equals, "eq")
+          .Case(TokenKind::NotEquals, "ne")
+          .Case(TokenKind::Greater, "gt")
+          .Case(TokenKind::GreaterEqual, "ge")
+          .Case(TokenKind::Less, "lt")
+          .Case(TokenKind::LessEqual, "le");
+    } };
+
     RVInstInfo info{ "j" };
     if (brInst->isConditional()) {
-      info.InstName = "bnez";
-      if (brInst->isNegated()) {
-        info.InstName = "beqz";
+      bort_assert(s_BranchModePostfix.Find(brInst->getMode()).has_value(),
+                  "Branch mode not resolved in codegen");
+      info.InstName = fmt::format(
+          "b{}", s_BranchModePostfix.Find(brInst->getMode()).value());
+
+      auto* brInfo = brInst->getMDNode<RVBranchInfo>();
+      if (brInfo->IsSingleOp) {
+        info.InstName += "z";
       }
     }
 
@@ -327,7 +378,7 @@ static void attachAdditionalCode(IRFunction& func) {
   retBB->addInstruction(
       makeRef<OpInst>(TokenKind::Plus, RVMachineRegister::get(GPR::sp),
                       RVMachineRegister::get(GPR::sp),
-                      IntConstant::create(frameInfo->Size)));
+                      IntConstant::getOrCreate(frameInfo->Size)));
   functionPrologueEpilogue.Epilogue = fmt::format("{}\n\n", retCode);
   func.addMDNode(functionPrologueEpilogue);
 }
@@ -446,14 +497,18 @@ void Generator::visit(const Ref<ir::OpInst>& opInst) {
 }
 
 void Generator::visit(const Ref<ir::BranchInst>& brInst) {
-  if (brInst->isConditional()) {
-    if (auto op{ dynCastRef<Operand>(brInst->getCondition()) }) {
+  if (!brInst->isConditional()) {
+    return;
+  }
+
+  for (size_t i{ BranchInst::LHSIdx }; i <= BranchInst::RHSIdx; i++) {
+    if (auto op{ dynCastRef<Operand>(brInst->getOperand(i)) }) {
       auto reg{ chooseReadReg(op) };
       if (!m_RegisterContent[reg].contains(op)) {
         generateLoad(op, reg);
       }
 
-      brInst->setCondition(reg);
+      brInst->setOperand(i, reg);
     }
   }
 }

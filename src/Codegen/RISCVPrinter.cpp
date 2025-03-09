@@ -4,6 +4,7 @@
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Codegen/StoreInst.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/Value.hpp"
 #include <fmt/format.h>
@@ -73,11 +74,19 @@ void Printer::visit(const Ref<ir::OpInst>& opInst) {
 
 void Printer::visit(const Ref<ir::BranchInst>& brInst) {
   auto* II{ brInst->getMDNode<RVInstInfo>() };
+  auto* BRI{ brInst->getMDNode<RVBranchInfo>() };
 
   if (brInst->isConditional()) {
-    fmt::println(m_Stream, "{} {}, {}", II->InstName,
-                 formatMachineValue(brInst->getCondition()),
-                 brInst->getTarget()->getName());
+    if (BRI && BRI->IsSingleOp) {
+      fmt::println(m_Stream, "{} {}, {}", II->InstName,
+                   formatMachineValue(brInst->getLHS()),
+                   brInst->getTarget()->getName());
+    } else {
+      fmt::println(m_Stream, "{} {}, {}, {}", II->InstName,
+                   formatMachineValue(brInst->getLHS()),
+                   formatMachineValue(brInst->getRHS()),
+                   brInst->getTarget()->getName());
+    }
   } else {
     fmt::println(m_Stream, "{} {}", II->InstName,
                  brInst->getTarget()->getName());

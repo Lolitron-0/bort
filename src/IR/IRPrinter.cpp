@@ -111,9 +111,17 @@ void IRPrinter::visit(const Ref<AllocaInst>& allocaInst) {
 }
 
 void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
+  static std::unordered_map<TokenKind, std::string> s_ModeNames{
+    { TokenKind::NotEquals, "ne" }, { TokenKind::Equals, "eq" },
+    { TokenKind::Less, "lt" },      { TokenKind::Greater, "gt" },
+    { TokenKind::LessEqual, "le" }, { TokenKind::GreaterEqual, "ge" }
+  };
+
   if (branchInst->isConditional()) {
-    fmt::print(stderr, "{} {}, {}", styleInst("br"),
-               formatValueColored(branchInst->getCondition()),
+    auto [lhs, rhs]{ branchInst->getOperands() };
+    fmt::print(stderr, "{} {}, {}, {}",
+               styleInst("b" + s_ModeNames.at(branchInst->getMode())),
+               formatValueColored(lhs), formatValueColored(rhs),
                branchInst->getTarget()->getName());
   } else {
     fmt::print(stderr, "{} {}", styleInst("br"),

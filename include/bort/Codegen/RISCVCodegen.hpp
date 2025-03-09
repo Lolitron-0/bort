@@ -77,6 +77,16 @@ struct RVInstInfo final : public ir::Metadata {
   std::string InstName;
 };
 
+struct RVBranchInfo final : public ir::Metadata {
+  explicit RVBranchInfo(bool isSingleOp)
+      : IsSingleOp{ isSingleOp } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  bool IsSingleOp;
+};
+
 class RVMachineRegister final : public MachineRegister {
 public:
   static auto get(GPR gprId) -> Ref<RVMachineRegister>;

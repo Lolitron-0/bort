@@ -150,6 +150,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1TypePropagationVisitor.html">TypePropagationVisitor</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1UnaryOpExpr.html">UnaryOpExpr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1VariableExpr.html">VariableExpr</a></td></tr>
@@ -166,16 +168,17 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8">CharExpr</a>
 , <br />
 &#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46">BinOpExpr</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa46c32a439c862831374acca35ed4f61f">UnaryOpExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">VarDecl</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5">FunctionDecl</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4">FunctionCallExpr</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2">Block</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4">FunctionCallExpr</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2">Block</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa3ba01edbf5b3bdc8de4483cdf2b4af47">ExpressionStmt</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad7f36bb6c6d04d8628bfa775f2159f29">IfStmt</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad892e02ab8e354706edd7bf675c8429b">WhileStmt</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663">ReturnStmt</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad892e02ab8e354706edd7bf675c8429b">WhileStmt</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663">ReturnStmt</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">NUM_NODES</a>
 <br />
@@ -218,6 +221,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3" name="af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3"></a>StringExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8" name="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8"></a>CharExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46" name="af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46"></a>BinOpExpr&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa46c32a439c862831374acca35ed4f61f" name="af477babacfc630db95da7ed465bfe37aa46c32a439c862831374acca35ed4f61f"></a>UnaryOpExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3" name="af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3"></a>VarDecl&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5" name="af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5"></a>FunctionDecl&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4" name="af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4"></a>FunctionCallExpr&#160;</td><td class="fielddoc"></td></tr>
@@ -268,12 +272,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacebort_1_1ast_a8ce8b2fe26c383c125e5fb8564586399_icgraph.png" border="0" usemap="#anamespacebort_1_1ast_a8ce8b2fe26c383c125e5fb8564586399_icgraph" alt=""/></div>
 <map name="anamespacebort_1_1ast_a8ce8b2fe26c383c125e5fb8564586399_icgraph" id="anamespacebort_1_1ast_a8ce8b2fe26c383c125e5fb8564586399_icgraph">
-<area shape="rect" title="Driver for all AST walkers." alt="" coords="733,77,892,102"/>
-<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="501,69,685,109"/>
-<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="260,5,444,45"/>
-<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="260,69,444,109"/>
-<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="251,133,453,173"/>
-<area shape="rect" href="structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="5,13,203,38"/>
+<area shape="rect" title="Driver for all AST walkers." alt="" coords="739,77,897,102"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="507,69,691,109"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="265,5,449,45"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="265,69,449,109"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="256,133,459,173"/>
+<area shape="rect" href="structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="8,13,205,38"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#ad4958a03c18ff689262f6fbe61474a76" title=" " alt="" coords="5,69,208,109"/>
 </map>
 </div>
 

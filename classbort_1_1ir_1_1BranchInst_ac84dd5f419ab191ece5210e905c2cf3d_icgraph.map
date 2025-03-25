@@ -1,5 +1,6 @@
 <map id="bort::ir::BranchInst::isConditional" name="bort::ir::BranchInst::isConditional">
-<area shape="rect" id="node1" title=" " alt="" coords="196,37,339,77"/>
-<area shape="rect" id="node2" href="$classbort_1_1ir_1_1BranchInst.html#ac67fe2a33bc0093040bfcdf5d374d1c9" title=" " alt="" coords="5,5,148,45"/>
-<area shape="rect" id="node3" href="$classbort_1_1ir_1_1BranchInst.html#abc017274f52d5405268501962d53b51d" title=" " alt="" coords="5,69,148,109"/>
+<area shape="rect" id="node1" title=" " alt="" coords="196,69,339,109"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1BranchInst.html#ac5403e4a063984e7ca351104733e75c0" title=" " alt="" coords="5,5,148,45"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1BranchInst.html#a06ddebd2d351d533a079b0c9976fba0a" title=" " alt="" coords="5,69,148,109"/>
+<area shape="rect" id="node4" href="$classbort_1_1ir_1_1BranchInst.html#ae10f16cd47a7451703d543719f4ef9d4" title=" " alt="" coords="5,133,148,173"/>
 </map>

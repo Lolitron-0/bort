@@ -95,36 +95,62 @@ $(document).ready(function(){initNavTree('VarDecl_8hpp_source.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <a href="VarDecl_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="ASTNode_8hpp.html">bort/AST/ASTNode.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Symbol_8hpp.html">bort/Frontend/Symbol.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ast.html">bort::ast</a> {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ast_1_1Statement.html">Statement</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <a class="code hl_class" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a>(<a class="code hl_typedef" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, std::string name)</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>      : <a class="code hl_class" href="classbort_1_1ast_1_1Statement.html">Statement</a>{ <a class="code hl_enumvalue" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">NodeKind::VarDecl</a> },</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        m_Variable{ makeRef&lt;Variable&gt;(std::move(name),</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>                                      std::move(type)) } {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  }</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#aacdf282d39e9e87f06a3923a349f6fca">   15</a></span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">   17</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">getVariable</a>() -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;Variable&gt;</a> {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">return</span> m_Variable;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  }</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;Variable&gt;</a> m_Variable;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <span class="comment">// namespace bort::ast</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="ASTNode_8hpp.html">bort/AST/ASTNode.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="ExpressionNode_8hpp.html">bort/AST/ExpressionNode.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="Assert_8hpp.html">bort/Basic/Assert.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="Symbol_8hpp.html">bort/Frontend/Symbol.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ast.html">bort::ast</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ast_1_1Statement.html">Statement</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <a class="code hl_class" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a>(<a class="code hl_typedef" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, std::string name)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      : <a class="code hl_class" href="classbort_1_1ast_1_1Statement.html">Statement</a>{ <a class="code hl_enumvalue" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">NodeKind::VarDecl</a> },</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        m_Variable{ makeRef&lt;Variable&gt;(std::move(name),</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                                      std::move(type)) } {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  }</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#aacdf282d39e9e87f06a3923a349f6fca">   20</a></span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">   22</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">getVariable</a>() -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;Variable&gt;</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">return</span> m_Variable;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#abbd25f18bf7d49dca8f06ba0e9f0dd77">   26</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#abbd25f18bf7d49dca8f06ba0e9f0dd77">hasInitializer</a>() const -&gt; <span class="keywordtype">bool</span> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> m_Initializer != <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  }</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#ae19b99bf4b611863233e0b10d4290783">   30</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#ae19b99bf4b611863233e0b10d4290783">setInitializer</a>(<a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;ExpressionNode&gt;</a> initializer) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    m_Initializer = std::move(initializer);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1VarDecl.html#a804097f8c9ad9d5d0fd537d5264f86a4">   34</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#a804097f8c9ad9d5d0fd537d5264f86a4">getInitializer</a>() -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;ExpressionNode&gt;</a> {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_define" href="Assert_8hpp.html#aa4489bace96135f1181039034084a7dd">bort_assert</a>(<a class="code hl_function" href="classbort_1_1ast_1_1VarDecl.html#abbd25f18bf7d49dca8f06ba0e9f0dd77">hasInitializer</a>(),</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                <span class="stringliteral">&quot;getInitializer on non-initialized var decl&quot;</span>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">return</span> m_Initializer;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;Variable&gt;</a> m_Variable;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;ExpressionNode&gt;</a> m_Initializer;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>};</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>} <span class="comment">// namespace bort::ast</span></div>
 <div class="ttc" id="aASTNode_8hpp_html"><div class="ttname"><a href="ASTNode_8hpp.html">ASTNode.hpp</a></div></div>
+<div class="ttc" id="aAssert_8hpp_html"><div class="ttname"><a href="Assert_8hpp.html">Assert.hpp</a></div></div>
+<div class="ttc" id="aAssert_8hpp_html_aa4489bace96135f1181039034084a7dd"><div class="ttname"><a href="Assert_8hpp.html#aa4489bace96135f1181039034084a7dd">bort_assert</a></div><div class="ttdeci">#define bort_assert(expr, msg)</div><div class="ttdef"><b>Definition:</b> Assert.hpp:9</div></div>
+<div class="ttc" id="aExpressionNode_8hpp_html"><div class="ttname"><a href="ExpressionNode_8hpp.html">ExpressionNode.hpp</a></div></div>
 <div class="ttc" id="aSymbol_8hpp_html"><div class="ttname"><a href="Symbol_8hpp.html">Symbol.hpp</a></div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1ASTRoot_html"><div class="ttname"><a href="classbort_1_1ast_1_1ASTRoot.html">bort::ast::ASTRoot</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:65</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1Statement_html"><div class="ttname"><a href="classbort_1_1ast_1_1Statement.html">bort::ast::Statement</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:56</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html">bort::ast::VarDecl</a></div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:7</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html_a912dd9defbdfd1f122553c8e4aad525a"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">bort::ast::VarDecl::getVariable</a></div><div class="ttdeci">auto getVariable() -&gt; Ref&lt; Variable &gt;</div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:17</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1ASTRoot_html"><div class="ttname"><a href="classbort_1_1ast_1_1ASTRoot.html">bort::ast::ASTRoot</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:66</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1Statement_html"><div class="ttname"><a href="classbort_1_1ast_1_1Statement.html">bort::ast::Statement</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:57</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html">bort::ast::VarDecl</a></div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:11</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html_a804097f8c9ad9d5d0fd537d5264f86a4"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html#a804097f8c9ad9d5d0fd537d5264f86a4">bort::ast::VarDecl::getInitializer</a></div><div class="ttdeci">auto getInitializer() -&gt; Ref&lt; ExpressionNode &gt;</div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:34</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html_a912dd9defbdfd1f122553c8e4aad525a"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html#a912dd9defbdfd1f122553c8e4aad525a">bort::ast::VarDecl::getVariable</a></div><div class="ttdeci">auto getVariable() -&gt; Ref&lt; Variable &gt;</div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:22</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html_abbd25f18bf7d49dca8f06ba0e9f0dd77"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html#abbd25f18bf7d49dca8f06ba0e9f0dd77">bort::ast::VarDecl::hasInitializer</a></div><div class="ttdeci">auto hasInitializer() const -&gt; bool</div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:26</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1VarDecl_html_ae19b99bf4b611863233e0b10d4290783"><div class="ttname"><a href="classbort_1_1ast_1_1VarDecl.html#ae19b99bf4b611863233e0b10d4290783">bort::ast::VarDecl::setInitializer</a></div><div class="ttdeci">void setInitializer(Ref&lt; ExpressionNode &gt; initializer)</div><div class="ttdef"><b>Definition:</b> VarDecl.hpp:30</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html"><div class="ttname"><a href="namespacebort_1_1ast.html">bort::ast</a></div><div class="ttdef"><b>Definition:</b> ASTNode.cpp:6</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html_af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3"><div class="ttname"><a href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">bort::ast::NodeKind::VarDecl</a></div><div class="ttdeci">@ VarDecl</div></div>
 <div class="ttc" id="anamespacebort_html_acd1b1c718ad9eb9764e2a02eb6724e61"><div class="ttname"><a href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">bort::Ref</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; Ref</div><div class="ttdef"><b>Definition:</b> Ref.hpp:10</div></div>

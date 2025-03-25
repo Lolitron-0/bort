@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['offset_0',['Offset',['../structbort_1_1codegen_1_1rv_1_1FrameOffset.html#aa79c61a899be5890376f68237290be4a',1,'bort::codegen::rv::FrameOffset']]]
+  ['lhsidx_0',['LHSIdx',['../classbort_1_1ir_1_1BranchInst.html#ab08208883b43b2214f186662e34b199f',1,'bort::ir::BranchInst']]]
 ];

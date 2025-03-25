@@ -1,21 +1,25 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="5,166,115,191"/>
+<area shape="rect" id="node1" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="5,203,115,229"/>
 <area shape="rect" id="node2" href="$classbort_1_1codegen_1_1MachineRegister.html" title=" " alt="" coords="163,27,391,53"/>
-<area shape="rect" id="node4" href="$classbort_1_1ir_1_1BasicBlock.html" title=" " alt="" coords="205,91,349,117"/>
-<area shape="rect" id="node5" href="$structbort_1_1ir_1_1Constant.html" title=" " alt="" coords="211,141,342,166"/>
-<area shape="rect" id="node7" href="$classbort_1_1ir_1_1IRFunction.html" title=" " alt="" coords="206,190,347,215"/>
-<area shape="rect" id="node8" href="$classbort_1_1ir_1_1Instruction.html" title=" " alt="" coords="205,267,348,293"/>
-<area shape="rect" id="node17" href="$classbort_1_1ir_1_1Operand.html" title=" " alt="" coords="213,514,341,539"/>
-<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html" title=" " alt="" coords="453,5,602,45"/>
-<area shape="rect" id="node6" href="$classbort_1_1ir_1_1IntConstant.html" title=" " alt="" coords="453,70,601,95"/>
-<area shape="rect" id="node9" href="$classbort_1_1codegen_1_1LoadInst.html" title=" " alt="" coords="440,119,615,145"/>
-<area shape="rect" id="node10" href="$classbort_1_1codegen_1_1StoreInst.html" title=" " alt="" coords="439,169,616,194"/>
-<area shape="rect" id="node11" href="$classbort_1_1ir_1_1AllocaInst.html" title=" " alt="" coords="459,218,596,243"/>
-<area shape="rect" id="node12" href="$classbort_1_1ir_1_1BranchInst.html" title=" " alt="" coords="456,267,599,293"/>
-<area shape="rect" id="node13" href="$classbort_1_1ir_1_1CallInst.html" title=" " alt="" coords="466,317,589,342"/>
-<area shape="rect" id="node14" href="$classbort_1_1ir_1_1MoveInst.html" title=" " alt="" coords="461,366,594,391"/>
-<area shape="rect" id="node15" href="$classbort_1_1ir_1_1OpInst.html" title=" " alt="" coords="470,415,585,441"/>
-<area shape="rect" id="node16" href="$classbort_1_1ir_1_1RetInst.html" title=" " alt="" coords="468,465,587,490"/>
-<area shape="rect" id="node18" href="$classbort_1_1ir_1_1Register.html" title=" " alt="" coords="464,514,591,539"/>
-<area shape="rect" id="node19" href="$classbort_1_1ir_1_1VariableUse.html" title="Operand wrapper that represents usage of a variable in instruction." alt="" coords="452,563,603,589"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1ValueLoc.html" title=" " alt="" coords="188,105,365,130"/>
+<area shape="rect" id="node7" href="$classbort_1_1ir_1_1BasicBlock.html" title=" " alt="" coords="205,154,349,179"/>
+<area shape="rect" id="node8" href="$structbort_1_1ir_1_1Constant.html" title=" " alt="" coords="211,203,342,229"/>
+<area shape="rect" id="node10" href="$classbort_1_1ir_1_1IRFunction.html" title=" " alt="" coords="206,253,347,278"/>
+<area shape="rect" id="node11" href="$classbort_1_1ir_1_1Instruction.html" title=" " alt="" coords="205,391,348,417"/>
+<area shape="rect" id="node21" href="$classbort_1_1ir_1_1Operand.html" title=" " alt="" coords="213,662,341,687"/>
+<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html" title=" " alt="" coords="461,5,611,45"/>
+<area shape="rect" id="node5" href="$classbort_1_1codegen_1_1RegisterLoc.html" title="Register location." alt="" coords="439,70,633,95"/>
+<area shape="rect" id="node6" href="$classbort_1_1codegen_1_1StackLoc.html" title=" " alt="" coords="447,119,625,145"/>
+<area shape="rect" id="node9" href="$classbort_1_1ir_1_1IntConstant.html" title=" " alt="" coords="462,169,610,194"/>
+<area shape="rect" id="node12" href="$classbort_1_1ir_1_1AllocaInst.html" title=" " alt="" coords="467,218,605,243"/>
+<area shape="rect" id="node13" href="$classbort_1_1ir_1_1BranchInst.html" title=" " alt="" coords="465,267,607,293"/>
+<area shape="rect" id="node14" href="$classbort_1_1ir_1_1CallInst.html" title=" " alt="" coords="475,317,597,342"/>
+<area shape="rect" id="node15" href="$classbort_1_1ir_1_1LoadInst.html" title=" " alt="" coords="472,366,600,391"/>
+<area shape="rect" id="node16" href="$classbort_1_1ir_1_1MoveInst.html" title=" " alt="" coords="469,415,603,441"/>
+<area shape="rect" id="node17" href="$classbort_1_1ir_1_1OpInst.html" title=" " alt="" coords="479,465,593,490"/>
+<area shape="rect" id="node18" href="$classbort_1_1ir_1_1RetInst.html" title=" " alt="" coords="477,514,595,539"/>
+<area shape="rect" id="node19" href="$classbort_1_1ir_1_1StoreInst.html" title=" " alt="" coords="471,563,601,589"/>
+<area shape="rect" id="node20" href="$classbort_1_1ir_1_1UnaryInst.html" title=" " alt="" coords="468,613,604,638"/>
+<area shape="rect" id="node22" href="$classbort_1_1ir_1_1Register.html" title=" " alt="" coords="473,662,599,687"/>
+<area shape="rect" id="node23" href="$classbort_1_1ir_1_1VariableUse.html" title="Operand wrapper that represents usage of a variable in instruction." alt="" coords="461,711,611,737"/>
 </map>

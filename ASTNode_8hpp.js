@@ -9,6 +9,7 @@ var ASTNode_8hpp =
       [ "StringExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3", null ],
       [ "CharExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8", null ],
       [ "BinOpExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46", null ],
+      [ "UnaryOpExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa46c32a439c862831374acca35ed4f61f", null ],
       [ "VarDecl", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3", null ],
       [ "FunctionDecl", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5", null ],
       [ "FunctionCallExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4", null ],

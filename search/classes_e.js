@@ -9,9 +9,10 @@ var searchData=
   ['sourcefilereadererror_6',['SourceFileReaderError',['../classbort_1_1exceptions_1_1SourceFileReaderError.html',1,'bort::exceptions']]],
   ['stackloc_7',['StackLoc',['../classbort_1_1codegen_1_1StackLoc.html',1,'bort::codegen']]],
   ['statement_8',['Statement',['../classbort_1_1ast_1_1Statement.html',1,'bort::ast']]],
-  ['storeinst_9',['StoreInst',['../classbort_1_1codegen_1_1StoreInst.html',1,'bort::codegen']]],
-  ['structureawareastvisitor_10',['StructureAwareASTVisitor',['../classbort_1_1ast_1_1StructureAwareASTVisitor.html',1,'bort::ast']]],
-  ['symbol_11',['Symbol',['../classbort_1_1Symbol.html',1,'bort']]],
-  ['symbolalreadydefinederror_12',['SymbolAlreadyDefinedError',['../classbort_1_1ast_1_1SymbolAlreadyDefinedError.html',1,'bort::ast']]],
-  ['symbolresolutionvisitor_13',['SymbolResolutionVisitor',['../classbort_1_1ast_1_1SymbolResolutionVisitor.html',1,'bort::ast']]]
+  ['storeinst_9',['StoreInst',['../classbort_1_1ir_1_1StoreInst.html',1,'bort::ir']]],
+  ['storesync_10',['StoreSync',['../classbort_1_1ir_1_1StoreSync.html',1,'bort::ir']]],
+  ['structureawareastvisitor_11',['StructureAwareASTVisitor',['../classbort_1_1ast_1_1StructureAwareASTVisitor.html',1,'bort::ast']]],
+  ['symbol_12',['Symbol',['../classbort_1_1Symbol.html',1,'bort']]],
+  ['symbolalreadydefinederror_13',['SymbolAlreadyDefinedError',['../classbort_1_1ast_1_1SymbolAlreadyDefinedError.html',1,'bort::ast']]],
+  ['symbolresolutionvisitor_14',['SymbolResolutionVisitor',['../classbort_1_1ast_1_1SymbolResolutionVisitor.html',1,'bort::ast']]]
 ];

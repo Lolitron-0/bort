@@ -1,8 +1,9 @@
 <map id="bort::ast::callHandler" name="bort::ast::callHandler">
-<area shape="rect" id="node1" title="Driver for all AST walkers." alt="" coords="733,77,892,102"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="501,69,685,109"/>
-<area shape="rect" id="node3" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="260,5,444,45"/>
-<area shape="rect" id="node5" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="260,69,444,109"/>
-<area shape="rect" id="node6" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="251,133,453,173"/>
-<area shape="rect" id="node4" href="$structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="5,13,203,38"/>
+<area shape="rect" id="node1" title="Driver for all AST walkers." alt="" coords="739,77,897,102"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="507,69,691,109"/>
+<area shape="rect" id="node3" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="265,5,449,45"/>
+<area shape="rect" id="node5" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="265,69,449,109"/>
+<area shape="rect" id="node7" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="256,133,459,173"/>
+<area shape="rect" id="node4" href="$structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="8,13,205,38"/>
+<area shape="rect" id="node6" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#ad4958a03c18ff689262f6fbe61474a76" title=" " alt="" coords="5,69,208,109"/>
 </map>

@@ -3,11 +3,9 @@ var namespacebort_1_1codegen =
     [ "rv", "namespacebort_1_1codegen_1_1rv.html", "namespacebort_1_1codegen_1_1rv" ],
     [ "FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", "classbort_1_1codegen_1_1FrameInfo" ],
     [ "InstructionVisitorBase", "classbort_1_1codegen_1_1InstructionVisitorBase.html", "classbort_1_1codegen_1_1InstructionVisitorBase" ],
-    [ "LoadInst", "classbort_1_1codegen_1_1LoadInst.html", "classbort_1_1codegen_1_1LoadInst" ],
     [ "MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", "classbort_1_1codegen_1_1MachineRegister" ],
     [ "RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", "classbort_1_1codegen_1_1RegisterLoc" ],
     [ "StackLoc", "classbort_1_1codegen_1_1StackLoc.html", "classbort_1_1codegen_1_1StackLoc" ],
-    [ "StoreInst", "classbort_1_1codegen_1_1StoreInst.html", "classbort_1_1codegen_1_1StoreInst" ],
     [ "ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", "classbort_1_1codegen_1_1ValueLoc" ],
     [ "LocationKind", "namespacebort_1_1codegen.html#a19c5b6fb50f778dd9e5b8f4aab63e1c2", [
       [ "Stack", "namespacebort_1_1codegen.html#a19c5b6fb50f778dd9e5b8f4aab63e1c2a2187e1021a911b3807cc1bea2eb1a9ca", null ],

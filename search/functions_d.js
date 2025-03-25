@@ -14,11 +14,12 @@ var searchData=
   ['parser_11',['Parser',['../classbort_1_1Parser.html#af42ae854eddea33b4b116346538da17a',1,'bort::Parser']]],
   ['parsereturnstatement_12',['parseReturnStatement',['../classbort_1_1Parser.html#ad7fb31030c6b199bc0e09e329bbb5443',1,'bort::Parser']]],
   ['parsestatement_13',['parseStatement',['../classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc',1,'bort::Parser']]],
-  ['parsevalueexpression_14',['parseValueExpression',['../classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe',1,'bort::Parser']]],
-  ['parsevardecl_15',['parseVarDecl',['../classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8',1,'bort::Parser']]],
-  ['parsewhilestatement_16',['parseWhileStatement',['../classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb',1,'bort::Parser']]],
-  ['preprocess_17',['preprocess',['../classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb',1,'bort::Preprocessor']]],
-  ['print_18',['print',['../classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2',1,'bort::ir::IRPrinter']]],
-  ['printer_19',['Printer',['../classbort_1_1codegen_1_1rv_1_1Printer.html#a0dd45e602ab0d43db058477aa88bb3f7',1,'bort::codegen::rv::Printer']]],
-  ['pushchild_20',['pushChild',['../classbort_1_1ast_1_1ASTRoot.html#a584787ab370e287adcdfc08f893a76b6',1,'bort::ast::ASTRoot::pushChild()'],['../classbort_1_1ast_1_1Block.html#a1b9ba9e7c2021edd49b1c17cae2f7d75',1,'bort::ast::Block::pushChild()']]]
+  ['parseunaryopexpr_14',['parseUnaryOpExpr',['../classbort_1_1Parser.html#ae2fc7ee37fe057be97e7d10ae71623fd',1,'bort::Parser']]],
+  ['parsevalueexpression_15',['parseValueExpression',['../classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe',1,'bort::Parser']]],
+  ['parsevardecl_16',['parseVarDecl',['../classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8',1,'bort::Parser']]],
+  ['parsewhilestatement_17',['parseWhileStatement',['../classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb',1,'bort::Parser']]],
+  ['preprocess_18',['preprocess',['../classbort_1_1Preprocessor.html#adf5e8536addea08a1f89c10c61f429eb',1,'bort::Preprocessor']]],
+  ['print_19',['print',['../classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2',1,'bort::ir::IRPrinter']]],
+  ['printer_20',['Printer',['../classbort_1_1codegen_1_1rv_1_1Printer.html#a0dd45e602ab0d43db058477aa88bb3f7',1,'bort::codegen::rv::Printer']]],
+  ['pushchild_21',['pushChild',['../classbort_1_1ast_1_1ASTRoot.html#a584787ab370e287adcdfc08f893a76b6',1,'bort::ast::ASTRoot::pushChild()'],['../classbort_1_1ast_1_1Block.html#a1b9ba9e7c2021edd49b1c17cae2f7d75',1,'bort::ast::Block::pushChild()']]]
 ];

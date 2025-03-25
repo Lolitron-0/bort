@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>bort: include/bort/Codegen/LoadInst.hpp Source File</title>
+<title>bort: include/bort/IR/LoadInst.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,51 +95,63 @@ $(document).ready(function(){initNavTree('LoadInst_8hpp_source.html',''); initRe
 </div><!--header-->
 <div class="contents">
 <a href="LoadInst_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="MachineRegister_8hpp.html">bort/Codegen/MachineRegister.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="ValueLoc_8hpp.html">bort/Codegen/ValueLoc.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="Assert_8hpp.html">bort/Basic/Assert.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Constant_8hpp.html">bort/IR/Constant.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Instruction_8hpp.html">bort/IR/Instruction.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1codegen.html">bort::codegen</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classbort_1_1codegen_1_1LoadInst.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1codegen_1_1LoadInst.html">LoadInst</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ir_1_1Instruction.html">ir::Instruction</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="classbort_1_1codegen_1_1LoadInst.html#ad4ae1348c1d417ce48710577432d1229">    9</a></span>  <a class="code hl_function" href="classbort_1_1codegen_1_1LoadInst.html#ad4ae1348c1d417ce48710577432d1229">LoadInst</a>(<a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;MachineRegister&gt;</a> destination, <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;ValueLoc&gt;</a> loc,</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>           <span class="keywordtype">size_t</span> bytes)</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>      : <a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a6168501c8e1aa363f46637bbd9b5e80f">Instruction</a>{ 0, std::move(destination) },</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        m_Loc{ std::move(loc) },</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        m_Bytes{ bytes } {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  }</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classbort_1_1codegen_1_1LoadInst.html#a2a07f206dba3e20c2d5e32b0ad6d6e55">   16</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1codegen_1_1LoadInst.html#a2a07f206dba3e20c2d5e32b0ad6d6e55">getLoc</a>() const -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="code hl_class" href="classbort_1_1codegen_1_1ValueLoc.html">ValueLoc</a>&gt; {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordflow">return</span> m_Loc;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  }</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classbort_1_1codegen_1_1LoadInst.html#acfc1f926060aa2e6e58c87cadbeed33d">   20</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1codegen_1_1LoadInst.html#acfc1f926060aa2e6e58c87cadbeed33d">getBytes</a>() const -&gt; <span class="keywordtype">size_t</span> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordflow">return</span> m_Bytes;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;ValueLoc&gt;</a> m_Loc;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keywordtype">size_t</span> m_Bytes; </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>} <span class="comment">// namespace bort::codegen</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="Value_8hpp.html">bort/IR/Value.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ir.html">bort::ir</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1LoadInst.html">    9</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ir_1_1LoadInst.html">LoadInst</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ir_1_1Instruction.html">ir::Instruction</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1LoadInst.html#a2f6ad4a865b73dc2c3507720ac870715">   11</a></span>  <a class="code hl_function" href="classbort_1_1ir_1_1LoadInst.html#a2f6ad4a865b73dc2c3507720ac870715">LoadInst</a>(<a class="code hl_typedef" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> destination, <a class="code hl_typedef" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ir::ValueRef</a> loc, <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;IntConstant&gt;</a> bytes)</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>      : <a class="code hl_class" href="classbort_1_1ir_1_1Instruction.html">Instruction</a>{ 2, std::move(destination) } {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_function" href="classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3">setLoc</a>(std::move(loc));</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a338f23e77bb56cc5d75bb5d2e9c3f85f">setOperand</a>(s_BytesIdx, std::move(bytes));</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  }</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3">   17</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3">setLoc</a>(<a class="code hl_typedef" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ir::ValueRef</a> loc) {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a338f23e77bb56cc5d75bb5d2e9c3f85f">setOperand</a>(s_LocIdx, std::move(loc));</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1LoadInst.html#aa425b556e68edca62fd37e28ca23767d">   21</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1LoadInst.html#aa425b556e68edca62fd37e28ca23767d">getLoc</a>() const -&gt; ir::<a class="code hl_typedef" href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">ValueRef</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a6bc9cd9075afe031bc66bbfaa63a8f8e">getOperand</a>(s_LocIdx);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1LoadInst.html#a4a8f1e5fab766abb404e3b176967010c">   25</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1LoadInst.html#a4a8f1e5fab766abb404e3b176967010c">getBytes</a>() const -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a>&gt; {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_define" href="Assert_8hpp.html#aa4489bace96135f1181039034084a7dd">bort_assert</a>(isaRef&lt;IntConstant&gt;(<a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a6bc9cd9075afe031bc66bbfaa63a8f8e">getOperand</a>(s_BytesIdx)),</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="stringliteral">&quot;Store size should be constant&quot;</span>);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> dynCastRef&lt;IntConstant&gt;(<a class="code hl_function" href="classbort_1_1ir_1_1Instruction.html#a6bc9cd9075afe031bc66bbfaa63a8f8e">getOperand</a>(s_BytesIdx));</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> s_LocIdx{ 1 };</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> s_BytesIdx{ 2 }; </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>} <span class="comment">// namespace bort::ir</span></div>
+<div class="ttc" id="aAssert_8hpp_html"><div class="ttname"><a href="Assert_8hpp.html">Assert.hpp</a></div></div>
+<div class="ttc" id="aAssert_8hpp_html_aa4489bace96135f1181039034084a7dd"><div class="ttname"><a href="Assert_8hpp.html#aa4489bace96135f1181039034084a7dd">bort_assert</a></div><div class="ttdeci">#define bort_assert(expr, msg)</div><div class="ttdef"><b>Definition:</b> Assert.hpp:9</div></div>
+<div class="ttc" id="aConstant_8hpp_html"><div class="ttname"><a href="Constant_8hpp.html">Constant.hpp</a></div></div>
 <div class="ttc" id="aInstruction_8hpp_html"><div class="ttname"><a href="Instruction_8hpp.html">Instruction.hpp</a></div></div>
-<div class="ttc" id="aMachineRegister_8hpp_html"><div class="ttname"><a href="MachineRegister_8hpp.html">MachineRegister.hpp</a></div></div>
-<div class="ttc" id="aValueLoc_8hpp_html"><div class="ttname"><a href="ValueLoc_8hpp.html">ValueLoc.hpp</a></div></div>
-<div class="ttc" id="aclassbort_1_1codegen_1_1LoadInst_html"><div class="ttname"><a href="classbort_1_1codegen_1_1LoadInst.html">bort::codegen::LoadInst</a></div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:7</div></div>
-<div class="ttc" id="aclassbort_1_1codegen_1_1LoadInst_html_a2a07f206dba3e20c2d5e32b0ad6d6e55"><div class="ttname"><a href="classbort_1_1codegen_1_1LoadInst.html#a2a07f206dba3e20c2d5e32b0ad6d6e55">bort::codegen::LoadInst::getLoc</a></div><div class="ttdeci">auto getLoc() const -&gt; Ref&lt; ValueLoc &gt;</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:16</div></div>
-<div class="ttc" id="aclassbort_1_1codegen_1_1LoadInst_html_acfc1f926060aa2e6e58c87cadbeed33d"><div class="ttname"><a href="classbort_1_1codegen_1_1LoadInst.html#acfc1f926060aa2e6e58c87cadbeed33d">bort::codegen::LoadInst::getBytes</a></div><div class="ttdeci">auto getBytes() const -&gt; size_t</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:20</div></div>
-<div class="ttc" id="aclassbort_1_1codegen_1_1LoadInst_html_ad4ae1348c1d417ce48710577432d1229"><div class="ttname"><a href="classbort_1_1codegen_1_1LoadInst.html#ad4ae1348c1d417ce48710577432d1229">bort::codegen::LoadInst::LoadInst</a></div><div class="ttdeci">LoadInst(Ref&lt; MachineRegister &gt; destination, Ref&lt; ValueLoc &gt; loc, size_t bytes)</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:9</div></div>
-<div class="ttc" id="aclassbort_1_1codegen_1_1ValueLoc_html"><div class="ttname"><a href="classbort_1_1codegen_1_1ValueLoc.html">bort::codegen::ValueLoc</a></div><div class="ttdef"><b>Definition:</b> ValueLoc.hpp:15</div></div>
+<div class="ttc" id="aValue_8hpp_html"><div class="ttname"><a href="Value_8hpp.html">Value.hpp</a></div></div>
 <div class="ttc" id="aclassbort_1_1ir_1_1Instruction_html"><div class="ttname"><a href="classbort_1_1ir_1_1Instruction.html">bort::ir::Instruction</a></div><div class="ttdef"><b>Definition:</b> Instruction.hpp:7</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1Instruction_html_a6168501c8e1aa363f46637bbd9b5e80f"><div class="ttname"><a href="classbort_1_1ir_1_1Instruction.html#a6168501c8e1aa363f46637bbd9b5e80f">bort::ir::Instruction::Instruction</a></div><div class="ttdeci">Instruction(size_t numArgs, ValueRef destination)</div><div class="ttdef"><b>Definition:</b> Instruction.cpp:19</div></div>
-<div class="ttc" id="anamespacebort_1_1codegen_html"><div class="ttname"><a href="namespacebort_1_1codegen.html">bort::codegen</a></div><div class="ttdef"><b>Definition:</b> InstructionVisitor.cpp:10</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1Instruction_html_a338f23e77bb56cc5d75bb5d2e9c3f85f"><div class="ttname"><a href="classbort_1_1ir_1_1Instruction.html#a338f23e77bb56cc5d75bb5d2e9c3f85f">bort::ir::Instruction::setOperand</a></div><div class="ttdeci">void setOperand(size_t index, ValueRef value)</div><div class="ttdef"><b>Definition:</b> Instruction.cpp:38</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1Instruction_html_a6bc9cd9075afe031bc66bbfaa63a8f8e"><div class="ttname"><a href="classbort_1_1ir_1_1Instruction.html#a6bc9cd9075afe031bc66bbfaa63a8f8e">bort::ir::Instruction::getOperand</a></div><div class="ttdeci">auto getOperand(size_t index) const -&gt; ValueRef</div><div class="ttdef"><b>Definition:</b> Instruction.cpp:14</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html">bort::ir::IntConstant</a></div><div class="ttdef"><b>Definition:</b> Constant.hpp:11</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1LoadInst_html"><div class="ttname"><a href="classbort_1_1ir_1_1LoadInst.html">bort::ir::LoadInst</a></div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:9</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1LoadInst_html_a2f6ad4a865b73dc2c3507720ac870715"><div class="ttname"><a href="classbort_1_1ir_1_1LoadInst.html#a2f6ad4a865b73dc2c3507720ac870715">bort::ir::LoadInst::LoadInst</a></div><div class="ttdeci">LoadInst(ValueRef destination, ir::ValueRef loc, Ref&lt; IntConstant &gt; bytes)</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:11</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1LoadInst_html_a4a8f1e5fab766abb404e3b176967010c"><div class="ttname"><a href="classbort_1_1ir_1_1LoadInst.html#a4a8f1e5fab766abb404e3b176967010c">bort::ir::LoadInst::getBytes</a></div><div class="ttdeci">auto getBytes() const -&gt; Ref&lt; IntConstant &gt;</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:25</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1LoadInst_html_aa425b556e68edca62fd37e28ca23767d"><div class="ttname"><a href="classbort_1_1ir_1_1LoadInst.html#aa425b556e68edca62fd37e28ca23767d">bort::ir::LoadInst::getLoc</a></div><div class="ttdeci">auto getLoc() const -&gt; ir::ValueRef</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:21</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1LoadInst_html_ad260b5e6e1605af96ab3411636f6f4a3"><div class="ttname"><a href="classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3">bort::ir::LoadInst::setLoc</a></div><div class="ttdeci">void setLoc(ir::ValueRef loc)</div><div class="ttdef"><b>Definition:</b> LoadInst.hpp:17</div></div>
+<div class="ttc" id="anamespacebort_1_1ir_html"><div class="ttname"><a href="namespacebort_1_1ir.html">bort::ir</a></div><div class="ttdef"><b>Definition:</b> BasicBlock.cpp:4</div></div>
+<div class="ttc" id="anamespacebort_1_1ir_html_ad9308ede5f2c490398d69276e803ef19"><div class="ttname"><a href="namespacebort_1_1ir.html#ad9308ede5f2c490398d69276e803ef19">bort::ir::ValueRef</a></div><div class="ttdeci">Ref&lt; Value &gt; ValueRef</div><div class="ttdef"><b>Definition:</b> Value.hpp:12</div></div>
 <div class="ttc" id="anamespacebort_html_acd1b1c718ad9eb9764e2a02eb6724e61"><div class="ttname"><a href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">bort::Ref</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; Ref</div><div class="ttdef"><b>Definition:</b> Ref.hpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c873a8d65c8d3fbfd544a4ca3d83bfa3.html">bort</a></li><li class="navelem"><a class="el" href="dir_d0321950f9d87a7e8d704994b0a77f4c.html">Codegen</a></li><li class="navelem"><a class="el" href="LoadInst_8hpp.html">LoadInst.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c873a8d65c8d3fbfd544a4ca3d83bfa3.html">bort</a></li><li class="navelem"><a class="el" href="dir_1b1e4052151ed69d578995b12b89b979.html">IR</a></li><li class="navelem"><a class="el" href="LoadInst_8hpp.html">LoadInst.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

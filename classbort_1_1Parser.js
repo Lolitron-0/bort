@@ -16,7 +16,9 @@ var classbort_1_1Parser =
     [ "parseParenExpr", "classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d", null ],
     [ "parseReturnStatement", "classbort_1_1Parser.html#ad7fb31030c6b199bc0e09e329bbb5443", null ],
     [ "parseStatement", "classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc", null ],
+    [ "parseUnaryOpExpr", "classbort_1_1Parser.html#ae2fc7ee37fe057be97e7d10ae71623fd", null ],
     [ "parseValueExpression", "classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe", null ],
     [ "parseVarDecl", "classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8", null ],
-    [ "parseWhileStatement", "classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb", null ]
+    [ "parseWhileStatement", "classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb", null ],
+    [ "tryParseLValue", "classbort_1_1Parser.html#a2b6bb92d88b2d439ea5f33b6c6b3e77e", null ]
 ];

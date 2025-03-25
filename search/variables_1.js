@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dumpast_0',['DumpAST',['../classbort_1_1CLIOptions.html#a42f13055e29084fa91c85a7d5aa4fff0',1,'bort::CLIOptions']]]
+  ['countpunctuators_5fv_0',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]]
 ];

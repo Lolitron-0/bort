@@ -24,8 +24,13 @@ var hierarchy =
     [ "bort::ir::Metadata", "structbort_1_1ir_1_1Metadata.html", [
       [ "bort::codegen::FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", null ],
       [ "bort::codegen::rv::FrameOffset", "structbort_1_1codegen_1_1rv_1_1FrameOffset.html", null ],
+      [ "bort::codegen::rv::RVBranchInfo", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html", null ],
       [ "bort::codegen::rv::RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", null ],
-      [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", null ]
+      [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", null ],
+      [ "bort::ir::MDTag", "classbort_1_1ir_1_1MDTag.html", [
+        [ "bort::codegen::rv::MemoryDependencyMDTag", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html", null ]
+      ] ],
+      [ "bort::ir::StoreSync", "classbort_1_1ir_1_1StoreSync.html", null ]
     ] ],
     [ "bort::MiddleEndInstance", "classbort_1_1MiddleEndInstance.html", null ],
     [ "bort::ir::Module", "classbort_1_1ir_1_1Module.html", null ],
@@ -35,6 +40,7 @@ var hierarchy =
         [ "bort::ast::BinOpExpr", "classbort_1_1ast_1_1BinOpExpr.html", null ],
         [ "bort::ast::FunctionCallExpr", "classbort_1_1ast_1_1FunctionCallExpr.html", null ],
         [ "bort::ast::NumberExpr", "classbort_1_1ast_1_1NumberExpr.html", null ],
+        [ "bort::ast::UnaryOpExpr", "classbort_1_1ast_1_1UnaryOpExpr.html", null ],
         [ "bort::ast::VariableExpr", "classbort_1_1ast_1_1VariableExpr.html", null ]
       ] ],
       [ "bort::ast::Statement", "classbort_1_1ast_1_1Statement.html", [
@@ -68,6 +74,7 @@ var hierarchy =
       [ "bort::Variable", "classbort_1_1Variable.html", null ]
     ] ],
     [ "bort::Token", "classbort_1_1Token.html", null ],
+    [ "bort::ir::TraversalContext", "structbort_1_1ir_1_1TraversalContext.html", null ],
     [ "bort::Type", "classbort_1_1Type.html", [
       [ "bort::ArrayType", "classbort_1_1ArrayType.html", null ],
       [ "bort::CharType", "classbort_1_1CharType.html", null ],
@@ -81,28 +88,29 @@ var hierarchy =
       [ "bort::codegen::MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", [
         [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", null ]
       ] ],
+      [ "bort::codegen::ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", [
+        [ "bort::codegen::RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", null ],
+        [ "bort::codegen::StackLoc", "classbort_1_1codegen_1_1StackLoc.html", null ]
+      ] ],
       [ "bort::ir::BasicBlock", "classbort_1_1ir_1_1BasicBlock.html", null ],
       [ "bort::ir::Constant", "structbort_1_1ir_1_1Constant.html", [
         [ "bort::ir::IntConstant", "classbort_1_1ir_1_1IntConstant.html", null ]
       ] ],
       [ "bort::ir::IRFunction", "classbort_1_1ir_1_1IRFunction.html", null ],
       [ "bort::ir::Instruction", "classbort_1_1ir_1_1Instruction.html", [
-        [ "bort::codegen::LoadInst", "classbort_1_1codegen_1_1LoadInst.html", null ],
-        [ "bort::codegen::StoreInst", "classbort_1_1codegen_1_1StoreInst.html", null ],
         [ "bort::ir::AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", null ],
         [ "bort::ir::BranchInst", "classbort_1_1ir_1_1BranchInst.html", null ],
         [ "bort::ir::CallInst", "classbort_1_1ir_1_1CallInst.html", null ],
+        [ "bort::ir::LoadInst", "classbort_1_1ir_1_1LoadInst.html", null ],
         [ "bort::ir::MoveInst", "classbort_1_1ir_1_1MoveInst.html", null ],
         [ "bort::ir::OpInst", "classbort_1_1ir_1_1OpInst.html", null ],
-        [ "bort::ir::RetInst", "classbort_1_1ir_1_1RetInst.html", null ]
+        [ "bort::ir::RetInst", "classbort_1_1ir_1_1RetInst.html", null ],
+        [ "bort::ir::StoreInst", "classbort_1_1ir_1_1StoreInst.html", null ],
+        [ "bort::ir::UnaryInst", "classbort_1_1ir_1_1UnaryInst.html", null ]
       ] ],
       [ "bort::ir::Operand", "classbort_1_1ir_1_1Operand.html", [
         [ "bort::ir::Register", "classbort_1_1ir_1_1Register.html", null ],
         [ "bort::ir::VariableUse", "classbort_1_1ir_1_1VariableUse.html", null ]
       ] ]
-    ] ],
-    [ "bort::codegen::ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", [
-      [ "bort::codegen::RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", null ],
-      [ "bort::codegen::StackLoc", "classbort_1_1codegen_1_1StackLoc.html", null ]
     ] ]
 ];

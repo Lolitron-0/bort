@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['countpunctuators_5fv_0',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]]
+  ['bbit_0',['bbIt',['../structbort_1_1ir_1_1TraversalContext.html#ab9ba3d95f069ea6ba8903f4644af51bb',1,'bort::ir::TraversalContext']]]
 ];

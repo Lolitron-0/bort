@@ -1,6 +1,7 @@
 <map id="bort::ast::StructureAwareASTVisitor::visit" name="bort::ast::StructureAwareASTVisitor::visit">
-<area shape="rect" id="node1" title=" " alt="" coords="733,37,917,77"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="501,37,685,77"/>
+<area shape="rect" id="node1" title=" " alt="" coords="752,37,936,77"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="511,37,695,77"/>
+<area shape="rect" id="node6" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#ad4958a03c18ff689262f6fbe61474a76" title=" " alt="" coords="501,101,704,141"/>
 <area shape="rect" id="node3" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html#ae4dfcf63a998f837a31d2d371e4c84be" title=" " alt="" coords="260,5,444,45"/>
 <area shape="rect" id="node5" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="251,69,453,109"/>
 <area shape="rect" id="node4" href="$structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="5,13,203,38"/>

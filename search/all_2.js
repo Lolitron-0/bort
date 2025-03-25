@@ -17,6 +17,5 @@ var searchData=
   ['contains_14',['contains',['../classbort_1_1ir_1_1MDList.html#ab5a70952888d7f9104b207cca289fa94',1,'bort::ir::MDList']]],
   ['countpunctuators_15',['CountPunctuators',['../namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda',1,'bort::detail']]],
   ['countpunctuators_5fv_16',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]],
-  ['create_17',['create',['../classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf',1,'bort::ir::IntConstant']]],
-  ['createunique_18',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
+  ['createunique_17',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
 ];

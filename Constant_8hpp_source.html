@@ -106,33 +106,37 @@ $(document).ready(function(){initNavTree('Constant_8hpp_source.html',''); initRe
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IntConstant.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a> final : <span class="keyword">public</span> <a class="code hl_struct" href="structbort_1_1ir_1_1Constant.html">Constant</a> {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf">   14</a></span>  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf">create</a>(int32_t value) -&gt; <a class="code hl_typedef" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt;IntConstant&gt;</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt;IntConstant&gt;</a>(<span class="keyword">new</span> <a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a>{ value });</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  }</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">   18</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">getValue</a>() const -&gt; <span class="keywordtype">int</span> {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> m_Value;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IntConstant.html#a6da30ac8768f7c8aaa3535525e4898fb">   14</a></span>  <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1IntConstant.html#a6da30ac8768f7c8aaa3535525e4898fb">getOrCreate</a>(int32_t value) -&gt; <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;IntConstant&gt;</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">static</span> std::unordered_map&lt;int32_t, Ref&lt;IntConstant&gt;&gt; s_Registry{};</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordflow">if</span> (!s_Registry.contains(value)) {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      s_Registry[value] = <a class="code hl_typedef" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref&lt;IntConstant&gt;</a>(<span class="keyword">new</span> <a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a>{ value });</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    }</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> s_Registry.at(value);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  }</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a>(int32_t value)</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>      : <a class="code hl_struct" href="structbort_1_1ir_1_1Constant.html">Constant</a>{ <a class="code hl_class" href="classbort_1_1IntType.html">IntType</a>::get() },</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        m_Value{ value } {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  int32_t m_Value;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>};</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>} <span class="comment">// namespace bort::ir</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">   22</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">getValue</a>() const -&gt; <span class="keywordtype">int</span> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">return</span> m_Value;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1ir_1_1IntConstant.html">IntConstant</a>(int32_t value)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      : <a class="code hl_struct" href="structbort_1_1ir_1_1Constant.html">Constant</a>{ <a class="code hl_class" href="classbort_1_1IntType.html">IntType</a>::get() },</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        m_Value{ value } {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  }</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  int32_t m_Value;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>};</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>} <span class="comment">// namespace bort::ir</span></div>
 <div class="ttc" id="aValue_8hpp_html"><div class="ttname"><a href="Value_8hpp.html">Value.hpp</a></div></div>
 <div class="ttc" id="aclassbort_1_1IntType_html"><div class="ttname"><a href="classbort_1_1IntType.html">bort::IntType</a></div><div class="ttdef"><b>Definition:</b> Type.hpp:76</div></div>
 <div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html">bort::ir::IntConstant</a></div><div class="ttdef"><b>Definition:</b> Constant.hpp:11</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html_a20b35b183fd51c453dca8b1aec74e06d"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">bort::ir::IntConstant::getValue</a></div><div class="ttdeci">auto getValue() const -&gt; int</div><div class="ttdef"><b>Definition:</b> Constant.hpp:18</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html_a8d08a3ee7081352c5d20a1d8b86d5dcf"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html#a8d08a3ee7081352c5d20a1d8b86d5dcf">bort::ir::IntConstant::create</a></div><div class="ttdeci">static auto create(int32_t value) -&gt; Unique&lt; IntConstant &gt;</div><div class="ttdef"><b>Definition:</b> Constant.hpp:14</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html_a20b35b183fd51c453dca8b1aec74e06d"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html#a20b35b183fd51c453dca8b1aec74e06d">bort::ir::IntConstant::getValue</a></div><div class="ttdeci">auto getValue() const -&gt; int</div><div class="ttdef"><b>Definition:</b> Constant.hpp:22</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1IntConstant_html_a6da30ac8768f7c8aaa3535525e4898fb"><div class="ttname"><a href="classbort_1_1ir_1_1IntConstant.html#a6da30ac8768f7c8aaa3535525e4898fb">bort::ir::IntConstant::getOrCreate</a></div><div class="ttdeci">static auto getOrCreate(int32_t value) -&gt; Ref&lt; IntConstant &gt;</div><div class="ttdef"><b>Definition:</b> Constant.hpp:14</div></div>
 <div class="ttc" id="aclassbort_1_1ir_1_1Value_html"><div class="ttname"><a href="classbort_1_1ir_1_1Value.html">bort::ir::Value</a></div><div class="ttdef"><b>Definition:</b> Value.hpp:14</div></div>
 <div class="ttc" id="aclassbort_1_1ir_1_1Value_html_af2d204e3b89d425ff871337b30268c82"><div class="ttname"><a href="classbort_1_1ir_1_1Value.html#af2d204e3b89d425ff871337b30268c82">bort::ir::Value::Value</a></div><div class="ttdeci">Value(TypeRef type, std::string name=&quot;&quot;)</div><div class="ttdef"><b>Definition:</b> Value.hpp:51</div></div>
-<div class="ttc" id="anamespacebort_1_1ir_html"><div class="ttname"><a href="namespacebort_1_1ir.html">bort::ir</a></div><div class="ttdef"><b>Definition:</b> ValueLoc.cpp:5</div></div>
-<div class="ttc" id="anamespacebort_html_a71954fa19c253eb3f36aa297f7cd3051"><div class="ttname"><a href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">bort::Unique</a></div><div class="ttdeci">std::unique_ptr&lt; T &gt; Unique</div><div class="ttdef"><b>Definition:</b> Ref.hpp:13</div></div>
+<div class="ttc" id="anamespacebort_1_1ir_html"><div class="ttname"><a href="namespacebort_1_1ir.html">bort::ir</a></div><div class="ttdef"><b>Definition:</b> BasicBlock.cpp:4</div></div>
+<div class="ttc" id="anamespacebort_html_acd1b1c718ad9eb9764e2a02eb6724e61"><div class="ttname"><a href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">bort::Ref</a></div><div class="ttdeci">std::shared_ptr&lt; T &gt; Ref</div><div class="ttdef"><b>Definition:</b> Ref.hpp:10</div></div>
 <div class="ttc" id="astructbort_1_1ir_1_1Constant_html"><div class="ttname"><a href="structbort_1_1ir_1_1Constant.html">bort::ir::Constant</a></div><div class="ttdef"><b>Definition:</b> Constant.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

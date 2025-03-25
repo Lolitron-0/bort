@@ -9,6 +9,7 @@ var searchData=
   ['difference_5ftype_6',['difference_type',['../classbort_1_1SourceFileIt.html#a4184f81b8ac0d3249c4e9e0b6a05d1e8',1,'bort::SourceFileIt']]],
   ['dump_7',['dump',['../classbort_1_1Symbol.html#ab21193b3ad1edd369222a83ef1ea376f',1,'bort::Symbol::dump()'],['../classbort_1_1Type.html#a15513fe36f0b234a7aa6366c8ce51989',1,'bort::Type::dump()'],['../namespacebort_1_1ast_1_1internal.html#ab44779eb2c77daed4915d76e5ddc08bb',1,'bort::ast::internal::dump()']]],
   ['dumpast_8',['DumpAST',['../classbort_1_1CLIOptions.html#a42f13055e29084fa91c85a7d5aa4fff0',1,'bort::CLIOptions']]],
-  ['dyncast_9',['dynCast',['../namespacebort.html#ada3e097e6a71de1a50cf79bb94994a97',1,'bort']]],
-  ['dyncastref_10',['dynCastRef',['../namespacebort.html#aa410f87769168b4a597988ed74c20987',1,'bort']]]
+  ['dumpcodegeninfo_9',['DumpCodegenInfo',['../classbort_1_1CLIOptions.html#ac6b4f7718a5bfcfec560c355af0f73bf',1,'bort::CLIOptions']]],
+  ['dyncast_10',['dynCast',['../namespacebort.html#ada3e097e6a71de1a50cf79bb94994a97',1,'bort']]],
+  ['dyncastref_11',['dynCastRef',['../namespacebort.html#aa410f87769168b4a597988ed74c20987',1,'bort']]]
 ];

@@ -2,6 +2,7 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 #include <algorithm>
 
@@ -123,6 +124,16 @@ public:
 
 private:
   std::list<IRFunction> m_Functions;
+};
+
+struct TraversalContext {
+  IRFuncIter funcIt;
+  BBIter bbIt;
+  InstIter instIt;
+
+  void insertInstruction(Ref<Instruction> instruction) const {
+    return bbIt->insertBefore(instIt, std::move(instruction));
+  }
 };
 
 } // namespace bort::ir

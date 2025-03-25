@@ -12,6 +12,7 @@ public:
   bool PreprocessorOnly{ false };
   bool DumpAST{ false };
   bool EmitIR{ false };
+  bool DumpCodegenInfo{false};
 };
 
 } // namespace bort

@@ -2,11 +2,12 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/Codegen/RISCVCodegen.hpp"
-#include "bort/Codegen/StoreInst.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/MoveInst.hpp"
+#include "bort/IR/StoreInst.hpp"
 #include "bort/IR/Value.hpp"
+#include "fmt/color.h"
 #include <fmt/format.h>
 #include <fmt/ostream.h>
 
@@ -14,6 +15,19 @@ using namespace bort::ir;
 using namespace bort;
 
 namespace bort::codegen::rv {
+
+static auto formatValueLoc(const Ref<ValueLoc>& VL) -> std::string {
+  if (auto SL{ dynCastRef<StackLoc>(VL) }) {
+    return fmt::format("{}(sp)", SL->getOffset());
+  }
+
+  if (auto RL{ dynCastRef<RegisterLoc>(VL) }) {
+    return fmt::format("({})", RL->getRegister()->getName());
+  }
+
+  bort_assert(false, "Unhandled ValueLoc");
+  return {};
+}
 
 auto formatMachineValue(const ValueRef& val) -> std::string {
   auto defaultFmt{ Value::formatValue(val) };
@@ -24,18 +38,12 @@ auto formatMachineValue(const ValueRef& val) -> std::string {
           dynCastRef<bort::codegen::rv::RVMachineRegister>(val) }) {
     return std::string{ GPRToString(rvReg->getGPRId()) };
   }
+  if (auto VL{ dynCastRef<ValueLoc>(val) }) {
+    return formatValueLoc(VL);
+  }
 
   bort_assert(false, "Can't format Value in codegen");
   return "";
-}
-
-static auto formatValueLoc(const Ref<ValueLoc>& VL) -> std::string {
-  if (auto SL{ dynCastRef<StackLoc>(VL) }) {
-    return fmt::format("{}(sp)", SL->getOffset());
-  }
-
-  bort_assert(false, "Unhandled ValueLoc");
-  return {};
 }
 
 void Printer::run(ir::Module& module) {
@@ -63,13 +71,16 @@ void Printer::visit(const Ref<ir::OpInst>& opInst) {
   /// @todo MD node for immediatness, signedness, etc...
   auto* II{ opInst->getMDNode<RVInstInfo>() };
   auto opName{ II->InstName };
-  auto src1Reg{ dynCastRef<RVMachineRegister>(opInst->getSrc1()) };
+  auto src1Reg{ dynCastRef<RVMachineRegister>(opInst->getSrc()) };
   auto src2Reg{ dynCastRef<RVMachineRegister>(opInst->getSrc2()) };
   auto dstReg{ dynCastRef<RVMachineRegister>(opInst->getDestination()) };
   fmt::println(m_Stream, "{} {}, {}, {}", opName,
                formatMachineValue(opInst->getDestination()),
-               formatMachineValue(opInst->getSrc1()),
+               formatMachineValue(opInst->getSrc()),
                formatMachineValue(opInst->getSrc2()));
+}
+
+void Printer::visit(const Ref<ir::UnaryInst>& unaryInst) {
 }
 
 void Printer::visit(const Ref<ir::BranchInst>& brInst) {
@@ -97,7 +108,7 @@ void Printer::visit(const Ref<LoadInst>& loadInst) {
   auto* II{ loadInst->getMDNode<RVInstInfo>() };
   fmt::println(m_Stream, "{} {}, {}", II->InstName,
                formatMachineValue(loadInst->getDestination()),
-               formatValueLoc(loadInst->getLoc()));
+               formatMachineValue(loadInst->getLoc()));
 }
 
 void Printer::visit(const Ref<ir::MoveInst>& mvInst) {
@@ -111,7 +122,7 @@ void Printer::visit(const Ref<StoreInst>& storeInst) {
   auto* II{ storeInst->getMDNode<RVInstInfo>() };
   fmt::println(m_Stream, "{} {}, {}", II->InstName,
                formatMachineValue(storeInst->getSource()),
-               formatValueLoc(storeInst->getLoc()));
+               formatMachineValue(storeInst->getLoc()));
 }
 
 void Printer::visit(const Ref<ir::CallInst>& callInst) {

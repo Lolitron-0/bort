@@ -1,27 +1,24 @@
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
-#include "bort/CLI/IO.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
-#include "bort/Codegen/LoadInst.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
-#include "bort/Codegen/StoreInst.hpp"
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
-#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
-#include "bort/IR/Instruction.hpp"
+#include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
 #include "bort/IR/RetInst.hpp"
+#include "bort/IR/StoreInst.hpp"
+#include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
-#include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 #include "cul/BiMap.hpp"
 #include <algorithm>
@@ -48,6 +45,12 @@ auto RVBranchInfo::toString() const -> std::string {
   return fmt::format("rv_bri .is_single_op={}", IsSingleOp);
 }
 
+struct MemoryDependencyMDTag : MDTag {
+  MemoryDependencyMDTag()
+      : MDTag{ "mem_dependency" } {
+  }
+};
+
 class PreprocessVisitor : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
@@ -66,6 +69,12 @@ private:
         // add can be immediate
         break;
       }
+    }
+  }
+
+  void visit(const Ref<ir::UnaryInst>& unaryInst) override {
+    if (unaryInst->getOp() == TokenKind::Amp) {
+      unaryInst->getSrc()->addMDNode(MemoryDependencyMDTag{});
     }
   }
 
@@ -162,17 +171,27 @@ private:
   }
 
   void visit(const Ref<LoadInst>& loadInst) override {
-    RVInstInfo info{ "lw" };
-    if (loadInst->getBytes() == 1) {
+    RVInstInfo info{ "l?" };
+    switch (loadInst->getBytes()->getValue()) {
+    case 1:
       info.InstName = "lb";
+      break;
+    case 4:
+      info.InstName = "lw";
+      break;
     }
     loadInst->addMDNode(std::move(info));
   }
 
   void visit(const Ref<StoreInst>& storeInst) override {
-    RVInstInfo info{ "sw" };
-    if (storeInst->getBytes() == 1) {
+    RVInstInfo info{ "s?" };
+    switch (storeInst->getBytes()->getValue()) {
+    case 1:
       info.InstName = "sb";
+      break;
+    case 4:
+      info.InstName = "sw";
+      break;
     }
     storeInst->addMDNode(std::move(info));
   }
@@ -328,17 +347,27 @@ void Generator::assignLocalOperandsOffsets() {
   }
 }
 
-void Generator::spillEndBB() {
-  for (auto& [op, locs] : m_OperandLocs) {
-    Ref<RegisterLoc> regLoc{ nullptr };
-    Ref<ValueLoc> inMemoryLoc{ nullptr };
-    for (auto&& loc : locs) {
-      if (loc->getKind() == LocationKind::Register) {
-        regLoc = dynCastRef<RegisterLoc>(loc);
-      } else {
-        inMemoryLoc = dynCastRef<ValueLoc>(loc);
-      }
+auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
+    const -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>> {
+  Ref<RegisterLoc> regLoc{ nullptr };
+  Ref<ValueLoc> inMemoryLoc{ nullptr };
+  for (auto&& loc : m_OperandLocs.at(op)) {
+    if (loc->getKind() == LocationKind::Register) {
+      regLoc = dynCastRef<RegisterLoc>(loc);
+    } else {
+      inMemoryLoc = dynCastRef<ValueLoc>(loc);
     }
+  }
+  return { regLoc, inMemoryLoc };
+}
+
+void Generator::spillIf(const SpillFilter& filter) {
+  for (auto& [op, _] : m_OperandLocs) {
+    if (!filter(op)) {
+      continue;
+    }
+
+    auto [regLoc, inMemoryLoc]{ getOperandRegisterMemoryLocs(op) };
 
     if (!inMemoryLoc) {
       bort_assert(regLoc, "Operand is neither in memory nor register");
@@ -367,14 +396,14 @@ static void attachAdditionalCode(IRFunction& func) {
   auto retLabel = fmt::format(".L{}_ret", returnLabelCounter++);
   auto* retBB{ func.addBB(retLabel) };
   functionPrologueEpilogue.EpilogueBB = retBB;
-  retBB->addInstruction(
-      makeRef<LoadInst>(RVMachineRegister::get(GPR::ra),
-                        makeRef<StackLoc>(frameInfo->Size - 4),
-                        IntType::get()->getSizeof()));
-  retBB->addInstruction(
-      makeRef<LoadInst>(RVMachineRegister::get(GPR::fp),
-                        makeRef<StackLoc>(frameInfo->Size - 8),
-                        IntType::get()->getSizeof()));
+  retBB->addInstruction(makeRef<LoadInst>(
+      RVMachineRegister::get(GPR::ra),
+      makeRef<StackLoc>(frameInfo->Size - 4),
+      IntConstant::getOrCreate(IntType::get()->getSizeof())));
+  retBB->addInstruction(makeRef<LoadInst>(
+      RVMachineRegister::get(GPR::fp),
+      makeRef<StackLoc>(frameInfo->Size - 8),
+      IntConstant::getOrCreate(IntType::get()->getSizeof())));
   retBB->addInstruction(
       makeRef<OpInst>(TokenKind::Plus, RVMachineRegister::get(GPR::sp),
                       RVMachineRegister::get(GPR::sp),
@@ -400,13 +429,13 @@ void Generator::generate() {
         auto isJump{ isJumpInst(*m_CurrentInstIter) };
         if (isLast && isJump) {
           // spill before branch
-          spillEndBB();
+          spillIf();
         }
         genericVisit(*m_CurrentInstIter);
         if (isLast && !isJump) {
           // spill after other
           m_CurrentInstIter++;
-          spillEndBB();
+          spillIf();
           break;
         }
       }
@@ -448,7 +477,9 @@ void Generator::generateLoad(const Ref<ir::Operand>& op,
               "Operand is neither in memory nor register");
   m_CurrentBBIter->insertBefore(
       m_CurrentInstIter,
-      makeRef<LoadInst>(reg, *memoryLocIt, op->getType()->getSizeof()));
+      makeRef<LoadInst>(
+          reg, *memoryLocIt,
+          IntConstant::getOrCreate(op->getType()->getSizeof())));
 }
 
 void Generator::generateStore(const Ref<ir::Operand>& op,
@@ -458,7 +489,37 @@ void Generator::generateStore(const Ref<ir::Operand>& op,
 
   m_CurrentBBIter->insertBefore(
       m_CurrentInstIter,
-      makeRef<StoreInst>(reg, loc, op->getType()->getSizeof()));
+      makeRef<StoreInst>(
+          reg, loc,
+          IntConstant::getOrCreate(op->getType()->getSizeof())));
+}
+
+void Generator::processSourceChoice(const RVMachineRegisterRef& reg,
+                                    const Ref<ir::Operand>& op) {
+  if (!m_RegisterContent[reg].contains(op)) {
+    generateLoad(op, reg);
+  }
+}
+
+void Generator::processDstChoice(const RVMachineRegisterRef& reg,
+                                 const Ref<ir::Operand>& op) {
+  // remove register location from other operands
+  for (auto& [op, locs] : m_OperandLocs) {
+    std::erase_if(locs, [&reg](const auto& loc) {
+      if (auto regLoc{ dynCastRef<RegisterLoc>(loc) }) {
+        return regLoc->getRegister() == reg;
+      }
+      return false;
+    });
+  }
+  // register now only has destination operand
+  m_RegisterContent[reg] = { op };
+  // destination operand is now only in register
+  m_OperandLocs[op] = { makeRef<RegisterLoc>(reg) };
+
+  spillIf([](const auto& op) {
+    return op->template getMDNode<MemoryDependencyMDTag>();
+  });
 }
 
 void Generator::visit(const Ref<ir::OpInst>& opInst) {
@@ -467,9 +528,7 @@ void Generator::visit(const Ref<ir::OpInst>& opInst) {
     auto op{ dynCastRef<Operand>(opInst->getOperand(i)) };
     if (op) {
       auto reg{ chooseReadReg(op) };
-      if (!m_RegisterContent[reg].contains(op)) {
-        generateLoad(op, reg);
-      }
+      processSourceChoice(reg, op);
 
       opInst->setOperand(i, reg);
     }
@@ -477,22 +536,36 @@ void Generator::visit(const Ref<ir::OpInst>& opInst) {
 
   if (auto dstOp{ dynCastRef<Operand>(opInst->getDestination()) }) {
     auto dstReg{ chooseDstReg(dstOp) };
-
-    // remove register location from other operands
-    for (auto& [op, locs] : m_OperandLocs) {
-      std::erase_if(locs, [&dstReg](const auto& loc) {
-        if (auto regLoc{ dynCastRef<RegisterLoc>(loc) }) {
-          return regLoc->getRegister() == dstReg;
-        }
-        return false;
-      });
-    }
-    // register now only has destination operand
-    m_RegisterContent[dstReg] = { dstOp };
-    // destination operand is now only in register
-    m_OperandLocs[dstOp] = { makeRef<RegisterLoc>(dstReg) };
+    processDstChoice(dstReg, dstOp);
 
     opInst->setDestination(std::move(dstReg));
+  }
+}
+
+void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
+  RVMachineRegisterRef dstReg;
+  if (auto dstOp{ dynCastRef<Operand>(unaryInst->getDestination()) }) {
+    dstReg = chooseDstReg(dstOp);
+    processDstChoice(dstReg, dstOp);
+    unaryInst->setDestination(dstReg);
+  }
+
+  if (unaryInst->getOp() == TokenKind::Amp) {
+    bort_assert(unaryInst->getSrc()->getMDNode<MemoryDependencyMDTag>(),
+                "Addr operand not marked as memory dependency");
+    auto op{ dynCastRef<Operand>(unaryInst->getSrc()) };
+    bort_assert(op, "Addr operand should be operand");
+    auto [_, inMemoryLoc]{ getOperandRegisterMemoryLocs(op) };
+    bort_assert(inMemoryLoc, "Addr operand memory consistency broken");
+    bort_assert(dstReg, "Addr destination register not chosen");
+    evaluateLocAddress(inMemoryLoc, dstReg);
+    return;
+  }
+
+  if (auto op{ dynCastRef<Operand>(unaryInst->getSrc()) }) {
+    auto reg{ chooseReadReg(op) };
+    processSourceChoice(reg, op);
+    unaryInst->setSrc(std::move(reg));
   }
 }
 
@@ -510,6 +583,34 @@ void Generator::visit(const Ref<ir::BranchInst>& brInst) {
 
       brInst->setOperand(i, reg);
     }
+  }
+}
+
+void Generator::visit(const Ref<ir::LoadInst>& loadInst) {
+  if (auto op{ dynCastRef<Operand>(loadInst->getLoc()) }) {
+    auto reg{ chooseReadReg(op) };
+    processSourceChoice(reg, op);
+    loadInst->setLoc(makeRef<RegisterLoc>(reg));
+  }
+
+  if (auto dstOp{ dynCastRef<Operand>(loadInst->getDestination()) }) {
+    auto dstReg{ chooseDstReg(dstOp) };
+    processDstChoice(dstReg, dstOp);
+    loadInst->setDestination(dstReg);
+  }
+}
+
+void Generator::visit(const Ref<ir::StoreInst>& storeInst) {
+  if (auto sourceOp{ dynCastRef<Operand>(storeInst->getSource()) }) {
+    auto reg{ chooseReadReg(sourceOp) };
+    processSourceChoice(reg, sourceOp);
+    storeInst->setSource(reg);
+  }
+
+  if (auto locOp{ dynCastRef<Operand>(storeInst->getLoc()) }) {
+    auto locReg{ chooseReadReg(locOp) };
+    processSourceChoice(locReg, locOp);
+    storeInst->setLoc(makeRef<RegisterLoc>(locReg));
   }
 }
 
@@ -617,6 +718,27 @@ void Generator::reinitDescriptors(const BasicBlock& bb) {
     bort_assert(opLoc, "Operand has no FrameOffset");
     m_OperandLocs[operand].insert(makeRef<StackLoc>(opLoc->Offset));
   }
+}
+
+void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
+                                   const RVMachineRegisterRef& dest) {
+  if (auto stackLoc{ dynCastRef<StackLoc>(loc) }) {
+    m_CurrentBBIter->insertBefore(
+        m_CurrentInstIter,
+        makeRef<OpInst>(TokenKind::Plus, dest,
+                        RVMachineRegister::get(GPR::sp),
+                        IntConstant::getOrCreate(stackLoc->getOffset())));
+    return;
+  }
+
+  bort_assert(false, fmt::format("Cant evaluate location address for: {}",
+                                 loc->getName())
+                         .c_str());
+}
+
+void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
+  m_CurrentBBIter->insertBefore(m_CurrentInstIter, inst);
+  InstructionVisitorBase::genericVisit(inst);
 }
 
 } // namespace bort::codegen::rv

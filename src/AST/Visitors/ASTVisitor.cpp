@@ -21,6 +21,11 @@ void StructureAwareASTVisitor::visit(const Ref<BinOpExpr>& binopNode) {
 }
 
 void StructureAwareASTVisitor::visit(
+    const Ref<UnaryOpExpr>& unaryOpNode) {
+  genericVisit(unaryOpNode->getOperand());
+}
+
+void StructureAwareASTVisitor::visit(
     const Ref<FunctionDecl>& functionDeclNode) {
   genericVisit(functionDeclNode->getBody());
 }
@@ -76,4 +81,9 @@ void StructureAwareASTVisitor::visit(
   genericVisit(returnStmtNode->getExpression());
 }
 
+void StructureAwareASTVisitor::visit(const Ref<VarDecl>& varDeclNode) {
+  if (varDeclNode->hasInitializer()) {
+    genericVisit(varDeclNode->getInitializer());
+  }
+}
 } // namespace bort::ast

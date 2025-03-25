@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Frontend/Type.hpp"
 #include <unordered_map>
@@ -25,6 +26,7 @@ public:
 
 private:
   void visit(const Ref<BinOpExpr>& binopNode) override;
+  void visit(const Ref<UnaryOpExpr>& unaryOpNode) override;
 
   static OpResultTypeMap s_ArtithmeticOpResultTypeMap;
   /// for pair {t1, t2}, shows how t1 needs to be promoted when op result

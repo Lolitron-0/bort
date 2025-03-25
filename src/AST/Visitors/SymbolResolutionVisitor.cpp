@@ -65,6 +65,8 @@ void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
 }
 
 void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
+  StructureAwareASTVisitor::visit(varDeclNode);
+
   try {
     define(varDeclNode->getVariable());
   } catch (const SymbolAlreadyDefinedError& e) {

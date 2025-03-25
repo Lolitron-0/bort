@@ -1,5 +1,6 @@
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/Type.hpp"
@@ -108,6 +109,31 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
           lhsTy->toString());
     }
   }
+}
+
+void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
+  StructureAwareASTVisitor::visit(unaryOpNode);
+  TypeRef type{ unaryOpNode->getOperand()->getType() };
+
+  switch (unaryOpNode->getOp()) {
+  case TokenKind::Amp:
+    type = PointerType::get(type);
+    break;
+  case TokenKind::Star:
+    if (auto ptrType{ dynCastRef<PointerType>(type) }) {
+      type = ptrType->getPointee();
+    } else {
+      Diagnostic::emitError(
+          getASTRoot()->getNodeDebugInfo(unaryOpNode).token,
+          "Invalid operand to dereference expression: {}",
+          type->toString());
+    }
+    break;
+  default:
+    break;
+  }
+
+  unaryOpNode->setType(std::move(type));
 }
 
 } // namespace bort::ast

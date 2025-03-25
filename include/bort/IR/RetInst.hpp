@@ -16,7 +16,7 @@ public:
   }
 
   [[nodiscard]] auto hasValue() const -> bool {
-    return getOperand(s_ReturnValueIndex) != nullptr;
+    return s_ReturnValueIndex < getNumOperands();
   }
 
   [[nodiscard]] auto getValue() const -> ValueRef {

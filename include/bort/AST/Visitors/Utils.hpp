@@ -8,6 +8,7 @@
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
@@ -35,6 +36,10 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
   case NodeKind::BinOpExpr:
     bort_assert_nomsg(dynCastRef<BinOpExpr>(node));
     return visit(dynCastRef<BinOpExpr>(node));
+    break;
+  case NodeKind::UnaryOpExpr:
+    bort_assert_nomsg(dynCastRef<UnaryOpExpr>(node));
+    return visit(dynCastRef<UnaryOpExpr>(node));
     break;
   case NodeKind::VarDecl:
     bort_assert_nomsg(dynCastRef<VarDecl>(node));

@@ -22,6 +22,8 @@ auto main(int argc, char* argv[]) -> int {
        cxxopts::value<bool>(cliOptions.DumpAST))
       ("emit-ir", "Dump IR to stderr",
        cxxopts::value<bool>(cliOptions.EmitIR))
+      ("dump-codegen-info", "Dump IR after codegen to stderr",
+       cxxopts::value<bool>(cliOptions.DumpCodegenInfo))
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 

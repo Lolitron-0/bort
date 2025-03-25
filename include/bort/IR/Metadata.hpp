@@ -3,6 +3,7 @@
 #include "bort/Basic/Ref.hpp"
 #include <ranges>
 #include <string>
+#include <string_view>
 #include <typeindex>
 #include <unordered_map>
 
@@ -45,6 +46,20 @@ public:
 
 private:
   std::unordered_map<std::type_index, Ref<Metadata>> m_Registry;
+};
+
+class MDTag : public Metadata {
+public:
+  [[nodiscard]] auto toString() const -> std::string override {
+    return m_Name;
+  }
+
+protected:
+  explicit MDTag(std::string name)
+      : m_Name{ std::move(name) } {
+  }
+
+  std::string m_Name;
 };
 
 } // namespace bort::ir

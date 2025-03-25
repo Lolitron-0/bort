@@ -1,5 +1,6 @@
 #include "bort/Frontend/FrontEndInstance.hpp"
 #include "bort/AST/Visitors/ASTPrinter.hpp"
+#include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
 #include "bort/CLI/IO.hpp"
@@ -45,14 +46,14 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
       ast::SymbolResolutionVisitor symbolResolveVisitor{};
       symbolResolveVisitor.SAVisit(ast);
       if (symbolResolveVisitor.isASTInvalidated()) {
-        DEBUG_OUT_MSG("Symbol resolution pass failed. Aborting");
+        DEBUG_OUT_MSG("Symbol resolution pass failed. Skipping file");
         continue;
       }
 
       ast::TypePropagationVisitor typePropagationVisitor{};
       typePropagationVisitor.SAVisit(ast);
       if (typePropagationVisitor.isASTInvalidated()) {
-        DEBUG_OUT_MSG("Type propagation pass failed. Aborting");
+        DEBUG_OUT_MSG("Type propagation pass failed. Skipping file");
         continue;
       }
 
@@ -66,10 +67,10 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
     } catch (const exceptions::SourceFileReaderError& e) {
       Diagnostic::emitError("{}", e.what());
       DEBUG_OUT("Skipping {}", input.Path.string());
-      throw FrontEndFatalError{ "Fatal error reading input file" };
+      continue;
     } catch (const FrontEndFatalError& e) {
       Diagnostic::emitError("{}", e.what());
-      exit(1);
+      std::exit(1);
     }
   }
 

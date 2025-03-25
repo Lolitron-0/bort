@@ -2,6 +2,7 @@
 #include "bort/AST/ASTDebugInfo.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/Basic/Ref.hpp"
+#include <stdexcept>
 #include <utility>
 
 namespace bort::ast {
@@ -21,6 +22,7 @@ class ExpressionStmt;
 class IfStmt;
 class WhileStmt;
 class ReturnStmt;
+
 
 class ASTVisitorBase {
 public:
@@ -78,7 +80,7 @@ protected:
   virtual void visit(const Ref<CharExpr>& /* charNode */) {
     // leaf
   }
-  virtual void visit(const Ref<VarDecl>&  varDeclNode );
+  virtual void visit(const Ref<VarDecl>& varDeclNode);
   virtual void visit(const Ref<FunctionDecl>& functionDeclNode);
   virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);

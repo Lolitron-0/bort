@@ -28,6 +28,9 @@ private:
   void visit(const Ref<BinOpExpr>& binopNode) override;
   void visit(const Ref<UnaryOpExpr>& unaryOpNode) override;
 
+  [[nodiscard]] static auto getArithmeticOpResultType(
+      const TypeRef& lhsType, const TypeRef& rhsType) -> TypeRef;
+
   static OpResultTypeMap s_ArtithmeticOpResultTypeMap;
   /// for pair {t1, t2}, shows how t1 needs to be promoted when op result
   /// is t2

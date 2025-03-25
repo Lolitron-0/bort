@@ -3,6 +3,7 @@
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Token.hpp"
 #include <boost/container_hash/hash_fwd.hpp>
@@ -10,11 +11,44 @@
 
 namespace bort::ast {
 
+class FatalSemanticError : public FrontEndFatalError {
+public:
+  FatalSemanticError()
+      : FrontEndFatalError{ "Semantic check failed" } {
+  }
+};
+
 TypePropagationVisitor::OpResultTypeMap
     TypePropagationVisitor::s_ArtithmeticOpResultTypeMap{};
 
 TypePropagationVisitor::OpPromotionTypeMap
     TypePropagationVisitor::s_ArithmeticOpPromotionTypeMap{};
+
+auto TypePropagationVisitor::getArithmeticOpResultType(
+    const TypeRef& lhsType, const TypeRef& rhsType) -> TypeRef {
+  if (auto result{ s_ArtithmeticOpResultTypeMap[{
+          lhsType->getKind(), rhsType->getKind() }] }) {
+    return result;
+  }
+
+  TypeRef result{ nullptr };
+  auto tryHandlePointerTypes{ [&](const TypeRef& type,
+                                  const TypeRef& other) {
+    auto ptrType{ dynCastRef<PointerType>(type) };
+    if (!ptrType) {
+      return;
+    }
+
+    if (other->getKind() == TypeKind::Int ||
+        other->getKind() == TypeKind::Char) {
+      result = ptrType;
+    }
+  } };
+
+  tryHandlePointerTypes(lhsType, rhsType);
+  tryHandlePointerTypes(rhsType, lhsType);
+  return result;
+}
 
 auto detail::TypePairHasher::operator()(
     const std::pair<TypeKind, TypeKind>& pair) const -> std::size_t {
@@ -65,15 +99,13 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
   }
 
   if (binopNode->isArithmetic()) {
-    auto opResultTy{
-      s_ArtithmeticOpResultTypeMap[{ lhsTy->getKind(), rhsTy->getKind() }]
-    };
+    auto opResultTy{ getArithmeticOpResultType(lhsTy, rhsTy) };
     if (!opResultTy) {
       Diagnostic::emitError(
           getNodeDebugInfo(binopNode).token,
           "Invalid operands to arithmetic expression: {}, {}",
           lhsTy->toString(), rhsTy->toString());
-      return;
+      throw FatalSemanticError();
     }
 
     /// @todo probably should annotate promotion instead of changing type
@@ -127,6 +159,7 @@ void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
           getASTRoot()->getNodeDebugInfo(unaryOpNode).token,
           "Invalid operand to dereference expression: {}",
           type->toString());
+      throw FatalSemanticError();
     }
     break;
   default:

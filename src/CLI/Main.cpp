@@ -51,6 +51,9 @@ auto main(int argc, char* argv[]) -> int {
 
   bort::FrontEndInstance frontend{ cliOptions };
   auto ast{ frontend.run() };
+  if (!ast) {
+    std::exit(1);
+  }
 
   bort::MiddleEndInstance middleEnd{ cliOptions, std::move(ast) };
   auto IR{ middleEnd.run() };

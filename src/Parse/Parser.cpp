@@ -139,7 +139,7 @@ auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
   auto op{ curTok() };
   consumeToken();
   Unique<ast::ExpressionNode> operand;
-  if (op.isOneOf(TokenKind::Star, TokenKind::Amp)) {
+  if (op.is(TokenKind::Amp)) {
     auto lvalueOpt{ tryParseLValue() };
     if (!lvalueOpt) {
       Diagnostic::emitError(curTok(), "Expected lvalue");

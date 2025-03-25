@@ -1,23 +1,97 @@
 #include "bort/IR/IRCodegen.hpp"
+#include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
+#include "bort/Basic/Ref.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/LoadInst.hpp"
+#include "bort/IR/Metadata.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
 #include "bort/IR/RetInst.hpp"
+#include "bort/IR/StoreInst.hpp"
+#include "bort/IR/UnaryInst.hpp"
+#include "bort/IR/Value.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
+#include "cul/BiMap.hpp"
 #include "fmt/format.h"
 #include <algorithm>
+#include <utility>
 
 namespace bort::ir {
+
+class StoreSync : public Metadata {
+public:
+  explicit StoreSync(ValueRef loc)
+      : m_Loc{ std::move(loc) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override {
+    return fmt::format("store_sync .loc={}", m_Loc->getName());
+  }
+
+  [[nodiscard]] auto getLoc() const -> ValueRef {
+    return m_Loc;
+  }
+
+private:
+  ValueRef m_Loc;
+};
+
+auto IRCodegen::genBranchFromCondition(
+    const Ref<ast::ExpressionNode>& cond,
+    bool negate) -> Ref<BranchInst> {
+  static constexpr cul::BiMap s_NegationTable{ [](auto&& selector) {
+    return selector.Case(TokenKind::Equals, TokenKind::NotEquals)
+        .Case(TokenKind::Greater, TokenKind::LessEqual)
+        .Case(TokenKind::Less, TokenKind::GreaterEqual);
+  } };
+
+  ValueRef lhs{ nullptr };
+  ValueRef rhs{ nullptr };
+  TokenKind mode{ TokenKind::NotEquals };
+
+  if (auto binOpCond{ dynCastRef<ast::BinOpExpr>(cond) }) {
+    switch (binOpCond->getOp()) {
+    case TokenKind::Equals:
+    case TokenKind::NotEquals:
+    case TokenKind::Greater:
+    case TokenKind::GreaterEqual:
+    case TokenKind::Less:
+    case TokenKind::LessEqual:
+      mode = binOpCond->getOp();
+      lhs  = genericVisit(binOpCond->getLhs());
+      rhs  = genericVisit(binOpCond->getRhs());
+      break;
+    default:
+      break;
+    }
+  }
+  if (!lhs && !rhs) {
+    lhs = genericVisit(cond);
+    rhs = IntConstant::getOrCreate(0);
+  }
+
+  if (negate) {
+    auto negModeOpt{ s_NegationTable.FindByFirst(mode) };
+    if (!negModeOpt) {
+      negModeOpt = s_NegationTable.FindBySecond(mode);
+    }
+    bort_assert(negModeOpt, "Negation table is incomplete");
+    mode = *negModeOpt;
+  }
+
+  return makeRef<BranchInst>(std::move(lhs), std::move(rhs), mode);
+}
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
   m_ASTRoot = ast;
@@ -47,9 +121,34 @@ auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
   return newInst->getDestination();
 }
 
+auto IRCodegen::visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr)
+    -> ValueRef {
+  auto operand{ genericVisit(unaryOpExpr->getOperand()) };
+  auto dst{ Register::getOrCreate(unaryOpExpr->getType()) };
+  Ref<Instruction> result;
+
+  switch (unaryOpExpr->getOp()) {
+  case TokenKind::Star:
+    result = addInstruction(
+        makeRef<LoadInst>(dst, operand,
+                          IntConstant::getOrCreate(static_cast<int32_t>(
+                              operand->getType()->getSizeof()))));
+    result->getDestination()->addMDNode(StoreSync{ operand });
+    break;
+  case TokenKind::Plus:
+    result = addInstruction(makeRef<MoveInst>(dst, operand));
+    break;
+  default:
+    result = addInstruction(
+        makeRef<UnaryInst>(unaryOpExpr->getOp(), dst, operand));
+    break;
+  }
+  return result->getDestination();
+}
+
 auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
     -> ValueRef {
-  return IntConstant::create(numberNode->getValue());
+  return IntConstant::getOrCreate(numberNode->getValue());
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
@@ -65,10 +164,20 @@ auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
-  ValueRef elementSize{ IntConstant::create(
+  ValueRef elementSize{ IntConstant::getOrCreate(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
-  return addInstruction(makeRef<AllocaInst>(
-      std::move(varSymbol), elementSize, IntConstant::create(1)));
+  auto newVar{ addInstruction(
+                   makeRef<AllocaInst>(std::move(varSymbol), elementSize,
+                                       IntConstant::getOrCreate(1)))
+                   ->getDestination() };
+
+  if (!varDeclNode->hasInitializer()) {
+    return newVar;
+  }
+
+  auto init{ genericVisit(varDeclNode->getInitializer()) };
+  auto move{ addInstruction(makeRef<MoveInst>(newVar, init)) };
+  return move->getDestination();
 }
 
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
@@ -125,9 +234,9 @@ auto IRCodegen::visit(const Ref<ast::Block>& blockNode) -> ValueRef {
 /// ...
 /// L_End:
 auto IRCodegen::visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef {
-  auto condition{ genericVisit(ifStmtNode->getCondition()) };
 
-  auto thenBr{ addInstruction(makeRef<BranchInst>(condition)) };
+  auto thenBr{ addInstruction(
+      genBranchFromCondition(ifStmtNode->getCondition())) };
   bort_assert_nomsg(thenBr);
 
   pushBB("_false");
@@ -160,9 +269,9 @@ auto IRCodegen::visit(const Ref<ast::WhileStmt>& whileStmtNode)
     -> ValueRef {
   pushBB("_cond");
   auto& condBB{ *m_Module.getLastBBIt() };
-  auto condition{ genericVisit(whileStmtNode->getCondition()) };
 
-  auto endBr{ addInstruction(makeRef<BranchInst>(condition, true)) };
+  auto endBr{ addInstruction(
+      genBranchFromCondition(whileStmtNode->getCondition(), true)) };
 
   pushBB("_body");
   genericVisit(whileStmtNode->getBody());
@@ -199,6 +308,20 @@ auto IRCodegen::visit(const Ref<ast::ReturnStmt>& returnStmt)
   }
   auto retInst{ addInstruction(makeRef<RetInst>(returnValue)) };
   return nullptr;
+}
+
+void IRCodegen::processNewInst(const Ref<Instruction>& instruction) {
+  if (instruction->getType() != VoidType::get()) {
+    if (auto* SS{
+            instruction->getDestination()->getMDNode<StoreSync>() }) {
+
+      auto dest{ instruction->getDestination() };
+      // has no destination, so won't recurse
+      addInstruction(makeRef<StoreInst>(
+          dest, SS->getLoc(),
+          IntConstant::getOrCreate(dest->getType()->getSizeof())));
+    }
+  }
 }
 
 } // namespace bort::ir

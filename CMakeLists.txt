@@ -20,6 +20,7 @@ set(SOURCES
     src/Parse/Parser.cpp
     src/AST/ASTNode.cpp
     src/AST/BinOpExpr.cpp
+    src/AST/UnaryOpExpr.cpp
     src/AST/Block.cpp
     src/AST/ExpressionNode.cpp
     src/AST/FunctionDecl.cpp

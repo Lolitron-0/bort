@@ -1,17 +1,20 @@
 #pragma once
 #include "bort/CLI/CLIOptions.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
-#include "bort/Codegen/LoadInst.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
+#include "bort/IR/StoreInst.hpp"
+#include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
+#include <functional>
 #include <map>
 #include <unordered_set>
 #include <utility>
@@ -77,6 +80,16 @@ struct RVInstInfo final : public ir::Metadata {
   std::string InstName;
 };
 
+struct RVBranchInfo final : public ir::Metadata {
+  explicit RVBranchInfo(bool isSingleOp)
+      : IsSingleOp{ isSingleOp } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  bool IsSingleOp;
+};
+
 class RVMachineRegister final : public MachineRegister {
 public:
   static auto get(GPR gprId) -> Ref<RVMachineRegister>;
@@ -113,18 +126,34 @@ private:
 
   void processInst();
   void visit(const Ref<ir::OpInst>& opInst) override;
+  void visit(const Ref<ir::UnaryInst>& unaryInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
   void visit(const Ref<ir::CallInst>& callInst) override;
   void visit(const Ref<ir::RetInst>& retInst) override;
   void visit(const Ref<ir::MoveInst>& mvInst) override;
+  void visit(const Ref<ir::LoadInst>& loadInst) override;
+  void visit(const Ref<ir::StoreInst>& storeInst) override;
 
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
       -> std::optional<RVMachineRegisterRef>;
   auto chooseReadReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
   auto chooseDstReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
+  void processSourceChoice(const RVMachineRegisterRef& reg,
+                           const Ref<ir::Operand>& op);
+  void processDstChoice(const RVMachineRegisterRef& reg,
+                        const Ref<ir::Operand>& op);
   void reinitDescriptors(const ir::BasicBlock& bb);
+  void addInstruction(const Ref<ir::Instruction>& inst);
   void assignLocalOperandsOffsets();
-  void spillEndBB();
+  auto getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op) const
+      -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>>;
+
+  using SpillFilter = std::function<bool(const Ref<ir::Operand>&)>;
+  void spillIf(const SpillFilter& filter = [](const auto&) {
+    return true;
+  });
+  void evaluateLocAddress(const Ref<ValueLoc>& loc,
+                          const RVMachineRegisterRef& dest);
 
   ir::Module& m_Module;
   CLIOptions m_CLIOptions;

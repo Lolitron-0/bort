@@ -2,24 +2,31 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Instruction.hpp"
+#include "bort/Lex/Token.hpp"
+#include <optional>
 
 namespace bort::ir {
 
 class BranchInst final : public Instruction {
 public:
-  explicit BranchInst(ValueRef condition = nullptr, bool negate = false)
-      : Instruction((condition ? 1 : 0)),
-        m_Negated{ negate } {
-    if (condition) {
-      m_Operands[s_ConditionIdx] = std::move(condition);
+  BranchInst()
+      : Instruction(0) {
+  }
+
+  BranchInst(ValueRef lhs, ValueRef rhs, TokenKind mode)
+      : Instruction((lhs && rhs ? 2 : 0)),
+        m_Mode{ mode } {
+    if (lhs && rhs) {
+      setOperands(std::move(lhs), std::move(rhs));
     }
   }
 
   void setTarget(const BasicBlock* block) {
     m_Target = block;
   }
-  void setCondition(ValueRef condition) {
-    m_Operands[s_ConditionIdx] = std::move(condition);
+  void setOperands(ValueRef lhs, ValueRef rhs) {
+    m_Operands[LHSIdx] = std::move(lhs);
+    m_Operands[RHSIdx] = std::move(rhs);
   }
 
   [[nodiscard]] auto getTarget() const -> const BasicBlock* {
@@ -27,25 +34,37 @@ public:
     return m_Target;
   }
 
-  [[nodiscard]] auto getCondition() const -> ValueRef {
+  [[nodiscard]] auto getOperands() const
+      -> std::pair<ValueRef, ValueRef> {
     bort_assert(isConditional(), "getCondition on unconditional branch");
-    return getOperand(s_ConditionIdx);
+    return { getOperand(LHSIdx), getOperand(RHSIdx) };
   }
 
-  [[nodiscard]] auto isNegated() const -> bool {
-    bort_assert(isConditional(), "isNegated on unconditional branch");
-    return m_Negated;
+  [[nodiscard]] auto getLHS() const -> ValueRef {
+    bort_assert(isConditional(), "getLHS on unconditional branch");
+    return getOperand(LHSIdx);
+  }
+
+  [[nodiscard]] auto getRHS() const -> ValueRef {
+    bort_assert(isConditional(), "getRHS on unconditional branch");
+    return getOperand(RHSIdx);
+  }
+
+  [[nodiscard]] auto getMode() const -> TokenKind {
+    bort_assert(m_Mode, "Mode not set");
+    return *m_Mode;
   }
 
   [[nodiscard]] auto isConditional() const -> bool {
     return getNumOperands() > 0;
   }
 
-private:
-  static constexpr size_t s_ConditionIdx{ 0 };
+  static constexpr size_t LHSIdx{ 0 };
+  static constexpr size_t RHSIdx{ 1 };
 
+private:
   const BasicBlock* m_Target{ nullptr };
-  bool m_Negated{ false };
+  std::optional<TokenKind> m_Mode{ std::nullopt };
 };
 
 } // namespace bort::ir

@@ -12,6 +12,7 @@
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Lexer.hpp"
 #include <cstddef>
+#include <optional>
 
 namespace bort {
 
@@ -52,8 +53,13 @@ protected:
   /// value expression \n
   /// -> number \n
   /// -> parenExpr \n
-  /// -> identifierExpr
+  /// -> lvalue
   auto parseValueExpression() -> Unique<ast::ExpressionNode>;
+  /// lvalue \n
+  /// -> identifier
+  auto tryParseLValue() -> std::optional<Unique<ast::ExpressionNode>>;
+  /// unaryOpExpr -> unaryOp valueExpression
+  auto parseUnaryOpExpr() -> Unique<ast::ExpressionNode>;
   /// expression
   /// -> valueExpression (binOp valueExpression ...)
   auto parseExpression() -> Unique<ast::ExpressionNode>;

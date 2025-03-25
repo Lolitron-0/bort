@@ -21,6 +21,7 @@ enum class NodeKind {
   StringExpr,
   CharExpr,
   BinOpExpr,
+  UnaryOpExpr,
   VarDecl,
   FunctionDecl,
   FunctionCallExpr,

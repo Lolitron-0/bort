@@ -11,8 +11,12 @@ protected:
 class IntConstant final : public Constant {
 public:
   /// @todo getOrCreate
-  static auto create(int32_t value) -> Unique<IntConstant> {
-    return Unique<IntConstant>(new IntConstant{ value });
+  static auto getOrCreate(int32_t value) -> Ref<IntConstant> {
+    static std::unordered_map<int32_t, Ref<IntConstant>> s_Registry{};
+    if (!s_Registry.contains(value)) {
+      s_Registry[value] = Ref<IntConstant>(new IntConstant{ value });
+    }
+    return s_Registry.at(value);
   }
 
   [[nodiscard]] auto getValue() const -> int {

@@ -8,6 +8,7 @@
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
@@ -103,19 +104,53 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
   return parseFunctionCallExpr(identifierTok);
 }
 
+auto Parser::tryParseLValue()
+    -> std::optional<Unique<ast::ExpressionNode>> {
+  if (curTok().is(TokenKind::Identifier)) {
+    return parseIdentifierExpr();
+  }
+  return std::nullopt;
+}
+
 auto Parser::parseValueExpression()
     -> std::unique_ptr<ast::ExpressionNode> {
+  if (auto lvalue{ tryParseLValue() }) {
+    return std::move(*lvalue);
+  }
+
   switch (curTok().getKind()) {
-  case TokenKind::Identifier:
-    return parseIdentifierExpr();
   case TokenKind::LParen:
     return parseParenExpr();
   case TokenKind::NumericLiteral:
     return parseNumberExpr();
   default:
-    Diagnostic::emitError(curTok(), "Expected value expression");
+    return parseUnaryOpExpr();
+  }
+}
+
+auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
+  if (!curTok().isOneOf(TokenKind::Plus, TokenKind::Minus, TokenKind::Amp,
+                        TokenKind::Star)) {
+    Diagnostic::emitError(curTok(),
+                          "Expected unary operator in value expression");
     return invalidNode();
   }
+
+  auto op{ curTok() };
+  consumeToken();
+  Unique<ast::ExpressionNode> operand;
+  if (op.isOneOf(TokenKind::Star, TokenKind::Amp)) {
+    auto lvalueOpt{ tryParseLValue() };
+    if (!lvalueOpt) {
+      Diagnostic::emitError(curTok(), "Expected lvalue");
+      return invalidNode();
+    }
+    operand = std::move(*lvalueOpt);
+  } else {
+    operand = parseValueExpression();
+  }
+  return m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+      ast::ASTDebugInfo{ op }, std::move(operand), op.getKind());
 }
 
 auto Parser::parseExpression() -> std::unique_ptr<ast::ExpressionNode> {
@@ -220,6 +255,11 @@ auto Parser::parseVarDecl(const TypeRef& type,
   std::string name{ nameTok.getStringView() };
   auto node{ m_ASTRoot->registerNode<ast::VarDecl>(
       ast::ASTDebugInfo{ nameTok }, type, name) };
+
+  if (curTok().is(TokenKind::Assign)) {
+    consumeToken();
+    node->setInitializer(parseExpression());
+  }
 
   if (curTok().isNot(TokenKind::Semicolon)) {
     Diagnostic::emitError(curTok(), "Expected ';'");

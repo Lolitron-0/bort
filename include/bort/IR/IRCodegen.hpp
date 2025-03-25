@@ -5,9 +5,11 @@
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/AST/WhileStmt.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
 #include <memory>
@@ -28,6 +30,7 @@ private:
 
   auto visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef;
   auto visit(const Ref<ast::BinOpExpr>& binopNode) -> ValueRef;
+  auto visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr) -> ValueRef;
   auto visit(const Ref<ast::NumberExpr>& numNode) -> ValueRef;
   auto visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef;
   auto visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef;
@@ -40,12 +43,19 @@ private:
   auto visit(const Ref<ast::ReturnStmt>& returnStmt) -> ValueRef;
   auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
 
+  auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
+                              bool negate = false) -> Ref<BranchInst>;
+
   template <typename T>
     requires std::is_base_of_v<Instruction, T>
   auto addInstruction(Ref<T> instruction) -> Ref<T> {
-    return std::dynamic_pointer_cast<T>(
-        m_Module.addInstruction(std::move(instruction)));
+    auto result{ std::dynamic_pointer_cast<T>(
+        m_Module.addInstruction(std::move(instruction))) };
+    processNewInst(result);
+    return result;
   }
+
+  void processNewInst(const Ref<Instruction>& instruction);
   void pushBB(std::string postfix = "", std::string name = "");
 
 private:

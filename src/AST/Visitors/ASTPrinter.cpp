@@ -25,6 +25,7 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::StringExpr, "StringExpr")
       .Case(NodeKind::CharExpr, "CharExpr")
       .Case(NodeKind::BinOpExpr, "BinOpExpr")
+      .Case(NodeKind::UnaryOpExpr, "UnaryOpExpr")
       .Case(NodeKind::VarDecl, "VarDecl")
       .Case(NodeKind::FunctionDecl, "FunctionDecl")
       .Case(NodeKind::FunctionCallExpr, "FunctionCallExpr")
@@ -98,6 +99,9 @@ void ASTPrinter::visit(const Ref<CharExpr>& /*charNode*/) {
 void ASTPrinter::visit(const Ref<VarDecl>& varDeclNode) {
   dumpNodeInfo(varDeclNode);
   dump("Variable", varDeclNode->getVariable()->toString());
+  if (varDeclNode->hasInitializer()) {
+    dump("Initializer", varDeclNode->getInitializer());
+  }
 }
 
 void ASTPrinter::visit(const Ref<FunctionDecl>& functionDeclNode) {
@@ -112,6 +116,13 @@ void ASTPrinter::visit(const Ref<BinOpExpr>& binopNode) {
                  .value_or("UNKNOWN"));
   dump("LHS", binopNode->getLhs());
   dump("RHS", binopNode->getRhs());
+}
+
+void ASTPrinter::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
+  dumpExprInfo(unaryOpNode);
+  dump("Op", Token::TokenNameMapping.Find(unaryOpNode->getOp())
+                 .value_or("UNKNOWN"));
+  dump("Operand", unaryOpNode->getOperand());
 }
 
 void ASTPrinter::visit(const Ref<Block>& blockNode) {

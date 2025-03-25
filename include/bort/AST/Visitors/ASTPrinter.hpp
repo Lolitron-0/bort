@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include <concepts>
 #include <fmt/base.h>
@@ -22,6 +23,7 @@ private:
   void visit(const Ref<FunctionDecl>& functionDeclNode) override;
   void visit(const Ref<ExpressionStmt>& expressionStmtNode) override;
   void visit(const Ref<BinOpExpr>& binopNode) override;
+  void visit(const Ref<UnaryOpExpr>& unaryOpNode) override;
   void visit(const Ref<Block>& blockNode) override;
   void visit(const Ref<IfStmt>& ifStmtNode) override;
   void visit(const Ref<WhileStmt>& whileStmtNode) override;

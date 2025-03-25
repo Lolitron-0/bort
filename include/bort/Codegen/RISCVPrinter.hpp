@@ -1,12 +1,14 @@
 #pragma once
 #include "bort/Codegen/InstructionVisitorBase.hpp"
-#include "bort/Codegen/LoadInst.hpp"
-#include "bort/Codegen/StoreInst.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/Instruction.hpp"
+#include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
+#include "bort/IR/StoreInst.hpp"
+#include "bort/IR/UnaryInst.hpp"
 #include <ostream>
 
 namespace bort::codegen::rv {
@@ -21,10 +23,11 @@ public:
 
 private:
   void visit(const Ref<ir::OpInst>& opInst) override;
+  void visit(const Ref<ir::UnaryInst>& unaryInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
   void visit(const Ref<ir::MoveInst>& mvInst) override;
-  void visit(const Ref<LoadInst>& loadInst) override;
-  void visit(const Ref<StoreInst>& storeInst) override;
+  void visit(const Ref<ir::LoadInst>& loadInst) override;
+  void visit(const Ref<ir::StoreInst>& storeInst) override;
   void visit(const Ref<ir::CallInst>& callInst) override;
 
   void printHeader();

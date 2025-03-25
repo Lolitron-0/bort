@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <utility>
 
@@ -77,12 +78,11 @@ protected:
   virtual void visit(const Ref<CharExpr>& /* charNode */) {
     // leaf
   }
-  virtual void visit(const Ref<VarDecl>& /* varDeclNode */) {
-    // leaf
-  }
+  virtual void visit(const Ref<VarDecl>&  varDeclNode );
   virtual void visit(const Ref<FunctionDecl>& functionDeclNode);
   virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);
+  virtual void visit(const Ref<UnaryOpExpr>& unaryOpNode);
   virtual void visit(const Ref<Block>& blockNode);
   virtual void visit(const Ref<IfStmt>& ifStmtNode);
   virtual void visit(const Ref<WhileStmt>& whileStmtNode);

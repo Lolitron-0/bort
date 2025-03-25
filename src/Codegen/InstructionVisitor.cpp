@@ -1,9 +1,10 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
-#include "bort/Codegen/StoreInst.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/RetInst.hpp"
+#include "bort/IR/StoreInst.hpp"
+#include "bort/IR/UnaryInst.hpp"
 
 using namespace bort::ir;
 
@@ -13,6 +14,8 @@ void InstructionVisitorBase::genericVisit(
     const Ref<ir::Instruction>& inst) {
   if (auto opInst{ dynCastRef<OpInst>(inst) }) {
     visit(opInst);
+  } else if (auto unaryInst{ dynCastRef<ir::UnaryInst>(inst) }) {
+    visit(unaryInst);
   } else if (auto mvInst{ dynCastRef<MoveInst>(inst) }) {
     visit(mvInst);
   } else if (auto loadInst{ dynCastRef<LoadInst>(inst) }) {

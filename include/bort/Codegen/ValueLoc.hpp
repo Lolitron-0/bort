@@ -1,6 +1,10 @@
 #pragma once
 #include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/Metadata.hpp"
+#include "bort/IR/Module.hpp"
+#include "bort/IR/Value.hpp"
+#include "cul/BiMap.hpp"
 #include <cstddef>
 #include <string>
 
@@ -12,20 +16,24 @@ enum class LocationKind {
   Global
 };
 
-class ValueLoc {
+class ValueLoc : public ir::Value {
 public:
-  virtual ~ValueLoc() = default;
-
   [[nodiscard]] auto getKind() const -> LocationKind {
     return m_Kind;
   }
 
 protected:
-  explicit ValueLoc(LocationKind kind)
-      : m_Kind{ kind } {
-  }
+  explicit ValueLoc(LocationKind kind);
 
 private:
+  static constexpr cul::BiMap s_LocationKindToString{
+    [](auto&& selector) {
+      return selector.Case(LocationKind::Stack, "stack")
+          .Case(LocationKind::Register, "reg")
+          .Case(LocationKind::Global, "glob");
+    }
+  };
+
   LocationKind m_Kind;
 };
 

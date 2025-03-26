@@ -422,6 +422,19 @@ void Generator::generate() {
     for (m_CurrentBBIter = func.begin(); m_CurrentBBIter != func.end();
          m_CurrentBBIter++) {
       auto& bb{ *m_CurrentBBIter };
+
+      // increases compilation time to n^2 but is worth it
+      SpillFilter usedLater{ [this](const Ref<ir::Operand>& op) {
+        auto nextBBIter{ m_CurrentBBIter };
+        nextBBIter++;
+        for (; nextBBIter != m_CurrentFuncIter->end(); nextBBIter++) {
+          if (getUniqueOperands(*nextBBIter).contains(op)) {
+            return true;
+          }
+        }
+        return false;
+      } };
+
       reinitDescriptors(bb);
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
@@ -429,19 +442,20 @@ void Generator::generate() {
         auto isJump{ isJumpInst(*m_CurrentInstIter) };
         if (isLast && isJump) {
           // spill before branch
-          spillIf();
+          spillIf(usedLater);
         }
         genericVisit(*m_CurrentInstIter);
         if (isLast && !isJump) {
           // spill after other
           m_CurrentInstIter++;
-          spillIf();
+          spillIf(usedLater);
           break;
         }
       }
     }
   }
   InstructionChoiceVisitor().run(m_Module);
+  InstructionRemover().run(m_Module);
 }
 
 void Generator::generateLoad(const Ref<ir::Operand>& op,
@@ -559,6 +573,7 @@ void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
     bort_assert(inMemoryLoc, "Addr operand memory consistency broken");
     bort_assert(dstReg, "Addr destination register not chosen");
     evaluateLocAddress(inMemoryLoc, dstReg);
+    markForRemoval(unaryInst);
     return;
   }
 
@@ -675,6 +690,7 @@ void Generator::visit(const Ref<ir::CallInst>& callInst) {
 
 void Generator::visit(const Ref<ir::RetInst>& retInst) {
 
+  markForRemoval(retInst);
   if (retInst->hasValue()) {
     auto reg{ RVMachineRegister::get(GPR::a0) };
 
@@ -741,4 +757,7 @@ void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
   InstructionVisitorBase::genericVisit(inst);
 }
 
+void Generator::markForRemoval(const Ref<ir::Instruction>& inst) const {
+  inst->addMDNode(RemoveInstructionMDTag{});
+}
 } // namespace bort::codegen::rv

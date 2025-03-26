@@ -10,8 +10,8 @@ class BinOpExpr final : public ExpressionNode {
 
 public:
   [[nodiscard]] auto getOp() const -> TokenKind;
-  [[nodiscard]] auto getLhs() -> Ref<ExpressionNode>;
-  [[nodiscard]] auto getRhs() -> Ref<ExpressionNode>;
+  [[nodiscard]] auto getLHS() -> Ref<ExpressionNode>;
+  [[nodiscard]] auto getRHS() -> Ref<ExpressionNode>;
   [[nodiscard]] constexpr auto isArithmetic() const -> bool {
     /// @todo bitwise operators
     return m_Op == TokenKind::Plus || m_Op == TokenKind::Minus ||
@@ -22,6 +22,9 @@ public:
     return m_Op == TokenKind::Less || m_Op == TokenKind::Greater ||
            m_Op == TokenKind::Equals;
   }
+
+  void setLHS(Ref<ExpressionNode> lhs);
+  void setRHS(Ref<ExpressionNode> rhs);
 
   friend class ASTRoot;
 

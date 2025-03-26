@@ -94,14 +94,18 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
 
   consumeToken();
 
-  if (curTok().isNot(TokenKind::LParen)) {
-    // it's a variable
-    return m_ASTRoot->registerNode<ast::VariableExpr>(
-        ast::ASTDebugInfo{ identifierTok },
-        makeRef<Variable>(std::string{ identifierTok.getStringView() }));
+  if (curTok().is(TokenKind::LParen)) {
+    return parseFunctionCallExpr(identifierTok);
   }
 
-  return parseFunctionCallExpr(identifierTok);
+  if (curTok().is(TokenKind::LBracket)) {
+    return parseIndexationExpr(identifierTok);
+  }
+
+  // it's a variable
+  return m_ASTRoot->registerNode<ast::VariableExpr>(
+      ast::ASTDebugInfo{ identifierTok },
+      makeRef<Variable>(std::string{ identifierTok.getStringView() }));
 }
 
 auto Parser::tryParseLValue()
@@ -123,9 +127,39 @@ auto Parser::parseValueExpression()
     return parseParenExpr();
   case TokenKind::NumericLiteral:
     return parseNumberExpr();
+  case TokenKind::KW_sizeof:
+    return parseSizeofExpr();
   default:
     return parseUnaryOpExpr();
   }
+}
+
+auto Parser::parseSizeofExpr() -> Unique<ast::ExpressionNode> {
+  bort_assert(curTok().is(TokenKind::KW_sizeof), "Expected 'sizeof'");
+  auto sizeofTok{ curTok() };
+  consumeToken();
+  if (curTok().isNot(TokenKind::LParen)) {
+    Diagnostic::emitError(curTok(), "Expected '('");
+    return invalidNode();
+  }
+
+  if (isTypenameStart(lookahead(1))) {
+    consumeToken(); // consume lparen
+    auto type{ parseDeclspec() };
+    if (curTok().isNot(TokenKind::RParen)) {
+      Diagnostic::emitError(curTok(), "Expected ')'");
+      return invalidNode();
+    }
+    consumeToken(); // rparen
+    return m_ASTRoot->registerNode<ast::NumberExpr>(
+        ast::ASTDebugInfo{ sizeofTok },
+        static_cast<ast::NumberExpr::ValueT>(type->getSizeof()));
+  }
+
+  auto expr{ parseParenExpr() };
+  return m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+      ast::ASTDebugInfo{ sizeofTok }, std::move(expr),
+      TokenKind::KW_sizeof);
 }
 
 auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
@@ -231,6 +265,16 @@ auto Parser::parseDeclspec() -> TypeRef {
     type = PointerType::get(type);
   }
 
+  if (curTok().is(TokenKind::LBracket)) {
+    bort_assert(false, "Not implemented");
+    // consumeToken();
+    // if (curTok().isNot(TokenKind::RBracket)) {
+    //   Diagnostic::emitError(curTok(), "Expected ']'");
+    //   return invalidNode();
+    // }
+    // consumeToken();
+  }
+
   return type;
 }
 
@@ -250,9 +294,30 @@ auto Parser::parseDeclarationStatement() -> Ref<ast::Statement> {
   return parseVarDecl(type, nameTok);
 }
 
-auto Parser::parseVarDecl(const TypeRef& type,
+auto Parser::parseVarDecl(TypeRef type,
                           const Token& nameTok) -> Ref<ast::VarDecl> {
   std::string name{ nameTok.getStringView() };
+
+  if (curTok().is(TokenKind::LBracket)) {
+    consumeToken();
+    if (curTok().isNot(TokenKind::NumericLiteral)) {
+      Diagnostic::emitError(curTok(),
+                            "Expected array size as numeric literal");
+      return invalidNode();
+    }
+
+    auto size{ curTok().getLiteralValue<int32_t>() };
+    consumeToken();
+
+    if (curTok().isNot(TokenKind::RBracket)) {
+      Diagnostic::emitError(curTok(), "Expected ']'");
+      return invalidNode();
+    }
+    consumeToken();
+
+    type = ArrayType::get(type, size);
+  }
+
   auto node{ m_ASTRoot->registerNode<ast::VarDecl>(
       ast::ASTDebugInfo{ nameTok }, type, name) };
 
@@ -351,6 +416,54 @@ auto Parser::parseFunctionCallExpr(const Token& nameTok)
   return m_ASTRoot->registerNode<ast::FunctionCallExpr>(
       ast::ASTDebugInfo{ nameTok }, makeRef<Function>(funcName),
       std::move(args));
+}
+
+auto Parser::parseIndexationExpr(const Token& nameTok)
+    -> Unique<ast::ExpressionNode> {
+  bort_assert(curTok().is(TokenKind::LBracket), "Expected '['");
+  auto indexationStartTok{ curTok() };
+  consumeToken();
+  auto expr{ parseExpression() };
+  if (curTok().isNot(TokenKind::RBracket)) {
+    Diagnostic::emitError(curTok(), "Expected ']'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  // now we need to create node for *(&nameTok + sizeof(*&nameTok) * expr)
+  // step by step
+
+  auto varExpr{ m_ASTRoot->registerNode<ast::VariableExpr>(
+      ast::ASTDebugInfo{ nameTok },
+      makeRef<Variable>(std::string{ nameTok.getStringView() })) };
+
+  Ref<ast::UnaryOpExpr> varAddr{
+    m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+        ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
+        TokenKind::Amp)
+  };
+
+  auto varAddrDeref{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, varAddr,
+      TokenKind::Star) };
+
+  auto sizeofExpr{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, std::move(varAddrDeref),
+      TokenKind::KW_sizeof) };
+
+  auto indexMultiplication{ m_ASTRoot->registerNode<ast::BinOpExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, std::move(sizeofExpr),
+      std::move(expr), TokenKind::Star) };
+
+  auto pointerAddition{ m_ASTRoot->registerNode<ast::BinOpExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, varAddr,
+      std::move(indexMultiplication), TokenKind::Plus) };
+
+  auto dereference{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, std::move(pointerAddition),
+      TokenKind::Star) };
+
+  return std::move(dereference);
 }
 
 auto Parser::parseStatement() -> Ref<ast::Statement> {

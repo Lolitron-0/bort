@@ -1,3 +1,4 @@
+#include <string_view>
 #include <utility>
 
 #include "bort/Basic/Assert.hpp"
@@ -30,6 +31,12 @@ auto Token::getStringView() const -> std::string_view {
 
 auto Token::getLength() const -> size_t {
   return m_Length;
+}
+
+auto bort::Token::getTokenName(TokenKind kind) -> std::string_view {
+  bort_assert(TokenNameMapping.Find(kind).has_value(),
+              "Unknown token kind");
+  return TokenNameMapping.Find(kind).value();
 }
 
 } // namespace bort

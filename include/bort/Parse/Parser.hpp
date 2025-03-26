@@ -48,13 +48,18 @@ protected:
   auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   /// identifier \n
   /// -> identifier - variable \n
-  /// -> identifier '(' expr, ... ')' - function call
+  /// -> identifier '(' expr, ... ')' - function call \n
+  /// -> identifier indexationExpr \n
+  /// -> identifier ('++' | '--')
   auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
   /// value expression \n
   /// -> number \n
   /// -> parenExpr \n
+  /// -> sizeofExpr \n
   /// -> lvalue
   auto parseValueExpression() -> Unique<ast::ExpressionNode>;
+  /// sizeofExpr -> 'sizeof' (parenExpr | '(' declspec ')' )
+  auto parseSizeofExpr() -> Unique<ast::ExpressionNode>;
   /// lvalue \n
   /// -> identifier
   auto tryParseLValue() -> std::optional<Unique<ast::ExpressionNode>>;
@@ -75,7 +80,7 @@ protected:
   auto parseDeclarationStatement() -> Ref<ast::Statement>;
   /// varDecl -> declspec identifier ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
-  auto parseVarDecl(const TypeRef& type,
+  auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,
@@ -83,6 +88,10 @@ protected:
   /// functionCallExpr -> nameTok '(' (declspec identifier, ...) ')'
   auto parseFunctionCallExpr(const Token& nameTok)
       -> Unique<ast::FunctionCallExpr>;
+  /// indexationExpr -> nameTok '[' expr ']'
+  /// desugared into pointer arithmetic
+  auto parseIndexationExpr(const Token& nameTok)
+      -> Unique<ast::ExpressionNode>;
   /// statement \n
   /// -> expression ';' \n
   /// -> block \n

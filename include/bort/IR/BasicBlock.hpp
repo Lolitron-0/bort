@@ -16,9 +16,13 @@ public:
     m_Instructions.push_back(std::move(instruction));
   }
 
-  void insertBefore(InstList::iterator pos,
+  void insertBefore(InstIter pos,
                     Ref<Instruction> instruction) {
     m_Instructions.insert(pos, std::move(instruction));
+  }
+
+  void removeAt(InstIter pos) {
+    m_Instructions.erase(pos);
   }
 
   [[nodiscard]] auto getInstructions() const -> const InstList& {

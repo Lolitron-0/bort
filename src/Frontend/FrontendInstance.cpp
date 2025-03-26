@@ -1,6 +1,7 @@
 #include "bort/Frontend/FrontEndInstance.hpp"
 #include "bort/AST/Visitors/ASTPrinter.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
+#include "bort/AST/Visitors/NodeSubstitutionVisitor.hpp"
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
 #include "bort/CLI/IO.hpp"
@@ -56,6 +57,10 @@ auto FrontEndInstance::run() -> Ref<ast::ASTRoot> {
         DEBUG_OUT_MSG("Type propagation pass failed. Skipping file");
         continue;
       }
+
+      ast::NodeSubstitutionVisitor nodeSubstitutionVisitor{};
+      // doesn't invalidate tree
+      nodeSubstitutionVisitor.SAVisit(ast);
 
       if (m_CLIOptions.DumpAST) {
         ast::ASTPrinter astPrinter{};

@@ -21,4 +21,10 @@ auto UnaryOpExpr::getOperand() -> Ref<ExpressionNode> {
   return m_Operand;
 }
 
+void UnaryOpExpr::setOperand(Ref<ExpressionNode> operand) {
+  m_Operand = std::move(operand);
+}
+void UnaryOpExpr::setOp(TokenKind op) {
+  m_Op = op;
+}
 } // namespace bort::ast

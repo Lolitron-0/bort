@@ -114,8 +114,8 @@ void ASTPrinter::visit(const Ref<BinOpExpr>& binopNode) {
   dumpExprInfo(binopNode);
   dump("Op", Token::TokenNameMapping.Find(binopNode->getOp())
                  .value_or("UNKNOWN"));
-  dump("LHS", binopNode->getLhs());
-  dump("RHS", binopNode->getRhs());
+  dump("LHS", binopNode->getLHS());
+  dump("RHS", binopNode->getRHS());
 }
 
 void ASTPrinter::visit(const Ref<UnaryOpExpr>& unaryOpNode) {

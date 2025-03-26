@@ -29,7 +29,7 @@ auto Function::toString() const -> std::string {
     ss << arg->toString();
     ss << fmt::format(s_ObjectStyle, ",");
   }
-  ss << fmt::format(s_ObjectStyle, ")");
+  ss << ")";
   return ss.str();
 }
 

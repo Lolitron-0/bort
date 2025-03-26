@@ -36,7 +36,7 @@ public:
   }
 
   [[nodiscard]] auto toString() const -> std::string override {
-    return fmt::format("store_sync .loc={}", m_Loc->getName());
+    return fmt::format("store_sync .loc=%{}", m_Loc->getName());
   }
 
   [[nodiscard]] auto getLoc() const -> ValueRef {
@@ -69,8 +69,8 @@ auto IRCodegen::genBranchFromCondition(
     case TokenKind::Less:
     case TokenKind::LessEqual:
       mode = binOpCond->getOp();
-      lhs  = genericVisit(binOpCond->getLhs());
-      rhs  = genericVisit(binOpCond->getRhs());
+      lhs  = genericVisit(binOpCond->getLHS());
+      rhs  = genericVisit(binOpCond->getRHS());
       break;
     default:
       break;
@@ -106,8 +106,8 @@ auto IRCodegen::genericVisit(const Ref<ast::Node>& node) -> ValueRef {
 }
 
 auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
-  auto lhs{ genericVisit(binOpNode->getLhs()) };
-  auto rhs{ genericVisit(binOpNode->getRhs()) };
+  auto lhs{ genericVisit(binOpNode->getLHS()) };
+  auto rhs{ genericVisit(binOpNode->getRHS()) };
 
   if (binOpNode->getOp() == TokenKind::Assign) {
     auto newInst{ addInstruction(
@@ -166,9 +166,15 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
   ValueRef elementSize{ IntConstant::getOrCreate(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
-  auto newVar{ addInstruction(
-                   makeRef<AllocaInst>(std::move(varSymbol), elementSize,
-                                       IntConstant::getOrCreate(1)))
+  ValueRef numElements{ IntConstant::getOrCreate(1) };
+  if (auto arrayType{ dynCastRef<ArrayType>(varSymbol->getType()) }) {
+    elementSize =
+        IntConstant::getOrCreate(arrayType->getBaseType()->getSizeof());
+    numElements = IntConstant::getOrCreate(arrayType->getNumElements());
+  }
+  auto newVar{ addInstruction(makeRef<AllocaInst>(std::move(varSymbol),
+                                                  elementSize,
+                                                  numElements))
                    ->getDestination() };
 
   if (!varDeclNode->hasInitializer()) {

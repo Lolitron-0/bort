@@ -7,6 +7,7 @@
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
@@ -154,6 +155,7 @@ private:
   });
   void evaluateLocAddress(const Ref<ValueLoc>& loc,
                           const RVMachineRegisterRef& dest);
+  void markForRemoval(const Ref<ir::Instruction>& inst) const;
 
   ir::Module& m_Module;
   CLIOptions m_CLIOptions;

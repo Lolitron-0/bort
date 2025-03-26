@@ -4,6 +4,7 @@
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
+#include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -54,6 +55,17 @@ protected:
   ir::InstIter m_CurrentInstIter;
   ir::BBIter m_CurrentBBIter;
   ir::IRFuncIter m_CurrentFuncIter;
+};
+
+struct RemoveInstructionMDTag : ir::MDTag {
+  RemoveInstructionMDTag()
+      : MDTag{ "rm" } {
+  }
+};
+
+class InstructionRemover : public InstructionVisitorBase {
+public:
+  void run(ir::Module& module) override;
 };
 
 } // namespace bort::codegen

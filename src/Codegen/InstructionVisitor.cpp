@@ -36,9 +36,10 @@ void InstructionVisitorBase::genericVisit(
 }
 
 void InstructionVisitorBase::run(ir::Module& module) {
-  for (auto&& func : module) {
-    for (m_CurrentBBIter = func.begin(); m_CurrentBBIter != func.end();
-         m_CurrentBBIter++) {
+  for (m_CurrentFuncIter = module.begin();
+       m_CurrentFuncIter != module.end(); m_CurrentFuncIter++) {
+    for (m_CurrentBBIter = m_CurrentFuncIter->begin();
+         m_CurrentBBIter != m_CurrentFuncIter->end(); m_CurrentBBIter++) {
       auto& bb{ *m_CurrentBBIter };
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
@@ -48,4 +49,21 @@ void InstructionVisitorBase::run(ir::Module& module) {
   }
 }
 
+void InstructionRemover::run(ir::Module& module) {
+  for (m_CurrentFuncIter = module.begin();
+       m_CurrentFuncIter != module.end(); m_CurrentFuncIter++) {
+    for (m_CurrentBBIter = m_CurrentFuncIter->begin();
+         m_CurrentBBIter != m_CurrentFuncIter->end(); m_CurrentBBIter++) {
+      auto& bb{ *m_CurrentBBIter };
+      for (m_CurrentInstIter = bb.begin();
+           m_CurrentInstIter != bb.end();) {
+        auto iter{ m_CurrentInstIter++ };
+
+        if ((*iter)->getMDNode<RemoveInstructionMDTag>()) {
+          bb.removeAt(iter);
+        }
+      }
+    }
+  }
+}
 } // namespace bort::codegen

@@ -16,8 +16,8 @@ void StructureAwareASTVisitor::visit(const Ref<ASTRoot>& rootNode) {
 }
 
 void StructureAwareASTVisitor::visit(const Ref<BinOpExpr>& binopNode) {
-  genericVisit(binopNode->getLhs());
-  genericVisit(binopNode->getRhs());
+  genericVisit(binopNode->getLHS());
+  genericVisit(binopNode->getRHS());
 }
 
 void StructureAwareASTVisitor::visit(

@@ -1,9 +1,12 @@
 #pragma once
+#include "bort/Basic/Casts.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 #include <list>
 
 namespace bort::ir {
+
+class BranchInst;
 
 using InstList = std::list<Ref<Instruction>>;
 using InstIter = InstList::iterator;
@@ -16,8 +19,7 @@ public:
     m_Instructions.push_back(std::move(instruction));
   }
 
-  void insertBefore(InstIter pos,
-                    Ref<Instruction> instruction) {
+  void insertBefore(InstIter pos, Ref<Instruction> instruction) {
     m_Instructions.insert(pos, std::move(instruction));
   }
 
@@ -42,6 +44,9 @@ public:
   [[nodiscard]] auto end() const {
     return m_Instructions.end();
   }
+
+  [[nodiscard]] auto getLast() const -> Ref<Instruction>;
+  [[nodiscard]] auto getLastAsBranch() const -> Ref<BranchInst>;
 
 private:
   InstList m_Instructions;

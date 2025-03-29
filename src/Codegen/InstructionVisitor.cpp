@@ -36,6 +36,7 @@ void InstructionVisitorBase::genericVisit(
 }
 
 void InstructionVisitorBase::run(ir::Module& module) {
+  m_CurrentModule = &module;
   for (m_CurrentFuncIter = module.begin();
        m_CurrentFuncIter != module.end(); m_CurrentFuncIter++) {
     for (m_CurrentBBIter = m_CurrentFuncIter->begin();
@@ -47,6 +48,7 @@ void InstructionVisitorBase::run(ir::Module& module) {
       }
     }
   }
+  m_CurrentModule = nullptr;
 }
 
 void InstructionRemover::run(ir::Module& module) {
@@ -65,5 +67,9 @@ void InstructionRemover::run(ir::Module& module) {
       }
     }
   }
+}
+auto InstructionVisitorBase::getCurrentModule() const -> ir::Module* {
+  bort_assert(m_CurrentModule, "Visitor is not being run");
+  return m_CurrentModule;
 }
 } // namespace bort::codegen

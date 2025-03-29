@@ -26,6 +26,8 @@
 #include <fmt/format.h>
 #include <fmt/ranges.h>
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -42,7 +44,7 @@ auto RVInstInfo::toString() const -> std::string {
 }
 
 auto RVBranchInfo::toString() const -> std::string {
-  return fmt::format("rv_bri .is_single_op={}", IsSingleOp);
+  return fmt::format("rv_bri .is_single_op={}", IsRhsZero);
 }
 
 struct MemoryDependencyMDTag : MDTag {
@@ -51,16 +53,14 @@ struct MemoryDependencyMDTag : MDTag {
   }
 };
 
-class PreprocessVisitor : public InstructionVisitorBase {
+/// Removes immediate operands from certain instructions
+class PreprocessPass : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
     // eliminate immediatness
-    for (int i{ 1 }; i <= 2; i++) {
+    for (int i{ OpInst::Src1Idx }; i <= OpInst::Src2Idx; i++) {
       if (auto srcConst{ dynCastRef<Constant>(opInst->getOperand(i)) }) {
-        auto newIRReg{ Register::getOrCreate(srcConst->getType()) };
-        m_CurrentBBIter->insertBefore(
-            m_CurrentInstIter, makeRef<MoveInst>(newIRReg, srcConst));
-        opInst->setOperand(i, newIRReg);
+        opInst->setOperand(i, moveToNewReg(srcConst));
       }
 
       if (opInst->getOp() == TokenKind::Plus ||
@@ -86,32 +86,33 @@ private:
     RVBranchInfo info{ false };
     auto [lhs, rhs]{ brInst->getOperands() };
     if (auto lhsConst{ dynCastRef<Constant>(lhs) }) {
-      auto newIRReg{ Register::getOrCreate(lhsConst->getType()) };
-      m_CurrentBBIter->insertBefore(
-          m_CurrentInstIter, makeRef<MoveInst>(newIRReg, lhsConst));
-      lhs = newIRReg;
+      lhs = moveToNewReg(lhsConst);
     }
 
-    if (auto rhsConst{ dynCastRef<Constant>(rhs) }) {
-      if (auto rhsInt{ dynCastRef<IntConstant>(rhsConst) }) {
-        if (rhsInt->getValue() == 0) {
-          info.IsSingleOp = true;
-          rhs             = nullptr;
-        }
+    auto rhsConstant{ dynCastRef<Constant>(rhs) };
+    auto rhsIntConstant{ dynCastRef<IntConstant>(rhs) };
+    if (rhsConstant) {
+      if (rhsIntConstant && rhsIntConstant->getValue() == 0) {
+        info.IsRhsZero = true;
+        rhs            = nullptr;
       } else {
-        auto newIRReg{ Register::getOrCreate(rhsConst->getType()) };
-        m_CurrentBBIter->insertBefore(
-            m_CurrentInstIter, makeRef<MoveInst>(newIRReg, rhsConst));
-        rhs = newIRReg;
+        rhs = moveToNewReg(rhsConstant);
       }
     }
 
     brInst->setOperands(lhs, rhs);
     brInst->addMDNode(info);
   }
+
+  auto moveToNewReg(const Ref<Constant>& constant) -> Ref<Register> {
+    auto newIRReg{ Register::getOrCreate(constant->getType()) };
+    m_CurrentBBIter->insertBefore(m_CurrentInstIter,
+                                  makeRef<MoveInst>(newIRReg, constant));
+    return newIRReg;
+  }
 };
 
-class InstructionChoiceVisitor : public InstructionVisitorBase {
+class InstructionChoicePass : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
     static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
@@ -153,7 +154,7 @@ private:
           "b{}", s_BranchModePostfix.Find(brInst->getMode()).value());
 
       auto* brInfo = brInst->getMDNode<RVBranchInfo>();
-      if (brInfo->IsSingleOp) {
+      if (brInfo->IsRhsZero) {
         info.InstName += "z";
       }
     }
@@ -200,6 +201,23 @@ private:
     RVInstInfo info{ "call" };
     callInst->addMDNode(std::move(info));
   }
+};
+
+static void markForRemoval(const Ref<ir::Instruction>& inst) {
+  inst->addMDNode(RemoveInstructionMDTag{});
+}
+
+class StoreSourceOperandMD : public Metadata {
+public:
+  explicit StoreSourceOperandMD(Ref<ir::Operand> op)
+      : Operand{ std::move(op) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override {
+    return fmt::format("store_op .op=%{}", Operand->getName());
+  }
+
+  Ref<ir::Operand> Operand;
 };
 
 struct FrameOffset : public Metadata {
@@ -347,6 +365,17 @@ void Generator::assignLocalOperandsOffsets() {
   }
 }
 
+void Generator::fillOperandUsages() {
+  for (auto&& func : m_Module) {
+    for (auto&& bb : func) {
+      auto operands{ getUniqueOperands(bb) };
+      for (auto&& operand : operands) {
+        m_OperandUsages[operand].insert(&bb);
+      }
+    }
+  }
+}
+
 auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
     const -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>> {
   Ref<RegisterLoc> regLoc{ nullptr };
@@ -359,6 +388,15 @@ auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
     }
   }
   return { regLoc, inMemoryLoc };
+}
+
+auto Generator::notLocalToBBFilter(const Ref<ir::Operand>& op,
+                                   const ir::BasicBlock& bb) -> bool {
+  return std::count_if(m_OperandUsages[op].begin(),
+                       m_OperandUsages[op].end(),
+                       [&bb](const auto* usageBB) {
+                         return usageBB != &bb;
+                       }) > 0;
 }
 
 void Generator::spillIf(const SpillFilter& filter) {
@@ -413,7 +451,9 @@ static void attachAdditionalCode(IRFunction& func) {
 }
 
 void Generator::generate() {
-  PreprocessVisitor().run(m_Module);
+  PreprocessPass().run(m_Module);
+
+  fillOperandUsages();
   assignLocalOperandsOffsets();
   for (m_CurrentFuncIter = m_Module.begin();
        m_CurrentFuncIter != m_Module.end(); m_CurrentFuncIter++) {
@@ -423,38 +463,32 @@ void Generator::generate() {
          m_CurrentBBIter++) {
       auto& bb{ *m_CurrentBBIter };
 
-      // increases compilation time to n^2 but is worth it
-      SpillFilter usedLater{ [this](const Ref<ir::Operand>& op) {
-        auto nextBBIter{ m_CurrentBBIter };
-        nextBBIter++;
-        for (; nextBBIter != m_CurrentFuncIter->end(); nextBBIter++) {
-          if (getUniqueOperands(*nextBBIter).contains(op)) {
-            return true;
-          }
-        }
-        return false;
+      reinitDescriptors(bb);
+
+      SpillFilter nonLocalSpillFilter{ [this, &bb](const auto& op) {
+        return notLocalToBBFilter(op, bb);
       } };
 
-      reinitDescriptors(bb);
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
         auto isLast{ ++InstIter{ m_CurrentInstIter } == bb.end() };
         auto isJump{ isJumpInst(*m_CurrentInstIter) };
         if (isLast && isJump) {
           // spill before branch
-          spillIf(usedLater);
+          spillIf(nonLocalSpillFilter);
         }
         genericVisit(*m_CurrentInstIter);
         if (isLast && !isJump) {
           // spill after other
           m_CurrentInstIter++;
-          spillIf(usedLater);
+          spillIf(nonLocalSpillFilter);
           break;
         }
       }
     }
   }
-  InstructionChoiceVisitor().run(m_Module);
+
+  InstructionChoicePass().run(m_Module);
   InstructionRemover().run(m_Module);
 }
 
@@ -501,11 +535,10 @@ void Generator::generateStore(const Ref<ir::Operand>& op,
                               const Ref<ValueLoc>& loc) {
   m_OperandLocs[op].insert(loc);
 
-  m_CurrentBBIter->insertBefore(
-      m_CurrentInstIter,
-      makeRef<StoreInst>(
-          reg, loc,
-          IntConstant::getOrCreate(op->getType()->getSizeof())));
+  auto storeInst{ makeRef<StoreInst>(
+      reg, loc, IntConstant::getOrCreate(op->getType()->getSizeof())) };
+  storeInst->addMDNode(StoreSourceOperandMD{ op });
+  m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(storeInst));
 }
 
 void Generator::processSourceChoice(const RVMachineRegisterRef& reg,
@@ -617,6 +650,7 @@ void Generator::visit(const Ref<ir::LoadInst>& loadInst) {
 
 void Generator::visit(const Ref<ir::StoreInst>& storeInst) {
   if (auto sourceOp{ dynCastRef<Operand>(storeInst->getSource()) }) {
+    storeInst->addMDNode(StoreSourceOperandMD{ sourceOp });
     auto reg{ chooseReadReg(sourceOp) };
     processSourceChoice(reg, sourceOp);
     storeInst->setSource(reg);
@@ -757,7 +791,4 @@ void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
   InstructionVisitorBase::genericVisit(inst);
 }
 
-void Generator::markForRemoval(const Ref<ir::Instruction>& inst) const {
-  inst->addMDNode(RemoveInstructionMDTag{});
-}
 } // namespace bort::codegen::rv

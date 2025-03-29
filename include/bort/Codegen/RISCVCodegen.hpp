@@ -17,6 +17,7 @@
 #include "bort/IR/Value.hpp"
 #include <functional>
 #include <map>
+#include <set>
 #include <unordered_set>
 #include <utility>
 
@@ -83,12 +84,12 @@ struct RVInstInfo final : public ir::Metadata {
 
 struct RVBranchInfo final : public ir::Metadata {
   explicit RVBranchInfo(bool isSingleOp)
-      : IsSingleOp{ isSingleOp } {
+      : IsRhsZero{ isSingleOp } {
   }
 
   [[nodiscard]] auto toString() const -> std::string override;
 
-  bool IsSingleOp;
+  bool IsRhsZero;
 };
 
 class RVMachineRegister final : public MachineRegister {
@@ -108,7 +109,7 @@ using RVMachineRegisterRef = Ref<RVMachineRegister>;
 
 /// General note: for this type of IR, graph-coloring algorithm would be
 /// more preferable, but firstly I decided to quickly implement something
-/// more simple
+/// simple
 class Generator : public InstructionVisitorBase {
 public:
   Generator(CLIOptions cliOptions, ir::Module& module)
@@ -146,23 +147,29 @@ private:
   void reinitDescriptors(const ir::BasicBlock& bb);
   void addInstruction(const Ref<ir::Instruction>& inst);
   void assignLocalOperandsOffsets();
+  void fillOperandUsages();
   auto getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op) const
       -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>>;
 
+  auto notLocalToBBFilter(const Ref<ir::Operand>& op,
+                          const ir::BasicBlock& bb) -> bool;
   using SpillFilter = std::function<bool(const Ref<ir::Operand>&)>;
   void spillIf(const SpillFilter& filter = [](const auto&) {
     return true;
   });
   void evaluateLocAddress(const Ref<ValueLoc>& loc,
                           const RVMachineRegisterRef& dest);
-  void markForRemoval(const Ref<ir::Instruction>& inst) const;
 
+private:
   ir::Module& m_Module;
   CLIOptions m_CLIOptions;
   std::map<RVMachineRegisterRef, std::unordered_set<Ref<ir::Operand>>>
       m_RegisterContent;
   std::unordered_map<Ref<ir::Operand>, std::unordered_set<Ref<ValueLoc>>>
       m_OperandLocs;
+  std::unordered_map<Ref<ir::Operand>,
+                     std::unordered_set<ir::BasicBlock*>>
+      m_OperandUsages;
 };
 
 } // namespace bort::codegen::rv

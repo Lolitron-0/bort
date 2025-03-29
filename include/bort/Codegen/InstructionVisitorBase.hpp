@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/Basic/Assert.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
@@ -22,6 +23,8 @@ public:
 
 protected:
   void genericVisit(const Ref<ir::Instruction>& inst);
+
+  auto getCurrentModule() const -> ir::Module*;
 
 private:
   virtual void visit(const Ref<ir::OpInst>& opInst) {
@@ -55,6 +58,9 @@ protected:
   ir::InstIter m_CurrentInstIter;
   ir::BBIter m_CurrentBBIter;
   ir::IRFuncIter m_CurrentFuncIter;
+
+private:
+  ir::Module* m_CurrentModule{nullptr};
 };
 
 struct RemoveInstructionMDTag : ir::MDTag {

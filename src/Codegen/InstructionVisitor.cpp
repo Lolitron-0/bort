@@ -1,5 +1,6 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/RetInst.hpp"
@@ -16,6 +17,8 @@ void InstructionVisitorBase::genericVisit(
     visit(opInst);
   } else if (auto unaryInst{ dynCastRef<ir::UnaryInst>(inst) }) {
     visit(unaryInst);
+  } else if (auto idxInst{ dynCastRef<ir::GepInst>(inst) }) {
+    visit(idxInst);
   } else if (auto mvInst{ dynCastRef<MoveInst>(inst) }) {
     visit(mvInst);
   } else if (auto loadInst{ dynCastRef<LoadInst>(inst) }) {
@@ -28,10 +31,13 @@ void InstructionVisitorBase::genericVisit(
     visit(callInst);
   } else if (auto retInst{ dynCastRef<ir::RetInst>(inst) }) {
     visit(retInst);
+  } else if (auto macroInst{ dynCastRef<rv::RARSMacroCallInst>(inst) }) {
+    visit(macroInst);
   } else if (auto allocaInst{ dynCastRef<ir::AllocaInst>(inst) }) {
     ///
   } else {
-    bort_assert_nomsg(false);
+    bort_assert(false,
+                "Unhandled value in InstructionVisitor generic visit");
   }
 }
 

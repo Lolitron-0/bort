@@ -1,14 +1,17 @@
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
+#include "bort/Codegen/Instinsics.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
@@ -19,6 +22,7 @@
 #include "bort/IR/StoreInst.hpp"
 #include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
+#include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 #include "cul/BiMap.hpp"
 #include <algorithm>
@@ -43,8 +47,12 @@ auto RVInstInfo::toString() const -> std::string {
   return fmt::format("rv_ii .inst_name={}", InstName);
 }
 
+auto RARSMacroDefinitions::toString() const -> std::string {
+  return fmt::format("rars_macros .num_defined={}", Macros.size());
+}
+
 auto RVBranchInfo::toString() const -> std::string {
-  return fmt::format("rv_bri .is_single_op={}", IsRhsZero);
+  return fmt::format("rv_bri .is_rhs_zero={}", IsRhsZero);
 }
 
 struct MemoryDependencyMDTag : MDTag {
@@ -90,7 +98,7 @@ private:
     }
 
     auto rhsConstant{ dynCastRef<Constant>(rhs) };
-    auto rhsIntConstant{ dynCastRef<IntConstant>(rhs) };
+    auto rhsIntConstant{ dynCastRef<IntegralConstant>(rhs) };
     if (rhsConstant) {
       if (rhsIntConstant && rhsIntConstant->getValue() == 0) {
         info.IsRhsZero = true;
@@ -102,6 +110,13 @@ private:
 
     brInst->setOperands(lhs, rhs);
     brInst->addMDNode(info);
+  }
+
+  void visit(const Ref<StoreInst>& storeInst) override {
+    if (auto srcConstant{
+            dynCastRef<Constant>(storeInst->getSource()) }) {
+      storeInst->setSource(moveToNewReg(srcConstant));
+    }
   }
 
   auto moveToNewReg(const Ref<Constant>& constant) -> Ref<Register> {
@@ -392,7 +407,8 @@ auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
 
 auto Generator::notLocalToBBFilter(const Ref<ir::Operand>& op,
                                    const ir::BasicBlock& bb) -> bool {
-  return std::count_if(m_OperandUsages[op].begin(),
+  return isaRef<VariableUse>(op) ||
+         std::count_if(m_OperandUsages[op].begin(),
                        m_OperandUsages[op].end(),
                        [&bb](const auto* usageBB) {
                          return usageBB != &bb;
@@ -437,20 +453,21 @@ static void attachAdditionalCode(IRFunction& func) {
   retBB->addInstruction(makeRef<LoadInst>(
       RVMachineRegister::get(GPR::ra),
       makeRef<StackLoc>(frameInfo->Size - 4),
-      IntConstant::getOrCreate(IntType::get()->getSizeof())));
+      IntegralConstant::getInt(IntType::get()->getSizeof())));
   retBB->addInstruction(makeRef<LoadInst>(
       RVMachineRegister::get(GPR::fp),
       makeRef<StackLoc>(frameInfo->Size - 8),
-      IntConstant::getOrCreate(IntType::get()->getSizeof())));
+      IntegralConstant::getInt(IntType::get()->getSizeof())));
   retBB->addInstruction(
       makeRef<OpInst>(TokenKind::Plus, RVMachineRegister::get(GPR::sp),
                       RVMachineRegister::get(GPR::sp),
-                      IntConstant::getOrCreate(frameInfo->Size)));
+                      IntegralConstant::getInt(frameInfo->Size)));
   functionPrologueEpilogue.Epilogue = fmt::format("{}\n\n", retCode);
   func.addMDNode(functionPrologueEpilogue);
 }
 
 void Generator::generate() {
+  m_Module.addMDNode(RARSMacroDefinitions{});
   PreprocessPass().run(m_Module);
 
   fillOperandUsages();
@@ -527,7 +544,7 @@ void Generator::generateLoad(const Ref<ir::Operand>& op,
       m_CurrentInstIter,
       makeRef<LoadInst>(
           reg, *memoryLocIt,
-          IntConstant::getOrCreate(op->getType()->getSizeof())));
+          IntegralConstant::getInt(op->getType()->getSizeof())));
 }
 
 void Generator::generateStore(const Ref<ir::Operand>& op,
@@ -536,7 +553,7 @@ void Generator::generateStore(const Ref<ir::Operand>& op,
   m_OperandLocs[op].insert(loc);
 
   auto storeInst{ makeRef<StoreInst>(
-      reg, loc, IntConstant::getOrCreate(op->getType()->getSizeof())) };
+      reg, loc, IntegralConstant::getInt(op->getType()->getSizeof())) };
   storeInst->addMDNode(StoreSourceOperandMD{ op });
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(storeInst));
 }
@@ -615,6 +632,31 @@ void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
     processSourceChoice(reg, op);
     unaryInst->setSrc(std::move(reg));
   }
+}
+
+void Generator::visit(const Ref<ir::GepInst>& gepInst) {
+  auto bpOp{ dynCastRef<Operand>(gepInst->getBasePtr()) };
+  bort_assert(bpOp, "Gep base pointer should be operand");
+  auto bpReg{ chooseReadReg(bpOp) };
+  processSourceChoice(bpReg, bpOp);
+  gepInst->setArray(bpReg);
+
+  if (auto op{ dynCastRef<Operand>(gepInst->getIndex()) }) {
+    auto reg{ chooseReadReg(op) };
+    processSourceChoice(reg, op);
+    gepInst->setIndex(reg);
+  }
+
+  gepInst->setDestination(gepInst->getBasePtr());
+  processDstChoice(bpReg, bpOp);
+  // elem.ptr %ptr %index %stride_shift
+  m_CurrentBBIter->insertBefore(
+      m_CurrentInstIter,
+      createMacroCall(intrinsics::MacroID::ElemPtr,
+                      { gepInst->getBasePtr(), gepInst->getIndex(),
+                        IntegralConstant::getInt(std::log2(
+                            gepInst->getType()->getSizeof())) }));
+  markForRemoval(gepInst);
 }
 
 void Generator::visit(const Ref<ir::BranchInst>& brInst) {
@@ -777,7 +819,7 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
         m_CurrentInstIter,
         makeRef<OpInst>(TokenKind::Plus, dest,
                         RVMachineRegister::get(GPR::sp),
-                        IntConstant::getOrCreate(stackLoc->getOffset())));
+                        IntegralConstant::getInt(stackLoc->getOffset())));
     return;
   }
 
@@ -789,6 +831,15 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
 void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, inst);
   InstructionVisitorBase::genericVisit(inst);
+}
+
+auto Generator::createMacroCall(intrinsics::MacroID id,
+                                std::vector<ir::ValueRef> args)
+    -> Ref<RARSMacroCallInst> {
+  auto* macros{ m_Module.getMDNode<RARSMacroDefinitions>() };
+  bort_assert_nomsg(macros);
+  macros->Macros.push_back(intrinsics::getDefinition(id));
+  return makeRef<RARSMacroCallInst>(id, std::move(args));
 }
 
 } // namespace bort::codegen::rv

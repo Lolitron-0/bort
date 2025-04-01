@@ -1,8 +1,10 @@
 #include "bort/IR/IRPrinter.hpp"
 #include "bort/Basic/Casts.hpp"
+#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -12,16 +14,21 @@
 #include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
 #include "bort/Lex/Token.hpp"
-#include "fmt/color.h"
 #include <fmt/base.h>
+#include <fmt/color.h>
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 #include <memory>
 
-static constexpr auto s_InstColor(fmt::fg(fmt::color::blue_violet));
-static constexpr auto s_RegColor(fmt::fg(fmt::color::pale_golden_rod));
-static constexpr auto s_ConstColor(fmt::fg(fmt::color::pale_green));
-static constexpr auto s_UnknownColor(fmt::fg(fmt::color::indian_red));
-static constexpr auto s_MDColor(fmt::fg(fmt::color::slate_gray));
+static constexpr auto s_InstructionStyle(
+    fmt::fg(fmt::color::blue_violet));
+static constexpr auto s_RegisterStyle(
+    fmt::fg(fmt::color::pale_golden_rod));
+static constexpr auto s_GlobalStyle(s_RegisterStyle |
+                                    fmt::emphasis::italic);
+static constexpr auto s_ConstantStyle(fmt::fg(fmt::color::pale_green));
+static constexpr auto s_UnknownStyle(fmt::fg(fmt::color::indian_red));
+static constexpr auto s_MDStyle(fmt::fg(fmt::color::slate_gray));
 
 using namespace bort::ir;
 using namespace bort;
@@ -36,24 +43,48 @@ static auto getMDClause(const Value& val) -> std::string {
     res += "!" + md->toString() + ", ";
   }
   res = res.substr(0, res.rfind(','));
-  return fmt::format(s_MDColor, "[{}]", std::move(res));
+  return fmt::format(s_MDStyle, "[{}]", std::move(res));
 }
 
 auto formatValueColored(const bort::ir::ValueRef& val) -> std::string {
-  if (auto constant = dynCastRef<bort::ir::IntConstant>(val)) {
-    return fmt::format(s_ConstColor, "{}", constant->getValue());
+  if (auto constant{ dynCastRef<bort::ir::IntegralConstant>(val) }) {
+    return fmt::format(s_ConstantStyle, "{}", constant->getValue());
+  }
+  if (auto GV{ dynCastRef<bort::ir::GlobalValue>(val) }) {
+    return fmt::format(s_GlobalStyle, "%{}", GV->getName());
   }
   if (bort::isaRef<bort::ir::Register>(val) ||
       bort::isaRef<bort::ir ::VariableUse>(val)) {
-    return fmt::format(s_RegColor, "%{}{}", val->getName(),
+    return fmt::format(s_RegisterStyle, "%{}{}", val->getName(),
                        getMDClause(*val));
   }
-  return fmt::format(s_UnknownColor, "?{}", val->getName());
+  return fmt::format(s_UnknownStyle, "?{}", val->getName());
 }
+
+struct GlobalValueInitializerFormatter {
+  auto visit(GlobalArray* val) -> std::string {
+    std::string values{};
+    std::string delim{ ", " };
+    for (auto&& n : val->getValues()) {
+      values += fmt::format(s_ConstantStyle, "{}", n->getValue()) + delim;
+    }
+
+    if (!values.empty()) {
+      values.erase(values.size() - delim.size());
+    }
+    return fmt::format("{} = {{{}}}", formatValueNameColored(val),
+                       values);
+  }
+
+private:
+  static auto formatValueNameColored(GlobalValue* val) -> std::string {
+    return fmt::format(s_GlobalStyle, "{}", val->getName());
+  }
+};
 
 template <typename T>
 static auto styleInst(T&& name) {
-  return fmt::styled(name, s_InstColor);
+  return fmt::styled(name, s_InstructionStyle);
 }
 
 static constexpr cul::BiMap s_UnaryInstNames{ [](auto&& selector) {
@@ -73,35 +104,28 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Pipe, "or");
 } };
 
+template <>
+struct VisitorTraits<IRPrinter> {
+  static constexpr bool isRefBased      = true;
+  static constexpr bool ignoreUnhandled = true;
+};
+
 void IRPrinter::print(const Module& module) {
+  for (auto&& GV : module.getGlobals()) {
+    fmt::println(stderr, "{}",
+                 GV->accept(GlobalValueInitializerFormatter{}));
+  }
+  fmt::print(stderr, "\n");
+
   for (auto&& func : module) {
-    fmt::print(stderr, s_MDColor, "function {}\n", getMDClause(func));
+    fmt::print(stderr, s_MDStyle, "function {}\n", getMDClause(func));
     for (auto&& BB : func) {
       fmt::println(stderr, "{}:", BB.getName());
       for (auto&& inst : BB) {
-        if (auto opInst{ dynCastRef<OpInst>(inst) }) {
-          visit(opInst);
-        } else if (auto unaryInst{ dynCastRef<UnaryInst>(inst) }) {
-          visit(unaryInst);
-        } else if (auto allocaInst{ dynCastRef<AllocaInst>(inst) }) {
-          visit(allocaInst);
-        } else if (auto moveInst{ dynCastRef<MoveInst>(inst) }) {
-          fmt::print(stderr, "{} = {}",
-                     formatValueColored(moveInst->getDestination()),
-                     formatValueColored(moveInst->getSrc()));
-        } else if (auto branchInst{ dynCastRef<BranchInst>(inst) }) {
-          visit(branchInst);
-        } else if (auto callInst{ dynCastRef<CallInst>(inst) }) {
-          visit(callInst);
-        } else if (auto retInst{ dynCastRef<RetInst>(inst) }) {
-          visit(retInst);
-        } else if (auto loadInst{ dynCastRef<LoadInst>(inst) }) {
-          visit(loadInst);
-        } else if (auto storeInst{ dynCastRef<StoreInst>(inst) }) {
-          visit(storeInst);
-        } else {
-          continue;
-        }
+        VisitDispatcher<IRPrinter, Instruction, OpInst, UnaryInst,
+                        AllocaInst, MoveInst, GepInst, BranchInst,
+                        CallInst, RetInst, LoadInst,
+                        StoreInst>::dispatch(inst, *this);
         fmt::print(stderr, "; {}\n", getMDClause(*inst));
       }
     }
@@ -127,12 +151,25 @@ void bort::ir::IRPrinter::visit(const Ref<UnaryInst>& unaryInst) {
              formatValueColored(unaryInst->getSrc()));
 }
 
+void bort::ir::IRPrinter::visit(const Ref<GepInst>& gepInst) {
+  fmt::print(stderr, "{} = {} {}, {}",
+             formatValueColored(gepInst->getDestination()),
+             styleInst("gep"), formatValueColored(gepInst->getBasePtr()),
+             formatValueColored(gepInst->getIndex()));
+}
+
 void IRPrinter::visit(const Ref<AllocaInst>& allocaInst) {
   fmt::print(stderr, "{} = {} {}, {}",
              formatValueColored(allocaInst->getDestination()),
              styleInst("alloca"),
              formatValueColored(allocaInst->getElementSize()),
              formatValueColored(allocaInst->getNumElements()));
+}
+
+void bort::ir::IRPrinter::visit(const Ref<MoveInst>& moveInst) {
+  fmt::print(stderr, "{} = {}",
+             formatValueColored(moveInst->getDestination()),
+             formatValueColored(moveInst->getSrc()));
 }
 
 void IRPrinter::visit(const Ref<BranchInst>& branchInst) {

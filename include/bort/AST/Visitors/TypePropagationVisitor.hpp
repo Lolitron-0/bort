@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Frontend/Type.hpp"
@@ -27,6 +28,7 @@ public:
 private:
   void visit(const Ref<BinOpExpr>& binopNode) override;
   void visit(const Ref<UnaryOpExpr>& unaryOpNode) override;
+  void visit(const Ref<IndexationExpr>& indexationNode) override;
 
   [[nodiscard]] static auto getArithmeticOpResultType(
       const TypeRef& lhsType, const TypeRef& rhsType) -> TypeRef;

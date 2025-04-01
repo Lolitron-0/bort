@@ -1,5 +1,6 @@
 #pragma once
 #include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Instruction.hpp"
@@ -24,13 +25,14 @@ public:
 private:
   void visit(const Ref<ir::OpInst>& opInst) override;
   void visit(const Ref<ir::UnaryInst>& unaryInst) override;
+  void visit(const Ref<RARSMacroCallInst>& macroInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
   void visit(const Ref<ir::MoveInst>& mvInst) override;
   void visit(const Ref<ir::LoadInst>& loadInst) override;
   void visit(const Ref<ir::StoreInst>& storeInst) override;
   void visit(const Ref<ir::CallInst>& callInst) override;
 
-  void printHeader();
+  void printHeader(const ir::Module& module);
 
 private:
   std::ostream& m_Stream;

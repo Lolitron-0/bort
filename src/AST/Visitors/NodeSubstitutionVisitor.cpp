@@ -15,8 +15,8 @@ void NodeSubstitutionVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
     auto operand{ unaryOpNode->getOperand() };
     auto newOperand{ getASTRoot()->registerNode<NumberExpr>(
         getASTRoot()->getNodeDebugInfo(operand),
-        static_cast<NumberExpr::ValueT>(
-            operand->getType()->getSizeof())) };
+        static_cast<NumberExpr::ValueT>(operand->getType()->getSizeof()),
+        IntType::get()) };
 
     unaryOpNode->setOperand(std::move(newOperand));
     unaryOpNode->setOp(TokenKind::Plus);

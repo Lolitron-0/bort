@@ -13,10 +13,10 @@ MiddleEndInstance::MiddleEndInstance(CLIOptions cliOptions,
       m_AST(std::move(ast)) {
 }
 
-auto MiddleEndInstance::run() -> ir::Module {
+auto MiddleEndInstance::run() -> ir::Module&& {
   ir::IRCodegen irCodegen{};
   irCodegen.codegen(m_AST);
-  auto IR{ irCodegen.takeInstructions() };
+  auto&& IR{ irCodegen.takeInstructions() };
 
   if (m_CLIOptions.EmitIR) {
     ir::IRPrinter irPrinter{};
@@ -35,7 +35,7 @@ auto MiddleEndInstance::run() -> ir::Module {
   codegen::rv::Printer riscvPrinter{ std::cerr };
   riscvPrinter.run(IR);
 
-  return IR;
+  return std::move(IR);
 }
 
 } // namespace bort

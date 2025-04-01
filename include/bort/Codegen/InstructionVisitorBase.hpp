@@ -1,8 +1,10 @@
 #pragma once
 #include "bort/Basic/Assert.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/GepInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
@@ -24,7 +26,7 @@ public:
 protected:
   void genericVisit(const Ref<ir::Instruction>& inst);
 
-  auto getCurrentModule() const -> ir::Module*;
+  [[nodiscard]] auto getCurrentModule() const -> ir::Module*;
 
 private:
   virtual void visit(const Ref<ir::OpInst>& opInst) {
@@ -32,6 +34,9 @@ private:
   }
   virtual void visit(const Ref<ir::UnaryInst>& unaryInst) {
     visitUnhandled(unaryInst);
+  }
+  virtual void visit(const Ref<ir::GepInst>& idxInst) {
+    visitUnhandled(idxInst);
   }
   virtual void visit(const Ref<ir::MoveInst>& mvInst) {
     visitUnhandled(mvInst);
@@ -51,6 +56,9 @@ private:
   virtual void visit(const Ref<ir::RetInst>& retInst) {
     visitUnhandled(retInst);
   }
+  virtual void visit(const Ref<rv::RARSMacroCallInst>& macroInst) {
+    visitUnhandled(macroInst);
+  }
   virtual void visitUnhandled(const Ref<ir::Instruction>& /* inst */) {
   }
 
@@ -60,7 +68,7 @@ protected:
   ir::IRFuncIter m_CurrentFuncIter;
 
 private:
-  ir::Module* m_CurrentModule{nullptr};
+  ir::Module* m_CurrentModule{ nullptr };
 };
 
 struct RemoveInstructionMDTag : ir::MDTag {

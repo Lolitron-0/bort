@@ -1,8 +1,9 @@
 int main() {
-  int x[10];
+  // "hello";
+  int x[3] = { 3, 2, 1 };
 
   int i = 0;
-  while (i < 10) {
+  while (i < 3) {
     x[i] = i;
     i    = i + 1;
   }

@@ -16,6 +16,7 @@
 #include "bort/Basic/Assert.hpp"
 #include <boost/range/adaptors.hpp>
 #include <cul/BiMap.hpp>
+#include <fmt/color.h>
 
 namespace bort::ast {
 
@@ -23,6 +24,8 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
   return selector.Case(NodeKind::NumberExpr, "NumberExpr")
       .Case(NodeKind::VariableExpr, "VariableExpr")
       .Case(NodeKind::StringExpr, "StringExpr")
+      .Case(NodeKind::InitializerList, "InitializerList")
+      .Case(NodeKind::IndexationExpr, "IndexationExpr")
       .Case(NodeKind::CharExpr, "CharExpr")
       .Case(NodeKind::BinOpExpr, "BinOpExpr")
       .Case(NodeKind::UnaryOpExpr, "UnaryOpExpr")
@@ -41,7 +44,7 @@ inline auto depthPrefix(int depth) -> std::string {
 
   std::string res{};
   for (int i{ 0 }; i < depth; i++) {
-    res += "|  ";
+    res += "| ";
   }
   return res;
 }
@@ -51,7 +54,8 @@ static auto red(std::string_view str) -> std::string {
 }
 
 void ASTPrinter::printDepthPrefix() const {
-  fmt::print(stderr, fmt::fg(fmt::color::dark_gray), "{}",
+  fmt::print(stderr,
+             fmt::fg(fmt::color::dark_gray) | fmt::emphasis::faint, "{}",
              depthPrefix(m_Depth));
 }
 
@@ -102,6 +106,20 @@ void ASTPrinter::visit(const Ref<VarDecl>& varDeclNode) {
   if (varDeclNode->hasInitializer()) {
     dump("Initializer", varDeclNode->getInitializer());
   }
+}
+
+void ASTPrinter::visit(const Ref<InitializerList>& initializerListNode) {
+  dumpExprInfo(initializerListNode);
+  for (auto&& el :
+       initializerListNode->getValues() | boost::adaptors::indexed()) {
+    dump(fmt::format("Value #{}", el.index()), el.value());
+  }
+}
+
+void ASTPrinter::visit(const Ref<IndexationExpr>& indexationExpr) {
+  dumpExprInfo(indexationExpr);
+  dump("Array", indexationExpr->getArray());
+  dump("Index", indexationExpr->getIndex());
 }
 
 void ASTPrinter::visit(const Ref<FunctionDecl>& functionDeclNode) {

@@ -8,7 +8,7 @@
 namespace bort::ir {
 class StoreInst final : public ir::Instruction {
 public:
-  StoreInst(ValueRef source, ir::ValueRef loc, Ref<IntConstant> bytes)
+  StoreInst(ValueRef source, ir::ValueRef loc, Ref<IntegralConstant> bytes)
       : Instruction{ 3 } {
     m_Operands[s_SrcIdx] = std::move(source);
     setLoc(std::move(loc));
@@ -31,10 +31,10 @@ public:
     return getOperand(s_SrcIdx);
   }
 
-  [[nodiscard]] auto getBytes() const -> Ref<IntConstant> {
-    bort_assert(isaRef<IntConstant>(getOperand(s_BytesIdx)),
+  [[nodiscard]] auto getBytes() const -> Ref<IntegralConstant> {
+    bort_assert(isaRef<IntegralConstant>(getOperand(s_BytesIdx)),
                 "Store size should be constant");
-    return dynCastRef<IntConstant>(getOperand(s_BytesIdx));
+    return dynCastRef<IntegralConstant>(getOperand(s_BytesIdx));
   }
 
 private:

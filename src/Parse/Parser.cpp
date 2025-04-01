@@ -6,6 +6,8 @@
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
+#include "bort/AST/IndexationExpr.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -61,13 +63,22 @@ auto Parser::buildAST() -> Ref<ast::ASTRoot> {
 }
 
 auto Parser::parseNumberExpr() -> Unique<ast::NumberExpr> {
-  bort_assert(curTok().is(TokenKind::NumericLiteral),
-              "Expected numeric literal");
-  auto result{ curTok().getLiteralValue<ast::NumberExpr::ValueT>() };
+  bort_assert(
+      curTok().isOneOf(TokenKind::NumericLiteral, TokenKind::CharLiteral),
+      "Expected literal");
+  ast::NumberExpr::ValueT value{};
+  TypeRef type;
+  if (curTok().is(TokenKind::NumericLiteral)) {
+    value = curTok().getLiteralValue<int>();
+    type  = IntType::get();
+  } else {
+    value = curTok().getLiteralValue<char>(); // NOLINT
+    type  = CharType::get();
+  }
   auto token{ curTok() };
   consumeToken();
   return m_ASTRoot->registerNode<ast::NumberExpr>(
-      ast::ASTDebugInfo{ token }, result);
+      ast::ASTDebugInfo{ token }, value, std::move(type));
 }
 
 auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
@@ -153,7 +164,8 @@ auto Parser::parseSizeofExpr() -> Unique<ast::ExpressionNode> {
     consumeToken(); // rparen
     return m_ASTRoot->registerNode<ast::NumberExpr>(
         ast::ASTDebugInfo{ sizeofTok },
-        static_cast<ast::NumberExpr::ValueT>(type->getSizeof()));
+        static_cast<ast::NumberExpr::ValueT>(type->getSizeof()),
+        IntType::get());
   }
 
   auto expr{ parseParenExpr() };
@@ -323,7 +335,11 @@ auto Parser::parseVarDecl(TypeRef type,
 
   if (curTok().is(TokenKind::Assign)) {
     consumeToken();
-    node->setInitializer(parseExpression());
+    if (curTok().is(TokenKind::LBrace)) {
+      node->setInitializer(parseInitializerList());
+    } else {
+      node->setInitializer(parseExpression());
+    }
   }
 
   if (curTok().isNot(TokenKind::Semicolon)) {
@@ -337,6 +353,37 @@ auto Parser::parseVarDecl(TypeRef type,
     return invalidNode();
   }
   return node;
+}
+
+auto Parser::parseInitializerList() -> Unique<ast::InitializerList> {
+  bort_assert(curTok().is(TokenKind::LBrace), "Expected '{'");
+  auto startTok{ curTok() };
+  consumeToken();
+  std::vector<Ref<ast::NumberExpr>> values;
+
+  while (curTok().isNot(TokenKind::RBrace)) {
+    Ref<ast::NumberExpr> value{ parseNumberExpr() };
+    values.emplace_back(std::move(value));
+    if (curTok().is(TokenKind::RBrace)) {
+      continue;
+    }
+
+    if (curTok().isNot(TokenKind::Comma)) {
+      Diagnostic::emitError(curTok(), "Expected ','");
+      return invalidNode();
+    }
+
+    consumeToken(); // comma
+  }
+  consumeToken(); // rbrace
+
+  if (values.empty()) {
+    Diagnostic::emitError(startTok, "Initializer list can't be empty");
+    return invalidNode();
+  }
+
+  return m_ASTRoot->registerNode<ast::InitializerList>(
+      ast::ASTDebugInfo{ startTok }, std::move(values));
 }
 
 auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
@@ -423,47 +470,46 @@ auto Parser::parseIndexationExpr(const Token& nameTok)
   bort_assert(curTok().is(TokenKind::LBracket), "Expected '['");
   auto indexationStartTok{ curTok() };
   consumeToken();
-  auto expr{ parseExpression() };
+  auto idxExpr{ parseExpression() };
   if (curTok().isNot(TokenKind::RBracket)) {
     Diagnostic::emitError(curTok(), "Expected ']'");
     return invalidNode();
   }
   consumeToken();
 
-  // now we need to create node for *(&nameTok + sizeof(*&nameTok) * expr)
-  // step by step
-
   auto varExpr{ m_ASTRoot->registerNode<ast::VariableExpr>(
       ast::ASTDebugInfo{ nameTok },
       makeRef<Variable>(std::string{ nameTok.getStringView() })) };
 
-  Ref<ast::UnaryOpExpr> varAddr{
-    m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-        ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
-        TokenKind::Amp)
-  };
+  // Ref<ast::UnaryOpExpr> varAddr{
+  //   m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+  //       ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
+  //       TokenKind::Amp)
+  // };
+  //
+  // auto varAddrDeref{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+  //     ast::ASTDebugInfo{ indexationStartTok }, varAddr,
+  //     TokenKind::Star) };
+  //
+  // auto sizeofExpr{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+  //     ast::ASTDebugInfo{ indexationStartTok }, std::move(varAddrDeref),
+  //     TokenKind::KW_sizeof) };
+  //
+  // auto indexMultiplication{ m_ASTRoot->registerNode<ast::BinOpExpr>(
+  //     ast::ASTDebugInfo{ indexationStartTok }, std::move(sizeofExpr),
+  //     std::move(expr), TokenKind::Star) };
+  //
+  // auto pointerAddition{ m_ASTRoot->registerNode<ast::BinOpExpr>(
+  //     ast::ASTDebugInfo{ indexationStartTok }, varAddr,
+  //     std::move(indexMultiplication), TokenKind::Plus) };
+  //
+  // auto dereference{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
+  //     ast::ASTDebugInfo{ indexationStartTok },
+  //     std::move(pointerAddition), TokenKind::Star) };
 
-  auto varAddrDeref{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-      ast::ASTDebugInfo{ indexationStartTok }, varAddr,
-      TokenKind::Star) };
-
-  auto sizeofExpr{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-      ast::ASTDebugInfo{ indexationStartTok }, std::move(varAddrDeref),
-      TokenKind::KW_sizeof) };
-
-  auto indexMultiplication{ m_ASTRoot->registerNode<ast::BinOpExpr>(
-      ast::ASTDebugInfo{ indexationStartTok }, std::move(sizeofExpr),
-      std::move(expr), TokenKind::Star) };
-
-  auto pointerAddition{ m_ASTRoot->registerNode<ast::BinOpExpr>(
-      ast::ASTDebugInfo{ indexationStartTok }, varAddr,
-      std::move(indexMultiplication), TokenKind::Plus) };
-
-  auto dereference{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-      ast::ASTDebugInfo{ indexationStartTok }, std::move(pointerAddition),
-      TokenKind::Star) };
-
-  return std::move(dereference);
+  return m_ASTRoot->registerNode<ast::IndexationExpr>(
+      ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
+      std::move(idxExpr));
 }
 
 auto Parser::parseStatement() -> Ref<ast::Statement> {

@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
@@ -20,6 +21,12 @@ public:
   }
 
   void insertBefore(InstIter pos, Ref<Instruction> instruction) {
+    m_Instructions.insert(pos, std::move(instruction));
+  }
+
+  void insertAfter(InstIter pos, Ref<Instruction> instruction) {
+    bort_assert(pos != m_Instructions.end(), "Invalid position");
+    pos++;
     m_Instructions.insert(pos, std::move(instruction));
   }
 

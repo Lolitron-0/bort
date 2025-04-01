@@ -1,12 +1,14 @@
 #pragma once
 #include "bort/CLI/CLIOptions.hpp"
+#include "bort/Codegen/Instinsics.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
-#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
+#include "bort/IR/GepInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Module.hpp"
@@ -17,9 +19,9 @@
 #include "bort/IR/Value.hpp"
 #include <functional>
 #include <map>
-#include <set>
 #include <unordered_set>
 #include <utility>
+#include <vector>
 
 namespace bort::codegen::rv {
 
@@ -82,6 +84,12 @@ struct RVInstInfo final : public ir::Metadata {
   std::string InstName;
 };
 
+struct RARSMacroDefinitions final : public ir::Metadata {
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  std::vector<std::string> Macros;
+};
+
 struct RVBranchInfo final : public ir::Metadata {
   explicit RVBranchInfo(bool isSingleOp)
       : IsRhsZero{ isSingleOp } {
@@ -129,6 +137,7 @@ private:
   void processInst();
   void visit(const Ref<ir::OpInst>& opInst) override;
   void visit(const Ref<ir::UnaryInst>& unaryInst) override;
+  void visit(const Ref<ir::GepInst>& gepInst) override;
   void visit(const Ref<ir::BranchInst>& brInst) override;
   void visit(const Ref<ir::CallInst>& callInst) override;
   void visit(const Ref<ir::RetInst>& retInst) override;
@@ -159,6 +168,9 @@ private:
   });
   void evaluateLocAddress(const Ref<ValueLoc>& loc,
                           const RVMachineRegisterRef& dest);
+  auto createMacroCall(intrinsics::MacroID id,
+                       std::vector<ir::ValueRef> args)
+      -> Ref<RARSMacroCallInst>;
 
 private:
   ir::Module& m_Module;
@@ -170,6 +182,7 @@ private:
   std::unordered_map<Ref<ir::Operand>,
                      std::unordered_set<ir::BasicBlock*>>
       m_OperandUsages;
+  std::unordered_set<intrinsics::MacroID> m_UsedMacros;
 };
 
 } // namespace bort::codegen::rv

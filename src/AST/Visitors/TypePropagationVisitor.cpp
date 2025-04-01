@@ -174,4 +174,20 @@ void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
   unaryOpNode->setType(std::move(type));
 }
 
+void TypePropagationVisitor::visit(
+    const Ref<IndexationExpr>& indexationNode) {
+  StructureAwareASTVisitor::visit(indexationNode);
+
+  auto arrayTy{ dynCastRef<ArrayType>(
+      indexationNode->getArray()->getType()) };
+  if (!arrayTy) {
+    Diagnostic::emitError(
+        getASTRoot()->getNodeDebugInfo(indexationNode->getArray()).token,
+        "Expression should have array type, got {} instead",
+        indexationNode->getArray()->getType()->toString());
+    throw FatalSemanticError();
+  }
+
+  indexationNode->setType(arrayTy->getBaseType());
+}
 } // namespace bort::ast

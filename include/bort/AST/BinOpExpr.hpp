@@ -20,7 +20,8 @@ public:
   }
   [[nodiscard]] constexpr auto isLogical() const -> bool {
     return m_Op == TokenKind::Less || m_Op == TokenKind::Greater ||
-           m_Op == TokenKind::Equals;
+           m_Op == TokenKind::LessEqual ||
+           m_Op == TokenKind::GreaterEqual || m_Op == TokenKind::Equals;
   }
 
   void setLHS(Ref<ExpressionNode> lhs);

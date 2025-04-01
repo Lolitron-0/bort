@@ -4,6 +4,8 @@
 #include "bort/AST/Block.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/IndexationExpr.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 
@@ -85,5 +87,17 @@ void StructureAwareASTVisitor::visit(const Ref<VarDecl>& varDeclNode) {
   if (varDeclNode->hasInitializer()) {
     genericVisit(varDeclNode->getInitializer());
   }
+}
+
+void StructureAwareASTVisitor::visit(
+    const Ref<InitializerList>& initializerListNode) {
+  for (auto&& value : initializerListNode->getValues()) {
+    genericVisit(value);
+  }
+}
+void StructureAwareASTVisitor::visit(
+    const Ref<IndexationExpr>& indexationExpr) {
+  genericVisit(indexationExpr->getArray());
+  genericVisit(indexationExpr->getIndex());
 }
 } // namespace bort::ast

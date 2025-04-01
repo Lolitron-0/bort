@@ -2,6 +2,7 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 #include <algorithm>
@@ -62,8 +63,12 @@ private:
 using BBIter     = std::list<BasicBlock>::iterator;
 using IRFuncIter = std::list<IRFunction>::iterator;
 
-class Module {
+class Module : public Value {
 public:
+  Module()
+      : Value{ VoidType::get(), "module" } {
+  }
+
   auto addInstruction(Ref<Instruction> instruction) -> ValueRef {
     auto& lastBB{ m_Functions.back().back() };
     lastBB.addInstruction(std::move(instruction));
@@ -82,6 +87,16 @@ public:
         }
       }
     }
+  }
+
+  auto addGlobal(Ref<GlobalValue> global) -> Ref<GlobalValue> {
+    m_Globals.push_back(std::move(global));
+    return m_Globals.back();
+  }
+
+  [[nodiscard]] auto getGlobals() const
+      -> const std::vector<Ref<GlobalValue>>& {
+    return m_Globals;
   }
 
   void addBasicBlock(std::string name) {
@@ -124,6 +139,7 @@ public:
 
 private:
   std::list<IRFunction> m_Functions;
+  std::vector<Ref<GlobalValue>> m_Globals;
 };
 
 struct TraversalContext {

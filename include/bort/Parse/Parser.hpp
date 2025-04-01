@@ -4,6 +4,7 @@
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
@@ -40,7 +41,7 @@ public:
 
   // for docs
 protected:
-  /// number -> {integer}
+  /// number -> [0-9]+ | charLiteral
   auto parseNumberExpr() -> Unique<ast::NumberExpr>;
   /// parenExpr \n
   /// -> '(' expression ')' \n
@@ -82,6 +83,8 @@ protected:
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
   auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
+  /// initializerList -> '{' number, ... '}'
+  auto parseInitializerList() -> Unique<ast::InitializerList>;
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,
                          const Token& nameTok) -> Ref<ast::FunctionDecl>;

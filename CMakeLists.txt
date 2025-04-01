@@ -33,7 +33,9 @@ set(SOURCES
     src/AST/Visitors/NodeSubstitutionVisitor.cpp
     src/AST/Visitors/ASTPrinter.cpp
     src/IR/MiddleEndInstance.cpp
+    src/IR/Module.cpp
     src/IR/Value.cpp
+    src/IR/GlobalValue.cpp
     src/IR/VariableUse.cpp
     src/IR/Instruction.cpp
     src/IR/IRCodegen.cpp
@@ -41,6 +43,7 @@ set(SOURCES
     src/IR/BasicBlock.cpp
     src/Codegen/RISCVCodegen.cpp
     src/Codegen/RISCVPrinter.cpp
+    src/Codegen/Intrinsics.cpp
     src/Codegen/InstructionVisitor.cpp
     src/Codegen/Utils.cpp
     src/Codegen/ValueLoc.cpp)

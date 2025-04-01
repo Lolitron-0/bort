@@ -8,7 +8,7 @@ class MiddleEndInstance {
 public:
   explicit MiddleEndInstance(CLIOptions cliOptions,
                              Ref<ast::ASTRoot> ast);
-  auto run() -> ir::Module;
+  auto run() -> ir::Module&&;
 
 private:
   CLIOptions m_CLIOptions;

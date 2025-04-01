@@ -56,7 +56,7 @@ auto main(int argc, char* argv[]) -> int {
   }
 
   bort::MiddleEndInstance middleEnd{ cliOptions, std::move(ast) };
-  auto IR{ middleEnd.run() };
+  auto&& IR{ middleEnd.run() };
 
   return 0;
 }

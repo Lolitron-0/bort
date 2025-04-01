@@ -1,4 +1,6 @@
 #pragma once
+#include "bort/AST/IndexationExpr.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include <concepts>
@@ -20,6 +22,8 @@ private:
   void visit(const Ref<StringExpr>& strNode) override;
   void visit(const Ref<CharExpr>& charNode) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
+  void visit(const Ref<InitializerList>& initializerListNode) override;
+  void visit(const Ref<IndexationExpr>& indexationExpr) override;
   void visit(const Ref<FunctionDecl>& functionDeclNode) override;
   void visit(const Ref<ExpressionStmt>& expressionStmtNode) override;
   void visit(const Ref<BinOpExpr>& binopNode) override;

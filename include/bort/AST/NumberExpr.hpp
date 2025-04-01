@@ -3,14 +3,15 @@
 
 namespace bort::ast {
 
+/// Generic node for both char and int constants
 class NumberExpr final : public ExpressionNode {
 public:
-  // TODO typed constants
-  using ValueT = int;
+  // both will fit
+  using ValueT = int32_t;
 
 private:
-  explicit NumberExpr(ValueT value)
-      : ExpressionNode{ NodeKind::NumberExpr, IntType::get() },
+  explicit NumberExpr(ValueT value, TypeRef type)
+      : ExpressionNode{ NodeKind::NumberExpr, std::move(type) },
         m_Value{ value } {
   }
 

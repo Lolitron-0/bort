@@ -17,6 +17,8 @@ void dump(int depth, std::string_view name, T value);
 /// Parser
 enum class NodeKind {
   NumberExpr,
+  InitializerList,
+  IndexationExpr,
   VariableExpr,
   StringExpr,
   CharExpr,

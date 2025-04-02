@@ -52,12 +52,10 @@ public:
   }
 
   template <typename V>
+    requires std::is_same_v<std::remove_cvref_t<V>,
+                            std::remove_cvref_t<Visitor>>
   static auto dispatch(VisitDecorator<Base> value,
                        V&& visitor) -> VisitRetT {
-    static_assert(std::is_same_v<std::remove_cvref_t<V>,
-                                 std::remove_cvref_t<Visitor>>,
-                  "dispatch accepts visitor of same class as declared in "
-                  "class template argument");
     return [&]<size_t... Is>(std::index_sequence<Is...>) {
       using VisitRetSafeT = std::conditional_t<isVoid, void*, VisitRetT>;
       std::optional<VisitRetSafeT> res;

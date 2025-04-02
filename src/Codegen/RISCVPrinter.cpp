@@ -82,6 +82,10 @@ void Printer::visit(const Ref<ir::OpInst>& opInst) {
 }
 
 void Printer::visit(const Ref<ir::UnaryInst>& unaryInst) {
+  auto* II{ unaryInst->getMDNode<RVInstInfo>() };
+  fmt::println(m_Stream, "{} {}, {}", II->InstName,
+               formatMachineValue(unaryInst->getDestination()),
+               formatMachineValue(unaryInst->getSrc()));
 }
 
 void Printer::visit(const Ref<ir::BranchInst>& brInst) {

@@ -1,6 +1,7 @@
 #pragma once
 #include "bort/Basic/Assert.hpp"
 #include "bort/Codegen/RARSMacroCallInst.hpp"
+#include "bort/IR/AllocaInst.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
@@ -23,12 +24,6 @@ public:
 
   virtual void run(ir::Module& module);
 
-protected:
-  void genericVisit(const Ref<ir::Instruction>& inst);
-
-  [[nodiscard]] auto getCurrentModule() const -> ir::Module*;
-
-private:
   virtual void visit(const Ref<ir::OpInst>& opInst) {
     visitUnhandled(opInst);
   }
@@ -56,11 +51,19 @@ private:
   virtual void visit(const Ref<ir::RetInst>& retInst) {
     visitUnhandled(retInst);
   }
+  virtual void visit(const Ref<ir::AllocaInst>& allocaInst) {
+    visitUnhandled(allocaInst);
+  }
   virtual void visit(const Ref<rv::RARSMacroCallInst>& macroInst) {
     visitUnhandled(macroInst);
   }
   virtual void visitUnhandled(const Ref<ir::Instruction>& /* inst */) {
   }
+
+protected:
+  void genericVisit(const Ref<ir::Instruction>& inst);
+
+  [[nodiscard]] auto getCurrentModule() const -> ir::Module*;
 
 protected:
   ir::InstIter m_CurrentInstIter;

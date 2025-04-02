@@ -91,6 +91,10 @@ private:
     if (unaryInst->getOp() == TokenKind::Amp) {
       unaryInst->getSrc()->addMDNode(MemoryDependencyMDTag{});
     }
+
+    if (auto srcConst{ dynCastRef<Constant>(unaryInst->getSrc()) }) {
+      unaryInst->setSrc(moveToNewReg(srcConst));
+    }
   }
 
   void visit(const Ref<GepInst>& gepInst) override {
@@ -203,6 +207,19 @@ private:
       info.InstName += "i";
     }
     opInst->addMDNode(info);
+  }
+
+  void visit(const Ref<UnaryInst>& unaryInst) override {
+    static constexpr cul::BiMap s_UnaryInstNames{ [](auto&& selector) {
+      return selector.Case(TokenKind::Minus, "neg");
+    } };
+
+    bort_assert(s_UnaryInstNames.Find(unaryInst->getOp()).has_value(),
+                "Unknown unary name");
+
+    RVInstInfo info{ std::string{
+        s_UnaryInstNames.Find(unaryInst->getOp()).value() } };
+    unaryInst->addMDNode(info);
   }
 
   void visit(const Ref<ir::BranchInst>& brInst) override {
@@ -556,8 +573,8 @@ void Generator::generate() {
     }
   }
 
-  InstructionChoicePass().run(m_Module);
   InstructionRemover().run(m_Module);
+  InstructionChoicePass().run(m_Module);
 
   auto* macros{ m_Module.getMDNode<RARSMacroDefinitions>() };
   for (auto&& macroID : m_UsedMacros) {

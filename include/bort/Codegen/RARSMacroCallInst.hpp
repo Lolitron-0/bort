@@ -1,5 +1,6 @@
 #pragma once
-#include "bort/Codegen/Instinsics.hpp"
+#include "bort/Basic/Assert.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 
@@ -7,11 +8,14 @@ namespace bort::codegen::rv {
 
 class RARSMacroCallInst final : public ir::Instruction {
 public:
+  template <size_t N>
   RARSMacroCallInst(intrinsics::MacroID macro,
-                    const std::vector<ir::ValueRef>& args)
+                    std::array<ir::ValueRef, N> args)
       : Instruction{ args.size() },
         m_NumArgs{ args.size() },
         m_MacroID{ macro } {
+    bort_assert(intrinsics::checkSignature(macro, args),
+                "Macro with invalid signature instantiated");
     for (size_t i{ 0 }; i < args.size(); i++) {
       setArg(i, args[i]);
     }

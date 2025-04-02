@@ -83,7 +83,7 @@ protected:
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
   auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
-  /// initializerList -> '{' number, ... '}'
+  /// initializerList -> '{' number, ... '}' | stringLiteral
   auto parseInitializerList() -> Unique<ast::InitializerList>;
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,

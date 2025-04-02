@@ -1,7 +1,7 @@
 #pragma once
 #include "bort/CLI/CLIOptions.hpp"
-#include "bort/Codegen/Instinsics.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
 #include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
@@ -9,6 +9,7 @@
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/GepInst.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Module.hpp"
@@ -19,6 +20,7 @@
 #include "bort/IR/Value.hpp"
 #include <functional>
 #include <map>
+#include <tuple>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -145,6 +147,8 @@ private:
   void visit(const Ref<ir::LoadInst>& loadInst) override;
   void visit(const Ref<ir::StoreInst>& storeInst) override;
 
+  void processGlobalArrayAssignment(const Ref<ir::MoveInst>& inst,
+                                    const Ref<ir::GlobalArray>& GA);
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
       -> std::optional<RVMachineRegisterRef>;
   auto chooseReadReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
@@ -168,9 +172,13 @@ private:
   });
   void evaluateLocAddress(const Ref<ValueLoc>& loc,
                           const RVMachineRegisterRef& dest);
+  template <std::convertible_to<ir::ValueRef>... Ts>
   auto createMacroCall(intrinsics::MacroID id,
-                       std::vector<ir::ValueRef> args)
-      -> Ref<RARSMacroCallInst>;
+                       Ts... args) -> Ref<RARSMacroCallInst> {
+    m_UsedMacros.insert(id);
+    return makeRef<RARSMacroCallInst>(
+        id, std::array<ir::ValueRef, sizeof...(Ts)>{ args... });
+  }
 
 private:
   ir::Module& m_Module;

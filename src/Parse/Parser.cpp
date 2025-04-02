@@ -137,6 +137,7 @@ auto Parser::parseValueExpression()
   case TokenKind::LParen:
     return parseParenExpr();
   case TokenKind::NumericLiteral:
+  case TokenKind::CharLiteral:
     return parseNumberExpr();
   case TokenKind::KW_sizeof:
     return parseSizeofExpr();
@@ -335,7 +336,7 @@ auto Parser::parseVarDecl(TypeRef type,
 
   if (curTok().is(TokenKind::Assign)) {
     consumeToken();
-    if (curTok().is(TokenKind::LBrace)) {
+    if (curTok().isOneOf(TokenKind::LBrace, TokenKind::StringLiteral)) {
       node->setInitializer(parseInitializerList());
     } else {
       node->setInitializer(parseExpression());
@@ -356,26 +357,39 @@ auto Parser::parseVarDecl(TypeRef type,
 }
 
 auto Parser::parseInitializerList() -> Unique<ast::InitializerList> {
-  bort_assert(curTok().is(TokenKind::LBrace), "Expected '{'");
+  bort_assert(
+      curTok().isOneOf(TokenKind::LBrace, TokenKind::StringLiteral),
+      "Expected '{' or string literal");
+  bool parseInitList{ curTok().is(TokenKind::LBrace) };
   auto startTok{ curTok() };
   consumeToken();
   std::vector<Ref<ast::NumberExpr>> values;
 
-  while (curTok().isNot(TokenKind::RBrace)) {
-    Ref<ast::NumberExpr> value{ parseNumberExpr() };
-    values.emplace_back(std::move(value));
-    if (curTok().is(TokenKind::RBrace)) {
-      continue;
-    }
+  if (parseInitList) {
+    while (curTok().isNot(TokenKind::RBrace)) {
+      Ref<ast::NumberExpr> value{ parseNumberExpr() };
+      values.emplace_back(std::move(value));
+      if (curTok().is(TokenKind::RBrace)) {
+        continue;
+      }
 
-    if (curTok().isNot(TokenKind::Comma)) {
-      Diagnostic::emitError(curTok(), "Expected ','");
-      return invalidNode();
-    }
+      if (curTok().isNot(TokenKind::Comma)) {
+        Diagnostic::emitError(curTok(), "Expected ','");
+        return invalidNode();
+      }
 
-    consumeToken(); // comma
+      consumeToken(); // comma
+    }
+    consumeToken(); // rbrace
+  } else {
+    // it's string
+    for (char c : startTok.getLiteralValue<std::string>()) {
+      values.emplace_back(m_ASTRoot->registerNode<ast::NumberExpr>(
+          ast::ASTDebugInfo{ startTok }, c, CharType::get()));
+    }
+    values.emplace_back(m_ASTRoot->registerNode<ast::NumberExpr>(
+        ast::ASTDebugInfo{ startTok }, 0, CharType::get()));
   }
-  consumeToken(); // rbrace
 
   if (values.empty()) {
     Diagnostic::emitError(startTok, "Initializer list can't be empty");

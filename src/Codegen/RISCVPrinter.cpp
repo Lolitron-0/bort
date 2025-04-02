@@ -1,7 +1,7 @@
 #include "bort/Codegen/RISCVPrinter.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
-#include "bort/Codegen/Instinsics.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/BranchInst.hpp"

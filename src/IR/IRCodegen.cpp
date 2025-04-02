@@ -198,21 +198,6 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   }
 
   auto init{ genericVisit(varDeclNode->getInitializer()) };
-
-  if (auto GA{ dynCastRef<GlobalArray>(init) }) {
-    auto [arrPtrTy, arrPtr]{ genArrayPtr(newVar) };
-    // we could use an immediate store here, but temporary register will
-    // help in register allocation
-    auto valueReg{ Register::getOrCreate(varSymbol->getType()) };
-    for (auto&& num : GA->getValues()) {
-      addInstruction(makeRef<MoveInst>(valueReg, num));
-      addInstruction(makeRef<StoreInst>(valueReg, arrPtr, elementSize));
-      addInstruction(
-          makeRef<OpInst>(TokenKind::Plus, arrPtr, arrPtr, elementSize));
-    }
-    return newVar;
-  }
-
   auto move{ addInstruction(makeRef<MoveInst>(newVar, init)) };
   return move->getDestination();
 }

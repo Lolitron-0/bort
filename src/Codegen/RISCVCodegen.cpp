@@ -1,17 +1,18 @@
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
-#include "bort/Codegen/Instinsics.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
 #include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
-#include "bort/IR/GlobalValue.hpp"
+#include "bort/IR/GepInst.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
@@ -26,6 +27,7 @@
 #include "bort/Lex/Token.hpp"
 #include "cul/BiMap.hpp"
 #include <algorithm>
+#include <boost/range/adaptor/indexed.hpp>
 #include <cul/cul.hpp>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
@@ -61,7 +63,12 @@ struct MemoryDependencyMDTag : MDTag {
   }
 };
 
-/// Removes immediate operands from certain instructions
+static void markForRemoval(const Ref<ir::Instruction>& inst) {
+  inst->addMDNode(RemoveInstructionMDTag{});
+}
+
+/// Operates on IR only. Removes immediate operands from certain
+/// instructions, desugars some constructions
 class PreprocessPass : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
@@ -83,6 +90,53 @@ private:
   void visit(const Ref<ir::UnaryInst>& unaryInst) override {
     if (unaryInst->getOp() == TokenKind::Amp) {
       unaryInst->getSrc()->addMDNode(MemoryDependencyMDTag{});
+    }
+  }
+
+  void visit(const Ref<GepInst>& gepInst) override {
+    if (auto indexConstant{ dynCastRef<Constant>(gepInst->getIndex()) }) {
+      gepInst->setIndex(moveToNewReg(indexConstant));
+    }
+  }
+
+  /// %arrPtr = addr %arr
+  /// %valueReg = GA[0]
+  /// store %valueReg, %arrPtr
+  /// %arrPtr = add %arrPtr, %elementSize
+  /// ...
+  void processGlobalArrayAssignment(const Ref<ir::MoveInst>& inst,
+                                    const Ref<ir::GlobalArray>& GA) {
+    auto arrTy{ dynCastRef<ArrayType>(GA->getType()) };
+    auto arrPtrTy{ PointerType::get(arrTy->getBaseType()) };
+    auto arrPtr{ Register::getOrCreate(arrPtrTy) };
+    auto elementSize{ IntegralConstant::getInt(
+        arrTy->getBaseType()->getSizeof()) };
+    auto valueReg{ Register::getOrCreate(arrPtrTy->getPointee()) };
+
+    auto lastIter{ m_CurrentInstIter };
+    auto addInstruction{ [&](auto&& inst) {
+      m_CurrentBBIter->insertAfter(lastIter, inst);
+      lastIter++;
+    } };
+
+    addInstruction(makeRef<UnaryInst>(TokenKind::Amp, arrPtr,
+                                      inst->getDestination()));
+    for (auto&& el : GA->getValues() | boost::adaptors::indexed()) {
+      addInstruction(makeRef<MoveInst>(valueReg, el.value()));
+      addInstruction(makeRef<StoreInst>(valueReg, arrPtr, elementSize));
+      if (el.index() != GA->getValues().size() - 1) {
+        addInstruction(makeRef<OpInst>(TokenKind::Plus, arrPtr, arrPtr,
+                                       elementSize));
+      }
+    }
+
+    markForRemoval(inst);
+  }
+
+  void visit(const Ref<MoveInst>& moveInst) override {
+    if (auto GA{ dynCastRef<GlobalArray>(moveInst->getSrc()) }) {
+      processGlobalArrayAssignment(moveInst, GA);
+      return;
     }
   }
 
@@ -217,10 +271,6 @@ private:
     callInst->addMDNode(std::move(info));
   }
 };
-
-static void markForRemoval(const Ref<ir::Instruction>& inst) {
-  inst->addMDNode(RemoveInstructionMDTag{});
-}
 
 class StoreSourceOperandMD : public Metadata {
 public:
@@ -469,6 +519,7 @@ static void attachAdditionalCode(IRFunction& func) {
 void Generator::generate() {
   m_Module.addMDNode(RARSMacroDefinitions{});
   PreprocessPass().run(m_Module);
+  InstructionRemover().run(m_Module);
 
   fillOperandUsages();
   assignLocalOperandsOffsets();
@@ -507,6 +558,11 @@ void Generator::generate() {
 
   InstructionChoicePass().run(m_Module);
   InstructionRemover().run(m_Module);
+
+  auto* macros{ m_Module.getMDNode<RARSMacroDefinitions>() };
+  for (auto&& macroID : m_UsedMacros) {
+    macros->Macros.push_back(intrinsics::getDefinition(macroID));
+  }
 }
 
 void Generator::generateLoad(const Ref<ir::Operand>& op,
@@ -652,10 +708,10 @@ void Generator::visit(const Ref<ir::GepInst>& gepInst) {
   // elem.ptr %ptr %index %stride_shift
   m_CurrentBBIter->insertBefore(
       m_CurrentInstIter,
-      createMacroCall(intrinsics::MacroID::ElemPtr,
-                      { gepInst->getBasePtr(), gepInst->getIndex(),
-                        IntegralConstant::getInt(std::log2(
-                            gepInst->getType()->getSizeof())) }));
+      createMacroCall(intrinsics::MacroID::ElemPtr, gepInst->getBasePtr(),
+                      gepInst->getIndex(),
+                      IntegralConstant::getInt(
+                          std::log2(gepInst->getType()->getSizeof()))));
   markForRemoval(gepInst);
 }
 
@@ -831,15 +887,6 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
 void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, inst);
   InstructionVisitorBase::genericVisit(inst);
-}
-
-auto Generator::createMacroCall(intrinsics::MacroID id,
-                                std::vector<ir::ValueRef> args)
-    -> Ref<RARSMacroCallInst> {
-  auto* macros{ m_Module.getMDNode<RARSMacroDefinitions>() };
-  bort_assert_nomsg(macros);
-  macros->Macros.push_back(intrinsics::getDefinition(id));
-  return makeRef<RARSMacroCallInst>(id, std::move(args));
 }
 
 } // namespace bort::codegen::rv

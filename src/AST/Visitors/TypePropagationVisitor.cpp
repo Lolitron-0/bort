@@ -190,4 +190,21 @@ void TypePropagationVisitor::visit(
 
   indexationNode->setType(arrayTy->getBaseType());
 }
+
+void TypePropagationVisitor::visit(const Ref<VarDecl>& varDeclNode) {
+  StructureAwareASTVisitor::visit(varDeclNode);
+  if (varDeclNode->hasInitializer() &&
+      varDeclNode->getInitializer()->getType() !=
+          varDeclNode->getVariable()->getType()) {
+    Diagnostic::emitError(
+        getASTRoot()
+            ->getNodeDebugInfo(varDeclNode->getInitializer())
+            .token,
+        "Invalid initializer type, expected {}, got {} instead",
+        varDeclNode->getVariable()->getType()->toString(),
+        varDeclNode->getInitializer()->getType()->toString());
+    throw FatalSemanticError();
+  }
+}
+
 } // namespace bort::ast

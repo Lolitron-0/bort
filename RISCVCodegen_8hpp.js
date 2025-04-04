@@ -2,6 +2,7 @@ var RISCVCodegen_8hpp =
 [
     [ "bort::codegen::rv::RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue" ],
     [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
+    [ "bort::codegen::rv::RARSMacroDefinitions", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions.html", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions" ],
     [ "bort::codegen::rv::RVBranchInfo", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo" ],
     [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
     [ "bort::codegen::rv::Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],

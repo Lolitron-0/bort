@@ -108,11 +108,12 @@ Inheritance diagram for bort::ast::StructureAwareASTVisitor:</div>
 <div class="dyncontent">
 <div class="center"><img src="classbort_1_1ast_1_1StructureAwareASTVisitor__inherit__graph.png" border="0" usemap="#abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map" alt="Inheritance graph"/></div>
 <map name="abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map" id="abort_1_1ast_1_1StructureAwareASTVisitor_inherit__map">
-<area shape="rect" title="Base class of all SA visitors." alt="" coords="236,55,420,95"/>
+<area shape="rect" title="Base class of all SA visitors." alt="" coords="236,87,420,127"/>
 <area shape="rect" href="classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="493,5,645,31"/>
-<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="468,55,671,95"/>
-<area shape="rect" href="classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="473,119,665,159"/>
-<area shape="rect" href="classbort_1_1ast_1_1ASTVisitorBase.html" title=" " alt="" coords="5,63,188,88"/>
+<area shape="rect" href="classbort_1_1ast_1_1NodeSubstitutionVisitor.html" title=" " alt="" coords="471,55,667,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="468,119,671,159"/>
+<area shape="rect" href="classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="473,183,665,223"/>
+<area shape="rect" href="classbort_1_1ast_1_1ASTVisitorBase.html" title=" " alt="" coords="5,95,188,120"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -151,6 +152,10 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a915940f62009f0b1fb7a9a463608269a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad83e3985da6e13b0beecefea63a180eb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ad83e3985da6e13b0beecefea63a180eb">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1VarDecl.html">VarDecl</a> &gt; &amp;varDeclNode)</td></tr>
 <tr class="separator:ad83e3985da6e13b0beecefea63a180eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0849ae4be1e060178bc9400681ae44ab"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a0849ae4be1e060178bc9400681ae44ab">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1InitializerList.html">InitializerList</a> &gt; &amp;initializerListNode)</td></tr>
+<tr class="separator:a0849ae4be1e060178bc9400681ae44ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0ffaba990824035729d947b10037b3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#ade0ffaba990824035729d947b10037b3">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1IndexationExpr.html">IndexationExpr</a> &gt; &amp;indexationExpr)</td></tr>
+<tr class="separator:ade0ffaba990824035729d947b10037b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f05d34656b254ab8edc0e59d213e944"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8f05d34656b254ab8edc0e59d213e944">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">FunctionDecl</a> &gt; &amp;functionDeclNode)</td></tr>
 <tr class="separator:a8f05d34656b254ab8edc0e59d213e944"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a884532d315fd83e619690d6278daa4fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#a884532d315fd83e619690d6278daa4fb">visit</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionStmt.html">ExpressionStmt</a> &gt; &amp;exprStmtNode)</td></tr>
@@ -272,7 +277,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="abb57e7bfa9332570a4e6c1731107116a" name="abb57e7bfa9332570a4e6c1731107116a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb57e7bfa9332570a4e6c1731107116a">&#9670;&#160;</a></span>visit() <span class="overload">[1/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abb57e7bfa9332570a4e6c1731107116a">&#9670;&#160;</a></span>visit() <span class="overload">[1/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +326,7 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 <a id="a37de0b7cecbd40f718d9133f5c0e2490" name="a37de0b7cecbd40f718d9133f5c0e2490"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37de0b7cecbd40f718d9133f5c0e2490">&#9670;&#160;</a></span>visit() <span class="overload">[2/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a37de0b7cecbd40f718d9133f5c0e2490">&#9670;&#160;</a></span>visit() <span class="overload">[2/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -358,7 +363,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="aeaaa5eeb1ad6ce30399deb21149f2364" name="aeaaa5eeb1ad6ce30399deb21149f2364"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeaaa5eeb1ad6ce30399deb21149f2364">&#9670;&#160;</a></span>visit() <span class="overload">[3/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaaa5eeb1ad6ce30399deb21149f2364">&#9670;&#160;</a></span>visit() <span class="overload">[3/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -397,7 +402,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a915940f62009f0b1fb7a9a463608269a" name="a915940f62009f0b1fb7a9a463608269a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a915940f62009f0b1fb7a9a463608269a">&#9670;&#160;</a></span>visit() <span class="overload">[4/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a915940f62009f0b1fb7a9a463608269a">&#9670;&#160;</a></span>visit() <span class="overload">[4/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -423,7 +428,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a884532d315fd83e619690d6278daa4fb" name="a884532d315fd83e619690d6278daa4fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a884532d315fd83e619690d6278daa4fb">&#9670;&#160;</a></span>visit() <span class="overload">[5/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a884532d315fd83e619690d6278daa4fb">&#9670;&#160;</a></span>visit() <span class="overload">[5/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -460,7 +465,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a98cf2c75d859c128acf2335b6ad3a031" name="a98cf2c75d859c128acf2335b6ad3a031"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98cf2c75d859c128acf2335b6ad3a031">&#9670;&#160;</a></span>visit() <span class="overload">[6/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a98cf2c75d859c128acf2335b6ad3a031">&#9670;&#160;</a></span>visit() <span class="overload">[6/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,7 +504,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a8f05d34656b254ab8edc0e59d213e944" name="a8f05d34656b254ab8edc0e59d213e944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f05d34656b254ab8edc0e59d213e944">&#9670;&#160;</a></span>visit() <span class="overload">[7/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f05d34656b254ab8edc0e59d213e944">&#9670;&#160;</a></span>visit() <span class="overload">[7/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -538,7 +543,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a98510f59e43deab91d8c11f0c5a86c0c" name="a98510f59e43deab91d8c11f0c5a86c0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98510f59e43deab91d8c11f0c5a86c0c">&#9670;&#160;</a></span>visit() <span class="overload">[8/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a98510f59e43deab91d8c11f0c5a86c0c">&#9670;&#160;</a></span>visit() <span class="overload">[8/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -574,8 +579,82 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="ade0ffaba990824035729d947b10037b3" name="ade0ffaba990824035729d947b10037b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade0ffaba990824035729d947b10037b3">&#9670;&#160;</a></span>visit() <span class="overload">[9/17]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::ast::StructureAwareASTVisitor::visit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1IndexationExpr.html">IndexationExpr</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>indexationExpr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1ast_1_1StructureAwareASTVisitor_ade0ffaba990824035729d947b10037b3_cgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1StructureAwareASTVisitor_ade0ffaba990824035729d947b10037b3_cgraph" alt=""/></div>
+<map name="aclassbort_1_1ast_1_1StructureAwareASTVisitor_ade0ffaba990824035729d947b10037b3_cgraph" id="aclassbort_1_1ast_1_1StructureAwareASTVisitor_ade0ffaba990824035729d947b10037b3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,189,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="237,55,421,95"/>
+<area shape="rect" href="namespacebort_1_1ast.html#a8ce8b2fe26c383c125e5fb8564586399" title="Driver for all AST walkers." alt="" coords="482,5,641,31"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="469,55,653,95"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a0849ae4be1e060178bc9400681ae44ab" name="a0849ae4be1e060178bc9400681ae44ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0849ae4be1e060178bc9400681ae44ab">&#9670;&#160;</a></span>visit() <span class="overload">[10/17]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::ast::StructureAwareASTVisitor::visit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1InitializerList.html">InitializerList</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>initializerListNode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1ast_1_1StructureAwareASTVisitor_a0849ae4be1e060178bc9400681ae44ab_cgraph.png" border="0" usemap="#aclassbort_1_1ast_1_1StructureAwareASTVisitor_a0849ae4be1e060178bc9400681ae44ab_cgraph" alt=""/></div>
+<map name="aclassbort_1_1ast_1_1StructureAwareASTVisitor_a0849ae4be1e060178bc9400681ae44ab_cgraph" id="aclassbort_1_1ast_1_1StructureAwareASTVisitor_a0849ae4be1e060178bc9400681ae44ab_cgraph">
+<area shape="rect" title=" " alt="" coords="5,55,189,95"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#addf9e2fefb082561bf134a9086f2baa7" title=" " alt="" coords="237,55,421,95"/>
+<area shape="rect" href="namespacebort_1_1ast.html#a8ce8b2fe26c383c125e5fb8564586399" title="Driver for all AST walkers." alt="" coords="482,5,641,31"/>
+<area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="469,55,653,95"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="adcff1f6356414af9bb45c73f51d3f796" name="adcff1f6356414af9bb45c73f51d3f796"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcff1f6356414af9bb45c73f51d3f796">&#9670;&#160;</a></span>visit() <span class="overload">[9/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adcff1f6356414af9bb45c73f51d3f796">&#9670;&#160;</a></span>visit() <span class="overload">[11/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -601,7 +680,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="ab0077771e3f1ea79661887c09ee08a31" name="ab0077771e3f1ea79661887c09ee08a31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0077771e3f1ea79661887c09ee08a31">&#9670;&#160;</a></span>visit() <span class="overload">[10/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0077771e3f1ea79661887c09ee08a31">&#9670;&#160;</a></span>visit() <span class="overload">[12/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -638,7 +717,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a8d16f5cbf55963493f01aee3e2a83dae" name="a8d16f5cbf55963493f01aee3e2a83dae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d16f5cbf55963493f01aee3e2a83dae">&#9670;&#160;</a></span>visit() <span class="overload">[11/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d16f5cbf55963493f01aee3e2a83dae">&#9670;&#160;</a></span>visit() <span class="overload">[13/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -664,7 +743,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a8a6bd8ac49ea42117a1124969f3e9afe" name="a8a6bd8ac49ea42117a1124969f3e9afe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a6bd8ac49ea42117a1124969f3e9afe">&#9670;&#160;</a></span>visit() <span class="overload">[12/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a6bd8ac49ea42117a1124969f3e9afe">&#9670;&#160;</a></span>visit() <span class="overload">[14/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -701,7 +780,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="ad83e3985da6e13b0beecefea63a180eb" name="ad83e3985da6e13b0beecefea63a180eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad83e3985da6e13b0beecefea63a180eb">&#9670;&#160;</a></span>visit() <span class="overload">[13/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad83e3985da6e13b0beecefea63a180eb">&#9670;&#160;</a></span>visit() <span class="overload">[15/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -740,7 +819,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a0a508884e6bd59b4f7982f3c08f15abf" name="a0a508884e6bd59b4f7982f3c08f15abf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a508884e6bd59b4f7982f3c08f15abf">&#9670;&#160;</a></span>visit() <span class="overload">[14/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a508884e6bd59b4f7982f3c08f15abf">&#9670;&#160;</a></span>visit() <span class="overload">[16/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -768,7 +847,7 @@ Here is the call graph for this function:</div>
 </div>
 </div>
 <a id="a9648ae631419cdb5470962efd4fe866a" name="a9648ae631419cdb5470962efd4fe866a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9648ae631419cdb5470962efd4fe866a">&#9670;&#160;</a></span>visit() <span class="overload">[15/15]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9648ae631419cdb5470962efd4fe866a">&#9670;&#160;</a></span>visit() <span class="overload">[17/17]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

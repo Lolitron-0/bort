@@ -10,6 +10,8 @@ var dir_c9bd21a529a1f984aa10a039564d6131 =
     [ "FunctionCallExpr.hpp", "FunctionCallExpr_8hpp.html", "FunctionCallExpr_8hpp" ],
     [ "FunctionDecl.hpp", "FunctionDecl_8hpp.html", "FunctionDecl_8hpp" ],
     [ "IfStmt.hpp", "IfStmt_8hpp.html", "IfStmt_8hpp" ],
+    [ "IndexationExpr.hpp", "IndexationExpr_8hpp.html", "IndexationExpr_8hpp" ],
+    [ "InitializerList.hpp", "InitializerList_8hpp.html", "InitializerList_8hpp" ],
     [ "NumberExpr.hpp", "NumberExpr_8hpp.html", "NumberExpr_8hpp" ],
     [ "ReturnStmt.hpp", "ReturnStmt_8hpp.html", "ReturnStmt_8hpp" ],
     [ "UnaryOpExpr.hpp", "UnaryOpExpr_8hpp.html", "UnaryOpExpr_8hpp" ],

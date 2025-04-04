@@ -12,13 +12,16 @@ var classbort_1_1Parser =
     [ "parseFunctionDecl", "classbort_1_1Parser.html#a6fbac845679c8fdcd86f3d919b9e57f1", null ],
     [ "parseIdentifierExpr", "classbort_1_1Parser.html#ac4ae3cb710b01b46c39ebe6cb6e5c08b", null ],
     [ "parseIfStatement", "classbort_1_1Parser.html#a00e81996a34f0f7c3be98f922f0a4f1a", null ],
+    [ "parseIndexationExpr", "classbort_1_1Parser.html#a2231810f7e50724e1da5dde4597f591b", null ],
+    [ "parseInitializerList", "classbort_1_1Parser.html#a83e9f2bf0fa4947a9acbbe36e73478cf", null ],
     [ "parseNumberExpr", "classbort_1_1Parser.html#a402efd67a175b34e36c27b8819b65326", null ],
     [ "parseParenExpr", "classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d", null ],
     [ "parseReturnStatement", "classbort_1_1Parser.html#ad7fb31030c6b199bc0e09e329bbb5443", null ],
+    [ "parseSizeofExpr", "classbort_1_1Parser.html#ada526cf89c0f6ff0fd857bf7674da74d", null ],
     [ "parseStatement", "classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc", null ],
     [ "parseUnaryOpExpr", "classbort_1_1Parser.html#ae2fc7ee37fe057be97e7d10ae71623fd", null ],
     [ "parseValueExpression", "classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe", null ],
-    [ "parseVarDecl", "classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8", null ],
+    [ "parseVarDecl", "classbort_1_1Parser.html#a8419a6f153bb793e2c97a69eda374ca0", null ],
     [ "parseWhileStatement", "classbort_1_1Parser.html#a0bde8aca03563a174f195698db8c5cbb", null ],
     [ "tryParseLValue", "classbort_1_1Parser.html#a2b6bb92d88b2d439ea5f33b6c6b3e77e", null ]
 ];

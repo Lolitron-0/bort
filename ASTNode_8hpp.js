@@ -5,6 +5,8 @@ var ASTNode_8hpp =
     [ "bort::ast::ASTRoot", "classbort_1_1ast_1_1ASTRoot.html", "classbort_1_1ast_1_1ASTRoot" ],
     [ "NodeKind", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37a", [
       [ "NumberExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa255fe64b2da3568f43f01d987d77f282", null ],
+      [ "InitializerList", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aad0609287378441d1c239f7d9b4ab3f3a", null ],
+      [ "IndexationExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa03b7ce0cc48b4630c80439389cf07104", null ],
       [ "VariableExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa85d8309062c47e5cd645cd423a98a06f", null ],
       [ "StringExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3", null ],
       [ "CharExpr", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8", null ],

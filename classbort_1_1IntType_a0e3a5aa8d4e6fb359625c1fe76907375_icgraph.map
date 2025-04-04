@@ -1,5 +1,9 @@
 <map id="bort::IntType::get" name="bort::IntType::get">
-<area shape="rect" id="node1" title=" " alt="" coords="276,35,408,60"/>
-<area shape="rect" id="node2" href="$classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d" title=" " alt="" coords="17,5,216,31"/>
-<area shape="rect" id="node3" href="$classbort_1_1ast_1_1TypePropagationVisitor.html#a4e830d9694aeddc47e250521434dfe46" title=" " alt="" coords="5,55,228,95"/>
+<area shape="rect" id="node1" title=" " alt="" coords="505,146,637,171"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1IntegralConstant.html#a86bbdfb5268aac41993c0494e3d9883b" title=" " alt="" coords="255,5,437,45"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1IntegralConstant.html#aa1ecf5e3252f9010c05df12498ed887d" title=" " alt="" coords="5,35,187,75"/>
+<area shape="rect" id="node4" href="$classbort_1_1Parser.html#a7802f7a1279c73ec148811d16d305a7d" title=" " alt="" coords="247,121,445,146"/>
+<area shape="rect" id="node5" href="$classbort_1_1Parser.html#a402efd67a175b34e36c27b8819b65326" title="number &#45;&gt; [0&#45;9]+ | charLiteral" alt="" coords="235,170,457,195"/>
+<area shape="rect" id="node6" href="$classbort_1_1Parser.html#ada526cf89c0f6ff0fd857bf7674da74d" title="sizeofExpr &#45;&gt; &#39;sizeof&#39; (parenExpr | &#39;(&#39; declspec &#39;)&#39; )" alt="" coords="241,219,451,245"/>
+<area shape="rect" id="node7" href="$classbort_1_1ast_1_1TypePropagationVisitor.html#a4e830d9694aeddc47e250521434dfe46" title=" " alt="" coords="235,269,457,309"/>
 </map>

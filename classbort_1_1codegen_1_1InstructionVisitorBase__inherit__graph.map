@@ -1,7 +1,8 @@
 <map id="bort::codegen::InstructionVisitorBase" name="bort::codegen::InstructionVisitorBase">
-<area shape="rect" id="node1" title=" " alt="" coords="5,101,193,141"/>
-<area shape="rect" id="node2" href="$classbort_1_1codegen_1_1rv_1_1Generator.html" title=" " alt="" coords="261,5,399,45"/>
-<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html" title=" " alt="" coords="241,69,419,109"/>
-<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html" title=" " alt="" coords="261,133,399,173"/>
-<area shape="rect" id="node5" href="$classbort_1_1codegen_1_1rv_1_1Printer.html" title=" " alt="" coords="261,197,399,237"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,133,193,173"/>
+<area shape="rect" id="node2" href="$classbort_1_1codegen_1_1InstructionRemover.html" title=" " alt="" coords="241,5,429,45"/>
+<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1rv_1_1Generator.html" title=" " alt="" coords="266,69,405,109"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1rv_1_1InstructionChoicePass.html" title=" " alt="" coords="253,133,417,173"/>
+<area shape="rect" id="node5" href="$classbort_1_1codegen_1_1rv_1_1PreprocessPass.html" title=" " alt="" coords="266,197,405,237"/>
+<area shape="rect" id="node6" href="$classbort_1_1codegen_1_1rv_1_1Printer.html" title=" " alt="" coords="266,261,405,301"/>
 </map>

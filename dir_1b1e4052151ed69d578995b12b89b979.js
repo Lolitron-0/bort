@@ -5,6 +5,8 @@ var dir_1b1e4052151ed69d578995b12b89b979 =
     [ "BranchInst.hpp", "BranchInst_8hpp.html", "BranchInst_8hpp" ],
     [ "CallInst.hpp", "CallInst_8hpp.html", "CallInst_8hpp" ],
     [ "Constant.hpp", "Constant_8hpp.html", "Constant_8hpp" ],
+    [ "GepInst.hpp", "GepInst_8hpp.html", "GepInst_8hpp" ],
+    [ "GlobalValue.hpp", "GlobalValue_8hpp.html", "GlobalValue_8hpp" ],
     [ "Instruction.hpp", "Instruction_8hpp.html", "Instruction_8hpp" ],
     [ "IRCodegen.hpp", "IRCodegen_8hpp.html", "IRCodegen_8hpp" ],
     [ "IRPrinter.hpp", "IRPrinter_8hpp.html", "IRPrinter_8hpp" ],

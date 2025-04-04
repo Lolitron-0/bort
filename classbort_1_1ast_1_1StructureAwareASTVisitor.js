@@ -10,6 +10,8 @@ var classbort_1_1ast_1_1StructureAwareASTVisitor =
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a98cf2c75d859c128acf2335b6ad3a031", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8f05d34656b254ab8edc0e59d213e944", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a98510f59e43deab91d8c11f0c5a86c0c", null ],
+    [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#ade0ffaba990824035729d947b10037b3", null ],
+    [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a0849ae4be1e060178bc9400681ae44ab", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#adcff1f6356414af9bb45c73f51d3f796", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#ab0077771e3f1ea79661887c09ee08a31", null ],
     [ "visit", "classbort_1_1ast_1_1StructureAwareASTVisitor.html#a8d16f5cbf55963493f01aee3e2a83dae", null ],

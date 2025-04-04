@@ -109,12 +109,16 @@ Namespaces</h2></td></tr>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1FrameInfo.html">FrameInfo</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1InstructionRemover.html">InstructionRemover</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1InstructionVisitorBase.html">InstructionVisitorBase</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1MachineRegister.html">MachineRegister</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1RegisterLoc.html">RegisterLoc</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register location.  <a href="classbort_1_1codegen_1_1RegisterLoc.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1codegen_1_1RemoveInstructionMDTag.html">RemoveInstructionMDTag</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1codegen_1_1StackLoc.html">StackLoc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,8 +137,8 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a46a48bcb09c4f0ceba90778c4663abda"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html#a46a48bcb09c4f0ceba90778c4663abda">getUniqueOperands</a> (const <a class="el" href="classbort_1_1ir_1_1IRFunction.html">IRFunction</a> &amp;func) -&gt; std::vector&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a> &gt; &gt;</td></tr>
 <tr class="separator:a46a48bcb09c4f0ceba90778c4663abda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21cd20e9da79608cc9622a5a1e4f4506"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html#a21cd20e9da79608cc9622a5a1e4f4506">getUniqueOperands</a> (const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> &amp;block) -&gt; std::vector&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a> &gt; &gt;</td></tr>
-<tr class="separator:a21cd20e9da79608cc9622a5a1e4f4506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaed716ea2ef4bb001214c21fe5895787"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html#aaed716ea2ef4bb001214c21fe5895787">getUniqueOperands</a> (const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> &amp;block) -&gt; std::unordered_set&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a> &gt; &gt;</td></tr>
+<tr class="separator:aaed716ea2ef4bb001214c21fe5895787"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace3e9d04d32609b66d9ed4205a922480"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480">isJumpInst</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">ir::Instruction</a> &gt; &amp;inst) -&gt; bool</td></tr>
 <tr class="separator:ace3e9d04d32609b66d9ed4205a922480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace3e9d04d32609b66d9ed4205a922480"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480">isJumpInst</a> (const <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Instruction.html">ir::Instruction</a> &gt; &amp;inst) -&gt; bool</td></tr>
@@ -169,8 +173,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a21cd20e9da79608cc9622a5a1e4f4506" name="a21cd20e9da79608cc9622a5a1e4f4506"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21cd20e9da79608cc9622a5a1e4f4506">&#9670;&#160;</a></span>getUniqueOperands() <span class="overload">[1/2]</span></h2>
+<a id="aaed716ea2ef4bb001214c21fe5895787" name="aaed716ea2ef4bb001214c21fe5895787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaed716ea2ef4bb001214c21fe5895787">&#9670;&#160;</a></span>getUniqueOperands() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +184,7 @@ Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classbort_1_1ir_1_1BasicBlock.html">BasicBlock</a> &amp;&#160;</td>
           <td class="paramname"><em>block</em></td><td>)</td>
-          <td> -&gt;  std::vector&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a> &gt; &gt;</td>
+          <td> -&gt;  std::unordered_set&lt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ir_1_1Operand.html">Operand</a> &gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -259,9 +263,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="namespacebort_1_1codegen_ace3e9d04d32609b66d9ed4205a922480_icgraph.png" border="0" usemap="#anamespacebort_1_1codegen_ace3e9d04d32609b66d9ed4205a922480_icgraph" alt=""/></div>
 <map name="anamespacebort_1_1codegen_ace3e9d04d32609b66d9ed4205a922480_icgraph" id="anamespacebort_1_1codegen_ace3e9d04d32609b66d9ed4205a922480_icgraph">
-<area shape="rect" title=" " alt="" coords="463,13,649,38"/>
-<area shape="rect" href="classbort_1_1codegen_1_1rv_1_1Generator.html#ad414584e8752cb5ccea6d8e4dfcf2c59" title=" " alt="" coords="261,5,415,45"/>
-<area shape="rect" href="classbort_1_1MiddleEndInstance.html#aa59af09863f386ae6bd8bf195bf1a07d" title=" " alt="" coords="5,13,213,38"/>
+<area shape="rect" title=" " alt="" coords="449,13,636,38"/>
+<area shape="rect" href="classbort_1_1codegen_1_1rv_1_1Generator.html#ad414584e8752cb5ccea6d8e4dfcf2c59" title=" " alt="" coords="248,5,401,45"/>
+<area shape="rect" href="classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd" title=" " alt="" coords="5,13,200,38"/>
 </map>
 </div>
 

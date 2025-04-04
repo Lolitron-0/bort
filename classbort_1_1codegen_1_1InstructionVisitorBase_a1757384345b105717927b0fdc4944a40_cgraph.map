@@ -1,4 +1,6 @@
 <map id="bort::codegen::InstructionVisitorBase::run" name="bort::codegen::InstructionVisitorBase::run">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,193,45"/>
-<area shape="rect" id="node2" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda" title=" " alt="" coords="241,5,429,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,47,193,87"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Module.html#a3ce66d254384a37265e883a64c8f4a95" title=" " alt="" coords="253,5,418,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1Module.html#a460554bb745c1a9d56b0279ed057d812" title=" " alt="" coords="259,55,412,80"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1InstructionVisitorBase.html#aaa25349d7ca5f7a46bc43dfdf86ddbda" title=" " alt="" coords="241,105,429,145"/>
 </map>

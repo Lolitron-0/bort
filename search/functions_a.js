@@ -9,5 +9,6 @@ var searchData=
   ['mdtag_6',['MDTag',['../classbort_1_1ir_1_1MDTag.html#a4111504fcfe37b71f46445ce6c1ddd8a',1,'bort::ir::MDTag']]],
   ['memorydependencymdtag_7',['MemoryDependencyMDTag',['../structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html#a187169476bb6b60a99713fcc14f3d30d',1,'bort::codegen::rv::MemoryDependencyMDTag']]],
   ['middleendinstance_8',['MiddleEndInstance',['../classbort_1_1MiddleEndInstance.html#a2704cbf904ba7ba1ada7da6396ad76f5',1,'bort::MiddleEndInstance']]],
-  ['moveinst_9',['MoveInst',['../classbort_1_1ir_1_1MoveInst.html#a40eafc57ae491eda9c3d8ec9a16ddb5a',1,'bort::ir::MoveInst']]]
+  ['module_9',['Module',['../classbort_1_1ir_1_1Module.html#ae402815d8a01816a5d34813a0b3e5215',1,'bort::ir::Module']]],
+  ['moveinst_10',['MoveInst',['../classbort_1_1ir_1_1MoveInst.html#a40eafc57ae491eda9c3d8ec9a16ddb5a',1,'bort::ir::MoveInst']]]
 ];

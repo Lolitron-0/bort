@@ -125,15 +125,24 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ExpressionStmt.html">ExpressionStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1FatalSemanticError.html">FatalSemanticError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1FunctionCallExpr.html">FunctionCallExpr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">FunctionDecl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1IfStmt.html">IfStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1IndexationExpr.html">IndexationExpr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1InitializerList.html">InitializerList</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html">Node</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1NodeSubstitutionVisitor.html">NodeSubstitutionVisitor</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic node for both char and int constants.  <a href="classbort_1_1ast_1_1NumberExpr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ReturnStmt.html">ReturnStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,23 +172,26 @@ Classes</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr class="memitem:af477babacfc630db95da7ed465bfe37a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a> { <br />
 &#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa255fe64b2da3568f43f01d987d77f282">NumberExpr</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad0609287378441d1c239f7d9b4ab3f3a">InitializerList</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa03b7ce0cc48b4630c80439389cf07104">IndexationExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa85d8309062c47e5cd645cd423a98a06f">VariableExpr</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3">StringExpr</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3">StringExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8">CharExpr</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46">BinOpExpr</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa491b51a518cf2608201b2098d17a8d46">BinOpExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa46c32a439c862831374acca35ed4f61f">UnaryOpExpr</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">VarDecl</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7cf38224c0901136e8277e35fd2065c3">VarDecl</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaeaf52621c7293be9aea1386772f53ea5">FunctionDecl</a>
-, <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4">FunctionCallExpr</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa0df91356d9c8d2e9b09bdc7a69437cf4">FunctionCallExpr</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aae1e4c8c9ccd9fc39c391da4bcd093fb2">Block</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa3ba01edbf5b3bdc8de4483cdf2b4af47">ExpressionStmt</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad7f36bb6c6d04d8628bfa775f2159f29">IfStmt</a>
 , <br />
-&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad892e02ab8e354706edd7bf675c8429b">WhileStmt</a>
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa3ba01edbf5b3bdc8de4483cdf2b4af47">ExpressionStmt</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad7f36bb6c6d04d8628bfa775f2159f29">IfStmt</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aad892e02ab8e354706edd7bf675c8429b">WhileStmt</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663">ReturnStmt</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">NUM_NODES</a>
 <br />
  }</td></tr>
@@ -217,6 +229,8 @@ Functions</h2></td></tr>
 <p>For grammar description of each node refer to corresponding method in <a class="el" href="classbort_1_1Parser.html">Parser</a> </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa255fe64b2da3568f43f01d987d77f282" name="af477babacfc630db95da7ed465bfe37aa255fe64b2da3568f43f01d987d77f282"></a>NumberExpr&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aad0609287378441d1c239f7d9b4ab3f3a" name="af477babacfc630db95da7ed465bfe37aad0609287378441d1c239f7d9b4ab3f3a"></a>InitializerList&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa03b7ce0cc48b4630c80439389cf07104" name="af477babacfc630db95da7ed465bfe37aa03b7ce0cc48b4630c80439389cf07104"></a>IndexationExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa85d8309062c47e5cd645cd423a98a06f" name="af477babacfc630db95da7ed465bfe37aa85d8309062c47e5cd645cd423a98a06f"></a>VariableExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3" name="af477babacfc630db95da7ed465bfe37aaf950924f0351996aaf0340f1d6af5ba3"></a>StringExpr&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8" name="af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8"></a>CharExpr&#160;</td><td class="fielddoc"></td></tr>

@@ -1,15 +1,19 @@
 var namespacebort_1_1codegen_1_1rv =
 [
+    [ "intrinsics", "namespacebort_1_1codegen_1_1rv_1_1intrinsics.html", "namespacebort_1_1codegen_1_1rv_1_1intrinsics" ],
     [ "FrameOffset", "structbort_1_1codegen_1_1rv_1_1FrameOffset.html", "structbort_1_1codegen_1_1rv_1_1FrameOffset" ],
     [ "Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],
-    [ "InstructionChoiceVisitor", "classbort_1_1codegen_1_1rv_1_1InstructionChoiceVisitor.html", null ],
+    [ "InstructionChoicePass", "classbort_1_1codegen_1_1rv_1_1InstructionChoicePass.html", null ],
     [ "MemoryDependencyMDTag", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag" ],
-    [ "PreprocessVisitor", "classbort_1_1codegen_1_1rv_1_1PreprocessVisitor.html", null ],
+    [ "PreprocessPass", "classbort_1_1codegen_1_1rv_1_1PreprocessPass.html", null ],
     [ "Printer", "classbort_1_1codegen_1_1rv_1_1Printer.html", "classbort_1_1codegen_1_1rv_1_1Printer" ],
+    [ "RARSMacroCallInst", "classbort_1_1codegen_1_1rv_1_1RARSMacroCallInst.html", "classbort_1_1codegen_1_1rv_1_1RARSMacroCallInst" ],
+    [ "RARSMacroDefinitions", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions.html", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions" ],
     [ "RVBranchInfo", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo" ],
     [ "RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue" ],
     [ "RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
     [ "RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
+    [ "StoreSourceOperandMD", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD.html", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD" ],
     [ "RVMachineRegisterRef", "namespacebort_1_1codegen_1_1rv.html#af53baca35254c91295c5504b75f3abbd", null ],
     [ "GPR", "namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248", [
       [ "VALUE_REGS_START", "namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248abd2ef9f4bd77488d5d4d16049379d4bc", null ],

@@ -2,9 +2,11 @@ var namespacebort_1_1codegen =
 [
     [ "rv", "namespacebort_1_1codegen_1_1rv.html", "namespacebort_1_1codegen_1_1rv" ],
     [ "FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", "classbort_1_1codegen_1_1FrameInfo" ],
+    [ "InstructionRemover", "classbort_1_1codegen_1_1InstructionRemover.html", "classbort_1_1codegen_1_1InstructionRemover" ],
     [ "InstructionVisitorBase", "classbort_1_1codegen_1_1InstructionVisitorBase.html", "classbort_1_1codegen_1_1InstructionVisitorBase" ],
     [ "MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", "classbort_1_1codegen_1_1MachineRegister" ],
     [ "RegisterLoc", "classbort_1_1codegen_1_1RegisterLoc.html", "classbort_1_1codegen_1_1RegisterLoc" ],
+    [ "RemoveInstructionMDTag", "structbort_1_1codegen_1_1RemoveInstructionMDTag.html", "structbort_1_1codegen_1_1RemoveInstructionMDTag" ],
     [ "StackLoc", "classbort_1_1codegen_1_1StackLoc.html", "classbort_1_1codegen_1_1StackLoc" ],
     [ "ValueLoc", "classbort_1_1codegen_1_1ValueLoc.html", "classbort_1_1codegen_1_1ValueLoc" ],
     [ "LocationKind", "namespacebort_1_1codegen.html#a19c5b6fb50f778dd9e5b8f4aab63e1c2", [
@@ -12,7 +14,7 @@ var namespacebort_1_1codegen =
       [ "Register", "namespacebort_1_1codegen.html#a19c5b6fb50f778dd9e5b8f4aab63e1c2a0ba7583639a274c434bbe6ef797115a4", null ],
       [ "Global", "namespacebort_1_1codegen.html#a19c5b6fb50f778dd9e5b8f4aab63e1c2a4cc6684df7b4a92b1dec6fce3264fac8", null ]
     ] ],
-    [ "getUniqueOperands", "namespacebort_1_1codegen.html#a21cd20e9da79608cc9622a5a1e4f4506", null ],
+    [ "getUniqueOperands", "namespacebort_1_1codegen.html#aaed716ea2ef4bb001214c21fe5895787", null ],
     [ "getUniqueOperands", "namespacebort_1_1codegen.html#a46a48bcb09c4f0ceba90778c4663abda", null ],
     [ "isJumpInst", "namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480", null ],
     [ "isJumpInst", "namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480", null ]

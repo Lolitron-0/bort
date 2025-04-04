@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ref_0',['Ref',['../namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61',1,'bort']]],
-  ['rvmachineregisterref_1',['RVMachineRegisterRef',['../namespacebort_1_1codegen_1_1rv.html#af53baca35254c91295c5504b75f3abbd',1,'bort::codegen::rv']]]
+  ['oppromotiontypemap_0',['OpPromotionTypeMap',['../classbort_1_1ast_1_1TypePropagationVisitor.html#a9373b8e0a916dc91eac6c5f9fdc86e50',1,'bort::ast::TypePropagationVisitor']]],
+  ['opresulttypemap_1',['OpResultTypeMap',['../classbort_1_1ast_1_1TypePropagationVisitor.html#abe5c9ad720204faaf1aa812559ba1b0b',1,'bort::ast::TypePropagationVisitor']]]
 ];

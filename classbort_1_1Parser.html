@@ -113,7 +113,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a402efd67a175b34e36c27b8819b65326"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a402efd67a175b34e36c27b8819b65326">parseNumberExpr</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1NumberExpr.html">ast::NumberExpr</a> &gt;</td></tr>
-<tr class="memdesc:a402efd67a175b34e36c27b8819b65326"><td class="mdescLeft">&#160;</td><td class="mdescRight">number -&gt; {integer}  <br /></td></tr>
+<tr class="memdesc:a402efd67a175b34e36c27b8819b65326"><td class="mdescLeft">&#160;</td><td class="mdescRight">number -&gt; [0-9]+ | charLiteral  <br /></td></tr>
 <tr class="separator:a402efd67a175b34e36c27b8819b65326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcfceca0655d7b99d077a37c7ee5b48d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#afcfceca0655d7b99d077a37c7ee5b48d">parseParenExpr</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt;</td></tr>
 <tr class="separator:afcfceca0655d7b99d077a37c7ee5b48d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,6 +121,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ac4ae3cb710b01b46c39ebe6cb6e5c08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c1b3dea857908776a282f886edcf7fe"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a5c1b3dea857908776a282f886edcf7fe">parseValueExpression</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt;</td></tr>
 <tr class="separator:a5c1b3dea857908776a282f886edcf7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada526cf89c0f6ff0fd857bf7674da74d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#ada526cf89c0f6ff0fd857bf7674da74d">parseSizeofExpr</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt;</td></tr>
+<tr class="memdesc:ada526cf89c0f6ff0fd857bf7674da74d"><td class="mdescLeft">&#160;</td><td class="mdescRight">sizeofExpr -&gt; 'sizeof' (parenExpr | '(' declspec ')' )  <br /></td></tr>
+<tr class="separator:ada526cf89c0f6ff0fd857bf7674da74d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b6bb92d88b2d439ea5f33b6c6b3e77e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a2b6bb92d88b2d439ea5f33b6c6b3e77e">tryParseLValue</a> () -&gt; std::optional&lt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt; &gt;</td></tr>
 <tr class="separator:a2b6bb92d88b2d439ea5f33b6c6b3e77e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2fc7ee37fe057be97e7d10ae71623fd"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#ae2fc7ee37fe057be97e7d10ae71623fd">parseUnaryOpExpr</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt;</td></tr>
@@ -135,14 +138,19 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a7db06bcc778d3fefe57d7b7289d16bb2"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a7db06bcc778d3fefe57d7b7289d16bb2">parseDeclarationStatement</a> () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Statement.html">ast::Statement</a> &gt;</td></tr>
 <tr class="memdesc:a7db06bcc778d3fefe57d7b7289d16bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">declaration -&gt; declspec (varDecl | functionDecl)  <br /></td></tr>
 <tr class="separator:a7db06bcc778d3fefe57d7b7289d16bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb0f3d2ba6cf538f6e49f381d3856d8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a5cb0f3d2ba6cf538f6e49f381d3856d8">parseVarDecl</a> (const <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> &amp;type, const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1VarDecl.html">ast::VarDecl</a> &gt;</td></tr>
-<tr class="separator:a5cb0f3d2ba6cf538f6e49f381d3856d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8419a6f153bb793e2c97a69eda374ca0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a8419a6f153bb793e2c97a69eda374ca0">parseVarDecl</a> (<a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1VarDecl.html">ast::VarDecl</a> &gt;</td></tr>
+<tr class="separator:a8419a6f153bb793e2c97a69eda374ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e9f2bf0fa4947a9acbbe36e73478cf"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a83e9f2bf0fa4947a9acbbe36e73478cf">parseInitializerList</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1InitializerList.html">ast::InitializerList</a> &gt;</td></tr>
+<tr class="memdesc:a83e9f2bf0fa4947a9acbbe36e73478cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializerList -&gt; '{' number, ... '}' | stringLiteral  <br /></td></tr>
+<tr class="separator:a83e9f2bf0fa4947a9acbbe36e73478cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fbac845679c8fdcd86f3d919b9e57f1"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a6fbac845679c8fdcd86f3d919b9e57f1">parseFunctionDecl</a> (const <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> &amp;type, const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">ast::FunctionDecl</a> &gt;</td></tr>
 <tr class="memdesc:a6fbac845679c8fdcd86f3d919b9e57f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">functionDecl -&gt; identifier '(' (declspec ident, ...) ')' block  <br /></td></tr>
 <tr class="separator:a6fbac845679c8fdcd86f3d919b9e57f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3bf5182ad1703feb75bd46a80aa56f20"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a3bf5182ad1703feb75bd46a80aa56f20">parseFunctionCallExpr</a> (const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1FunctionCallExpr.html">ast::FunctionCallExpr</a> &gt;</td></tr>
 <tr class="memdesc:a3bf5182ad1703feb75bd46a80aa56f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">functionCallExpr -&gt; nameTok '(' (declspec identifier, ...) ')'  <br /></td></tr>
 <tr class="separator:a3bf5182ad1703feb75bd46a80aa56f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2231810f7e50724e1da5dde4597f591b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a2231810f7e50724e1da5dde4597f591b">parseIndexationExpr</a> (const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;nameTok) -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a> &gt;</td></tr>
+<tr class="separator:a2231810f7e50724e1da5dde4597f591b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fa319f75c398d379f07c8ad44d2d6dc"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a5fa319f75c398d379f07c8ad44d2d6dc">parseStatement</a> () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1Statement.html">ast::Statement</a> &gt;</td></tr>
 <tr class="separator:a5fa319f75c398d379f07c8ad44d2d6dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af251743fe093a8c859ba91389408044b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#af251743fe093a8c859ba91389408044b">parseBlock</a> () -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt; <a class="el" href="classbort_1_1ast_1_1Block.html">ast::Block</a> &gt;</td></tr>
@@ -158,7 +166,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ad7fb31030c6b199bc0e09e329bbb5443"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>don't check null on error and then traverse, checking for null, to recieve more errors at once </dd></dl>
+<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>don't check null on error and then traverse, checking for null, to recieve more errors at once </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af42ae854eddea33b4b116346538da17a" name="af42ae854eddea33b4b116346538da17a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af42ae854eddea33b4b116346538da17a">&#9670;&#160;</a></span>Parser()</h2>
@@ -364,7 +372,7 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>declspec -&gt; ( 'int' | 'void' | 'char' ) ('*'...) </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>type qualifiers </dd></dl>
+<p>declspec -&gt; ( 'int' | 'void' | 'char' ) ('*'...) </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>type qualifiers </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -515,7 +523,9 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 <p>identifier <br  />
 -&gt; identifier - variable <br  />
--&gt; identifier '(' expr, ... ')' - function call </p>
+-&gt; identifier '(' expr, ... ')' - function call <br  />
+-&gt; identifier indexationExpr <br  />
+-&gt; identifier ('++' | '&ndash;') </p>
 
 </div>
 </div>
@@ -555,6 +565,79 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a2231810f7e50724e1da5dde4597f591b" name="a2231810f7e50724e1da5dde4597f591b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2231810f7e50724e1da5dde4597f591b">&#9670;&#160;</a></span>parseIndexationExpr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Parser::parseIndexationExpr </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classbort_1_1Token.html">Token</a> &amp;&#160;</td>
+          <td class="paramname"><em>nameTok</em></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt;<a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>indexationExpr -&gt; nameTok '[' expr ']' desugared into pointer arithmetic </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_a2231810f7e50724e1da5dde4597f591b_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a2231810f7e50724e1da5dde4597f591b_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_a2231810f7e50724e1da5dde4597f591b_cgraph" id="aclassbort_1_1Parser_a2231810f7e50724e1da5dde4597f591b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,244,31"/>
+<area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="292,5,487,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a83e9f2bf0fa4947a9acbbe36e73478cf" name="a83e9f2bf0fa4947a9acbbe36e73478cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e9f2bf0fa4947a9acbbe36e73478cf">&#9670;&#160;</a></span>parseInitializerList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Parser::parseInitializerList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt;<a class="el" href="classbort_1_1ast_1_1InitializerList.html">ast::InitializerList</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>initializerList -&gt; '{' number, ... '}' | stringLiteral </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_a83e9f2bf0fa4947a9acbbe36e73478cf_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a83e9f2bf0fa4947a9acbbe36e73478cf_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_a83e9f2bf0fa4947a9acbbe36e73478cf_cgraph" id="aclassbort_1_1Parser_a83e9f2bf0fa4947a9acbbe36e73478cf_cgraph">
+<area shape="rect" title="initializerList &#45;&gt; &#39;{&#39; number, ... &#39;}&#39; | stringLiteral" alt="" coords="5,31,229,56"/>
+<area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="277,5,472,31"/>
+<area shape="rect" href="classbort_1_1CharType.html#ace23df476f6beb7eaa641d7084cebd02" title=" " alt="" coords="302,55,447,80"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a402efd67a175b34e36c27b8819b65326" name="a402efd67a175b34e36c27b8819b65326"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a402efd67a175b34e36c27b8819b65326">&#9670;&#160;</a></span>parseNumberExpr()</h2>
 
@@ -578,7 +661,17 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>number -&gt; {integer} </p>
+<p>number -&gt; [0-9]+ | charLiteral </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_a402efd67a175b34e36c27b8819b65326_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a402efd67a175b34e36c27b8819b65326_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_a402efd67a175b34e36c27b8819b65326_cgraph" id="aclassbort_1_1Parser_a402efd67a175b34e36c27b8819b65326_cgraph">
+<area shape="rect" title="number &#45;&gt; [0&#45;9]+ | charLiteral" alt="" coords="5,31,227,56"/>
+<area shape="rect" href="classbort_1_1CharType.html#ace23df476f6beb7eaa641d7084cebd02" title=" " alt="" coords="275,5,420,31"/>
+<area shape="rect" href="classbort_1_1IntType.html#a0e3a5aa8d4e6fb359625c1fe76907375" title=" " alt="" coords="281,55,413,80"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -606,7 +699,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 <p>parenExpr <br  />
 -&gt; '(' expression ')' <br  />
- </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>type-casts -&gt; '(' declspec ')' </dd></dl>
+ </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>type-casts -&gt; '(' declspec ')' </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -650,6 +743,43 @@ Here is the call graph for this function:</div>
 <map name="aclassbort_1_1Parser_ad7fb31030c6b199bc0e09e329bbb5443_cgraph" id="aclassbort_1_1Parser_ad7fb31030c6b199bc0e09e329bbb5443_cgraph">
 <area shape="rect" title="returnStatement &#45;&gt; &#39;return&#39; (expr)? &#39;;&#39;" alt="" coords="5,5,188,45"/>
 <area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="236,13,431,38"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ada526cf89c0f6ff0fd857bf7674da74d" name="ada526cf89c0f6ff0fd857bf7674da74d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada526cf89c0f6ff0fd857bf7674da74d">&#9670;&#160;</a></span>parseSizeofExpr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Parser::parseSizeofExpr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique</a>&lt;<a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ast::ExpressionNode</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>sizeofExpr -&gt; 'sizeof' (parenExpr | '(' declspec ')' ) </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_ada526cf89c0f6ff0fd857bf7674da74d_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_ada526cf89c0f6ff0fd857bf7674da74d_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_ada526cf89c0f6ff0fd857bf7674da74d_cgraph" id="aclassbort_1_1Parser_ada526cf89c0f6ff0fd857bf7674da74d_cgraph">
+<area shape="rect" title="sizeofExpr &#45;&gt; &#39;sizeof&#39; (parenExpr | &#39;(&#39; declspec &#39;)&#39; )" alt="" coords="5,31,215,56"/>
+<area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="263,5,457,31"/>
+<area shape="rect" href="classbort_1_1IntType.html#a0e3a5aa8d4e6fb359625c1fe76907375" title=" " alt="" coords="294,55,426,80"/>
 </map>
 </div>
 
@@ -755,12 +885,13 @@ Here is the call graph for this function:</div>
 <p>value expression <br  />
 -&gt; number <br  />
 -&gt; parenExpr <br  />
+-&gt; sizeofExpr <br  />
 -&gt; lvalue </p>
 
 </div>
 </div>
-<a id="a5cb0f3d2ba6cf538f6e49f381d3856d8" name="a5cb0f3d2ba6cf538f6e49f381d3856d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cb0f3d2ba6cf538f6e49f381d3856d8">&#9670;&#160;</a></span>parseVarDecl()</h2>
+<a id="a8419a6f153bb793e2c97a69eda374ca0" name="a8419a6f153bb793e2c97a69eda374ca0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8419a6f153bb793e2c97a69eda374ca0">&#9670;&#160;</a></span>parseVarDecl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -771,7 +902,7 @@ Here is the call graph for this function:</div>
         <tr>
           <td class="memname">auto bort::Parser::parseVarDecl </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a>&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
@@ -792,14 +923,15 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>varDecl -&gt; declspec identifier ';' </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>declspec (identifier ('=' expr)?, ...) ';' </dd></dl>
+<p>varDecl -&gt; declspec identifier ';' </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>declspec (identifier ('=' expr)?, ...) ';' </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classbort_1_1Parser_a5cb0f3d2ba6cf538f6e49f381d3856d8_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a5cb0f3d2ba6cf538f6e49f381d3856d8_cgraph" alt=""/></div>
-<map name="aclassbort_1_1Parser_a5cb0f3d2ba6cf538f6e49f381d3856d8_cgraph" id="aclassbort_1_1Parser_a5cb0f3d2ba6cf538f6e49f381d3856d8_cgraph">
-<area shape="rect" title=" " alt="" coords="5,5,196,31"/>
+<div class="center"><img src="classbort_1_1Parser_a8419a6f153bb793e2c97a69eda374ca0_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a8419a6f153bb793e2c97a69eda374ca0_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_a8419a6f153bb793e2c97a69eda374ca0_cgraph" id="aclassbort_1_1Parser_a8419a6f153bb793e2c97a69eda374ca0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,196,56"/>
 <area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="244,5,439,31"/>
+<area shape="rect" href="classbort_1_1ArrayType.html#ac495e70ece2b7ef5ebda732de851612f" title=" " alt="" coords="266,55,417,80"/>
 </map>
 </div>
 

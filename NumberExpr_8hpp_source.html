@@ -99,38 +99,38 @@ $(document).ready(function(){initNavTree('NumberExpr_8hpp_source.html',''); init
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort_1_1ast.html">bort::ast</a> {</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ast_1_1ExpressionNode.html">ExpressionNode</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <span class="comment">// TODO typed constants</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">    9</a></span>  <span class="keyword">using </span><a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">ValueT</a> = int;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a>(<a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">ValueT</a> value)</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>      : <a class="code hl_class" href="classbort_1_1ast_1_1ExpressionNode.html">ExpressionNode</a>{ <a class="code hl_enumeration" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a>::<a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a>, <a class="code hl_class" href="classbort_1_1IntType.html">IntType</a>::get() },</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        m_Value{ value } {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  }</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">   18</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">getValue</a>() const -&gt; <a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">ValueT</a> {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> m_Value;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  }</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#aacdf282d39e9e87f06a3923a349f6fca">   22</a></span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a>;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">ValueT</a> m_Value;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>};</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>} <span class="comment">// namespace bort::ast</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html">    7</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a> final : <span class="keyword">public</span> <a class="code hl_class" href="classbort_1_1ast_1_1ExpressionNode.html">ExpressionNode</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  <span class="comment">// both will fit</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">   10</a></span>  <span class="keyword">using </span><a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">ValueT</a> = int32_t;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a>(<a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">ValueT</a> value, <a class="code hl_typedef" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      : <a class="code hl_class" href="classbort_1_1ast_1_1ExpressionNode.html">ExpressionNode</a>{ <a class="code hl_enumeration" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">NodeKind</a>::<a class="code hl_class" href="classbort_1_1ast_1_1NumberExpr.html">NumberExpr</a>, std::move(type) },</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        m_Value{ value } {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  }</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">   19</a></span>  [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">getValue</a>() const -&gt; <a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">ValueT</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordflow">return</span> m_Value;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classbort_1_1ast_1_1NumberExpr.html#aacdf282d39e9e87f06a3923a349f6fca">   23</a></span>  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classbort_1_1ast_1_1ASTRoot.html">ASTRoot</a>;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <a class="code hl_typedef" href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">ValueT</a> m_Value;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>} <span class="comment">// namespace bort::ast</span></div>
 <div class="ttc" id="aExpressionNode_8hpp_html"><div class="ttname"><a href="ExpressionNode_8hpp.html">ExpressionNode.hpp</a></div></div>
-<div class="ttc" id="aclassbort_1_1IntType_html"><div class="ttname"><a href="classbort_1_1IntType.html">bort::IntType</a></div><div class="ttdef"><b>Definition:</b> Type.hpp:76</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1ASTRoot_html"><div class="ttname"><a href="classbort_1_1ast_1_1ASTRoot.html">bort::ast::ASTRoot</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:66</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1ASTRoot_html"><div class="ttname"><a href="classbort_1_1ast_1_1ASTRoot.html">bort::ast::ASTRoot</a></div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:68</div></div>
 <div class="ttc" id="aclassbort_1_1ast_1_1ExpressionNode_html"><div class="ttname"><a href="classbort_1_1ast_1_1ExpressionNode.html">bort::ast::ExpressionNode</a></div><div class="ttdef"><b>Definition:</b> ExpressionNode.hpp:7</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html">bort::ast::NumberExpr</a></div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:6</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html_a220c0726e4070eb310853357a47919ed"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html#a220c0726e4070eb310853357a47919ed">bort::ast::NumberExpr::ValueT</a></div><div class="ttdeci">int ValueT</div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:9</div></div>
-<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html_a86542f5898473098fe95e8ca6a48fea9"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">bort::ast::NumberExpr::getValue</a></div><div class="ttdeci">auto getValue() const -&gt; ValueT</div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:18</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html">bort::ast::NumberExpr</a></div><div class="ttdoc">Generic node for both char and int constants.</div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:7</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html_a86542f5898473098fe95e8ca6a48fea9"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html#a86542f5898473098fe95e8ca6a48fea9">bort::ast::NumberExpr::getValue</a></div><div class="ttdeci">auto getValue() const -&gt; ValueT</div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:19</div></div>
+<div class="ttc" id="aclassbort_1_1ast_1_1NumberExpr_html_acf41eedab084bf64d41554e4623aedeb"><div class="ttname"><a href="classbort_1_1ast_1_1NumberExpr.html#acf41eedab084bf64d41554e4623aedeb">bort::ast::NumberExpr::ValueT</a></div><div class="ttdeci">int32_t ValueT</div><div class="ttdef"><b>Definition:</b> NumberExpr.hpp:10</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html"><div class="ttname"><a href="namespacebort_1_1ast.html">bort::ast</a></div><div class="ttdef"><b>Definition:</b> ASTNode.cpp:6</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html_af477babacfc630db95da7ed465bfe37a"><div class="ttname"><a href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">bort::ast::NodeKind</a></div><div class="ttdeci">NodeKind</div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:18</div></div>
+<div class="ttc" id="anamespacebort_html_ad37fcb92b9d778f5050dd5007c5ca039"><div class="ttname"><a href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">bort::TypeRef</a></div><div class="ttdeci">std::shared_ptr&lt; Type &gt; TypeRef</div><div class="ttdef"><b>Definition:</b> Type.hpp:49</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

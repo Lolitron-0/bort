@@ -1,10 +1,13 @@
 <map id="bort::ir::Instruction::setOperand" name="bort::ir::Instruction::setOperand">
-<area shape="rect" id="node1" title=" " alt="" coords="363,162,505,202"/>
-<area shape="rect" id="node2" href="$classbort_1_1ir_1_1LoadInst.html#a2f6ad4a865b73dc2c3507720ac870715" title=" " alt="" coords="7,85,135,125"/>
-<area shape="rect" id="node3" href="$classbort_1_1ir_1_1RetInst.html#ae5b2716f264a214e1b21fa8e76114004" title=" " alt="" coords="186,34,313,74"/>
-<area shape="rect" id="node4" href="$classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3" title=" " alt="" coords="185,98,313,138"/>
-<area shape="rect" id="node5" href="$classbort_1_1ir_1_1StoreInst.html#a78816b87a39c04c1873b659c52764677" title=" " alt="" coords="184,162,315,202"/>
-<area shape="rect" id="node6" href="$classbort_1_1ir_1_1StoreInst.html#a25cabf7505e9922ae320a8bf55c3ed41" title=" " alt="" coords="5,177,136,217"/>
-<area shape="rect" id="node7" href="$classbort_1_1ir_1_1StoreInst.html#abeb757a4633cfca0110cd1ccb42105ac" title=" " alt="" coords="184,277,315,317"/>
-<area shape="rect" id="node8" href="$classbort_1_1ir_1_1RetInst.html#af6958408d62694d29638b783b3106799" title=" " alt="" coords="186,341,313,381"/>
+<area shape="rect" id="node1" title=" " alt="" coords="363,228,505,268"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1LoadInst.html#a38f601e9c7ceb5b7f73b796543ad98a8" title=" " alt="" coords="7,84,135,124"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1RetInst.html#ae5b2716f264a214e1b21fa8e76114004" title=" " alt="" coords="186,36,313,76"/>
+<area shape="rect" id="node4" href="$classbort_1_1ir_1_1GepInst.html#a11df6135f40218ce13bcbe3aff659c06" title=" " alt="" coords="184,164,315,204"/>
+<area shape="rect" id="node6" href="$classbort_1_1ir_1_1GepInst.html#ae556d1981a9c1761b8e6f6630efb9f89" title=" " alt="" coords="184,228,315,268"/>
+<area shape="rect" id="node7" href="$classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3" title=" " alt="" coords="185,100,313,140"/>
+<area shape="rect" id="node8" href="$classbort_1_1ir_1_1StoreInst.html#a78816b87a39c04c1873b659c52764677" title=" " alt="" coords="184,292,315,332"/>
+<area shape="rect" id="node9" href="$classbort_1_1ir_1_1StoreInst.html#a31d415d9ed3b4045d50bc44a743f9518" title=" " alt="" coords="5,320,136,360"/>
+<area shape="rect" id="node10" href="$classbort_1_1ir_1_1StoreInst.html#abeb757a4633cfca0110cd1ccb42105ac" title=" " alt="" coords="184,407,315,447"/>
+<area shape="rect" id="node11" href="$classbort_1_1ir_1_1RetInst.html#af6958408d62694d29638b783b3106799" title=" " alt="" coords="186,471,313,511"/>
+<area shape="rect" id="node5" href="$classbort_1_1ir_1_1GepInst.html#aee91d2d28718d346f37517ec30e1335c" title=" " alt="" coords="5,180,136,220"/>
 </map>

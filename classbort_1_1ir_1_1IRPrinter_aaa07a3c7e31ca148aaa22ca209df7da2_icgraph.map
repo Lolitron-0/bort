@@ -1,4 +1,5 @@
 <map id="bort::ir::IRPrinter::print" name="bort::ir::IRPrinter::print">
-<area shape="rect" id="node1" title=" " alt="" coords="261,5,391,45"/>
-<area shape="rect" id="node2" href="$classbort_1_1MiddleEndInstance.html#aa59af09863f386ae6bd8bf195bf1a07d" title=" " alt="" coords="5,13,213,38"/>
+<area shape="rect" id="node1" title=" " alt="" coords="261,23,391,63"/>
+<area shape="rect" id="node2" href="$classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd" title=" " alt="" coords="12,5,207,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1MiddleEndInstance.html#aa59af09863f386ae6bd8bf195bf1a07d" title=" " alt="" coords="5,55,213,80"/>
 </map>

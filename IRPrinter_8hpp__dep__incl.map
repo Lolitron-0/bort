@@ -1,6 +1,6 @@
 <map id="include/bort/IR/IRPrinter.hpp" name="include/bort/IR/IRPrinter.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="128,5,331,31"/>
-<area shape="rect" id="node2" href="$Main_8cpp.html" title=" " alt="" coords="5,79,133,104"/>
-<area shape="rect" id="node3" href="$IRPrinter_8cpp.html" title=" " alt="" coords="157,79,301,104"/>
-<area shape="rect" id="node4" href="$MiddleEndInstance_8cpp.html" title=" " alt="" coords="326,79,538,104"/>
+<area shape="rect" id="node1" title=" " alt="" coords="243,5,445,31"/>
+<area shape="rect" id="node2" href="$BackendInstance_8cpp.html" title=" " alt="" coords="5,79,248,104"/>
+<area shape="rect" id="node3" href="$IRPrinter_8cpp.html" title=" " alt="" coords="272,79,416,104"/>
+<area shape="rect" id="node4" href="$MiddleEndInstance_8cpp.html" title=" " alt="" coords="441,79,653,104"/>
 </map>

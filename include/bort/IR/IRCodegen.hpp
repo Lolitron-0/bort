@@ -3,12 +3,15 @@
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/IfStmt.hpp"
+#include "bort/AST/IndexationExpr.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/AST/WhileStmt.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Module.hpp"
@@ -19,7 +22,7 @@ namespace bort::ir {
 
 class IRCodegen {
 public:
-  [[nodiscard]] auto takeInstructions() -> Module {
+  [[nodiscard]] auto takeInstructions() -> Module&& {
     return std::move(m_Module);
   }
 
@@ -34,6 +37,9 @@ private:
   auto visit(const Ref<ast::NumberExpr>& numNode) -> ValueRef;
   auto visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef;
   auto visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef;
+  auto visit(const Ref<ast::InitializerList>& initializerListNode)
+      -> ValueRef;
+  auto visit(const Ref<ast::IndexationExpr>& indexationNode) -> ValueRef;
   auto visit(const Ref<ast::FunctionDecl>& functionDeclNode) -> ValueRef;
   auto visit(const Ref<ast::ExpressionStmt>& expressionStmtNode)
       -> ValueRef;
@@ -45,6 +51,7 @@ private:
 
   auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
                               bool negate = false) -> Ref<BranchInst>;
+  auto genArrayPtr(const ValueRef& arr) -> std::pair<Ref<PointerType>, ValueRef>;
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>

@@ -11,6 +11,8 @@
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/GepInst.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/MoveInst.hpp"
@@ -22,9 +24,10 @@
 #include "bort/IR/Value.hpp"
 #include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
-#include "cul/BiMap.hpp"
-#include "fmt/format.h"
 #include <algorithm>
+#include <boost/range/adaptor/indexed.hpp>
+#include <cul/BiMap.hpp>
+#include <fmt/format.h>
 #include <utility>
 
 namespace bort::ir {
@@ -36,7 +39,7 @@ public:
   }
 
   [[nodiscard]] auto toString() const -> std::string override {
-    return fmt::format("store_sync .loc={}", m_Loc->getName());
+    return fmt::format("store_sync .loc=%{}", m_Loc->getName());
   }
 
   [[nodiscard]] auto getLoc() const -> ValueRef {
@@ -69,8 +72,8 @@ auto IRCodegen::genBranchFromCondition(
     case TokenKind::Less:
     case TokenKind::LessEqual:
       mode = binOpCond->getOp();
-      lhs  = genericVisit(binOpCond->getLhs());
-      rhs  = genericVisit(binOpCond->getRhs());
+      lhs  = genericVisit(binOpCond->getLHS());
+      rhs  = genericVisit(binOpCond->getRHS());
       break;
     default:
       break;
@@ -78,7 +81,7 @@ auto IRCodegen::genBranchFromCondition(
   }
   if (!lhs && !rhs) {
     lhs = genericVisit(cond);
-    rhs = IntConstant::getOrCreate(0);
+    rhs = IntegralConstant::getInt(0);
   }
 
   if (negate) {
@@ -91,6 +94,19 @@ auto IRCodegen::genBranchFromCondition(
   }
 
   return makeRef<BranchInst>(std::move(lhs), std::move(rhs), mode);
+}
+
+auto IRCodegen::genArrayPtr(const ValueRef& arr)
+    -> std::pair<Ref<PointerType>, ValueRef> {
+  auto arrTy{ dynCastRef<ArrayType>(arr->getType()) };
+  bort_assert(arrTy, "Array expected");
+  auto ptrTy{ PointerType::get(arrTy->getBaseType()) };
+
+  auto arrPtr{ addInstruction(
+                   makeRef<UnaryInst>(TokenKind::Amp,
+                                      Register::getOrCreate(ptrTy), arr))
+                   ->getDestination() };
+  return { ptrTy, arrPtr };
 }
 
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
@@ -106,8 +122,8 @@ auto IRCodegen::genericVisit(const Ref<ast::Node>& node) -> ValueRef {
 }
 
 auto IRCodegen::visit(const Ref<ast::BinOpExpr>& binOpNode) -> ValueRef {
-  auto lhs{ genericVisit(binOpNode->getLhs()) };
-  auto rhs{ genericVisit(binOpNode->getRhs()) };
+  auto lhs{ genericVisit(binOpNode->getLHS()) };
+  auto rhs{ genericVisit(binOpNode->getRHS()) };
 
   if (binOpNode->getOp() == TokenKind::Assign) {
     auto newInst{ addInstruction(
@@ -131,7 +147,7 @@ auto IRCodegen::visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr)
   case TokenKind::Star:
     result = addInstruction(
         makeRef<LoadInst>(dst, operand,
-                          IntConstant::getOrCreate(static_cast<int32_t>(
+                          IntegralConstant::getInt(static_cast<int32_t>(
                               operand->getType()->getSizeof()))));
     result->getDestination()->addMDNode(StoreSync{ operand });
     break;
@@ -148,7 +164,7 @@ auto IRCodegen::visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr)
 
 auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
     -> ValueRef {
-  return IntConstant::getOrCreate(numberNode->getValue());
+  return IntegralConstant::getInt(numberNode->getValue());
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
@@ -164,11 +180,17 @@ auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
-  ValueRef elementSize{ IntConstant::getOrCreate(
+  auto elementSize{ IntegralConstant::getInt(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
-  auto newVar{ addInstruction(
-                   makeRef<AllocaInst>(std::move(varSymbol), elementSize,
-                                       IntConstant::getOrCreate(1)))
+  ValueRef numElements{ IntegralConstant::getInt(1) };
+  if (auto arrayType{ dynCastRef<ArrayType>(varSymbol->getType()) }) {
+    elementSize =
+        IntegralConstant::getInt(arrayType->getBaseType()->getSizeof());
+    numElements = IntegralConstant::getInt(arrayType->getNumElements());
+  }
+  auto newVar{ addInstruction(makeRef<AllocaInst>(std::move(varSymbol),
+                                                  elementSize,
+                                                  numElements))
                    ->getDestination() };
 
   if (!varDeclNode->hasInitializer()) {
@@ -180,12 +202,42 @@ auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   return move->getDestination();
 }
 
+auto IRCodegen::visit(
+    const Ref<ast::InitializerList>& initializerListNode) -> ValueRef {
+  std::vector<Ref<IntegralConstant>> values{};
+  for (auto&& num : initializerListNode->getValues()) {
+    values.push_back(
+        IntegralConstant::getOrCreate(num->getValue(), num->getType()));
+  }
+  return m_Module.addGlobal(GlobalArray::getOrCreate(std::move(values)));
+}
+
+auto IRCodegen::visit(const Ref<ast::IndexationExpr>& indexationNode)
+    -> ValueRef {
+  auto arr{ genericVisit(indexationNode->getArray()) };
+
+  auto index{ genericVisit(indexationNode->getIndex()) };
+
+  auto [_, arrPtr]{ genArrayPtr(arr) };
+  auto gepInst{ addInstruction(
+      makeRef<GepInst>(arrPtr, arrPtr, std::move(index))) };
+
+  auto baseTy{ indexationNode->getType() };
+  auto deref{ addInstruction(makeRef<LoadInst>(
+      Register::getOrCreate(baseTy), gepInst->getDestination(),
+      IntegralConstant::getInt(baseTy->getSizeof()))) };
+
+  deref->getDestination()->addMDNode(
+      StoreSync{ gepInst->getDestination() });
+  return deref->getDestination();
+}
+
 auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
     -> ValueRef {
   for (auto&& paramVar : functionDeclNode->getFunction()->getArgs()) {
     VariableUse::createUnique(paramVar);
   }
-  m_Module.addFunction(functionDeclNode->getFunction()->getName());
+  m_Module.addFunction(functionDeclNode->getFunction());
   pushBB("", functionDeclNode->getFunction()->getName());
   genericVisit(functionDeclNode->getBody());
 
@@ -319,7 +371,7 @@ void IRCodegen::processNewInst(const Ref<Instruction>& instruction) {
       // has no destination, so won't recurse
       addInstruction(makeRef<StoreInst>(
           dest, SS->getLoc(),
-          IntConstant::getOrCreate(dest->getType()->getSizeof())));
+          IntegralConstant::getInt(dest->getType()->getSizeof())));
     }
   }
 }

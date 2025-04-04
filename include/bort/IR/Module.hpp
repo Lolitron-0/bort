@@ -1,7 +1,8 @@
 #pragma once
-#include "bort/Basic/Assert.hpp"
+#include "bort/Frontend/Symbol.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 #include <algorithm>
@@ -10,8 +11,9 @@ namespace bort::ir {
 
 class IRFunction : public Value {
 public:
-  explicit IRFunction(std::string name)
-      : Value{ VoidType::get(), std::move(name) } {
+  explicit IRFunction(const Ref<Function>& function)
+      : Value{ VoidType::get(), function->getName() },
+        m_Function{ function } {
   }
 
   auto addBB(std::string name) -> BasicBlock* {
@@ -55,15 +57,24 @@ public:
     return m_BasicBlocks.cend();
   }
 
+  [[nodiscard]] auto getFunction() const -> Ref<Function> {
+    return m_Function;
+  }
+
 private:
   std::list<BasicBlock> m_BasicBlocks;
+  Ref<Function> m_Function;
 };
 
 using BBIter     = std::list<BasicBlock>::iterator;
 using IRFuncIter = std::list<IRFunction>::iterator;
 
-class Module {
+class Module : public Value {
 public:
+  Module()
+      : Value{ VoidType::get(), "module" } {
+  }
+
   auto addInstruction(Ref<Instruction> instruction) -> ValueRef {
     auto& lastBB{ m_Functions.back().back() };
     lastBB.addInstruction(std::move(instruction));
@@ -84,12 +95,22 @@ public:
     }
   }
 
+  auto addGlobal(Ref<GlobalValue> global) -> Ref<GlobalValue> {
+    m_Globals.push_back(std::move(global));
+    return m_Globals.back();
+  }
+
+  [[nodiscard]] auto getGlobals() const
+      -> const std::vector<Ref<GlobalValue>>& {
+    return m_Globals;
+  }
+
   void addBasicBlock(std::string name) {
     m_Functions.back().addBB(std::move(name));
   }
 
-  void addFunction(std::string name) {
-    m_Functions.emplace_back(std::move(name));
+  void addFunction(Ref<Function> function) {
+    m_Functions.emplace_back(std::move(function));
   }
 
   [[nodiscard]] auto begin() {
@@ -124,6 +145,7 @@ public:
 
 private:
   std::list<IRFunction> m_Functions;
+  std::vector<Ref<GlobalValue>> m_Globals;
 };
 
 struct TraversalContext {

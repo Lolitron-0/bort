@@ -1,6 +1,5 @@
 #pragma once
 #include "bort/AST/ASTDebugInfo.hpp"
-#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/Basic/Ref.hpp"
 #include <utility>
 
@@ -9,9 +8,12 @@ namespace bort::ast {
 class Node;
 class NumberExpr;
 class VariableExpr;
+class InitializerList;
+class IndexationExpr;
 class StringExpr;
 class CharExpr;
 class BinOpExpr;
+class UnaryOpExpr;
 class VarDecl;
 class Block;
 class ASTRoot;
@@ -78,7 +80,9 @@ protected:
   virtual void visit(const Ref<CharExpr>& /* charNode */) {
     // leaf
   }
-  virtual void visit(const Ref<VarDecl>&  varDeclNode );
+  virtual void visit(const Ref<VarDecl>& varDeclNode);
+  virtual void visit(const Ref<InitializerList>& initializerListNode);
+  virtual void visit(const Ref<IndexationExpr>& indexationExpr);
   virtual void visit(const Ref<FunctionDecl>& functionDeclNode);
   virtual void visit(const Ref<ExpressionStmt>& exprStmtNode);
   virtual void visit(const Ref<BinOpExpr>& binopNode);

@@ -6,6 +6,8 @@
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
+#include "bort/AST/IndexationExpr.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -44,6 +46,14 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
   case NodeKind::VarDecl:
     bort_assert_nomsg(dynCastRef<VarDecl>(node));
     return visit(dynCastRef<VarDecl>(node));
+    break;
+  case NodeKind::InitializerList:
+    bort_assert_nomsg(dynCastRef<InitializerList>(node));
+    return visit(dynCastRef<InitializerList>(node));
+    break;
+  case NodeKind::IndexationExpr:
+    bort_assert_nomsg(dynCastRef<IndexationExpr>(node));
+    return visit(dynCastRef<IndexationExpr>(node));
     break;
   case NodeKind::FunctionDecl:
     bort_assert_nomsg(dynCastRef<FunctionDecl>(node));

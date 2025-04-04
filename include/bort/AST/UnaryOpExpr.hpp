@@ -11,6 +11,9 @@ public:
   [[nodiscard]] auto getOp() const -> TokenKind;
   [[nodiscard]] auto getOperand() -> Ref<ExpressionNode>;
 
+  void setOperand(Ref<ExpressionNode> operand);
+  void setOp(TokenKind op);
+
   friend class ASTRoot;
 
 private:

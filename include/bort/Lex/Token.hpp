@@ -61,6 +61,8 @@ public:
     return result;
   }
 
+  static auto getTokenName(TokenKind kind) -> std::string_view;
+
   // clang-format off
 #undef TOK
 #define TOK(t) .Case(#t, TokenKind::t)

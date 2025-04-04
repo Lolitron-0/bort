@@ -2,6 +2,7 @@
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
+#include <unordered_set>
 
 namespace bort::codegen {
 
@@ -17,7 +18,7 @@ auto getUniqueOperands(const ir::IRFunction& func)
     -> std::vector<Ref<ir::Operand>>;
 
 auto getUniqueOperands(const ir::BasicBlock& block)
-    -> std::vector<Ref<ir::Operand>>;
+    -> std::unordered_set<Ref<ir::Operand>>;
 
 auto isJumpInst(const Ref<ir::Instruction>& inst) -> bool;
 

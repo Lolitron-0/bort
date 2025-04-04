@@ -32,7 +32,7 @@ auto getUniqueOperands(const IRFunction& func)
 }
 
 auto getUniqueOperands(const BasicBlock& block)
-    -> std::vector<Ref<Operand>> {
+    -> std::unordered_set<Ref<Operand>> {
   std::unordered_set<Ref<Operand>> uniqueOperands;
   std::vector<Ref<Operand>> result;
   for (const auto& inst : block) {
@@ -42,13 +42,10 @@ auto getUniqueOperands(const BasicBlock& block)
         // probably a constant
         continue;
       }
-      auto [_, inserted]{ uniqueOperands.insert(op) };
-      if (inserted) {
-        result.push_back(op);
-      }
+      uniqueOperands.insert(op);
     }
   }
-  return result;
+  return uniqueOperands;
 }
 
 auto FrameInfo::toString() const -> std::string {

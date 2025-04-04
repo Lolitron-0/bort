@@ -13,6 +13,20 @@ using ValueRef = Ref<Value>;
 
 class Value {
 public:
+  Value(const Value& other)
+      : m_Type{ other.m_Type },
+        m_Name{ other.m_Name },
+        m_MDList{ makeUnique<MDList>(*other.m_MDList) } {
+  }
+  Value(Value&& other) = default;
+
+  auto operator=(Value other) -> Value& {
+    std::swap(m_Type, other.m_Type);
+    std::swap(m_Name, other.m_Name);
+    std::swap(m_MDList, other.m_MDList);
+    return *this;
+  }
+
   virtual ~Value() = default;
 
   // static auto get(std::string name) -> ValueRef;

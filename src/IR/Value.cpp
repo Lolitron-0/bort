@@ -10,7 +10,7 @@ namespace bort::ir {
 auto Value::formatValue(const ValueRef& value)
     -> std::optional<std::string> {
   if (auto constant =
-          std::dynamic_pointer_cast<bort::ir::IntConstant>(value)) {
+          std::dynamic_pointer_cast<bort::ir::IntegralConstant>(value)) {
     return fmt::format("{}", constant->getValue());
   }
   if (bort::isaRef<Register>(value) || bort::isaRef<VariableUse>(value)) {

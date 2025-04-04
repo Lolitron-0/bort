@@ -46,5 +46,5 @@ cp -f build/compile_commands.json .
 if [ $# -ne 0 ] && [ "$1" == "run" ]; then
 	echo -e "----------------------------------\n"
   set -eux
-	./build/bort --dump-ast --emit-ir --dump-codegen-info ./tests/corpus/pointers.c
+	./build/bort --dump-ast --emit-ir --dump-codegen-info ./tests/corpus/functions.c
 fi

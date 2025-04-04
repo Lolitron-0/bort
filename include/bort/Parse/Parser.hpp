@@ -4,6 +4,7 @@
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
 #include "bort/AST/IfStmt.hpp"
+#include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
@@ -40,7 +41,7 @@ public:
 
   // for docs
 protected:
-  /// number -> {integer}
+  /// number -> [0-9]+ | charLiteral
   auto parseNumberExpr() -> Unique<ast::NumberExpr>;
   /// parenExpr \n
   /// -> '(' expression ')' \n
@@ -48,13 +49,18 @@ protected:
   auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   /// identifier \n
   /// -> identifier - variable \n
-  /// -> identifier '(' expr, ... ')' - function call
+  /// -> identifier '(' expr, ... ')' - function call \n
+  /// -> identifier indexationExpr \n
+  /// -> identifier ('++' | '--')
   auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
   /// value expression \n
   /// -> number \n
   /// -> parenExpr \n
+  /// -> sizeofExpr \n
   /// -> lvalue
   auto parseValueExpression() -> Unique<ast::ExpressionNode>;
+  /// sizeofExpr -> 'sizeof' (parenExpr | '(' declspec ')' )
+  auto parseSizeofExpr() -> Unique<ast::ExpressionNode>;
   /// lvalue \n
   /// -> identifier
   auto tryParseLValue() -> std::optional<Unique<ast::ExpressionNode>>;
@@ -75,14 +81,20 @@ protected:
   auto parseDeclarationStatement() -> Ref<ast::Statement>;
   /// varDecl -> declspec identifier ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
-  auto parseVarDecl(const TypeRef& type,
+  auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
+  /// initializerList -> '{' number, ... '}' | stringLiteral
+  auto parseInitializerList() -> Unique<ast::InitializerList>;
   /// functionDecl -> identifier '(' (declspec ident, ...) ')' block
   auto parseFunctionDecl(const TypeRef& type,
                          const Token& nameTok) -> Ref<ast::FunctionDecl>;
   /// functionCallExpr -> nameTok '(' (declspec identifier, ...) ')'
   auto parseFunctionCallExpr(const Token& nameTok)
       -> Unique<ast::FunctionCallExpr>;
+  /// indexationExpr -> nameTok '[' expr ']'
+  /// desugared into pointer arithmetic
+  auto parseIndexationExpr(const Token& nameTok)
+      -> Unique<ast::ExpressionNode>;
   /// statement \n
   /// -> expression ';' \n
   /// -> block \n

@@ -1,6 +1,7 @@
 #include "bort/Codegen/RISCVPrinter.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
 #include "bort/IR/BranchInst.hpp"
@@ -47,13 +48,13 @@ auto formatMachineValue(const ValueRef& val) -> std::string {
 }
 
 void Printer::run(ir::Module& module) {
-  printHeader();
+  printHeader(module);
   for (auto&& func : module) {
     bool firstBlock{ true };
-    const auto* AC{ func.getMDNode<RVFuncPrologueEpilogue>() };
+    const auto* PE{ func.getMDNode<RVFuncPrologueEpilogue>() };
     fmt::println(m_Stream, "{}:", func.begin()->getName());
     /// @todo this is bad af, better make another structure
-    fmt::print(m_Stream, "{}", AC->Prologue);
+    fmt::print(m_Stream, "{}", PE->Prologue);
     for (auto&& BB : func) {
       if (!firstBlock) {
         fmt::println(m_Stream, "{}:", BB.getName());
@@ -63,7 +64,7 @@ void Printer::run(ir::Module& module) {
         genericVisit(inst);
       }
     }
-    fmt::print(m_Stream, "{}", AC->Epilogue);
+    fmt::print(m_Stream, "{}", PE->Epilogue);
   }
 }
 
@@ -81,6 +82,10 @@ void Printer::visit(const Ref<ir::OpInst>& opInst) {
 }
 
 void Printer::visit(const Ref<ir::UnaryInst>& unaryInst) {
+  auto* II{ unaryInst->getMDNode<RVInstInfo>() };
+  fmt::println(m_Stream, "{} {}, {}", II->InstName,
+               formatMachineValue(unaryInst->getDestination()),
+               formatMachineValue(unaryInst->getSrc()));
 }
 
 void Printer::visit(const Ref<ir::BranchInst>& brInst) {
@@ -88,7 +93,7 @@ void Printer::visit(const Ref<ir::BranchInst>& brInst) {
   auto* BRI{ brInst->getMDNode<RVBranchInfo>() };
 
   if (brInst->isConditional()) {
-    if (BRI && BRI->IsSingleOp) {
+    if (BRI && BRI->NoRHS) {
       fmt::println(m_Stream, "{} {}, {}", II->InstName,
                    formatMachineValue(brInst->getLHS()),
                    brInst->getTarget()->getName());
@@ -102,6 +107,15 @@ void Printer::visit(const Ref<ir::BranchInst>& brInst) {
     fmt::println(m_Stream, "{} {}", II->InstName,
                  brInst->getTarget()->getName());
   }
+}
+
+void Printer::visit(const Ref<RARSMacroCallInst>& macroInst) {
+  fmt::print(m_Stream, "{}",
+             intrinsics::getMacroName(macroInst->getMacroID()));
+  for (auto&& arg : macroInst->getArgs()) {
+    fmt::print(m_Stream, " {}", formatMachineValue(arg));
+  }
+  fmt::print(m_Stream, "\n");
 }
 
 void Printer::visit(const Ref<LoadInst>& loadInst) {
@@ -133,9 +147,14 @@ void Printer::visit(const Ref<ir::CallInst>& callInst) {
                callInst->getFunction()->getName());
 }
 
-void Printer::printHeader() {
-  fmt::println(m_Stream, R"(
-.globl main
+void Printer::printHeader(const Module& module) {
+  const auto* macros{ module.getMDNode<RARSMacroDefinitions>() };
+  bort_assert(macros, "Module has no macro definitions MD");
+  for (auto&& def : macros->Macros) {
+    fmt::println(m_Stream, "{}\n", def);
+  }
+
+  fmt::println(m_Stream, R"(.globl main
 .text
 )");
 }

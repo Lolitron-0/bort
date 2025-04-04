@@ -16,25 +16,12 @@ MiddleEndInstance::MiddleEndInstance(CLIOptions cliOptions,
 auto MiddleEndInstance::run() -> ir::Module {
   ir::IRCodegen irCodegen{};
   irCodegen.codegen(m_AST);
-  auto IR{ irCodegen.takeInstructions() };
+  auto&& IR{ irCodegen.takeInstructions() };
 
   if (m_CLIOptions.EmitIR) {
     ir::IRPrinter irPrinter{};
     irPrinter.print(IR);
   }
-
-  codegen::rv::Generator riscvCodegen{ m_CLIOptions, IR };
-  riscvCodegen.generate();
-
-  if (m_CLIOptions.DumpCodegenInfo) {
-    std::cerr << "\n=== After codegen ===\n\n";
-    ir::IRPrinter irPrinter{};
-    irPrinter.print(IR);
-  }
-
-  codegen::rv::Printer riscvPrinter{ std::cerr };
-  riscvPrinter.run(IR);
-
   return IR;
 }
 

@@ -1,4 +1,5 @@
 #include "bort/IR/BasicBlock.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include <fmt/format.h>
 
 namespace bort::ir {
@@ -11,4 +12,10 @@ BasicBlock::BasicBlock(std::string name)
                                   : std::move(name) } {
 }
 
+auto BasicBlock::getLast() const -> Ref<Instruction> {
+  return m_Instructions.back();
+}
+auto BasicBlock::getLastAsBranch() const -> Ref<BranchInst> {
+  return dynCastRef<BranchInst>(getLast());
+}
 } // namespace bort::ir

@@ -10,6 +10,10 @@ public:
   static auto createUnique(const Ref<Variable>& variable) -> ValueRef;
   static auto get(const Ref<Variable>& variable) -> ValueRef;
 
+  [[nodiscard]] auto getVariable() const -> Ref<Variable> {
+    return m_Variable;
+  }
+
 private:
   explicit VariableUse(Ref<Variable> variable, std::string name)
       : Operand{ variable->getType(), std::move(name) },

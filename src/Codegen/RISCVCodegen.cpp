@@ -2,13 +2,17 @@
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/Codegen/InstructionVisitorBase.hpp"
+#include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/MachineRegister.hpp"
+#include "bort/Codegen/RARSMacroCallInst.hpp"
 #include "bort/Codegen/Utils.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/BranchInst.hpp"
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
+#include "bort/IR/GepInst.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
@@ -19,13 +23,17 @@
 #include "bort/IR/StoreInst.hpp"
 #include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
+#include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 #include "cul/BiMap.hpp"
 #include <algorithm>
+#include <boost/range/adaptor/indexed.hpp>
 #include <cul/cul.hpp>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
 #include <memory>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -41,8 +49,12 @@ auto RVInstInfo::toString() const -> std::string {
   return fmt::format("rv_ii .inst_name={}", InstName);
 }
 
+auto RARSMacroDefinitions::toString() const -> std::string {
+  return fmt::format("rars_macros .num_defined={}", Macros.size());
+}
+
 auto RVBranchInfo::toString() const -> std::string {
-  return fmt::format("rv_bri .is_single_op={}", IsSingleOp);
+  return fmt::format("rv_bri .is_rhs_zero={}", NoRHS);
 }
 
 struct MemoryDependencyMDTag : MDTag {
@@ -51,16 +63,19 @@ struct MemoryDependencyMDTag : MDTag {
   }
 };
 
-class PreprocessVisitor : public InstructionVisitorBase {
+static void markForRemoval(const Ref<ir::Instruction>& inst) {
+  inst->addMDNode(RemoveInstructionMDTag{});
+}
+
+/// Operates on IR only. Removes immediate operands from certain
+/// instructions, desugars some constructions
+class PreprocessPass : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
     // eliminate immediatness
-    for (int i{ 1 }; i <= 2; i++) {
+    for (int i{ OpInst::Src1Idx }; i <= OpInst::Src2Idx; i++) {
       if (auto srcConst{ dynCastRef<Constant>(opInst->getOperand(i)) }) {
-        auto newIRReg{ Register::getOrCreate(srcConst->getType()) };
-        m_CurrentBBIter->insertBefore(
-            m_CurrentInstIter, makeRef<MoveInst>(newIRReg, srcConst));
-        opInst->setOperand(i, newIRReg);
+        opInst->setOperand(i, moveToNewReg(srcConst));
       }
 
       if (opInst->getOp() == TokenKind::Plus ||
@@ -76,6 +91,57 @@ private:
     if (unaryInst->getOp() == TokenKind::Amp) {
       unaryInst->getSrc()->addMDNode(MemoryDependencyMDTag{});
     }
+
+    if (auto srcConst{ dynCastRef<Constant>(unaryInst->getSrc()) }) {
+      unaryInst->setSrc(moveToNewReg(srcConst));
+    }
+  }
+
+  void visit(const Ref<GepInst>& gepInst) override {
+    if (auto indexConstant{ dynCastRef<Constant>(gepInst->getIndex()) }) {
+      gepInst->setIndex(moveToNewReg(indexConstant));
+    }
+  }
+
+  /// %arrPtr = addr %arr
+  /// %valueReg = GA[0]
+  /// store %valueReg, %arrPtr
+  /// %arrPtr = add %arrPtr, %elementSize
+  /// ...
+  void processGlobalArrayAssignment(const Ref<ir::MoveInst>& inst,
+                                    const Ref<ir::GlobalArray>& GA) {
+    auto arrTy{ dynCastRef<ArrayType>(GA->getType()) };
+    auto arrPtrTy{ PointerType::get(arrTy->getBaseType()) };
+    auto arrPtr{ Register::getOrCreate(arrPtrTy) };
+    auto elementSize{ IntegralConstant::getInt(
+        arrTy->getBaseType()->getSizeof()) };
+    auto valueReg{ Register::getOrCreate(arrPtrTy->getPointee()) };
+
+    auto lastIter{ m_CurrentInstIter };
+    auto addInstruction{ [&](auto&& inst) {
+      m_CurrentBBIter->insertAfter(lastIter, inst);
+      lastIter++;
+    } };
+
+    addInstruction(makeRef<UnaryInst>(TokenKind::Amp, arrPtr,
+                                      inst->getDestination()));
+    for (auto&& el : GA->getValues() | boost::adaptors::indexed()) {
+      addInstruction(makeRef<MoveInst>(valueReg, el.value()));
+      addInstruction(makeRef<StoreInst>(valueReg, arrPtr, elementSize));
+      if (static_cast<size_t>(el.index()) != GA->getValues().size() - 1) {
+        addInstruction(makeRef<OpInst>(TokenKind::Plus, arrPtr, arrPtr,
+                                       elementSize));
+      }
+    }
+
+    markForRemoval(inst);
+  }
+
+  void visit(const Ref<MoveInst>& moveInst) override {
+    if (auto GA{ dynCastRef<GlobalArray>(moveInst->getSrc()) }) {
+      processGlobalArrayAssignment(moveInst, GA);
+      return;
+    }
   }
 
   void visit(const Ref<ir::BranchInst>& brInst) override {
@@ -86,32 +152,40 @@ private:
     RVBranchInfo info{ false };
     auto [lhs, rhs]{ brInst->getOperands() };
     if (auto lhsConst{ dynCastRef<Constant>(lhs) }) {
-      auto newIRReg{ Register::getOrCreate(lhsConst->getType()) };
-      m_CurrentBBIter->insertBefore(
-          m_CurrentInstIter, makeRef<MoveInst>(newIRReg, lhsConst));
-      lhs = newIRReg;
+      lhs = moveToNewReg(lhsConst);
     }
 
-    if (auto rhsConst{ dynCastRef<Constant>(rhs) }) {
-      if (auto rhsInt{ dynCastRef<IntConstant>(rhsConst) }) {
-        if (rhsInt->getValue() == 0) {
-          info.IsSingleOp = true;
-          rhs             = nullptr;
-        }
+    auto rhsConstant{ dynCastRef<Constant>(rhs) };
+    auto rhsIntConstant{ dynCastRef<IntegralConstant>(rhs) };
+    if (rhsConstant) {
+      if (rhsIntConstant && rhsIntConstant->getValue() == 0) {
+        info.NoRHS = true;
+        rhs        = nullptr;
       } else {
-        auto newIRReg{ Register::getOrCreate(rhsConst->getType()) };
-        m_CurrentBBIter->insertBefore(
-            m_CurrentInstIter, makeRef<MoveInst>(newIRReg, rhsConst));
-        rhs = newIRReg;
+        rhs = moveToNewReg(rhsConstant);
       }
     }
 
     brInst->setOperands(lhs, rhs);
     brInst->addMDNode(info);
   }
+
+  void visit(const Ref<StoreInst>& storeInst) override {
+    if (auto srcConstant{
+            dynCastRef<Constant>(storeInst->getSource()) }) {
+      storeInst->setSource(moveToNewReg(srcConstant));
+    }
+  }
+
+  auto moveToNewReg(const Ref<Constant>& constant) -> Ref<Register> {
+    auto newIRReg{ Register::getOrCreate(constant->getType()) };
+    m_CurrentBBIter->insertBefore(m_CurrentInstIter,
+                                  makeRef<MoveInst>(newIRReg, constant));
+    return newIRReg;
+  }
 };
 
-class InstructionChoiceVisitor : public InstructionVisitorBase {
+class InstructionChoicePass : public InstructionVisitorBase {
 private:
   void visit(const Ref<ir::OpInst>& opInst) override {
     static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
@@ -135,6 +209,19 @@ private:
     opInst->addMDNode(info);
   }
 
+  void visit(const Ref<UnaryInst>& unaryInst) override {
+    static constexpr cul::BiMap s_UnaryInstNames{ [](auto&& selector) {
+      return selector.Case(TokenKind::Minus, "neg");
+    } };
+
+    bort_assert(s_UnaryInstNames.Find(unaryInst->getOp()).has_value(),
+                "Unknown unary name");
+
+    RVInstInfo info{ std::string{
+        s_UnaryInstNames.Find(unaryInst->getOp()).value() } };
+    unaryInst->addMDNode(info);
+  }
+
   void visit(const Ref<ir::BranchInst>& brInst) override {
     static constexpr cul::BiMap s_BranchModePostfix{ [](auto&& selector) {
       return selector.Case(TokenKind::Equals, "eq")
@@ -153,7 +240,7 @@ private:
           "b{}", s_BranchModePostfix.Find(brInst->getMode()).value());
 
       auto* brInfo = brInst->getMDNode<RVBranchInfo>();
-      if (brInfo->IsSingleOp) {
+      if (brInfo->NoRHS) {
         info.InstName += "z";
       }
     }
@@ -200,6 +287,19 @@ private:
     RVInstInfo info{ "call" };
     callInst->addMDNode(std::move(info));
   }
+};
+
+class StoreSourceOperandMD : public Metadata {
+public:
+  explicit StoreSourceOperandMD(Ref<ir::Operand> op)
+      : Operand{ std::move(op) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override {
+    return fmt::format("store_op .op=%{}", Operand->getName());
+  }
+
+  Ref<ir::Operand> Operand;
 };
 
 struct FrameOffset : public Metadata {
@@ -347,6 +447,17 @@ void Generator::assignLocalOperandsOffsets() {
   }
 }
 
+void Generator::fillOperandUsages() {
+  for (auto&& func : m_Module) {
+    for (auto&& bb : func) {
+      auto operands{ getUniqueOperands(bb) };
+      for (auto&& operand : operands) {
+        m_OperandUsages[operand].insert(&bb);
+      }
+    }
+  }
+}
+
 auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
     const -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>> {
   Ref<RegisterLoc> regLoc{ nullptr };
@@ -359,6 +470,16 @@ auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
     }
   }
   return { regLoc, inMemoryLoc };
+}
+
+auto Generator::notLocalToBBFilter(const Ref<ir::Operand>& op,
+                                   const ir::BasicBlock& bb) -> bool {
+  return isaRef<VariableUse>(op) ||
+         std::count_if(m_OperandUsages[op].begin(),
+                       m_OperandUsages[op].end(),
+                       [&bb](const auto* usageBB) {
+                         return usageBB != &bb;
+                       }) > 0;
 }
 
 void Generator::spillIf(const SpillFilter& filter) {
@@ -388,6 +509,7 @@ static void attachAdditionalCode(IRFunction& func) {
                   "{}(sp)\naddi fp, sp, {}\n",
                   frameInfo->Size, frameInfo->Size - 4,
                   frameInfo->Size - 8, frameInfo->Size);
+
   std::string retCode{ "ret" };
   // probably not the best way
   if (func.getName() == "main") {
@@ -399,21 +521,29 @@ static void attachAdditionalCode(IRFunction& func) {
   retBB->addInstruction(makeRef<LoadInst>(
       RVMachineRegister::get(GPR::ra),
       makeRef<StackLoc>(frameInfo->Size - 4),
-      IntConstant::getOrCreate(IntType::get()->getSizeof())));
+      IntegralConstant::getInt(IntType::get()->getSizeof())));
   retBB->addInstruction(makeRef<LoadInst>(
       RVMachineRegister::get(GPR::fp),
       makeRef<StackLoc>(frameInfo->Size - 8),
-      IntConstant::getOrCreate(IntType::get()->getSizeof())));
+      IntegralConstant::getInt(IntType::get()->getSizeof())));
   retBB->addInstruction(
       makeRef<OpInst>(TokenKind::Plus, RVMachineRegister::get(GPR::sp),
                       RVMachineRegister::get(GPR::sp),
-                      IntConstant::getOrCreate(frameInfo->Size)));
+                      IntegralConstant::getInt(frameInfo->Size)));
   functionPrologueEpilogue.Epilogue = fmt::format("{}\n\n", retCode);
   func.addMDNode(functionPrologueEpilogue);
 }
 
+static constexpr std::array ArgRegisters{ GPR::a0, GPR::a1, GPR::a2,
+                                          GPR::a3, GPR::a4, GPR::a5,
+                                          GPR::a6, GPR::a7 };
+
 void Generator::generate() {
-  PreprocessVisitor().run(m_Module);
+  m_Module.addMDNode(RARSMacroDefinitions{});
+  PreprocessPass().run(m_Module);
+  InstructionRemover().run(m_Module);
+
+  fillOperandUsages();
   assignLocalOperandsOffsets();
   for (m_CurrentFuncIter = m_Module.begin();
        m_CurrentFuncIter != m_Module.end(); m_CurrentFuncIter++) {
@@ -422,26 +552,39 @@ void Generator::generate() {
     for (m_CurrentBBIter = func.begin(); m_CurrentBBIter != func.end();
          m_CurrentBBIter++) {
       auto& bb{ *m_CurrentBBIter };
-      reinitDescriptors(bb);
+
+      reinitDescriptors(bb, m_CurrentBBIter == func.begin());
+
+      SpillFilter nonLocalSpillFilter{ [this, &bb](const auto& op) {
+        return notLocalToBBFilter(op, bb);
+      } };
+
       for (m_CurrentInstIter = bb.begin(); m_CurrentInstIter != bb.end();
            m_CurrentInstIter++) {
         auto isLast{ ++InstIter{ m_CurrentInstIter } == bb.end() };
         auto isJump{ isJumpInst(*m_CurrentInstIter) };
         if (isLast && isJump) {
           // spill before branch
-          spillIf();
+          spillIf(nonLocalSpillFilter);
         }
         genericVisit(*m_CurrentInstIter);
         if (isLast && !isJump) {
           // spill after other
           m_CurrentInstIter++;
-          spillIf();
+          spillIf(nonLocalSpillFilter);
           break;
         }
       }
     }
   }
-  InstructionChoiceVisitor().run(m_Module);
+
+  InstructionRemover().run(m_Module);
+  InstructionChoicePass().run(m_Module);
+
+  auto* macros{ m_Module.getMDNode<RARSMacroDefinitions>() };
+  for (auto&& macroID : m_UsedMacros) {
+    macros->Macros.push_back(intrinsics::getDefinition(macroID));
+  }
 }
 
 void Generator::generateLoad(const Ref<ir::Operand>& op,
@@ -479,7 +622,7 @@ void Generator::generateLoad(const Ref<ir::Operand>& op,
       m_CurrentInstIter,
       makeRef<LoadInst>(
           reg, *memoryLocIt,
-          IntConstant::getOrCreate(op->getType()->getSizeof())));
+          IntegralConstant::getInt(op->getType()->getSizeof())));
 }
 
 void Generator::generateStore(const Ref<ir::Operand>& op,
@@ -487,11 +630,10 @@ void Generator::generateStore(const Ref<ir::Operand>& op,
                               const Ref<ValueLoc>& loc) {
   m_OperandLocs[op].insert(loc);
 
-  m_CurrentBBIter->insertBefore(
-      m_CurrentInstIter,
-      makeRef<StoreInst>(
-          reg, loc,
-          IntConstant::getOrCreate(op->getType()->getSizeof())));
+  auto storeInst{ makeRef<StoreInst>(
+      reg, loc, IntegralConstant::getInt(op->getType()->getSizeof())) };
+  storeInst->addMDNode(StoreSourceOperandMD{ op });
+  m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(storeInst));
 }
 
 void Generator::processSourceChoice(const RVMachineRegisterRef& reg,
@@ -559,6 +701,7 @@ void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
     bort_assert(inMemoryLoc, "Addr operand memory consistency broken");
     bort_assert(dstReg, "Addr destination register not chosen");
     evaluateLocAddress(inMemoryLoc, dstReg);
+    markForRemoval(unaryInst);
     return;
   }
 
@@ -569,6 +712,31 @@ void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
   }
 }
 
+void Generator::visit(const Ref<ir::GepInst>& gepInst) {
+  auto bpOp{ dynCastRef<Operand>(gepInst->getBasePtr()) };
+  bort_assert(bpOp, "Gep base pointer should be operand");
+  auto bpReg{ chooseReadReg(bpOp) };
+  processSourceChoice(bpReg, bpOp);
+  gepInst->setArray(bpReg);
+
+  if (auto op{ dynCastRef<Operand>(gepInst->getIndex()) }) {
+    auto reg{ chooseReadReg(op) };
+    processSourceChoice(reg, op);
+    gepInst->setIndex(reg);
+  }
+
+  gepInst->setDestination(gepInst->getBasePtr());
+  processDstChoice(bpReg, bpOp);
+  // elem.ptr %ptr %index %stride_shift
+  m_CurrentBBIter->insertBefore(
+      m_CurrentInstIter,
+      createMacroCall(intrinsics::MacroID::ElemPtr, gepInst->getBasePtr(),
+                      gepInst->getIndex(),
+                      IntegralConstant::getInt(
+                          std::log2(gepInst->getType()->getSizeof()))));
+  markForRemoval(gepInst);
+}
+
 void Generator::visit(const Ref<ir::BranchInst>& brInst) {
   if (!brInst->isConditional()) {
     return;
@@ -577,9 +745,7 @@ void Generator::visit(const Ref<ir::BranchInst>& brInst) {
   for (size_t i{ BranchInst::LHSIdx }; i <= BranchInst::RHSIdx; i++) {
     if (auto op{ dynCastRef<Operand>(brInst->getOperand(i)) }) {
       auto reg{ chooseReadReg(op) };
-      if (!m_RegisterContent[reg].contains(op)) {
-        generateLoad(op, reg);
-      }
+      processSourceChoice(reg, op);
 
       brInst->setOperand(i, reg);
     }
@@ -602,6 +768,7 @@ void Generator::visit(const Ref<ir::LoadInst>& loadInst) {
 
 void Generator::visit(const Ref<ir::StoreInst>& storeInst) {
   if (auto sourceOp{ dynCastRef<Operand>(storeInst->getSource()) }) {
+    storeInst->addMDNode(StoreSourceOperandMD{ sourceOp });
     auto reg{ chooseReadReg(sourceOp) };
     processSourceChoice(reg, sourceOp);
     storeInst->setSource(reg);
@@ -638,22 +805,19 @@ void Generator::visit(const Ref<ir::MoveInst>& mvInst) {
 }
 
 void Generator::visit(const Ref<ir::CallInst>& callInst) {
-  static constexpr std::array s_ArgRegisters{ GPR::a0, GPR::a1, GPR::a2,
-                                              GPR::a3, GPR::a4, GPR::a5,
-                                              GPR::a6, GPR::a7 };
   int argRegN{ 0 };
   for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
     auto arg{ callInst->getArg(i) };
     auto argOp{ dynCastRef<Operand>(arg) };
 
-    if (argRegN == s_ArgRegisters.size()) {
+    if (argRegN == ArgRegisters.size()) {
       bort_assert(false,
                   "Too many arguments, memory args not implemented");
     }
 
-    auto argReg{ RVMachineRegister::get(s_ArgRegisters.at(argRegN++)) };
-    if (argOp && !m_RegisterContent[argReg].contains(argOp)) {
-      generateLoad(argOp, argReg);
+    auto argReg{ RVMachineRegister::get(ArgRegisters.at(argRegN++)) };
+    if (argOp) {
+      processSourceChoice(argReg, argOp);
     } else if (!argOp) {
       // it is immediate
       m_CurrentBBIter->insertBefore(m_CurrentInstIter,
@@ -675,6 +839,7 @@ void Generator::visit(const Ref<ir::CallInst>& callInst) {
 
 void Generator::visit(const Ref<ir::RetInst>& retInst) {
 
+  markForRemoval(retInst);
   if (retInst->hasValue()) {
     auto reg{ RVMachineRegister::get(GPR::a0) };
 
@@ -702,7 +867,7 @@ void Generator::visit(const Ref<ir::RetInst>& retInst) {
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(brToRet));
 }
 
-void Generator::reinitDescriptors(const BasicBlock& bb) {
+void Generator::reinitDescriptors(const BasicBlock& bb, bool isEntry) {
   for (int i{ static_cast<int>(GPR::VALUE_REGS_START) };
        i != static_cast<int>(GPR::VALUE_REGS_END); i++) {
     m_RegisterContent[RVMachineRegister::get(static_cast<GPR>(i))]
@@ -718,6 +883,25 @@ void Generator::reinitDescriptors(const BasicBlock& bb) {
     bort_assert(opLoc, "Operand has no FrameOffset");
     m_OperandLocs[operand].insert(makeRef<StackLoc>(opLoc->Offset));
   }
+
+  if (isEntry) {
+    for (auto&& argIt : m_CurrentFuncIter->getFunction()->getArgs() |
+                            boost::adaptors::indexed()) {
+      for (auto&& [op, _] : m_OperandLocs) {
+        if (auto opVU{ dynCastRef<VariableUse>(op) }) {
+          if (opVU->getVariable() == argIt.value()) {
+            bort_assert(static_cast<size_t>(argIt.index()) <
+                            ArgRegisters.size(),
+                        "Memory args not implemented");
+            auto argRegister{ RVMachineRegister::get(
+                ArgRegisters.at(argIt.index())) };
+            m_OperandLocs[op] = { makeRef<RegisterLoc>(argRegister) };
+            m_RegisterContent[argRegister] = { op };
+          }
+        }
+      }
+    }
+  }
 }
 
 void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
@@ -727,7 +911,7 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
         m_CurrentInstIter,
         makeRef<OpInst>(TokenKind::Plus, dest,
                         RVMachineRegister::get(GPR::sp),
-                        IntConstant::getOrCreate(stackLoc->getOffset())));
+                        IntegralConstant::getInt(stackLoc->getOffset())));
     return;
   }
 

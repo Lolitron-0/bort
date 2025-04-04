@@ -13,6 +13,7 @@
 #include "bort/IR/StoreInst.hpp"
 #include "bort/IR/UnaryInst.hpp"
 #include "bort/IR/Value.hpp"
+#include "bort/IR/VariableUse.hpp"
 #include "bort/Lex/Token.hpp"
 #include <fmt/base.h>
 #include <fmt/color.h>
@@ -20,6 +21,7 @@
 #include <fmt/ranges.h>
 #include <memory>
 
+static constexpr auto s_DefaultStyle(fmt::fg(fmt::color::white));
 static constexpr auto s_InstructionStyle(
     fmt::fg(fmt::color::blue_violet));
 static constexpr auto s_RegisterStyle(
@@ -60,6 +62,18 @@ auto formatValueColored(const bort::ir::ValueRef& val) -> std::string {
   }
   return fmt::format(s_UnknownStyle, "?{}",
                      val ? val->getName() : "null");
+}
+
+static auto formatFuncSignature(const IRFunction& func) -> std::string {
+  std::string args{};
+  std::string delim{ ", " };
+  for (auto&& arg : func.getFunction()->getArgs()) {
+    args += delim + arg->getType()->toString() + " " +
+            formatValueColored(VariableUse::get(arg));
+  }
+  args.erase(0, delim.size());
+  return fmt::format(s_DefaultStyle, "{}({})", func.getName(),
+                     std::move(args));
 }
 
 struct GlobalValueInitializerFormatter {
@@ -119,7 +133,8 @@ void IRPrinter::print(const Module& module) {
   fmt::print(stderr, "\n");
 
   for (auto&& func : module) {
-    fmt::print(stderr, s_MDStyle, "function {}\n", getMDClause(func));
+    fmt::print(stderr, s_MDStyle, "function {} {}\n",
+               formatFuncSignature(func), getMDClause(func));
     for (auto&& BB : func) {
       fmt::println(stderr, "{}:", BB.getName());
       for (auto&& inst : BB) {
@@ -130,6 +145,7 @@ void IRPrinter::print(const Module& module) {
         fmt::print(stderr, "; {}\n", getMDClause(*inst));
       }
     }
+    fmt::print(stderr, "\n");
   }
 }
 

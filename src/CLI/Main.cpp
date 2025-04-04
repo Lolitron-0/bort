@@ -1,8 +1,7 @@
 #include "bort/CLI/CLIOptions.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Codegen/BackendInstance.hpp"
 #include "bort/Frontend/FrontEndInstance.hpp"
-#include "bort/IR/IRCodegen.hpp"
-#include "bort/IR/IRPrinter.hpp"
 #include "bort/IR/MiddleEndInstance.hpp"
 #include <algorithm>
 #include <cxxopts.hpp>
@@ -56,7 +55,10 @@ auto main(int argc, char* argv[]) -> int {
   }
 
   bort::MiddleEndInstance middleEnd{ cliOptions, std::move(ast) };
-  auto&& IR{ middleEnd.run() };
+  auto IR{ middleEnd.run() };
+
+  bort::BackendInstance backend{ cliOptions, std::move(IR) };
+  backend.run();
 
   return 0;
 }

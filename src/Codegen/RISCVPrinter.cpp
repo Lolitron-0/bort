@@ -93,7 +93,7 @@ void Printer::visit(const Ref<ir::BranchInst>& brInst) {
   auto* BRI{ brInst->getMDNode<RVBranchInfo>() };
 
   if (brInst->isConditional()) {
-    if (BRI && BRI->IsRhsZero) {
+    if (BRI && BRI->NoRHS) {
       fmt::println(m_Stream, "{} {}, {}", II->InstName,
                    formatMachineValue(brInst->getLHS()),
                    brInst->getTarget()->getName());

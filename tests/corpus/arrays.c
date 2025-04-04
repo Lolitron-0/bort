@@ -1,5 +1,5 @@
 int main() {
-  int x[5];
+  int x[5] = {5,4,3,2,1};
 
   int y = 0;
 

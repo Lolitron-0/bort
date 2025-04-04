@@ -94,12 +94,12 @@ struct RARSMacroDefinitions final : public ir::Metadata {
 
 struct RVBranchInfo final : public ir::Metadata {
   explicit RVBranchInfo(bool isSingleOp)
-      : IsRhsZero{ isSingleOp } {
+      : NoRHS{ isSingleOp } {
   }
 
   [[nodiscard]] auto toString() const -> std::string override;
 
-  bool IsRhsZero;
+  bool NoRHS;
 };
 
 class RVMachineRegister final : public MachineRegister {

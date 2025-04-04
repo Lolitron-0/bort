@@ -54,7 +54,7 @@ auto RARSMacroDefinitions::toString() const -> std::string {
 }
 
 auto RVBranchInfo::toString() const -> std::string {
-  return fmt::format("rv_bri .is_rhs_zero={}", IsRhsZero);
+  return fmt::format("rv_bri .is_rhs_zero={}", NoRHS);
 }
 
 struct MemoryDependencyMDTag : MDTag {
@@ -128,7 +128,7 @@ private:
     for (auto&& el : GA->getValues() | boost::adaptors::indexed()) {
       addInstruction(makeRef<MoveInst>(valueReg, el.value()));
       addInstruction(makeRef<StoreInst>(valueReg, arrPtr, elementSize));
-      if (el.index() != GA->getValues().size() - 1) {
+      if (static_cast<size_t>(el.index()) != GA->getValues().size() - 1) {
         addInstruction(makeRef<OpInst>(TokenKind::Plus, arrPtr, arrPtr,
                                        elementSize));
       }
@@ -159,8 +159,8 @@ private:
     auto rhsIntConstant{ dynCastRef<IntegralConstant>(rhs) };
     if (rhsConstant) {
       if (rhsIntConstant && rhsIntConstant->getValue() == 0) {
-        info.IsRhsZero = true;
-        rhs            = nullptr;
+        info.NoRHS = true;
+        rhs        = nullptr;
       } else {
         rhs = moveToNewReg(rhsConstant);
       }
@@ -240,7 +240,7 @@ private:
           "b{}", s_BranchModePostfix.Find(brInst->getMode()).value());
 
       auto* brInfo = brInst->getMDNode<RVBranchInfo>();
-      if (brInfo->IsRhsZero) {
+      if (brInfo->NoRHS) {
         info.InstName += "z";
       }
     }
@@ -890,7 +890,8 @@ void Generator::reinitDescriptors(const BasicBlock& bb, bool isEntry) {
       for (auto&& [op, _] : m_OperandLocs) {
         if (auto opVU{ dynCastRef<VariableUse>(op) }) {
           if (opVU->getVariable() == argIt.value()) {
-            bort_assert(argIt.index() < ArgRegisters.size(),
+            bort_assert(static_cast<size_t>(argIt.index()) <
+                            ArgRegisters.size(),
                         "Memory args not implemented");
             auto argRegister{ RVMachineRegister::get(
                 ArgRegisters.at(argIt.index())) };

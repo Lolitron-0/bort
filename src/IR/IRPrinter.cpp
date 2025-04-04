@@ -119,11 +119,15 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Pipe, "or");
 } };
 
+namespace bort {
+
 template <>
 struct VisitorTraits<IRPrinter> {
   static constexpr bool isRefBased      = true;
   static constexpr bool ignoreUnhandled = true;
 };
+
+} // namespace bort
 
 void IRPrinter::print(const Module& module) {
   for (auto&& GV : module.getGlobals()) {

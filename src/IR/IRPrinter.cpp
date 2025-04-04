@@ -58,7 +58,8 @@ auto formatValueColored(const bort::ir::ValueRef& val) -> std::string {
     return fmt::format(s_RegisterStyle, "%{}{}", val->getName(),
                        getMDClause(*val));
   }
-  return fmt::format(s_UnknownStyle, "?{}", val->getName());
+  return fmt::format(s_UnknownStyle, "?{}",
+                     val ? val->getName() : "null");
 }
 
 struct GlobalValueInitializerFormatter {

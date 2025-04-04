@@ -157,7 +157,7 @@ private:
                            const Ref<ir::Operand>& op);
   void processDstChoice(const RVMachineRegisterRef& reg,
                         const Ref<ir::Operand>& op);
-  void reinitDescriptors(const ir::BasicBlock& bb);
+  void reinitDescriptors(const ir::BasicBlock& bb, bool isEntry);
   void addInstruction(const Ref<ir::Instruction>& inst);
   void assignLocalOperandsOffsets();
   void fillOperandUsages();

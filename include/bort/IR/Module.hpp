@@ -1,5 +1,5 @@
 #pragma once
-#include "bort/Basic/Assert.hpp"
+#include "bort/Frontend/Symbol.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/IR/BasicBlock.hpp"
 #include "bort/IR/GlobalValue.hpp"
@@ -11,8 +11,9 @@ namespace bort::ir {
 
 class IRFunction : public Value {
 public:
-  explicit IRFunction(std::string name)
-      : Value{ VoidType::get(), std::move(name) } {
+  explicit IRFunction(const Ref<Function>& function)
+      : Value{ VoidType::get(), function->getName() },
+        m_Function{ function } {
   }
 
   auto addBB(std::string name) -> BasicBlock* {
@@ -56,8 +57,13 @@ public:
     return m_BasicBlocks.cend();
   }
 
+  [[nodiscard]] auto getFunction() const -> Ref<Function> {
+    return m_Function;
+  }
+
 private:
   std::list<BasicBlock> m_BasicBlocks;
+  Ref<Function> m_Function;
 };
 
 using BBIter     = std::list<BasicBlock>::iterator;
@@ -103,8 +109,8 @@ public:
     m_Functions.back().addBB(std::move(name));
   }
 
-  void addFunction(std::string name) {
-    m_Functions.emplace_back(std::move(name));
+  void addFunction(Ref<Function> function) {
+    m_Functions.emplace_back(std::move(function));
   }
 
   [[nodiscard]] auto begin() {

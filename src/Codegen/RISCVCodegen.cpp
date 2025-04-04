@@ -509,6 +509,7 @@ static void attachAdditionalCode(IRFunction& func) {
                   "{}(sp)\naddi fp, sp, {}\n",
                   frameInfo->Size, frameInfo->Size - 4,
                   frameInfo->Size - 8, frameInfo->Size);
+
   std::string retCode{ "ret" };
   // probably not the best way
   if (func.getName() == "main") {
@@ -533,6 +534,10 @@ static void attachAdditionalCode(IRFunction& func) {
   func.addMDNode(functionPrologueEpilogue);
 }
 
+static constexpr std::array ArgRegisters{ GPR::a0, GPR::a1, GPR::a2,
+                                          GPR::a3, GPR::a4, GPR::a5,
+                                          GPR::a6, GPR::a7 };
+
 void Generator::generate() {
   m_Module.addMDNode(RARSMacroDefinitions{});
   PreprocessPass().run(m_Module);
@@ -548,7 +553,7 @@ void Generator::generate() {
          m_CurrentBBIter++) {
       auto& bb{ *m_CurrentBBIter };
 
-      reinitDescriptors(bb);
+      reinitDescriptors(bb, m_CurrentBBIter == func.begin());
 
       SpillFilter nonLocalSpillFilter{ [this, &bb](const auto& op) {
         return notLocalToBBFilter(op, bb);
@@ -740,9 +745,7 @@ void Generator::visit(const Ref<ir::BranchInst>& brInst) {
   for (size_t i{ BranchInst::LHSIdx }; i <= BranchInst::RHSIdx; i++) {
     if (auto op{ dynCastRef<Operand>(brInst->getOperand(i)) }) {
       auto reg{ chooseReadReg(op) };
-      if (!m_RegisterContent[reg].contains(op)) {
-        generateLoad(op, reg);
-      }
+      processSourceChoice(reg, op);
 
       brInst->setOperand(i, reg);
     }
@@ -802,22 +805,19 @@ void Generator::visit(const Ref<ir::MoveInst>& mvInst) {
 }
 
 void Generator::visit(const Ref<ir::CallInst>& callInst) {
-  static constexpr std::array s_ArgRegisters{ GPR::a0, GPR::a1, GPR::a2,
-                                              GPR::a3, GPR::a4, GPR::a5,
-                                              GPR::a6, GPR::a7 };
   int argRegN{ 0 };
   for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
     auto arg{ callInst->getArg(i) };
     auto argOp{ dynCastRef<Operand>(arg) };
 
-    if (argRegN == s_ArgRegisters.size()) {
+    if (argRegN == ArgRegisters.size()) {
       bort_assert(false,
                   "Too many arguments, memory args not implemented");
     }
 
-    auto argReg{ RVMachineRegister::get(s_ArgRegisters.at(argRegN++)) };
-    if (argOp && !m_RegisterContent[argReg].contains(argOp)) {
-      generateLoad(argOp, argReg);
+    auto argReg{ RVMachineRegister::get(ArgRegisters.at(argRegN++)) };
+    if (argOp) {
+      processSourceChoice(argReg, argOp);
     } else if (!argOp) {
       // it is immediate
       m_CurrentBBIter->insertBefore(m_CurrentInstIter,
@@ -867,7 +867,7 @@ void Generator::visit(const Ref<ir::RetInst>& retInst) {
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(brToRet));
 }
 
-void Generator::reinitDescriptors(const BasicBlock& bb) {
+void Generator::reinitDescriptors(const BasicBlock& bb, bool isEntry) {
   for (int i{ static_cast<int>(GPR::VALUE_REGS_START) };
        i != static_cast<int>(GPR::VALUE_REGS_END); i++) {
     m_RegisterContent[RVMachineRegister::get(static_cast<GPR>(i))]
@@ -882,6 +882,24 @@ void Generator::reinitDescriptors(const BasicBlock& bb) {
     auto* opLoc{ operand->getMDNode<FrameOffset>() };
     bort_assert(opLoc, "Operand has no FrameOffset");
     m_OperandLocs[operand].insert(makeRef<StackLoc>(opLoc->Offset));
+  }
+
+  if (isEntry) {
+    for (auto&& argIt : m_CurrentFuncIter->getFunction()->getArgs() |
+                            boost::adaptors::indexed()) {
+      for (auto&& [op, _] : m_OperandLocs) {
+        if (auto opVU{ dynCastRef<VariableUse>(op) }) {
+          if (opVU->getVariable() == argIt.value()) {
+            bort_assert(argIt.index() < ArgRegisters.size(),
+                        "Memory args not implemented");
+            auto argRegister{ RVMachineRegister::get(
+                ArgRegisters.at(argIt.index())) };
+            m_OperandLocs[op] = { makeRef<RegisterLoc>(argRegister) };
+            m_RegisterContent[argRegister] = { op };
+          }
+        }
+      }
+    }
   }
 }
 

@@ -237,7 +237,7 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
   for (auto&& paramVar : functionDeclNode->getFunction()->getArgs()) {
     VariableUse::createUnique(paramVar);
   }
-  m_Module.addFunction(functionDeclNode->getFunction()->getName());
+  m_Module.addFunction(functionDeclNode->getFunction());
   pushBB("", functionDeclNode->getFunction()->getName());
   genericVisit(functionDeclNode->getBody());
 

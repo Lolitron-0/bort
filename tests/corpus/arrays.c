@@ -1,4 +1,10 @@
 int main() {
-  int x[5] = {1,2,3,4,5};
-  x[0] = -1;
+  int x[5];
+
+  int y = 0;
+
+  while (y < 5) {
+    x[y] = y;
+    y    = y + 1;
+  }
 }

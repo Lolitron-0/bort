@@ -32,6 +32,9 @@ private:
   void visit(const Ref<IndexationExpr>& indexationNode) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
 
+  void promoteAssignmentOperands(const TypeRef& lhsTy, TypeRef& rhsTy,
+                                 const ASTDebugInfo& debugInfo);
+
   [[nodiscard]] static auto getArithmeticOpResultType(
       const TypeRef& lhsType, const TypeRef& rhsType) -> TypeRef;
 

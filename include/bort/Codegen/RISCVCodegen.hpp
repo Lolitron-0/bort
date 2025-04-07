@@ -151,8 +151,15 @@ private:
                                     const Ref<ir::GlobalArray>& GA);
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
       -> std::optional<RVMachineRegisterRef>;
-  auto chooseReadReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
-  auto chooseDstReg(const Ref<ir::Operand>& op) -> RVMachineRegisterRef;
+  auto chooseRegAndSpill(const Ref<ir::Operand>& op,
+                         std::unordered_set<ir::ValueRef> ctxOps = {})
+      -> RVMachineRegisterRef;
+  auto chooseReadReg(const Ref<ir::Operand>& op,
+                     std::unordered_set<ir::ValueRef> ctxOps = {})
+      -> RVMachineRegisterRef;
+  auto chooseDstReg(const Ref<ir::Operand>& op,
+                    std::unordered_set<ir::ValueRef> ctxOps = {})
+      -> RVMachineRegisterRef;
   void processSourceChoice(const RVMachineRegisterRef& reg,
                            const Ref<ir::Operand>& op);
   void processDstChoice(const RVMachineRegisterRef& reg,

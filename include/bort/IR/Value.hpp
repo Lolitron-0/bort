@@ -13,19 +13,10 @@ using ValueRef = Ref<Value>;
 
 class Value {
 public:
-  Value(const Value& other)
-      : m_Type{ other.m_Type },
-        m_Name{ other.m_Name },
-        m_MDList{ makeUnique<MDList>(*other.m_MDList) } {
-  }
+  Value(const Value& other);
   Value(Value&& other) = default;
 
-  auto operator=(Value other) -> Value& {
-    std::swap(m_Type, other.m_Type);
-    std::swap(m_Name, other.m_Name);
-    std::swap(m_MDList, other.m_MDList);
-    return *this;
-  }
+  auto operator=(Value other) -> Value&;
 
   virtual ~Value() = default;
 
@@ -62,11 +53,7 @@ public:
       -> std::optional<std::string>;
 
 protected:
-  explicit Value(TypeRef type, std::string name = "")
-      : m_Type{ std::move(type) },
-        m_Name{ std::move(name) },
-        m_MDList{ makeUnique<MDList>() } {
-  }
+  explicit Value(TypeRef type, std::string name = "");
 
 private:
   TypeRef m_Type;

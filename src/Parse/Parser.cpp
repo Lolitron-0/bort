@@ -278,16 +278,6 @@ auto Parser::parseDeclspec() -> TypeRef {
     type = PointerType::get(type);
   }
 
-  if (curTok().is(TokenKind::LBracket)) {
-    bort_assert(false, "Not implemented");
-    // consumeToken();
-    // if (curTok().isNot(TokenKind::RBracket)) {
-    //   Diagnostic::emitError(curTok(), "Expected ']'");
-    //   return invalidNode();
-    // }
-    // consumeToken();
-  }
-
   return type;
 }
 

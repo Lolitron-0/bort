@@ -153,7 +153,7 @@ auto Lexer::lexStringLiteral(SourceFileIt& pos) -> bool {
     ++pos;
   } else {
     Diagnostic::emitError(start, value.length(),
-                          "Unclosed string literal");
+                          "Missing terminating \"");
     throw LexerFatalError();
     return false;
   }
@@ -180,7 +180,7 @@ auto Lexer::lexCharLiteral(SourceFileIt& pos) -> bool {
   ++pos; // consume actual char
 
   if (*pos != '\'') {
-    Diagnostic::emitError(start, length, "Unclosed character literal");
+    Diagnostic::emitError(start, length, "Missing terminating '");
     throw LexerFatalError();
     return false;
   }

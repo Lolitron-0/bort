@@ -29,6 +29,8 @@ auto main(int argc, char* argv[]) -> int {
   // clang-format on
 
   cliParser.parse_positional("inputs");
+  cliParser.positional_help("inputs");
+  cliParser.show_positional_help();
 
   auto result{ cliParser.parse(argc, argv) };
 

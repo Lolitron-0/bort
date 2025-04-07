@@ -49,7 +49,7 @@ protected:
   auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   /// identifier \n
   /// -> identifier - variable \n
-  /// -> identifier '(' expr, ... ')' - function call \n
+  /// -> functionCallExpr \n
   /// -> identifier indexationExpr \n
   /// -> identifier ('++' | '--')
   auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
@@ -68,7 +68,7 @@ protected:
   /// unaryOpExpr -> unaryOp valueExpression
   auto parseUnaryOpExpr() -> Unique<ast::ExpressionNode>;
   /// expression
-  /// -> valueExpression (binOp valueExpression ...)
+  /// -> valueExpression binOpRhs 
   auto parseExpression() -> Unique<ast::ExpressionNode>;
   /// binOpRhs
   /// -> bipOp valueExpression (binOpRhs ...)
@@ -80,7 +80,7 @@ protected:
   auto parseDeclspec() -> TypeRef;
   /// declaration -> declspec (varDecl |  functionDecl)
   auto parseDeclarationStatement() -> Ref<ast::Statement>;
-  /// varDecl -> declspec identifier ';'
+  /// varDecl -> declspec identifier initializerExpr? ';'
   /// @todo declspec (identifier ('=' expr)?, ...) ';'
   auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
@@ -93,13 +93,14 @@ protected:
   auto parseFunctionCallExpr(const Token& nameTok)
       -> Unique<ast::FunctionCallExpr>;
   /// indexationExpr -> nameTok '[' expr ']'
-  /// desugared into pointer arithmetic
   auto parseIndexationExpr(const Token& nameTok)
       -> Unique<ast::ExpressionNode>;
   /// statement \n
   /// -> expression ';' \n
   /// -> block \n
   /// -> ifStatement \n
+  /// -> whileStatement \n
+  /// -> returnStatement \n
   auto parseStatement() -> Ref<ast::Statement>;
   /// block
   /// -> '{' statement... '}'

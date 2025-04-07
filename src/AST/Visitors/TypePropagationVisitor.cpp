@@ -1,6 +1,8 @@
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
 #include "bort/AST/ASTDebugInfo.hpp"
+#include "bort/AST/ASTNode.hpp"
 #include "bort/AST/NumberExpr.hpp"
+#include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
@@ -126,6 +128,8 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
   } else if (binopNode->isLogical()) {
     binopNode->setType(IntType::get());
   } else if (binopNode->getOp() == TokenKind::Assign) {
+    assertLvalue(binopNode->getLHS());
+
     auto lhsTy{ binopNode->getLHS()->getType() };
     auto rhsTy{ binopNode->getRHS()->getType() };
 
@@ -141,6 +145,7 @@ void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
 
   switch (unaryOpNode->getOp()) {
   case TokenKind::Amp:
+    assertLvalue(unaryOpNode->getOperand());
     // for arrays it's address of first element
     if (auto arrOpType{ dynCastRef<ArrayType>(type) }) {
       type = PointerType::get(arrOpType->getBaseType());
@@ -216,6 +221,23 @@ void TypePropagationVisitor::promoteAssignmentOperands(
         lhsTy->toString(), rhsTy->toString());
     throw FatalSemanticError();
   }
+}
+
+void TypePropagationVisitor::assertLvalue(const Ref<Node>& node) {
+  if (node->getKind() == NodeKind::VariableExpr ||
+      node->getKind() == NodeKind::IndexationExpr) {
+    return;
+  }
+
+  if (auto unOpNode{ dynCastRef<UnaryOpExpr>(node) }) {
+    if (unOpNode->getOp() == TokenKind::Star) {
+      return;
+    }
+  }
+
+  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(node).token,
+                        "Expected lvalue");
+  throw FatalSemanticError();
 }
 
 } // namespace bort::ast

@@ -119,21 +119,22 @@ auto Parser::parseIdentifierExpr() -> Unique<ast::ExpressionNode> {
       makeRef<Variable>(std::string{ identifierTok.getStringView() }));
 }
 
-auto Parser::tryParseLValue()
-    -> std::optional<Unique<ast::ExpressionNode>> {
-  if (curTok().is(TokenKind::Identifier)) {
-    return parseIdentifierExpr();
-  }
-  return std::nullopt;
+auto Parser::parseVarExpr() -> Unique<ast::ExpressionNode> {
+  bort_assert(curTok().is(TokenKind::Identifier), "Expected identifier");
+  auto varTok{ curTok() };
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::VariableExpr>(
+      ast::ASTDebugInfo{ varTok },
+      makeRef<Variable>(std::string{ varTok.getStringView() }));
 }
 
 auto Parser::parseValueExpression()
     -> std::unique_ptr<ast::ExpressionNode> {
-  if (auto lvalue{ tryParseLValue() }) {
-    return std::move(*lvalue);
-  }
 
   switch (curTok().getKind()) {
+  case TokenKind::Identifier:
+    return parseIdentifierExpr();
   case TokenKind::LParen:
     return parseParenExpr();
   case TokenKind::NumericLiteral:
@@ -185,19 +186,8 @@ auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
 
   auto op{ curTok() };
   consumeToken();
-  Unique<ast::ExpressionNode> operand;
-  if (op.is(TokenKind::Amp)) {
-    auto lvalueOpt{ tryParseLValue() };
-    if (!lvalueOpt) {
-      Diagnostic::emitError(curTok(), "Expected lvalue");
-      return invalidNode();
-    }
-    operand = std::move(*lvalueOpt);
-  } else {
-    operand = parseValueExpression();
-  }
   return m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-      ast::ASTDebugInfo{ op }, std::move(operand), op.getKind());
+      ast::ASTDebugInfo{ op }, parseValueExpression(), op.getKind());
 }
 
 auto Parser::parseExpression() -> std::unique_ptr<ast::ExpressionNode> {

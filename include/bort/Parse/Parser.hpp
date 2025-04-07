@@ -48,7 +48,7 @@ protected:
   /// @todo type-casts -> '(' declspec ')'
   auto parseParenExpr() -> Unique<ast::ExpressionNode>;
   /// identifier \n
-  /// -> identifier - variable \n
+  /// -> varExpr \n
   /// -> functionCallExpr \n
   /// -> identifier indexationExpr \n
   /// -> identifier ('++' | '--')
@@ -62,13 +62,12 @@ protected:
   auto parseValueExpression() -> Unique<ast::ExpressionNode>;
   /// sizeofExpr -> 'sizeof' (parenExpr | '(' declspec ')' )
   auto parseSizeofExpr() -> Unique<ast::ExpressionNode>;
-  /// lvalue \n
-  /// -> identifier
-  auto tryParseLValue() -> std::optional<Unique<ast::ExpressionNode>>;
+  /// varExpr -> identifier
+  auto parseVarExpr() -> Unique<ast::ExpressionNode>;
   /// unaryOpExpr -> unaryOp valueExpression
   auto parseUnaryOpExpr() -> Unique<ast::ExpressionNode>;
   /// expression
-  /// -> valueExpression binOpRhs 
+  /// -> valueExpression binOpRhs
   auto parseExpression() -> Unique<ast::ExpressionNode>;
   /// binOpRhs
   /// -> bipOp valueExpression (binOpRhs ...)

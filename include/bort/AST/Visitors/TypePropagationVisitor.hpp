@@ -1,4 +1,5 @@
 #pragma once
+#include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -32,6 +33,7 @@ private:
   void visit(const Ref<IndexationExpr>& indexationNode) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
 
+  void assertLvalue(const Ref<Node>& node);
   void promoteAssignmentOperands(const TypeRef& lhsTy, TypeRef& rhsTy,
                                  const ASTDebugInfo& debugInfo);
 

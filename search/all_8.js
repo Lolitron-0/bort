@@ -36,7 +36,7 @@ var searchData=
   ['ircodegen_2ecpp_33',['IRCodegen.cpp',['../IRCodegen_8cpp.html',1,'']]],
   ['ircodegen_2ehpp_34',['IRCodegen.hpp',['../IRCodegen_8hpp.html',1,'']]],
   ['irfunciter_35',['IRFuncIter',['../namespacebort_1_1ir.html#aac7200f4608a87ca4af189d9d06e5215',1,'bort::ir']]],
-  ['irfunction_36',['IRFunction',['../classbort_1_1ir_1_1IRFunction.html',1,'bort::ir::IRFunction'],['../classbort_1_1ir_1_1IRFunction.html#ab06d349c9c4fbcf5ff2ad504d0807a1a',1,'bort::ir::IRFunction::IRFunction()']]],
+  ['irfunction_36',['IRFunction',['../classbort_1_1ir_1_1IRFunction.html',1,'bort::ir::IRFunction'],['../classbort_1_1ir_1_1IRFunction.html#ab0bbd92e16ed7c5700321337f612afa5',1,'bort::ir::IRFunction::IRFunction()']]],
   ['irprinter_37',['IRPrinter',['../classbort_1_1ir_1_1IRPrinter.html',1,'bort::ir']]],
   ['irprinter_2ecpp_38',['IRPrinter.cpp',['../IRPrinter_8cpp.html',1,'']]],
   ['irprinter_2ehpp_39',['IRPrinter.hpp',['../IRPrinter_8hpp.html',1,'']]],

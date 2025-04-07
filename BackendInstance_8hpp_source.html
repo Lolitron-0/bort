@@ -99,23 +99,29 @@ $(document).ready(function(){initNavTree('BackendInstance_8hpp_source.html','');
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="Module_8hpp.html">bort/IR/Module.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebort.html">bort</a> {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="classbort_1_1BackendInstance.html">    6</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1BackendInstance.html">BackendInstance</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1BackendInstance.html">BackendInstance</a>(<a class="code hl_class" href="classbort_1_1CLIOptions.html">CLIOptions</a> cliOptions, <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">ir::Module</a> module);</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd">run</a>();</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>  </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="structbort_1_1BackendFatalError.html">    7</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structbort_1_1BackendFatalError.html">BackendFatalError</a> : std::runtime_error {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>  <span class="keyword">using </span>std::runtime_error::runtime_error;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>};</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <a class="code hl_class" href="classbort_1_1CLIOptions.html">CLIOptions</a> m_CLIOptions;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">ir::Module</a> m_Module;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>};</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} <span class="comment">// namespace bort</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classbort_1_1BackendInstance.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classbort_1_1BackendInstance.html">BackendInstance</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="classbort_1_1BackendInstance.html">BackendInstance</a>(<a class="code hl_class" href="classbort_1_1CLIOptions.html">CLIOptions</a> cliOptions, <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">ir::Module</a> module);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd">run</a>();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <a class="code hl_class" href="classbort_1_1CLIOptions.html">CLIOptions</a> m_CLIOptions;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_class" href="classbort_1_1ir_1_1Module.html">ir::Module</a> m_Module;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <span class="comment">// namespace bort</span></div>
 <div class="ttc" id="aCLIOptions_8hpp_html"><div class="ttname"><a href="CLIOptions_8hpp.html">CLIOptions.hpp</a></div></div>
 <div class="ttc" id="aModule_8hpp_html"><div class="ttname"><a href="Module_8hpp.html">Module.hpp</a></div></div>
-<div class="ttc" id="aclassbort_1_1BackendInstance_html"><div class="ttname"><a href="classbort_1_1BackendInstance.html">bort::BackendInstance</a></div><div class="ttdef"><b>Definition:</b> BackendInstance.hpp:6</div></div>
-<div class="ttc" id="aclassbort_1_1BackendInstance_html_ad26245bf74b6ba9242cd2695d08cc6cd"><div class="ttname"><a href="classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd">bort::BackendInstance::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition:</b> BackendInstance.cpp:15</div></div>
+<div class="ttc" id="aclassbort_1_1BackendInstance_html"><div class="ttname"><a href="classbort_1_1BackendInstance.html">bort::BackendInstance</a></div><div class="ttdef"><b>Definition:</b> BackendInstance.hpp:11</div></div>
+<div class="ttc" id="aclassbort_1_1BackendInstance_html_ad26245bf74b6ba9242cd2695d08cc6cd"><div class="ttname"><a href="classbort_1_1BackendInstance.html#ad26245bf74b6ba9242cd2695d08cc6cd">bort::BackendInstance::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition:</b> BackendInstance.cpp:17</div></div>
 <div class="ttc" id="aclassbort_1_1CLIOptions_html"><div class="ttname"><a href="classbort_1_1CLIOptions.html">bort::CLIOptions</a></div><div class="ttdef"><b>Definition:</b> CLIOptions.hpp:8</div></div>
-<div class="ttc" id="aclassbort_1_1ir_1_1Module_html"><div class="ttname"><a href="classbort_1_1ir_1_1Module.html">bort::ir::Module</a></div><div class="ttdef"><b>Definition:</b> Module.hpp:72</div></div>
-<div class="ttc" id="anamespacebort_html"><div class="ttname"><a href="namespacebort.html">bort</a></div><div class="ttdef"><b>Definition:</b> ASTNode.cpp:6</div></div>
+<div class="ttc" id="aclassbort_1_1ir_1_1Module_html"><div class="ttname"><a href="classbort_1_1ir_1_1Module.html">bort::ir::Module</a></div><div class="ttdef"><b>Definition:</b> Module.hpp:53</div></div>
+<div class="ttc" id="anamespacebort_html"><div class="ttname"><a href="namespacebort.html">bort</a></div><div class="ttdef"><b>Definition:</b> BinOpExpr.cpp:3</div></div>
+<div class="ttc" id="astructbort_1_1BackendFatalError_html"><div class="ttname"><a href="structbort_1_1BackendFatalError.html">bort::BackendFatalError</a></div><div class="ttdef"><b>Definition:</b> BackendInstance.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

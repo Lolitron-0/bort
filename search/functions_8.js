@@ -6,7 +6,7 @@ var searchData=
   ['insertbefore_3',['insertBefore',['../classbort_1_1ir_1_1BasicBlock.html#a115926307b50b4be326af8bcb4401455',1,'bort::ir::BasicBlock']]],
   ['insertinstruction_4',['insertInstruction',['../structbort_1_1ir_1_1TraversalContext.html#a6942ee9b754a2b33c93194b89624b1d2',1,'bort::ir::TraversalContext']]],
   ['instruction_5',['Instruction',['../classbort_1_1ir_1_1Instruction.html#a6168501c8e1aa363f46637bbd9b5e80f',1,'bort::ir::Instruction::Instruction(size_t numArgs, ValueRef destination)'],['../classbort_1_1ir_1_1Instruction.html#ab6c10fed97cd043d6b55fb156127670e',1,'bort::ir::Instruction::Instruction(size_t numArgs)']]],
-  ['irfunction_6',['IRFunction',['../classbort_1_1ir_1_1IRFunction.html#ab06d349c9c4fbcf5ff2ad504d0807a1a',1,'bort::ir::IRFunction']]],
+  ['irfunction_6',['IRFunction',['../classbort_1_1ir_1_1IRFunction.html#ab0bbd92e16ed7c5700321337f612afa5',1,'bort::ir::IRFunction']]],
   ['is_7',['is',['../classbort_1_1Type.html#aceb4990aab71cdec86275002119694f6',1,'bort::Type::is()'],['../classbort_1_1Token.html#a7342a2e80f747a4bb8e12114cf84a26d',1,'bort::Token::is()']]],
   ['isaref_8',['isaRef',['../namespacebort.html#addfec3adfed8b9b48effeeafaae80c9f',1,'bort']]],
   ['isarithmetic_9',['isArithmetic',['../classbort_1_1ast_1_1BinOpExpr.html#abdf50a1f0050143e4ff3eeea0bf4c090',1,'bort::ast::BinOpExpr']]],

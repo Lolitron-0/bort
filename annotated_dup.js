@@ -96,6 +96,7 @@ var annotated_dup =
         [ "VariableUse", "classbort_1_1ir_1_1VariableUse.html", "classbort_1_1ir_1_1VariableUse" ]
       ] ],
       [ "ArrayType", "classbort_1_1ArrayType.html", "classbort_1_1ArrayType" ],
+      [ "BackendFatalError", "structbort_1_1BackendFatalError.html", null ],
       [ "BackendInstance", "classbort_1_1BackendInstance.html", "classbort_1_1BackendInstance" ],
       [ "CharType", "classbort_1_1CharType.html", "classbort_1_1CharType" ],
       [ "CLIOptions", "classbort_1_1CLIOptions.html", "classbort_1_1CLIOptions" ],

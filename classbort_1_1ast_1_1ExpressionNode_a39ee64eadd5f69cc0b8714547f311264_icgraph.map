@@ -1,6 +1,5 @@
 <map id="bort::ast::ExpressionNode::setType" name="bort::ast::ExpressionNode::setType">
-<area shape="rect" id="node1" title=" " alt="" coords="488,37,677,77"/>
+<area shape="rect" id="node1" title=" " alt="" coords="488,5,677,45"/>
 <area shape="rect" id="node2" href="$classbort_1_1ast_1_1FunctionCallExpr.html#a4372747a996b35014a43db6cac3b03f1" title=" " alt="" coords="247,5,440,45"/>
-<area shape="rect" id="node4" href="$classbort_1_1ast_1_1VariableExpr.html#ab98d54ac2fbdb5c1e2170a5bd15e6d27" title=" " alt="" coords="260,69,427,109"/>
 <area shape="rect" id="node3" href="$classbort_1_1ast_1_1FunctionCallExpr.html#afab83ac2aea50cf6c880361ac1d7d826" title=" " alt="" coords="5,5,199,45"/>
 </map>

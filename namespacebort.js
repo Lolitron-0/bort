@@ -11,6 +11,7 @@ var namespacebort =
     [ "exceptions", "namespacebort_1_1exceptions.html", "namespacebort_1_1exceptions" ],
     [ "ir", "namespacebort_1_1ir.html", "namespacebort_1_1ir" ],
     [ "ArrayType", "classbort_1_1ArrayType.html", "classbort_1_1ArrayType" ],
+    [ "BackendFatalError", "structbort_1_1BackendFatalError.html", null ],
     [ "BackendInstance", "classbort_1_1BackendInstance.html", "classbort_1_1BackendInstance" ],
     [ "CharType", "classbort_1_1CharType.html", "classbort_1_1CharType" ],
     [ "CLIOptions", "classbort_1_1CLIOptions.html", "classbort_1_1CLIOptions" ],

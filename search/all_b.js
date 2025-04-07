@@ -22,7 +22,7 @@ var searchData=
   ['middleendinstance_19',['MiddleEndInstance',['../classbort_1_1MiddleEndInstance.html',1,'bort::MiddleEndInstance'],['../classbort_1_1MiddleEndInstance.html#a2704cbf904ba7ba1ada7da6396ad76f5',1,'bort::MiddleEndInstance::MiddleEndInstance()']]],
   ['middleendinstance_2ecpp_20',['MiddleEndInstance.cpp',['../MiddleEndInstance_8cpp.html',1,'']]],
   ['middleendinstance_2ehpp_21',['MiddleEndInstance.hpp',['../MiddleEndInstance_8hpp.html',1,'']]],
-  ['module_22',['Module',['../classbort_1_1ir_1_1Module.html',1,'bort::ir::Module'],['../classbort_1_1ir_1_1Module.html#ae402815d8a01816a5d34813a0b3e5215',1,'bort::ir::Module::Module()']]],
+  ['module_22',['Module',['../classbort_1_1ir_1_1Module.html',1,'bort::ir::Module'],['../classbort_1_1ir_1_1Module.html#a5a240a8a9ab1813b17bcb810b24ceaea',1,'bort::ir::Module::Module()']]],
   ['module_2ecpp_23',['Module.cpp',['../Module_8cpp.html',1,'']]],
   ['module_2ehpp_24',['Module.hpp',['../Module_8hpp.html',1,'']]],
   ['moveinst_25',['MoveInst',['../classbort_1_1ir_1_1MoveInst.html',1,'bort::ir::MoveInst'],['../classbort_1_1ir_1_1MoveInst.html#a40eafc57ae491eda9c3d8ec9a16ddb5a',1,'bort::ir::MoveInst::MoveInst()']]],

@@ -166,7 +166,7 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ad7fb31030c6b199bc0e09e329bbb5443"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>don't check null on error and then traverse, checking for null, to recieve more errors at once </dd></dl>
+<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>don't check null on error and then traverse, checking for null, to recieve more errors at once </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af42ae854eddea33b4b116346538da17a" name="af42ae854eddea33b4b116346538da17a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af42ae854eddea33b4b116346538da17a">&#9670;&#160;</a></span>Parser()</h2>
@@ -372,7 +372,7 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>declspec -&gt; ( 'int' | 'void' | 'char' ) ('*'...) </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>type qualifiers </dd></dl>
+<p>declspec -&gt; ( 'int' | 'void' | 'char' ) ('*'...) </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>type qualifiers </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -699,7 +699,7 @@ Here is the call graph for this function:</div>
 </div><div class="memdoc">
 <p>parenExpr <br  />
 -&gt; '(' expression ')' <br  />
- </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>type-casts -&gt; '(' declspec ')' </dd></dl>
+ </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>type-casts -&gt; '(' declspec ')' </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -886,6 +886,7 @@ Here is the call graph for this function:</div>
 -&gt; number <br  />
 -&gt; parenExpr <br  />
 -&gt; sizeofExpr <br  />
+-&gt; unaryOpExpr <br  />
 -&gt; lvalue </p>
 
 </div>
@@ -923,7 +924,7 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>varDecl -&gt; declspec identifier ';' </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>declspec (identifier ('=' expr)?, ...) ';' </dd></dl>
+<p>varDecl -&gt; declspec identifier ';' </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>declspec (identifier ('=' expr)?, ...) ';' </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

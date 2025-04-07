@@ -14,5 +14,6 @@ var searchData=
   ['opinst_2ehpp_11',['OpInst.hpp',['../OpInst_8hpp.html',1,'']]],
   ['oppromotiontypemap_12',['OpPromotionTypeMap',['../classbort_1_1ast_1_1TypePropagationVisitor.html#a9373b8e0a916dc91eac6c5f9fdc86e50',1,'bort::ast::TypePropagationVisitor']]],
   ['opresulttypemap_13',['OpResultTypeMap',['../classbort_1_1ast_1_1TypePropagationVisitor.html#abe5c9ad720204faaf1aa812559ba1b0b',1,'bort::ast::TypePropagationVisitor']]],
-  ['string_14',['string',['../classbort_1_1SourceFileIt.html#aab21f68f9d3ffe1322de0b41dfd07da7',1,'bort::SourceFileIt']]]
+  ['outputfilename_14',['OutputFilename',['../classbort_1_1CLIOptions.html#afcecaa54c4e79cc34ace1d91d99e8c8f',1,'bort::CLIOptions']]],
+  ['string_15',['string',['../classbort_1_1SourceFileIt.html#aab21f68f9d3ffe1322de0b41dfd07da7',1,'bort::SourceFileIt']]]
 ];

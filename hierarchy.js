@@ -64,6 +64,7 @@ var hierarchy =
     [ "bort::Parser", "classbort_1_1Parser.html", null ],
     [ "bort::Preprocessor", "classbort_1_1Preprocessor.html", null ],
     [ "std::runtime_error", null, [
+      [ "bort::BackendFatalError", "structbort_1_1BackendFatalError.html", null ],
       [ "bort::FrontEndFatalError", "classbort_1_1FrontEndFatalError.html", [
         [ "bort::LexerFatalError", "classbort_1_1LexerFatalError.html", null ],
         [ "bort::ast::FatalSemanticError", "classbort_1_1ast_1_1FatalSemanticError.html", null ]

@@ -1,10 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,105,144,131"/>
-<area shape="rect" id="node2" href="$classbort_1_1FrontEndFatalError.html" title=" " alt="" coords="196,48,371,73"/>
-<area shape="rect" id="node5" href="$classbort_1_1ast_1_1SymbolAlreadyDefinedError.html" title=" " alt="" coords="192,98,375,138"/>
-<area shape="rect" id="node6" href="$classbort_1_1exceptions_1_1SourceFileReaderError.html" title=" " alt="" coords="194,162,373,202"/>
-<area shape="rect" id="node3" href="$classbort_1_1LexerFatalError.html" title=" " alt="" coords="435,5,589,31"/>
-<area shape="rect" id="node4" href="$classbort_1_1ast_1_1FatalSemanticError.html" title=" " alt="" coords="424,55,600,95"/>
-<area shape="rect" id="node7" href="$classbort_1_1exceptions_1_1SourceFileFailedToOpen.html" title=" " alt="" coords="423,147,601,187"/>
-<area shape="rect" id="node8" href="$classbort_1_1exceptions_1_1SourceFileInvalidExtension.html" title=" " alt="" coords="423,211,601,251"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,84,144,109"/>
+<area shape="rect" id="node2" href="$structbort_1_1BackendFatalError.html" title=" " alt="" coords="197,5,370,31"/>
+<area shape="rect" id="node3" href="$classbort_1_1FrontEndFatalError.html" title=" " alt="" coords="196,55,371,80"/>
+<area shape="rect" id="node6" href="$classbort_1_1ast_1_1SymbolAlreadyDefinedError.html" title=" " alt="" coords="192,105,375,145"/>
+<area shape="rect" id="node7" href="$classbort_1_1exceptions_1_1SourceFileReaderError.html" title=" " alt="" coords="194,169,373,209"/>
+<area shape="rect" id="node4" href="$classbort_1_1LexerFatalError.html" title=" " alt="" coords="435,12,589,37"/>
+<area shape="rect" id="node5" href="$classbort_1_1ast_1_1FatalSemanticError.html" title=" " alt="" coords="424,62,600,102"/>
+<area shape="rect" id="node8" href="$classbort_1_1exceptions_1_1SourceFileFailedToOpen.html" title=" " alt="" coords="423,154,601,194"/>
+<area shape="rect" id="node9" href="$classbort_1_1exceptions_1_1SourceFileInvalidExtension.html" title=" " alt="" coords="423,218,601,258"/>
 </map>

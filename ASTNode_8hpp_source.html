@@ -190,21 +190,12 @@ $(document).ready(function(){initNavTree('ASTNode_8hpp_source.html',''); initRes
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> node;</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#if 0</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="keyword">template</span> &lt;std::derived_from&lt;Symbol&gt; T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="keyword">auto</span> registerSymbol(<a class="code hl_struct" href="structbort_1_1ast_1_1ASTDebugInfo.html">ASTDebugInfo</a> dbg, Args&amp;&amp;... args) -&gt; <a class="code hl_typedef" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt;T&gt;</a> {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <a class="code hl_typedef" href="namespacebort.html#a71954fa19c253eb3f36aa297f7cd3051">Unique&lt;T&gt;</a> symbol{ <span class="keyword">new</span> T{ std::forward&lt;Args&gt;(args)... } };</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    m_NodeDebugInfo.insert(std::make_pair(symbol.get(), std::move(dbg)));</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">return</span> symbol;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  }</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  std::vector&lt;Ref&lt;Node&gt;&gt; m_Children;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  std::unordered_map&lt;Node*, ASTDebugInfo&gt; m_NodeDebugInfo;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>};</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>} <span class="comment">// namespace bort::ast</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  std::vector&lt;Ref&lt;Node&gt;&gt; m_Children;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  std::unordered_map&lt;Node*, ASTDebugInfo&gt; m_NodeDebugInfo;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>};</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>} <span class="comment">// namespace bort::ast</span></div>
 <div class="ttc" id="aASTDebugInfo_8hpp_html"><div class="ttname"><a href="ASTDebugInfo_8hpp.html">ASTDebugInfo.hpp</a></div></div>
 <div class="ttc" id="aAssert_8hpp_html"><div class="ttname"><a href="Assert_8hpp.html">Assert.hpp</a></div></div>
 <div class="ttc" id="aAssert_8hpp_html_aa4489bace96135f1181039034084a7dd"><div class="ttname"><a href="Assert_8hpp.html#aa4489bace96135f1181039034084a7dd">bort_assert</a></div><div class="ttdeci">#define bort_assert(expr, msg)</div><div class="ttdef"><b>Definition:</b> Assert.hpp:9</div></div>
@@ -237,7 +228,7 @@ $(document).ready(function(){initNavTree('ASTNode_8hpp_source.html',''); initRes
 <div class="ttc" id="aclassbort_1_1ast_1_1VariableExpr_html"><div class="ttname"><a href="classbort_1_1ast_1_1VariableExpr.html">bort::ast::VariableExpr</a></div><div class="ttdef"><b>Definition:</b> VariableExpr.hpp:7</div></div>
 <div class="ttc" id="aclassbort_1_1ast_1_1WhileStmt_html"><div class="ttname"><a href="classbort_1_1ast_1_1WhileStmt.html">bort::ast::WhileStmt</a></div><div class="ttdef"><b>Definition:</b> WhileStmt.hpp:8</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_1_1internal_html_ab44779eb2c77daed4915d76e5ddc08bb"><div class="ttname"><a href="namespacebort_1_1ast_1_1internal.html#ab44779eb2c77daed4915d76e5ddc08bb">bort::ast::internal::dump</a></div><div class="ttdeci">void dump(int depth, std::string_view name, T value)</div></div>
-<div class="ttc" id="anamespacebort_1_1ast_html"><div class="ttname"><a href="namespacebort_1_1ast.html">bort::ast</a></div><div class="ttdef"><b>Definition:</b> ASTNode.cpp:6</div></div>
+<div class="ttc" id="anamespacebort_1_1ast_html"><div class="ttname"><a href="namespacebort_1_1ast.html">bort::ast</a></div><div class="ttdef"><b>Definition:</b> BinOpExpr.cpp:3</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html_af477babacfc630db95da7ed465bfe37a"><div class="ttname"><a href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37a">bort::ast::NodeKind</a></div><div class="ttdeci">NodeKind</div><div class="ttdef"><b>Definition:</b> ASTNode.hpp:18</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html_af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8"><div class="ttname"><a href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aab7662ae6f5a9d9ff8ff52a2248e78af8">bort::ast::NodeKind::CharExpr</a></div><div class="ttdeci">@ CharExpr</div></div>
 <div class="ttc" id="anamespacebort_1_1ast_html_af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283"><div class="ttname"><a href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">bort::ast::NodeKind::NUM_NODES</a></div><div class="ttdeci">@ NUM_NODES</div></div>

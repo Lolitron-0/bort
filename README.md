@@ -2,6 +2,15 @@
 
 **bort** is a cross-platform Small-C language cross compiler for RISC-V architecture.
 
+## Global TODOs
+- Global variables
+- for-loops
+- goto
+- switch
+- compound assignment (`+=`, `*=`, ...)
+- compound variable declaration (`int a = 5, b, c = d;`)
+- testing
+
 ## Build
 bort uses cmake build system, so building pipeline is pretty standard. All dependencies are downloaded during cmake configuration via `FetchContent` (~1G by now).
 

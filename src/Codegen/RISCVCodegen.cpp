@@ -355,7 +355,38 @@ auto Generator::tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
   return std::nullopt;
 }
 
-auto Generator::chooseReadReg(const Ref<ir::Operand>& op)
+auto Generator::chooseRegAndSpill(const Ref<ir::Operand>& op,
+                                  std::unordered_set<ir::ValueRef> ctxOps)
+    -> RVMachineRegisterRef {
+  for (int regIDCounter{ static_cast<int>(GPR::VALUE_REGS_END) - 1 };
+       regIDCounter >= static_cast<int>(GPR::VALUE_REGS_START);
+       regIDCounter--) {
+    GPR regID{ static_cast<GPR>(regIDCounter) };
+    // skip registers used in context
+    if (std::find_if(ctxOps.begin(), ctxOps.end(),
+                     [regID](const ir::ValueRef& op) {
+                       auto ctxReg{ dynCastRef<RVMachineRegister>(op) };
+                       return ctxReg && ctxReg->getGPRId() == regID;
+                     }) != ctxOps.end()) {
+      continue;
+    }
+
+    RVMachineRegisterRef reg{ RVMachineRegister::get(regID) };
+    for (auto&& oldOp : m_RegisterContent[reg]) {
+      bort_assert(oldOp != op, "Find free register failed");
+      auto [_, memLoc]{ getOperandRegisterMemoryLocs(oldOp) };
+      generateStore(oldOp, reg, memLoc);
+    }
+
+    return RVMachineRegister::get(regID);
+  }
+
+  bort_assert(false, "Fatal register allocation error");
+  return nullptr;
+}
+
+auto Generator::chooseReadReg(const Ref<ir::Operand>& op,
+                              std::unordered_set<ir::ValueRef> ctxOps)
     -> RVMachineRegisterRef {
   auto existingRegister{ tryFindRegisterWithOperand(op) };
   if (existingRegister.has_value()) {
@@ -366,12 +397,15 @@ auto Generator::chooseReadReg(const Ref<ir::Operand>& op)
     return pair.second.empty();
   }) };
 
-  bort_assert(freeRegIt != m_RegisterContent.end(),
-              "Spill not implemented");
-  return freeRegIt->first;
+  if (freeRegIt != m_RegisterContent.end()) {
+    return freeRegIt->first;
+  }
+
+  return chooseRegAndSpill(op, std::move(ctxOps));
 }
 
-auto Generator::chooseDstReg(const Ref<ir::Operand>& op)
+auto Generator::chooseDstReg(const Ref<ir::Operand>& op,
+                             std::unordered_set<ir::ValueRef> ctxOps)
     -> RVMachineRegisterRef {
   auto existingRegister{ tryFindRegisterWithOperand(op) };
   if (existingRegister.has_value()) {
@@ -384,9 +418,11 @@ auto Generator::chooseDstReg(const Ref<ir::Operand>& op)
         return (ops.size() == 1 && ops.contains(op)) || ops.empty();
       }) };
 
-  bort_assert(freeRegIt != m_RegisterContent.end(),
-              "Spill not implemented");
-  return freeRegIt->first;
+  if (freeRegIt != m_RegisterContent.end()) {
+    return freeRegIt->first;
+  }
+
+  return chooseRegAndSpill(op, std::move(ctxOps));
 }
 
 static constexpr cul::BiMap s_GPRStrings{ [](auto selector) {
@@ -666,18 +702,20 @@ void Generator::processDstChoice(const RVMachineRegisterRef& reg,
 
 void Generator::visit(const Ref<ir::OpInst>& opInst) {
   /// @todo destination register should be chosen differently
+  std::unordered_set<ValueRef> chosenOps;
   for (int i{ 1 }; i <= 2; i++) {
     auto op{ dynCastRef<Operand>(opInst->getOperand(i)) };
     if (op) {
-      auto reg{ chooseReadReg(op) };
+      auto reg{ chooseReadReg(op, chosenOps) };
       processSourceChoice(reg, op);
+      chosenOps.insert(reg);
 
       opInst->setOperand(i, reg);
     }
   }
 
   if (auto dstOp{ dynCastRef<Operand>(opInst->getDestination()) }) {
-    auto dstReg{ chooseDstReg(dstOp) };
+    auto dstReg{ chooseDstReg(dstOp, chosenOps) };
     processDstChoice(dstReg, dstOp);
 
     opInst->setDestination(std::move(dstReg));
@@ -685,12 +723,12 @@ void Generator::visit(const Ref<ir::OpInst>& opInst) {
 }
 
 void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
-  RVMachineRegisterRef dstReg;
-  if (auto dstOp{ dynCastRef<Operand>(unaryInst->getDestination()) }) {
-    dstReg = chooseDstReg(dstOp);
-    processDstChoice(dstReg, dstOp);
-    unaryInst->setDestination(dstReg);
-  }
+  bort_assert(isaRef<Operand>(unaryInst->getDestination()),
+              "UnaryInst destination should be operand");
+  auto dstOp{ dynCastRef<Operand>(unaryInst->getDestination()) };
+  RVMachineRegisterRef dstReg = chooseDstReg(dstOp);
+  processDstChoice(dstReg, dstOp);
+  unaryInst->setDestination(dstReg);
 
   if (unaryInst->getOp() == TokenKind::Amp) {
     bort_assert(unaryInst->getSrc()->getMDNode<MemoryDependencyMDTag>(),
@@ -706,7 +744,7 @@ void Generator::visit(const Ref<ir::UnaryInst>& unaryInst) {
   }
 
   if (auto op{ dynCastRef<Operand>(unaryInst->getSrc()) }) {
-    auto reg{ chooseReadReg(op) };
+    auto reg{ chooseReadReg(op, { dstReg }) };
     processSourceChoice(reg, op);
     unaryInst->setSrc(std::move(reg));
   }
@@ -720,7 +758,7 @@ void Generator::visit(const Ref<ir::GepInst>& gepInst) {
   gepInst->setArray(bpReg);
 
   if (auto op{ dynCastRef<Operand>(gepInst->getIndex()) }) {
-    auto reg{ chooseReadReg(op) };
+    auto reg{ chooseReadReg(op, { bpReg }) };
     processSourceChoice(reg, op);
     gepInst->setIndex(reg);
   }
@@ -760,7 +798,7 @@ void Generator::visit(const Ref<ir::LoadInst>& loadInst) {
   }
 
   if (auto dstOp{ dynCastRef<Operand>(loadInst->getDestination()) }) {
-    auto dstReg{ chooseDstReg(dstOp) };
+    auto dstReg{ chooseDstReg(dstOp, { loadInst->getLoc() }) };
     processDstChoice(dstReg, dstOp);
     loadInst->setDestination(dstReg);
   }
@@ -775,7 +813,7 @@ void Generator::visit(const Ref<ir::StoreInst>& storeInst) {
   }
 
   if (auto locOp{ dynCastRef<Operand>(storeInst->getLoc()) }) {
-    auto locReg{ chooseReadReg(locOp) };
+    auto locReg{ chooseReadReg(locOp, { storeInst->getSource() }) };
     processSourceChoice(locReg, locOp);
     storeInst->setLoc(makeRef<RegisterLoc>(locReg));
   }
@@ -794,7 +832,8 @@ void Generator::visit(const Ref<ir::MoveInst>& mvInst) {
   bort_assert(isaRef<Operand>(mvInst->getDestination()),
               "Move inst with immediate destination");
   auto dstOp{ dynCastRef<Operand>(mvInst->getDestination()) };
-  auto dstReg{ srcReg ? srcReg : chooseDstReg(dstOp) };
+  auto dstReg{ srcReg ? srcReg
+                      : chooseDstReg(dstOp, { mvInst->getSrc() }) };
 
   // dstOp is now in register
   m_RegisterContent[dstReg].insert(dstOp);

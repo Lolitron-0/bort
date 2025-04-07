@@ -57,6 +57,7 @@ protected:
   /// -> number \n
   /// -> parenExpr \n
   /// -> sizeofExpr \n
+  /// -> unaryOpExpr \n
   /// -> lvalue
   auto parseValueExpression() -> Unique<ast::ExpressionNode>;
   /// sizeofExpr -> 'sizeof' (parenExpr | '(' declspec ')' )

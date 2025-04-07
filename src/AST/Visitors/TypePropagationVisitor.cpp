@@ -1,4 +1,5 @@
 #include "bort/AST/Visitors/TypePropagationVisitor.hpp"
+#include "bort/AST/ASTDebugInfo.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
@@ -81,6 +82,7 @@ TypePropagationVisitor::TypePropagationVisitor() {
 
     s_ArithmeticOpPromotionTypeMap = {
       { { TypeKind::Char, TypeKind::Int }, IntType::get() },
+      { { TypeKind::Int, TypeKind::Char }, CharType::get() },
     };
   }
 }
@@ -108,7 +110,6 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
       throw FatalSemanticError();
     }
 
-    /// @todo probably should annotate promotion instead of changing type
     auto lhsPromotedTy{ s_ArithmeticOpPromotionTypeMap[{
         lhsTy->getKind(), opResultTy->getKind() }] };
     if (lhsPromotedTy) {
@@ -127,19 +128,10 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
   } else if (binopNode->getOp() == TokenKind::Assign) {
     auto lhsTy{ binopNode->getLHS()->getType() };
     auto rhsTy{ binopNode->getRHS()->getType() };
+
+    promoteAssignmentOperands(lhsTy, rhsTy,
+                              getASTRoot()->getNodeDebugInfo(binopNode));
     binopNode->setType(lhsTy);
-    /// @todo properly check constant assignment overflow
-    if (lhsTy->getSizeof() < rhsTy->getSizeof()) {
-      if (isaRef<NumberExpr>(binopNode->getRHS())) {
-        DEBUG_OUT("Narrowing constant assignment: {} to {}",
-                  rhsTy->toString(), lhsTy->toString());
-        return;
-      }
-      Diagnostic::emitWarning(
-          getASTRoot()->getNodeDebugInfo(binopNode).token,
-          "Narrowing conversion from {} to {}", rhsTy->toString(),
-          lhsTy->toString());
-    }
   }
 }
 
@@ -193,16 +185,35 @@ void TypePropagationVisitor::visit(
 
 void TypePropagationVisitor::visit(const Ref<VarDecl>& varDeclNode) {
   StructureAwareASTVisitor::visit(varDeclNode);
-  if (varDeclNode->hasInitializer() &&
-      varDeclNode->getInitializer()->getType() !=
-          varDeclNode->getVariable()->getType()) {
+  if (varDeclNode->hasInitializer()) {
+    auto varTy{ varDeclNode->getVariable()->getType() };
+    auto initTy{ varDeclNode->getInitializer()->getType() };
+    promoteAssignmentOperands(
+        varTy, initTy, getASTRoot()->getNodeDebugInfo(varDeclNode));
+  }
+}
+
+void TypePropagationVisitor::promoteAssignmentOperands(
+    const TypeRef& lhsTy, TypeRef& rhsTy, const ASTDebugInfo& debugInfo) {
+  auto rhsPromotedTy{
+    s_ArithmeticOpPromotionTypeMap[{ rhsTy->getKind(), lhsTy->getKind() }]
+  };
+
+  if (isaRef<IntType>(rhsTy) && isaRef<CharType>(lhsTy)) {
+    Diagnostic::emitWarning(debugInfo.token,
+                            "Narrowing conversion from {} to {}",
+                            rhsTy->toString(), lhsTy->toString());
+  }
+
+  if (rhsPromotedTy) {
+    rhsTy = rhsPromotedTy;
+  }
+
+  if (rhsTy != lhsTy) {
     Diagnostic::emitError(
-        getASTRoot()
-            ->getNodeDebugInfo(varDeclNode->getInitializer())
-            .token,
-        "Invalid initializer type, expected {}, got {} instead",
-        varDeclNode->getVariable()->getType()->toString(),
-        varDeclNode->getInitializer()->getType()->toString());
+        debugInfo.token,
+        "Invalid assignment RHS type, expected {}, got {} instead",
+        lhsTy->toString(), rhsTy->toString());
     throw FatalSemanticError();
   }
 }

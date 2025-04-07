@@ -98,15 +98,6 @@ public:
     return node;
   }
 
-#if 0
-  template <std::derived_from<Symbol> T, typename... Args>
-  auto registerSymbol(ASTDebugInfo dbg, Args&&... args) -> Unique<T> {
-    Unique<T> symbol{ new T{ std::forward<Args>(args)... } };
-    m_NodeDebugInfo.insert(std::make_pair(symbol.get(), std::move(dbg)));
-    return symbol;
-  }
-#endif
-
 private:
   std::vector<Ref<Node>> m_Children;
   std::unordered_map<Node*, ASTDebugInfo> m_NodeDebugInfo;

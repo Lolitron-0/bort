@@ -18,14 +18,10 @@ set(SOURCES
     src/Lex/Token.cpp
     src/Lex/Utils.cpp
     src/Parse/Parser.cpp
-    src/AST/ASTNode.cpp
     src/AST/BinOpExpr.cpp
     src/AST/UnaryOpExpr.cpp
     src/AST/Block.cpp
     src/AST/ExpressionNode.cpp
-    src/AST/FunctionDecl.cpp
-    src/AST/NumberExpr.cpp
-    src/AST/VarDecl.cpp
     src/AST/VariableExpr.cpp
     src/AST/Visitors/ASTVisitor.cpp
     src/AST/Visitors/SymbolResolutionVisitor.cpp

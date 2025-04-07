@@ -11,37 +11,18 @@ namespace bort::ir {
 
 class IRFunction : public Value {
 public:
-  explicit IRFunction(const Ref<Function>& function)
-      : Value{ VoidType::get(), function->getName() },
-        m_Function{ function } {
-  }
+  explicit IRFunction(const Ref<Function>& function);
 
-  auto addBB(std::string name) -> BasicBlock* {
-    m_BasicBlocks.emplace_back(std::move(name));
-    return &m_BasicBlocks.back();
-  }
+  auto addBB(std::string name) -> BasicBlock*;
 
-  [[nodiscard]] auto getBB(std::string name) -> BasicBlock* {
-    auto it{ std::find_if(m_BasicBlocks.begin(), m_BasicBlocks.end(),
-                          [&name](const auto& bb) {
-                            return bb.getName() == name;
-                          }) };
-    if (it == m_BasicBlocks.end()) {
-      return nullptr;
-    }
-    return &*it;
-  }
+  [[nodiscard]] auto getBB(std::string name) -> BasicBlock*;
 
   auto erase(std::list<BasicBlock>::iterator it) {
     return m_BasicBlocks.erase(it);
   }
 
-  auto getEntryBlock() -> BasicBlock& {
-    return m_BasicBlocks.front();
-  }
-  auto back() -> BasicBlock& {
-    return m_BasicBlocks.back();
-  }
+  auto getEntryBlock() -> BasicBlock&;
+  auto back() -> BasicBlock&;
 
   [[nodiscard]] auto begin() {
     return m_BasicBlocks.begin();
@@ -71,47 +52,22 @@ using IRFuncIter = std::list<IRFunction>::iterator;
 
 class Module : public Value {
 public:
-  Module()
-      : Value{ VoidType::get(), "module" } {
-  }
+  Module();
 
-  auto addInstruction(Ref<Instruction> instruction) -> ValueRef {
-    auto& lastBB{ m_Functions.back().back() };
-    lastBB.addInstruction(std::move(instruction));
-    return lastBB.getInstructions().back();
-  }
+  auto addInstruction(Ref<Instruction> instruction) -> ValueRef;
 
-  void revalidateBasicBlocks() {
-    for (auto&& func : m_Functions) {
-      for (auto it{ func.begin() }; it != func.end();) {
-        /// last BB can be empty
-        if (it->getInstructions().empty() &&
-            ++decltype(it){ it } != func.end()) {
-          it = func.erase(it);
-        } else {
-          it++;
-        }
-      }
-    }
-  }
+  void revalidateBasicBlocks();
 
-  auto addGlobal(Ref<GlobalValue> global) -> Ref<GlobalValue> {
-    m_Globals.push_back(std::move(global));
-    return m_Globals.back();
-  }
+  auto addGlobal(Ref<GlobalValue> global) -> Ref<GlobalValue>;
 
   [[nodiscard]] auto getGlobals() const
       -> const std::vector<Ref<GlobalValue>>& {
     return m_Globals;
   }
 
-  void addBasicBlock(std::string name) {
-    m_Functions.back().addBB(std::move(name));
-  }
+  void addBasicBlock(std::string name);
 
-  void addFunction(Ref<Function> function) {
-    m_Functions.emplace_back(std::move(function));
-  }
+  void addFunction(Ref<Function> function);
 
   [[nodiscard]] auto begin() {
     return m_Functions.begin();

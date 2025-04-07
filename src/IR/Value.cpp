@@ -20,4 +20,23 @@ auto Value::formatValue(const ValueRef& value)
   return std::nullopt;
 }
 
+Value::Value(const Value& other)
+    : m_Type{ other.m_Type },
+      m_Name{ other.m_Name },
+      m_MDList{ makeUnique<MDList>(*other.m_MDList) } {
+}
+
+auto Value::operator=(Value other) -> Value& {
+  std::swap(m_Type, other.m_Type);
+  std::swap(m_Name, other.m_Name);
+  std::swap(m_MDList, other.m_MDList);
+  return *this;
+}
+
+Value::Value(TypeRef type, std::string name)
+    : m_Type{ std::move(type) },
+      m_Name{ std::move(name) },
+      m_MDList{ makeUnique<MDList>() } {
+}
+
 } // namespace bort::ir

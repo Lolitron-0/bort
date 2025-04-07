@@ -15,14 +15,16 @@ auto main(int argc, char* argv[]) -> int {
   // clang-format off
   cliParser.add_options()
       ("h,help", "Show help")
-      ("E,preprocess", "Just preprocess file and dump it to stdout",
-       cxxopts::value<bool>(cliOptions.PreprocessorOnly))
+      // ("E,preprocess", "Just preprocess file and dump it to stdout",
+      //  cxxopts::value<bool>(cliOptions.PreprocessorOnly))
       ("dump-ast", "Dump AST to stderr",
        cxxopts::value<bool>(cliOptions.DumpAST))
       ("emit-ir", "Dump IR to stderr",
        cxxopts::value<bool>(cliOptions.EmitIR))
       ("dump-codegen-info", "Dump IR after codegen to stderr",
        cxxopts::value<bool>(cliOptions.DumpCodegenInfo))
+      ("o", "Output file, '-' for stdout",
+       cxxopts::value<std::string>(cliOptions.OutputFilename))
       ("inputs", "Small-C files to compile", cxxopts::value<std::vector<std::string>>());
   // clang-format on
 
@@ -37,6 +39,12 @@ auto main(int argc, char* argv[]) -> int {
 
   if (result.count("inputs") == 0) {
     bort::Diagnostic::emitError("No input files");
+    return 1;
+  }
+
+  if (result.count("o") == 0) {
+    bort::Diagnostic::emitError(
+        "-o <output-destination> flag is required");
     return 1;
   }
 

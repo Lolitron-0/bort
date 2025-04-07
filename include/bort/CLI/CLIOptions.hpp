@@ -8,6 +8,7 @@ namespace bort {
 class CLIOptions {
 public:
   std::vector<SourceFileInfo> InputFiles;
+  std::string OutputFilename;
 
   bool PreprocessorOnly{ false };
   bool DumpAST{ false };

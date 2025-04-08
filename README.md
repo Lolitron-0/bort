@@ -21,6 +21,8 @@ cmake -S . -B build
 сmake --build build
 ```
 
+To build bort with tests use `cmake -S . -B build -DBORT_BUILD_TESTS=ON` as configuration command (requires `python3` to be installed).
+
 ## Usage
 After building, you can find binaries directly in build directory. You can start with:
 ```bash

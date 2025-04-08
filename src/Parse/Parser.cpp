@@ -27,17 +27,18 @@ namespace bort {
 
 static constexpr auto s_BinopPrecedence{
   frozen::make_unordered_map<TokenKind, int32_t>({
-      { TokenKind::Plus, 20 },
-      { TokenKind::Minus, 20 },
-      { TokenKind::Star, 40 },
-      { TokenKind::Div, 40 },
-      { TokenKind::Less, 10 },
-      { TokenKind::Greater, 10 },
-      { TokenKind::LessEqual, 10 },
-      { TokenKind::GreaterEqual, 10 },
-      { TokenKind::Amp, 9 },
-      { TokenKind::Pipe, 8 },
-      { TokenKind::Assign, 5 },
+      { TokenKind::Plus, 200 },      { TokenKind::Minus, 200 },
+      { TokenKind::Star, 400 },      { TokenKind::Div, 400 },
+      { TokenKind::Less, 100 },      { TokenKind::Greater, 100 },
+      { TokenKind::LessEqual, 100 }, { TokenKind::GreaterEqual, 100 },
+      { TokenKind::Equals, 95 },     { TokenKind::NotEquals, 95 },
+      { TokenKind::Amp, 90 },        { TokenKind::Xor, 80 },
+      { TokenKind::Pipe, 70 },       { TokenKind::AmpAmp, 65 },
+      { TokenKind::PipePipe, 60 },   { TokenKind::Assign, 50 },
+      { TokenKind::PlusAssign, 50 }, { TokenKind::MinusAssign, 50 },
+      { TokenKind::StarAssign, 50 }, { TokenKind::DivAssign, 50 },
+      { TokenKind::AmpAssign, 50 },  { TokenKind::XorAssign, 50 },
+      { TokenKind::PipeAssign, 50 },
   })
 };
 
@@ -54,7 +55,7 @@ auto Parser::buildAST() -> Ref<ast::ASTRoot> {
       break;
     }
 
-    auto node{ parseStatement() };
+    auto node{ parseDeclarationStatement() };
     if (!node) {
       break;
     }
@@ -82,7 +83,7 @@ auto Parser::parseNumberExpr() -> Unique<ast::NumberExpr> {
       ast::ASTDebugInfo{ token }, value, std::move(type));
 }
 
-auto Parser::parseParenExpr() -> Unique<ast::ExpressionNode> {
+auto Parser::parseParenExpr() -> Ref<ast::ExpressionNode> {
   bort_assert(curTok().is(TokenKind::LParen), "Expected '('");
   consumeToken();
 
@@ -130,8 +131,7 @@ auto Parser::parseVarExpr() -> Unique<ast::ExpressionNode> {
       makeRef<Variable>(std::string{ varTok.getStringView() }));
 }
 
-auto Parser::parseValueExpression()
-    -> std::unique_ptr<ast::ExpressionNode> {
+auto Parser::parseValueExpression() -> Ref<ast::ExpressionNode> {
 
   switch (curTok().getKind()) {
   case TokenKind::Identifier:
@@ -179,7 +179,8 @@ auto Parser::parseSizeofExpr() -> Unique<ast::ExpressionNode> {
 
 auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
   if (!curTok().isOneOf(TokenKind::Plus, TokenKind::Minus, TokenKind::Amp,
-                        TokenKind::Star)) {
+                        TokenKind::Star, TokenKind::PlusPlus,
+                        TokenKind::MinusMinus, TokenKind::Not)) {
     Diagnostic::emitError(curTok(),
                           "Expected unary operator in value expression");
     return invalidNode();
@@ -191,7 +192,7 @@ auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
       ast::ASTDebugInfo{ op }, parseValueExpression(), op.getKind());
 }
 
-auto Parser::parseExpression() -> std::unique_ptr<ast::ExpressionNode> {
+auto Parser::parseExpression() -> Ref<ast::ExpressionNode> {
   auto lhs{ parseValueExpression() };
   if (!lhs) {
     return invalidNode();
@@ -206,9 +207,9 @@ static auto getTokPrecedence(const Token& tok) -> int32_t {
   return -1;
 }
 
-auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
+auto Parser::parseBinOpRhs(Ref<ast::ExpressionNode> lhs,
                            int32_t prevPrecedence)
-    -> std::unique_ptr<ast::ExpressionNode> {
+    -> Ref<ast::ExpressionNode> {
   while (true) {
     // precedence or -1 if not a binop
     auto tokPrecedence{ getTokPrecedence(curTok()) };
@@ -218,7 +219,7 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
 
     auto binOp{ curTok() };
     consumeToken();
-    auto rhs{ parseValueExpression() };
+    Ref<ast::ExpressionNode> rhs{ parseValueExpression() };
     if (!rhs) {
       return invalidNode();
     }
@@ -235,9 +236,48 @@ auto Parser::parseBinOpRhs(std::unique_ptr<ast::ExpressionNode> lhs,
     }
 
     // now: (lhs binOp rhs) lookahead unparsed
-    lhs = m_ASTRoot->registerNode<ast::BinOpExpr>(
-        ast::ASTDebugInfo{ binOp }, std::move(lhs), std::move(rhs),
-        binOp.getKind());
+
+    // these are the same in IR
+    if (binOp.is(TokenKind::AmpAmp)) {
+      binOp.setKind(TokenKind::Amp);
+    }
+    if (binOp.is(TokenKind::PipePipe)) {
+      binOp.setKind(TokenKind::Pipe);
+    }
+
+    auto getAssignTok{ [](TokenKind tok) -> std::optional<TokenKind> {
+      switch (tok) {
+      case TokenKind::PlusAssign:
+        return TokenKind::Plus;
+      case TokenKind::MinusAssign:
+        return TokenKind::Minus;
+      case TokenKind::StarAssign:
+        return TokenKind::Star;
+      case TokenKind::DivAssign:
+        return TokenKind::Div;
+      case TokenKind::AmpAssign:
+        return TokenKind::Amp;
+      case TokenKind::XorAssign:
+        return TokenKind::Xor;
+      case TokenKind::PipeAssign:
+        return TokenKind::Div;
+      default:
+        return std::nullopt;
+      }
+    } };
+    auto assignTok{ getAssignTok(binOp.getKind()) };
+
+    if (assignTok) {
+      auto actualOp{ m_ASTRoot->registerNode<ast::BinOpExpr>(
+          ast::ASTDebugInfo{ binOp }, lhs, std::move(rhs), *assignTok) };
+      lhs = m_ASTRoot->registerNode<ast::BinOpExpr>(
+          ast::ASTDebugInfo{ binOp }, std::move(lhs), std::move(actualOp),
+          TokenKind::Assign);
+    } else {
+      lhs = m_ASTRoot->registerNode<ast::BinOpExpr>(
+          ast::ASTDebugInfo{ binOp }, std::move(lhs), std::move(rhs),
+          binOp.getKind());
+    }
   }
 }
 
@@ -478,32 +518,6 @@ auto Parser::parseIndexationExpr(const Token& nameTok)
       ast::ASTDebugInfo{ nameTok },
       makeRef<Variable>(std::string{ nameTok.getStringView() })) };
 
-  // Ref<ast::UnaryOpExpr> varAddr{
-  //   m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-  //       ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
-  //       TokenKind::Amp)
-  // };
-  //
-  // auto varAddrDeref{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-  //     ast::ASTDebugInfo{ indexationStartTok }, varAddr,
-  //     TokenKind::Star) };
-  //
-  // auto sizeofExpr{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-  //     ast::ASTDebugInfo{ indexationStartTok }, std::move(varAddrDeref),
-  //     TokenKind::KW_sizeof) };
-  //
-  // auto indexMultiplication{ m_ASTRoot->registerNode<ast::BinOpExpr>(
-  //     ast::ASTDebugInfo{ indexationStartTok }, std::move(sizeofExpr),
-  //     std::move(expr), TokenKind::Star) };
-  //
-  // auto pointerAddition{ m_ASTRoot->registerNode<ast::BinOpExpr>(
-  //     ast::ASTDebugInfo{ indexationStartTok }, varAddr,
-  //     std::move(indexMultiplication), TokenKind::Plus) };
-  //
-  // auto dereference{ m_ASTRoot->registerNode<ast::UnaryOpExpr>(
-  //     ast::ASTDebugInfo{ indexationStartTok },
-  //     std::move(pointerAddition), TokenKind::Star) };
-
   return m_ASTRoot->registerNode<ast::IndexationExpr>(
       ast::ASTDebugInfo{ indexationStartTok }, std::move(varExpr),
       std::move(idxExpr));
@@ -634,8 +648,16 @@ auto Parser::parseReturnStatement() -> Ref<ast::ReturnStmt> {
   return m_ASTRoot->registerNode<ast::ReturnStmt>({ kwTok }, expr);
 }
 
+/// desugared into
+/// {
+///   init;
+///   while (condition) {
+///     ...
+///     update;
+///   }
 auto Parser::parseForStatement() -> Ref<ast::Block> {
   bort_assert(curTok().is(TokenKind::KW_for), "Expected 'for'");
+  auto forTok{ curTok() };
   consumeToken();
 
   if (curTok().isNot(TokenKind::LParen)) {
@@ -653,6 +675,53 @@ auto Parser::parseForStatement() -> Ref<ast::Block> {
       return invalidNode();
     }
   }
+
+  Ref<ast::ExpressionNode> condition;
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    condition = parseExpression();
+    if (curTok().isNot(TokenKind::Semicolon)) {
+      Diagnostic::emitError(curTok(), "Expected ';'");
+      return invalidNode();
+    }
+    consumeToken();
+  }
+
+  if (!condition) {
+    condition = m_ASTRoot->registerNode<ast::NumberExpr>(
+        ast::ASTDebugInfo{ curTok() }, 1, IntType::get());
+  }
+
+  Ref<ast::ExpressionNode> update;
+  auto updateTok{ curTok() };
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    update = parseExpression();
+  }
+
+  if (curTok().isNot(TokenKind::RParen)) {
+    Diagnostic::emitError(curTok(), "Expected ')'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::LBrace)) {
+    Diagnostic::emitError(curTok(), "Expected '{{'");
+    return invalidNode();
+  }
+  auto body{ parseBlock() };
+
+  if (update) {
+    body->pushChild(m_ASTRoot->registerNode<ast::ExpressionStmt>(
+        ast::ASTDebugInfo{ updateTok }, std::move(update)));
+  }
+
+  auto outerBlock{ m_ASTRoot->registerNode<ast::Block>(
+      ast::ASTDebugInfo{ curTok() }) };
+  outerBlock->pushChild(init);
+  outerBlock->pushChild(m_ASTRoot->registerNode<ast::WhileStmt>(
+      ast::ASTDebugInfo{ forTok }, std::move(condition),
+      std::move(body)));
+
+  return outerBlock;
 }
 
 } // namespace bort

@@ -154,6 +154,15 @@ auto IRCodegen::visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr)
   case TokenKind::Plus:
     result = addInstruction(makeRef<MoveInst>(dst, operand));
     break;
+  case TokenKind::PlusPlus:
+    result = addInstruction(makeRef<OpInst>(
+        TokenKind::Plus, operand, operand, IntegralConstant::getChar(1)));
+    break;
+  case TokenKind::MinusMinus:
+    result =
+        addInstruction(makeRef<OpInst>(TokenKind::Minus, operand, operand,
+                                       IntegralConstant::getChar(-1)));
+    break;
   default:
     result = addInstruction(
         makeRef<UnaryInst>(unaryOpExpr->getOp(), dst, operand));

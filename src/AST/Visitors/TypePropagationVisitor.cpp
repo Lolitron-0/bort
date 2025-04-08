@@ -164,6 +164,10 @@ void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
       throw FatalSemanticError();
     }
     break;
+  case TokenKind::PlusPlus:
+  case TokenKind::MinusMinus:
+    assertLvalue(unaryOpNode->getOperand());
+    break;
   default:
     break;
   }

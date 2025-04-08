@@ -71,14 +71,21 @@ void Printer::run(ir::Module& module) {
 void Printer::visit(const Ref<ir::OpInst>& opInst) {
   /// @todo MD node for immediatness, signedness, etc...
   auto* II{ opInst->getMDNode<RVInstInfo>() };
+  auto* OAI{ opInst->getMDNode<RVOpAdditionalInfo>() };
   auto opName{ II->InstName };
   auto src1Reg{ dynCastRef<RVMachineRegister>(opInst->getSrc()) };
   auto src2Reg{ dynCastRef<RVMachineRegister>(opInst->getSrc2()) };
   auto dstReg{ dynCastRef<RVMachineRegister>(opInst->getDestination()) };
-  fmt::println(m_Stream, "{} {}, {}, {}", opName,
-               formatMachineValue(opInst->getDestination()),
-               formatMachineValue(opInst->getSrc()),
-               formatMachineValue(opInst->getSrc2()));
+  if (OAI && OAI->IsSingleOp) {
+    fmt::println(m_Stream, "{} {}, {}", opName,
+                 formatMachineValue(opInst->getDestination()),
+                 formatMachineValue(opInst->getSrc()));
+  } else {
+    fmt::println(m_Stream, "{} {}, {}, {}", opName,
+                 formatMachineValue(opInst->getDestination()),
+                 formatMachineValue(opInst->getSrc()),
+                 formatMachineValue(opInst->getSrc2()));
+  }
 }
 
 void Printer::visit(const Ref<ir::UnaryInst>& unaryInst) {

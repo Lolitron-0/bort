@@ -49,6 +49,10 @@ auto RVInstInfo::toString() const -> std::string {
   return fmt::format("rv_ii .inst_name={}", InstName);
 }
 
+auto RVOpAdditionalInfo::toString() const -> std::string {
+  return fmt::format("rv_oai .is_single_op={}", IsSingleOp);
+}
+
 auto RARSMacroDefinitions::toString() const -> std::string {
   return fmt::format("rars_macros .num_defined={}", Macros.size());
 }
@@ -80,9 +84,40 @@ private:
 
       if (opInst->getOp() == TokenKind::Plus ||
           opInst->getOp() == TokenKind::Amp ||
-          opInst->getOp() == TokenKind::Pipe) {
+          opInst->getOp() == TokenKind::Pipe ||
+          opInst->getOp() == TokenKind::Xor) {
         // add can be immediate
         break;
+      }
+    }
+
+    // in RISC-V boolean stuff should be expressed through slt/sge/seqz
+
+    auto addModInst{ [this](TokenKind op, auto&& inst) {
+      m_CurrentBBIter->insertAfter(
+          m_CurrentInstIter,
+          makeRef<UnaryInst>(op, inst->getDestination(),
+                             inst->getDestination()));
+    } };
+    if (opInst->getOp() == TokenKind::LessEqual) {
+      opInst->setOp(TokenKind::Greater);
+      addModInst(TokenKind::Not, opInst);
+    } else if (opInst->getOp() == TokenKind::GreaterEqual) {
+      opInst->setOp(TokenKind::Less);
+      addModInst(TokenKind::Not, opInst);
+    } else if (opInst->getOp() == TokenKind::Equals ||
+               opInst->getOp() == TokenKind::NotEquals) {
+      if (opInst->getSrc2()) {
+        // c = a xor b
+        // c = (c ==/!= 0)
+        auto oldOp{ opInst->getOp() };
+        opInst->setOp(TokenKind::Xor);
+        auto newInst{ makeRef<OpInst>(oldOp, opInst->getDestination(),
+                                      opInst->getDestination(),
+                                      nullptr) };
+        newInst->addMDNode(RVOpAdditionalInfo{ true });
+        m_CurrentBBIter->insertAfter(m_CurrentInstIter,
+                                     std::move(newInst));
       }
     }
   }
@@ -195,12 +230,24 @@ private:
           .Case(TokenKind::Div, "div")
           .Case(TokenKind::Less, "slt")
           .Case(TokenKind::Greater, "sgt")
+          .Case(TokenKind::Equals, "seqz")
+          .Case(TokenKind::NotEquals, "snez")
           .Case(TokenKind::Amp, "and")
-          .Case(TokenKind::Pipe, "or");
+          .Case(TokenKind::Pipe, "or")
+          .Case(TokenKind::Xor, "xor");
     } };
 
     bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),
                 "Unknown op name");
+    if (opInst->getOp() == TokenKind::Equals ||
+        opInst->getOp() == TokenKind::NotEquals) {
+      if (auto src2Constant{
+              dynCastRef<IntegralConstant>(opInst->getSrc2()) }) {
+        bort_assert(src2Constant->getValue() == 0,
+                    "Preprocess should leave only ==/!= 0");
+      }
+    }
+
     RVInstInfo info{ std::string{
         s_OpInstNames.Find(opInst->getOp()).value() } };
     if (isaRef<Constant>(opInst->getSrc2())) {
@@ -211,7 +258,8 @@ private:
 
   void visit(const Ref<UnaryInst>& unaryInst) override {
     static constexpr cul::BiMap s_UnaryInstNames{ [](auto&& selector) {
-      return selector.Case(TokenKind::Minus, "neg");
+      return selector.Case(TokenKind::Minus, "neg")
+          .Case(TokenKind::Not, "not");
     } };
 
     bort_assert(s_UnaryInstNames.Find(unaryInst->getOp()).has_value(),

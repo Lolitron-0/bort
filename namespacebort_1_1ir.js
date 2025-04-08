@@ -3,6 +3,8 @@ var namespacebort_1_1ir =
     [ "AllocaInst", "classbort_1_1ir_1_1AllocaInst.html", "classbort_1_1ir_1_1AllocaInst" ],
     [ "BasicBlock", "classbort_1_1ir_1_1BasicBlock.html", "classbort_1_1ir_1_1BasicBlock" ],
     [ "BranchInst", "classbort_1_1ir_1_1BranchInst.html", "classbort_1_1ir_1_1BranchInst" ],
+    [ "BrToLoopEndMDTag", "structbort_1_1ir_1_1BrToLoopEndMDTag.html", "structbort_1_1ir_1_1BrToLoopEndMDTag" ],
+    [ "BrToLoopStartMDTag", "structbort_1_1ir_1_1BrToLoopStartMDTag.html", "structbort_1_1ir_1_1BrToLoopStartMDTag" ],
     [ "CallInst", "classbort_1_1ir_1_1CallInst.html", "classbort_1_1ir_1_1CallInst" ],
     [ "Constant", "structbort_1_1ir_1_1Constant.html", "structbort_1_1ir_1_1Constant" ],
     [ "GepInst", "classbort_1_1ir_1_1GepInst.html", "classbort_1_1ir_1_1GepInst" ],

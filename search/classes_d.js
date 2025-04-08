@@ -10,5 +10,6 @@ var searchData=
   ['rvbranchinfo_7',['RVBranchInfo',['../structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html',1,'bort::codegen::rv']]],
   ['rvfuncprologueepilogue_8',['RVFuncPrologueEpilogue',['../structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html',1,'bort::codegen::rv']]],
   ['rvinstinfo_9',['RVInstInfo',['../structbort_1_1codegen_1_1rv_1_1RVInstInfo.html',1,'bort::codegen::rv']]],
-  ['rvmachineregister_10',['RVMachineRegister',['../classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html',1,'bort::codegen::rv']]]
+  ['rvmachineregister_10',['RVMachineRegister',['../classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html',1,'bort::codegen::rv']]],
+  ['rvopadditionalinfo_11',['RVOpAdditionalInfo',['../structbort_1_1codegen_1_1rv_1_1RVOpAdditionalInfo.html',1,'bort::codegen::rv']]]
 ];

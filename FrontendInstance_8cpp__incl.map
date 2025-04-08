@@ -1,52 +1,52 @@
 <map id="src/Frontend/FrontendInstance.cpp" name="src/Frontend/FrontendInstance.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="731,5,976,31"/>
-<area shape="rect" id="node2" href="$FrontEndInstance_8hpp.html" title=" " alt="" coords="195,328,448,353"/>
-<area shape="rect" id="node9" href="$SourceFile_8hpp.html" title=" " alt="" coords="661,621,869,647"/>
-<area shape="rect" id="node12" title=" " alt="" coords="585,695,663,720"/>
-<area shape="rect" id="node19" title=" " alt="" coords="3145,475,3205,500"/>
-<area shape="rect" id="node22" href="$ASTPrinter_8hpp.html" title=" " alt="" coords="3445,86,3675,111"/>
-<area shape="rect" id="node31" href="$ASTVisitor_8hpp.html" title=" " alt="" coords="662,255,890,280"/>
-<area shape="rect" id="node34" href="$NodeSubstitutionVisitor_8hpp.html" title=" " alt="" coords="894,167,1141,207"/>
-<area shape="rect" id="node37" href="$SymbolResolutionVisitor_8hpp.html" title=" " alt="" coords="421,167,603,207"/>
-<area shape="rect" id="node41" href="$TypePropagationVisitor_8hpp.html" title=" " alt="" coords="2824,79,3067,119"/>
-<area shape="rect" id="node43" href="$IO_8hpp.html" title=" " alt="" coords="3859,475,3978,500"/>
-<area shape="rect" id="node44" href="$Lexer_8hpp.html" title=" " alt="" coords="195,255,336,280"/>
-<area shape="rect" id="node46" href="$Parser_8hpp.html" title=" " alt="" coords="1459,86,1618,111"/>
-<area shape="rect" id="node3" href="$ASTNode_8hpp.html" title=" " alt="" coords="1643,401,1811,427"/>
-<area shape="rect" id="node20" href="$CLIOptions_8hpp.html" title=" " alt="" coords="273,401,447,427"/>
-<area shape="rect" id="node4" href="$ASTDebugInfo_8hpp.html" title=" " alt="" coords="1506,475,1707,500"/>
-<area shape="rect" id="node6" href="$Assert_8hpp.html" title=" " alt="" coords="2828,621,2988,647"/>
-<area shape="rect" id="node16" href="$Ref_8hpp.html" title=" " alt="" coords="698,475,838,500"/>
-<area shape="rect" id="node17" title=" " alt="" coords="1783,475,1863,500"/>
-<area shape="rect" id="node18" title=" " alt="" coords="2997,475,3121,500"/>
-<area shape="rect" id="node5" href="$Token_8hpp.html" title=" " alt="" coords="1549,548,1693,573"/>
-<area shape="rect" id="node15" title=" " alt="" coords="1315,695,1413,720"/>
-<area shape="rect" id="node7" title=" " alt="" coords="3726,695,3818,720"/>
-<area shape="rect" id="node8" title=" " alt="" coords="3613,695,3702,720"/>
-<area shape="rect" id="node10" title=" " alt="" coords="831,695,921,720"/>
-<area shape="rect" id="node11" title=" " alt="" coords="701,695,806,720"/>
-<area shape="rect" id="node13" title=" " alt="" coords="245,695,331,720"/>
-<area shape="rect" id="node14" title=" " alt="" coords="1020,695,1079,720"/>
-<area shape="rect" id="node21" title=" " alt="" coords="522,475,585,500"/>
-<area shape="rect" id="node23" href="$IndexationExpr_8hpp.html" title=" " alt="" coords="2913,174,3119,199"/>
-<area shape="rect" id="node28" href="$InitializerList_8hpp.html" title=" " alt="" coords="3143,174,3337,199"/>
-<area shape="rect" id="node30" href="$UnaryOpExpr_8hpp.html" title=" " alt="" coords="3277,255,3472,280"/>
-<area shape="rect" id="node32" title=" " alt="" coords="3750,548,3842,573"/>
-<area shape="rect" id="node33" title=" " alt="" coords="3866,548,3971,573"/>
-<area shape="rect" id="node24" href="$ExpressionNode_8hpp.html" title=" " alt="" coords="2289,328,2503,353"/>
-<area shape="rect" id="node26" href="$VariableExpr_8hpp.html" title=" " alt="" coords="2367,255,2558,280"/>
-<area shape="rect" id="node25" href="$Type_8hpp.html" title=" " alt="" coords="3077,401,3248,427"/>
-<area shape="rect" id="node27" href="$Symbol_8hpp.html" title=" " alt="" coords="1030,328,1221,353"/>
-<area shape="rect" id="node29" href="$NumberExpr_8hpp.html" title=" " alt="" coords="2103,255,2292,280"/>
-<area shape="rect" id="node35" href="$BinOpExpr_8hpp.html" title=" " alt="" coords="1903,255,2079,280"/>
-<area shape="rect" id="node36" href="$FunctionCallExpr_8hpp.html" title=" " alt="" coords="1017,255,1234,280"/>
-<area shape="rect" id="node38" href="$FunctionDecl_8hpp.html" title=" " alt="" coords="1258,255,1451,280"/>
-<area shape="rect" id="node40" title=" " alt="" coords="512,255,587,280"/>
-<area shape="rect" id="node39" href="$Block_8hpp.html" title=" " alt="" coords="1637,328,1782,353"/>
-<area shape="rect" id="node42" href="$VarDecl_8hpp.html" title=" " alt="" coords="2891,255,3050,280"/>
-<area shape="rect" id="node45" title=" " alt="" coords="573,328,616,353"/>
-<area shape="rect" id="node47" href="$IfStmt_8hpp.html" title=" " alt="" coords="1729,255,1879,280"/>
-<area shape="rect" id="node48" href="$ReturnStmt_8hpp.html" title=" " alt="" coords="2685,255,2867,280"/>
-<area shape="rect" id="node49" href="$WhileStmt_8hpp.html" title=" " alt="" coords="1527,255,1705,280"/>
-<area shape="rect" id="node50" title=" " alt="" coords="1386,174,1457,199"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1401,5,1646,31"/>
+<area shape="rect" id="node2" href="$FrontEndInstance_8hpp.html" title=" " alt="" coords="353,313,606,339"/>
+<area shape="rect" id="node9" href="$SourceFile_8hpp.html" title=" " alt="" coords="202,607,410,632"/>
+<area shape="rect" id="node12" title=" " alt="" coords="605,680,682,705"/>
+<area shape="rect" id="node19" title=" " alt="" coords="3076,460,3136,485"/>
+<area shape="rect" id="node22" href="$ASTPrinter_8hpp.html" title=" " alt="" coords="3605,79,3834,104"/>
+<area shape="rect" id="node31" href="$ASTVisitor_8hpp.html" title=" " alt="" coords="1216,240,1444,265"/>
+<area shape="rect" id="node34" href="$NodeSubstitutionVisitor_8hpp.html" title=" " alt="" coords="2012,152,2259,192"/>
+<area shape="rect" id="node38" href="$SymbolResolutionVisitor_8hpp.html" title=" " alt="" coords="853,152,1036,192"/>
+<area shape="rect" id="node41" href="$TypePropagationVisitor_8hpp.html" title=" " alt="" coords="1519,152,1762,192"/>
+<area shape="rect" id="node43" href="$IO_8hpp.html" title=" " alt="" coords="4099,460,4217,485"/>
+<area shape="rect" id="node44" href="$Lexer_8hpp.html" title=" " alt="" coords="245,240,386,265"/>
+<area shape="rect" id="node46" href="$Parser_8hpp.html" title=" " alt="" coords="2319,79,2477,104"/>
+<area shape="rect" id="node3" href="$ASTNode_8hpp.html" title=" " alt="" coords="2809,387,2977,412"/>
+<area shape="rect" id="node20" href="$CLIOptions_8hpp.html" title=" " alt="" coords="392,387,567,412"/>
+<area shape="rect" id="node4" href="$ASTDebugInfo_8hpp.html" title=" " alt="" coords="1184,460,1385,485"/>
+<area shape="rect" id="node6" href="$Assert_8hpp.html" title=" " alt="" coords="3527,607,3687,632"/>
+<area shape="rect" id="node16" href="$Ref_8hpp.html" title=" " alt="" coords="768,460,908,485"/>
+<area shape="rect" id="node17" title=" " alt="" coords="3797,460,3877,485"/>
+<area shape="rect" id="node18" title=" " alt="" coords="984,460,1108,485"/>
+<area shape="rect" id="node5" href="$Token_8hpp.html" title=" " alt="" coords="874,533,1018,559"/>
+<area shape="rect" id="node15" title=" " alt="" coords="392,680,489,705"/>
+<area shape="rect" id="node7" title=" " alt="" coords="4117,680,4209,705"/>
+<area shape="rect" id="node8" title=" " alt="" coords="3849,680,3939,705"/>
+<area shape="rect" id="node10" title=" " alt="" coords="266,680,357,705"/>
+<area shape="rect" id="node11" title=" " alt="" coords="136,680,241,705"/>
+<area shape="rect" id="node13" title=" " alt="" coords="5,680,92,705"/>
+<area shape="rect" id="node14" title=" " alt="" coords="519,680,578,705"/>
+<area shape="rect" id="node21" title=" " alt="" coords="681,460,744,485"/>
+<area shape="rect" id="node23" href="$BreakStmt_8hpp.html" title=" " alt="" coords="3523,159,3702,185"/>
+<area shape="rect" id="node24" href="$ContinueStmt_8hpp.html" title=" " alt="" coords="3727,159,3925,185"/>
+<area shape="rect" id="node25" href="$IndexationExpr_8hpp.html" title=" " alt="" coords="2699,240,2905,265"/>
+<area shape="rect" id="node28" href="$InitializerList_8hpp.html" title=" " alt="" coords="2527,159,2720,185"/>
+<area shape="rect" id="node30" href="$UnaryOpExpr_8hpp.html" title=" " alt="" coords="1621,240,1815,265"/>
+<area shape="rect" id="node32" title=" " alt="" coords="3932,533,4024,559"/>
+<area shape="rect" id="node33" title=" " alt="" coords="4201,533,4307,559"/>
+<area shape="rect" id="node26" href="$ExpressionNode_8hpp.html" title=" " alt="" coords="2553,313,2768,339"/>
+<area shape="rect" id="node27" href="$Type_8hpp.html" title=" " alt="" coords="1562,387,1733,412"/>
+<area shape="rect" id="node29" href="$NumberExpr_8hpp.html" title=" " alt="" coords="2383,240,2573,265"/>
+<area shape="rect" id="node35" href="$BinOpExpr_8hpp.html" title=" " alt="" coords="1839,240,2015,265"/>
+<area shape="rect" id="node36" href="$FunctionCallExpr_8hpp.html" title=" " alt="" coords="2040,240,2257,265"/>
+<area shape="rect" id="node37" href="$Symbol_8hpp.html" title=" " alt="" coords="1283,313,1473,339"/>
+<area shape="rect" id="node39" href="$FunctionDecl_8hpp.html" title=" " alt="" coords="848,240,1041,265"/>
+<area shape="rect" id="node40" title=" " alt="" coords="1066,240,1141,265"/>
+<area shape="rect" id="node42" href="$VarDecl_8hpp.html" title=" " alt="" coords="3305,240,3464,265"/>
+<area shape="rect" id="node45" title=" " alt="" coords="235,313,278,339"/>
+<area shape="rect" id="node47" href="$IfStmt_8hpp.html" title=" " alt="" coords="3131,240,3281,265"/>
+<area shape="rect" id="node48" href="$ReturnStmt_8hpp.html" title=" " alt="" coords="3488,240,3671,265"/>
+<area shape="rect" id="node49" href="$WhileStmt_8hpp.html" title=" " alt="" coords="2929,240,3107,265"/>
+<area shape="rect" id="node50" title=" " alt="" coords="1816,159,1887,185"/>
 </map>

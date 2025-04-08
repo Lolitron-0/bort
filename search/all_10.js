@@ -25,7 +25,7 @@ var searchData=
   ['setlhs_22',['setLHS',['../classbort_1_1ast_1_1BinOpExpr.html#a6cbfd3646d690a1b8036a17fb174f587',1,'bort::ast::BinOpExpr']]],
   ['setliteralvalue_23',['setLiteralValue',['../classbort_1_1Token.html#a7fea852d334522bc9306818b2b2d0b3a',1,'bort::Token']]],
   ['setloc_24',['setLoc',['../classbort_1_1ir_1_1LoadInst.html#ad260b5e6e1605af96ab3411636f6f4a3',1,'bort::ir::LoadInst::setLoc()'],['../classbort_1_1ir_1_1StoreInst.html#a78816b87a39c04c1873b659c52764677',1,'bort::ir::StoreInst::setLoc()']]],
-  ['setop_25',['setOp',['../classbort_1_1ast_1_1UnaryOpExpr.html#a2f6c8daa316372653d55fd76e8f117fd',1,'bort::ast::UnaryOpExpr']]],
+  ['setop_25',['setOp',['../classbort_1_1ast_1_1UnaryOpExpr.html#a2f6c8daa316372653d55fd76e8f117fd',1,'bort::ast::UnaryOpExpr::setOp()'],['../classbort_1_1ir_1_1OpInst.html#ae98efabd36d87c67c37aa74c3d09cf6e',1,'bort::ir::OpInst::setOp()']]],
   ['setoperand_26',['setOperand',['../classbort_1_1ast_1_1UnaryOpExpr.html#a5527357a5f5e5076d787b5fa256ffd7e',1,'bort::ast::UnaryOpExpr::setOperand()'],['../classbort_1_1ir_1_1Instruction.html#a338f23e77bb56cc5d75bb5d2e9c3f85f',1,'bort::ir::Instruction::setOperand()']]],
   ['setoperands_27',['setOperands',['../classbort_1_1ir_1_1BranchInst.html#aaf63b81d61bbbfd1814eb3263ad6421a',1,'bort::ir::BranchInst']]],
   ['setrhs_28',['setRHS',['../classbort_1_1ast_1_1BinOpExpr.html#a3d4bdb56a4e0aae074390d73b99553ca',1,'bort::ast::BinOpExpr']]],

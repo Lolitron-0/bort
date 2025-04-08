@@ -1,4 +1,4 @@
 <map id="bort::Parser::parseDeclarationStatement" name="bort::Parser::parseDeclarationStatement">
-<area shape="rect" id="node1" title="declaration &#45;&gt; declspec (varDecl | functionDecl)" alt="" coords="5,5,220,45"/>
+<area shape="rect" id="node1" title="declaration &#45;&gt; declspec (varDecl &#39;;&#39; | functionDecl)" alt="" coords="5,5,220,45"/>
 <area shape="rect" id="node2" href="$classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="268,13,463,38"/>
 </map>

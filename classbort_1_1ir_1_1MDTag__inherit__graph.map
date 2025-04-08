@@ -1,6 +1,8 @@
 <map id="bort::ir::MDTag" name="bort::ir::MDTag">
-<area shape="rect" id="node1" title=" " alt="" coords="191,79,308,104"/>
-<area shape="rect" id="node3" href="$structbort_1_1codegen_1_1RemoveInstructionMDTag.html" title=" " alt="" coords="5,152,248,192"/>
-<area shape="rect" id="node4" href="$structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html" title=" " alt="" coords="273,152,474,192"/>
-<area shape="rect" id="node2" href="$structbort_1_1ir_1_1Metadata.html" title=" " alt="" coords="182,5,317,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="188,106,305,131"/>
+<area shape="rect" id="node3" href="$structbort_1_1codegen_1_1RemoveInstructionMDTag.html" title=" " alt="" coords="353,5,596,45"/>
+<area shape="rect" id="node4" href="$structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html" title=" " alt="" coords="374,69,575,109"/>
+<area shape="rect" id="node5" href="$structbort_1_1ir_1_1BrToLoopEndMDTag.html" title=" " alt="" coords="375,134,575,159"/>
+<area shape="rect" id="node6" href="$structbort_1_1ir_1_1BrToLoopStartMDTag.html" title=" " alt="" coords="371,183,578,209"/>
+<area shape="rect" id="node2" href="$structbort_1_1ir_1_1Metadata.html" title=" " alt="" coords="5,106,140,131"/>
 </map>

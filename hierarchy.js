@@ -32,10 +32,13 @@ var hierarchy =
       [ "bort::codegen::rv::RVBranchInfo", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html", null ],
       [ "bort::codegen::rv::RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", null ],
       [ "bort::codegen::rv::RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", null ],
+      [ "bort::codegen::rv::RVOpAdditionalInfo", "structbort_1_1codegen_1_1rv_1_1RVOpAdditionalInfo.html", null ],
       [ "bort::codegen::rv::StoreSourceOperandMD", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD.html", null ],
       [ "bort::ir::MDTag", "classbort_1_1ir_1_1MDTag.html", [
         [ "bort::codegen::RemoveInstructionMDTag", "structbort_1_1codegen_1_1RemoveInstructionMDTag.html", null ],
-        [ "bort::codegen::rv::MemoryDependencyMDTag", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html", null ]
+        [ "bort::codegen::rv::MemoryDependencyMDTag", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html", null ],
+        [ "bort::ir::BrToLoopEndMDTag", "structbort_1_1ir_1_1BrToLoopEndMDTag.html", null ],
+        [ "bort::ir::BrToLoopStartMDTag", "structbort_1_1ir_1_1BrToLoopStartMDTag.html", null ]
       ] ],
       [ "bort::ir::StoreSync", "classbort_1_1ir_1_1StoreSync.html", null ]
     ] ],
@@ -53,6 +56,8 @@ var hierarchy =
       ] ],
       [ "bort::ast::Statement", "classbort_1_1ast_1_1Statement.html", [
         [ "bort::ast::Block", "classbort_1_1ast_1_1Block.html", null ],
+        [ "bort::ast::BreakStmt", "classbort_1_1ast_1_1BreakStmt.html", null ],
+        [ "bort::ast::ContinueStmt", "classbort_1_1ast_1_1ContinueStmt.html", null ],
         [ "bort::ast::ExpressionStmt", "classbort_1_1ast_1_1ExpressionStmt.html", null ],
         [ "bort::ast::FunctionDecl", "classbort_1_1ast_1_1FunctionDecl.html", null ],
         [ "bort::ast::IfStmt", "classbort_1_1ast_1_1IfStmt.html", null ],

@@ -10,5 +10,6 @@ var classbort_1_1ir_1_1Value =
     [ "getMDRange", "classbort_1_1ir_1_1Value.html#a8ad31171ee6ebe3561f61df73cb63a34", null ],
     [ "getName", "classbort_1_1ir_1_1Value.html#a9a0b921c886fb6dff8aeff982afef205", null ],
     [ "getType", "classbort_1_1ir_1_1Value.html#aa644f6bf4d42ff5ac7c6e30675c61024", null ],
-    [ "operator=", "classbort_1_1ir_1_1Value.html#a7493f82a52f5dc0556a0872b2c33d996", null ]
+    [ "operator=", "classbort_1_1ir_1_1Value.html#a7493f82a52f5dc0556a0872b2c33d996", null ],
+    [ "removeMDNode", "classbort_1_1ir_1_1Value.html#a25ab659faf39c1f6dcfb64f6c62d5127", null ]
 ];

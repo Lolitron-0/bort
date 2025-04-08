@@ -4,5 +4,6 @@ var classbort_1_1ir_1_1MDList =
     [ "add", "classbort_1_1ir_1_1MDList.html#a0094b60047bb6d531872cf68469c7547", null ],
     [ "contains", "classbort_1_1ir_1_1MDList.html#ab5a70952888d7f9104b207cca289fa94", null ],
     [ "get", "classbort_1_1ir_1_1MDList.html#a16576ec890f1c5248b4aece6bba9881c", null ],
-    [ "nodes", "classbort_1_1ir_1_1MDList.html#a03cd4fc5c21e8b187e70929011d1231a", null ]
+    [ "nodes", "classbort_1_1ir_1_1MDList.html#a03cd4fc5c21e8b187e70929011d1231a", null ],
+    [ "remove", "classbort_1_1ir_1_1MDList.html#a2bb13ca49e84d8504030c31ad19b7e4c", null ]
 ];

@@ -13,6 +13,7 @@ var namespacebort_1_1codegen_1_1rv =
     [ "RVFuncPrologueEpilogue", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue.html", "structbort_1_1codegen_1_1rv_1_1RVFuncPrologueEpilogue" ],
     [ "RVInstInfo", "structbort_1_1codegen_1_1rv_1_1RVInstInfo.html", "structbort_1_1codegen_1_1rv_1_1RVInstInfo" ],
     [ "RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
+    [ "RVOpAdditionalInfo", "structbort_1_1codegen_1_1rv_1_1RVOpAdditionalInfo.html", "structbort_1_1codegen_1_1rv_1_1RVOpAdditionalInfo" ],
     [ "StoreSourceOperandMD", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD.html", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD" ],
     [ "RVMachineRegisterRef", "namespacebort_1_1codegen_1_1rv.html#af53baca35254c91295c5504b75f3abbd", null ],
     [ "GPR", "namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248", [

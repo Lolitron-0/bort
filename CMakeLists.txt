@@ -4,6 +4,8 @@ project(bort)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(BORT_BUILD_TESTS ON)
+
 include_directories(include)
 
 set(SOURCES
@@ -95,12 +97,14 @@ set(BOOST_INCLUDE_LIBRARIES functional;assert;stacktrace;range)
 FetchContent_Declare(
   Boost
   URL https://github.com/boostorg/boost/releases/download/boost-1.86.0/boost-1.86.0-cmake.tar.xz
-  DOWNLOAD_EXTRACT_TIMESTAMP ON
-)
+      DOWNLOAD_EXTRACT_TIMESTAMP
+      ON)
 
 FetchContent_MakeAvailable(Boost)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
                                               Boost::stacktrace Boost::range)
 
-add_subdirectory(tests)
+if(${BORT_BUILD_TESTS})
+  add_subdirectory(tests)
+endif()

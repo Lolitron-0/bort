@@ -17,7 +17,8 @@ bort uses cmake build system, so building pipeline is pretty standard. All depen
 ```bash
 git clone https://github.com/Lolitron-0/bort
 cd bort
-cmake -S . -B build 
+cmake -S . -B build
+сmake --build build
 ```
 
 ## Usage

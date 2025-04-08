@@ -23,6 +23,8 @@ class ExpressionStmt;
 class IfStmt;
 class WhileStmt;
 class ReturnStmt;
+class BreakStmt;
+class ContinueStmt;
 
 class ASTVisitorBase {
 public:
@@ -78,6 +80,12 @@ protected:
     // leaf
   }
   virtual void visit(const Ref<CharExpr>& /* charNode */) {
+    // leaf
+  }
+  virtual void visit(const Ref<BreakStmt>& /* breakNode */) {
+    // leaf
+  }
+  virtual void visit(const Ref<ContinueStmt>& /* continueNode */) {
     // leaf
   }
   virtual void visit(const Ref<VarDecl>& varDeclNode);

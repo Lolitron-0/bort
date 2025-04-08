@@ -1,5 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
+#include "bort/AST/BreakStmt.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
@@ -46,12 +48,11 @@ protected:
   /// parenExpr \n
   /// -> '(' expression ')' \n
   /// @todo type-casts -> '(' declspec ')'
-  auto parseParenExpr() -> Unique<ast::ExpressionNode>;
+  auto parseParenExpr() -> Ref<ast::ExpressionNode>;
   /// identifier \n
-  /// -> identifier - variable \n
-  /// -> identifier '(' expr, ... ')' - function call \n
-  /// -> identifier indexationExpr \n
-  /// -> identifier ('++' | '--')
+  /// -> varExpr \n
+  /// -> functionCallExpr \n
+  /// -> identifier indexationExpr
   auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
   /// value expression \n
   /// -> number \n
@@ -59,29 +60,28 @@ protected:
   /// -> sizeofExpr \n
   /// -> unaryOpExpr \n
   /// -> lvalue
-  auto parseValueExpression() -> Unique<ast::ExpressionNode>;
+  auto parseValueExpression() -> Ref<ast::ExpressionNode>;
   /// sizeofExpr -> 'sizeof' (parenExpr | '(' declspec ')' )
   auto parseSizeofExpr() -> Unique<ast::ExpressionNode>;
-  /// lvalue \n
-  /// -> identifier
-  auto tryParseLValue() -> std::optional<Unique<ast::ExpressionNode>>;
+  /// varExpr -> identifier
+  auto parseVarExpr() -> Unique<ast::ExpressionNode>;
   /// unaryOpExpr -> unaryOp valueExpression
   auto parseUnaryOpExpr() -> Unique<ast::ExpressionNode>;
   /// expression
-  /// -> valueExpression (binOp valueExpression ...)
-  auto parseExpression() -> Unique<ast::ExpressionNode>;
+  /// -> valueExpression binOpRhs
+  auto parseExpression() -> Ref<ast::ExpressionNode>;
   /// binOpRhs
   /// -> bipOp valueExpression (binOpRhs ...)
-  auto parseBinOpRhs(Unique<ast::ExpressionNode> lhs,
+  auto parseBinOpRhs(Ref<ast::ExpressionNode> lhs,
                      int32_t prevPrecedence = 0)
-      -> Unique<ast::ExpressionNode>;
+      -> Ref<ast::ExpressionNode>;
   /// declspec -> ( 'int' | 'void' | 'char' ) ('*'...)
   /// @todo type qualifiers
   auto parseDeclspec() -> TypeRef;
-  /// declaration -> declspec (varDecl |  functionDecl)
+  /// declaration -> declspec (varDecl ';' |  functionDecl)
   auto parseDeclarationStatement() -> Ref<ast::Statement>;
-  /// varDecl -> declspec identifier ';'
-  /// @todo declspec (identifier ('=' expr)?, ...) ';'
+  /// varDecl -> declspec identifier initializerExpr?
+  /// @todo declspec (identifier ('=' expr)?, ...)
   auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
   /// initializerList -> '{' number, ... '}' | stringLiteral
@@ -93,14 +93,22 @@ protected:
   auto parseFunctionCallExpr(const Token& nameTok)
       -> Unique<ast::FunctionCallExpr>;
   /// indexationExpr -> nameTok '[' expr ']'
-  /// desugared into pointer arithmetic
   auto parseIndexationExpr(const Token& nameTok)
       -> Unique<ast::ExpressionNode>;
   /// statement \n
   /// -> expression ';' \n
+  /// -> declarationStatement ';' \n
   /// -> block \n
   /// -> ifStatement \n
+  /// -> whileStatement \n
+  /// -> returnStatement \n
+  /// -> breakStatement \n
+  /// -> continueStatement
   auto parseStatement() -> Ref<ast::Statement>;
+  /// breakStatement -> 'break' ';'
+  auto parseBreakStatement() -> Ref<ast::BreakStmt>;
+  /// continueStatement -> 'continue' ';'
+  auto parseContinueStatement() -> Ref<ast::ContinueStmt>;
   /// block
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
@@ -108,6 +116,8 @@ protected:
   auto parseIfStatement() -> Ref<ast::IfStmt>;
   /// whileStatement -> 'while' parenExpr block
   auto parseWhileStatement() -> Ref<ast::WhileStmt>;
+  /// forStatement -> 'for' '(' varDecl ';' expr? ';' expr? ')' block
+  auto parseForStatement() -> Ref<ast::Block>;
   /// returnStatement -> 'return' (expr)? ';'
   auto parseReturnStatement() -> Ref<ast::ReturnStmt>;
 
@@ -141,6 +151,7 @@ private:
   Ref<ast::ASTRoot> m_ASTRoot;
   bool m_ASTInvalid{ false };
   bool m_DiagnosticSilenced{ false };
+  bool m_InsideLoop{ false };
 };
 
 } // namespace bort

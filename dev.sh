@@ -35,6 +35,7 @@ fi
 cmake -S . \
 			-B build \
 			-G Ninja \
+      -DBORT_BUILD_TESTS=ON \
 			-DCMAKE_CXX_COMPILER=clang++ \
 			-DCMAKE_C_COMPILER=clang \
       -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -Wall -Wextra -pedantic" \
@@ -46,5 +47,5 @@ cp -f build/compile_commands.json .
 if [ $# -ne 0 ] && [ "$1" == "run" ]; then
 	echo -e "----------------------------------\n"
   set -eux
-	./build/bort --dump-ast --emit-ir --dump-codegen-info -o - ./tests/corpus/arrays.c
+	./build/bort --dump-ast --emit-ir --dump-codegen-info -o - ./tests/corpus/loops.c
 fi

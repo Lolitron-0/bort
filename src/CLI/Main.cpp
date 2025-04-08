@@ -6,8 +6,27 @@
 #include <algorithm>
 #include <cxxopts.hpp>
 #include <iostream>
+#ifdef WIN32
+#include <windows.h>
+#endif
 
 auto main(int argc, char* argv[]) -> int {
+
+/// @todo: Make custom wrappers for fmt color formatters to make color
+/// optional
+#ifdef WIN32
+  HANDLE hOut{ GetStdHandle(STD_OUTPUT_HANDLE) };
+  HANDLE hErr{ GetStdHandle(STD_ERROR_HANDLE) };
+  DWORD dwMode{};
+
+  GetConsoleMode(hOut, &dwMode);
+  dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+  SetConsoleMode(hOut, dwMode);
+
+  GetConsoleMode(hErr, &dwMode);
+  dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+  SetConsoleMode(hErr, dwMode);
+#endif
 
   bort::CLIOptions cliOptions;
 
@@ -29,6 +48,8 @@ auto main(int argc, char* argv[]) -> int {
   // clang-format on
 
   cliParser.parse_positional("inputs");
+  cliParser.positional_help("inputs");
+  cliParser.show_positional_help();
 
   auto result{ cliParser.parse(argc, argv) };
 

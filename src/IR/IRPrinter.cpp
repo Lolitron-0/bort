@@ -105,7 +105,10 @@ static auto styleInst(T&& name) {
 static constexpr cul::BiMap s_UnaryInstNames{ [](auto&& selector) {
   return selector.Case(TokenKind::Minus, "neg")
       .Case(TokenKind::Amp, "addr")
-      .Case(TokenKind::Star, "deref");
+      .Case(TokenKind::Star, "deref")
+      .Case(TokenKind::PlusPlus, "inc")
+      .Case(TokenKind::MinusMinus, "dec")
+      .Case(TokenKind::Not, "not");
 } };
 
 static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
@@ -113,10 +116,18 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Minus, "sub")
       .Case(TokenKind::Star, "mul")
       .Case(TokenKind::Div, "div")
+      .Case(TokenKind::Mod, "rem")
       .Case(TokenKind::Less, "slt")
       .Case(TokenKind::Greater, "sgt")
+      .Case(TokenKind::GreaterEqual, "sge")
+      .Case(TokenKind::LessEqual, "sle")
+      .Case(TokenKind::Equals, "seq")
+      .Case(TokenKind::NotEquals, "sne")
       .Case(TokenKind::Amp, "and")
-      .Case(TokenKind::Pipe, "or");
+      .Case(TokenKind::Pipe, "or")
+      .Case(TokenKind::Xor, "xor")
+      .Case(TokenKind::LShift, "sl")
+      .Case(TokenKind::RShift, "sr");
 } };
 
 namespace bort {

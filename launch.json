@@ -8,7 +8,9 @@
       "program": "${workspaceFolder}/build/bort",
       "args": [
         "--emit-ir",
-        "${workspaceFolder}/tests/corpus/functions.c"
+        "-o",
+        "-",
+        "${workspaceFolder}/tests/corpus/loops.c"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

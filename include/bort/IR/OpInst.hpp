@@ -31,6 +31,9 @@ public:
   void setSrc2(ValueRef value) {
     m_Operands[Src2Idx] = std::move(value);
   }
+  void setOp(TokenKind op) {
+    m_Op = op;
+  }
 
   static constexpr int Src1Idx{ 1 };
   static constexpr int Src2Idx{ 2 };

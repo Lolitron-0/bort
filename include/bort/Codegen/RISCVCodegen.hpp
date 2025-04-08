@@ -86,6 +86,16 @@ struct RVInstInfo final : public ir::Metadata {
   std::string InstName;
 };
 
+struct RVOpAdditionalInfo final : public ir::Metadata {
+  explicit RVOpAdditionalInfo(bool isSingleOp)
+      : IsSingleOp{ isSingleOp } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  bool IsSingleOp;
+};
+
 struct RARSMacroDefinitions final : public ir::Metadata {
   [[nodiscard]] auto toString() const -> std::string override;
 

@@ -15,6 +15,7 @@
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Assert.hpp"
+#include "bort/Basic/Casts.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/CLI/IO.hpp"
 #include "bort/Frontend/Symbol.hpp"
@@ -284,7 +285,15 @@ auto Parser::parseDeclarationStatement() -> Ref<ast::Statement> {
     return parseFunctionDecl(type, nameTok);
   }
 
-  return parseVarDecl(type, nameTok);
+  auto varDecl{ parseVarDecl(type, nameTok) };
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return varDecl;
 }
 
 auto Parser::parseVarDecl(TypeRef type,
@@ -322,12 +331,6 @@ auto Parser::parseVarDecl(TypeRef type,
       node->setInitializer(parseExpression());
     }
   }
-
-  if (curTok().isNot(TokenKind::Semicolon)) {
-    Diagnostic::emitError(curTok(), "Expected ';'");
-    return invalidNode();
-  }
-  consumeToken();
 
   if (type->getKind() == TypeKind::Void) {
     Diagnostic::emitError(nameTok, "Variable of incomplete type 'void'");
@@ -522,6 +525,8 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
     return parseWhileStatement();
   case TokenKind::KW_return:
     return parseReturnStatement();
+  case TokenKind::KW_for:
+    return parseForStatement();
   default:
     break;
   }
@@ -627,6 +632,27 @@ auto Parser::parseReturnStatement() -> Ref<ast::ReturnStmt> {
   consumeToken();
 
   return m_ASTRoot->registerNode<ast::ReturnStmt>({ kwTok }, expr);
+}
+
+auto Parser::parseForStatement() -> Ref<ast::Block> {
+  bort_assert(curTok().is(TokenKind::KW_for), "Expected 'for'");
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::LParen)) {
+    Diagnostic::emitError(curTok(), "Expected '('");
+    return invalidNode();
+  }
+  consumeToken();
+
+  Ref<ast::VarDecl> init;
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    // a little trick
+    init = dynCastRef<ast::VarDecl>(parseDeclarationStatement());
+    if (!init) {
+      Diagnostic::emitError(curTok(), "Expected variable declaration");
+      return invalidNode();
+    }
+  }
 }
 
 } // namespace bort

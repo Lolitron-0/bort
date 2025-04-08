@@ -77,10 +77,10 @@ protected:
   /// declspec -> ( 'int' | 'void' | 'char' ) ('*'...)
   /// @todo type qualifiers
   auto parseDeclspec() -> TypeRef;
-  /// declaration -> declspec (varDecl |  functionDecl)
+  /// declaration -> declspec (varDecl ';' |  functionDecl)
   auto parseDeclarationStatement() -> Ref<ast::Statement>;
-  /// varDecl -> declspec identifier initializerExpr? ';'
-  /// @todo declspec (identifier ('=' expr)?, ...) ';'
+  /// varDecl -> declspec identifier initializerExpr?
+  /// @todo declspec (identifier ('=' expr)?, ...)
   auto parseVarDecl(TypeRef type,
                     const Token& nameTok) -> Ref<ast::VarDecl>;
   /// initializerList -> '{' number, ... '}' | stringLiteral
@@ -96,6 +96,7 @@ protected:
       -> Unique<ast::ExpressionNode>;
   /// statement \n
   /// -> expression ';' \n
+  /// -> declarationStatement ';' \n
   /// -> block \n
   /// -> ifStatement \n
   /// -> whileStatement \n
@@ -108,6 +109,8 @@ protected:
   auto parseIfStatement() -> Ref<ast::IfStmt>;
   /// whileStatement -> 'while' parenExpr block
   auto parseWhileStatement() -> Ref<ast::WhileStmt>;
+  /// forStatement -> 'for' '(' varDecl ';' expr? ';' expr? ')' block
+  auto parseForStatement() -> Ref<ast::Block>;
   /// returnStatement -> 'return' (expr)? ';'
   auto parseReturnStatement() -> Ref<ast::ReturnStmt>;
 

@@ -55,6 +55,7 @@ KEYWORD(const)
 KEYWORD(if)
 KEYWORD(else)
 KEYWORD(while)
+KEYWORD(for)
 KEYWORD(return)
 KEYWORD(sizeof)
 

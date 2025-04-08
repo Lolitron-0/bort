@@ -4,7 +4,7 @@ project(bort)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(BORT_BUILD_TESTS OFF)
+option(BORT_BUILD_TESTS "Enable testing (requires python3)")
 
 include_directories(include)
 
@@ -106,5 +106,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE Boost::functional Boost::assert
                                               Boost::stacktrace Boost::range)
 
 if(${BORT_BUILD_TESTS})
+  message(STATUS "Testing enabled")
   add_subdirectory(tests)
 endif()

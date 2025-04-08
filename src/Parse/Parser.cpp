@@ -3,6 +3,7 @@
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
@@ -27,18 +28,20 @@ namespace bort {
 
 static constexpr auto s_BinopPrecedence{
   frozen::make_unordered_map<TokenKind, int32_t>({
-      { TokenKind::Plus, 200 },      { TokenKind::Minus, 200 },
-      { TokenKind::Star, 400 },      { TokenKind::Div, 400 },
-      { TokenKind::Less, 100 },      { TokenKind::Greater, 100 },
-      { TokenKind::LessEqual, 100 }, { TokenKind::GreaterEqual, 100 },
-      { TokenKind::Equals, 95 },     { TokenKind::NotEquals, 95 },
-      { TokenKind::Amp, 90 },        { TokenKind::Xor, 80 },
-      { TokenKind::Pipe, 70 },       { TokenKind::AmpAmp, 65 },
-      { TokenKind::PipePipe, 60 },   { TokenKind::Assign, 50 },
-      { TokenKind::PlusAssign, 50 }, { TokenKind::MinusAssign, 50 },
-      { TokenKind::StarAssign, 50 }, { TokenKind::DivAssign, 50 },
-      { TokenKind::AmpAssign, 50 },  { TokenKind::XorAssign, 50 },
-      { TokenKind::PipeAssign, 50 },
+      { TokenKind::Star, 400 },         { TokenKind::Div, 400 },
+      { TokenKind::Mod, 400 },          { TokenKind::Plus, 200 },
+      { TokenKind::Minus, 200 },        { TokenKind::LShift, 150 },
+      { TokenKind::RShift, 150 },       { TokenKind::Less, 100 },
+      { TokenKind::Greater, 100 },      { TokenKind::LessEqual, 100 },
+      { TokenKind::GreaterEqual, 100 }, { TokenKind::Equals, 95 },
+      { TokenKind::NotEquals, 95 },     { TokenKind::Amp, 90 },
+      { TokenKind::Xor, 80 },           { TokenKind::Pipe, 70 },
+      { TokenKind::AmpAmp, 65 },        { TokenKind::PipePipe, 60 },
+      { TokenKind::Assign, 50 },        { TokenKind::PlusAssign, 50 },
+      { TokenKind::MinusAssign, 50 },   { TokenKind::StarAssign, 50 },
+      { TokenKind::DivAssign, 50 },     { TokenKind::AmpAssign, 50 },
+      { TokenKind::XorAssign, 50 },     { TokenKind::PipeAssign, 50 },
+      { TokenKind::LShiftAssign, 50 },  { TokenKind::RShiftAssign, 50 },
   })
 };
 
@@ -180,7 +183,8 @@ auto Parser::parseSizeofExpr() -> Unique<ast::ExpressionNode> {
 auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
   if (!curTok().isOneOf(TokenKind::Plus, TokenKind::Minus, TokenKind::Amp,
                         TokenKind::Star, TokenKind::PlusPlus,
-                        TokenKind::MinusMinus, TokenKind::Not)) {
+                        TokenKind::MinusMinus, TokenKind::Not,
+                        TokenKind::Tilde)) {
     Diagnostic::emitError(curTok(),
                           "Expected unary operator in value expression");
     return invalidNode();
@@ -188,6 +192,12 @@ auto Parser::parseUnaryOpExpr() -> Unique<ast::ExpressionNode> {
 
   auto op{ curTok() };
   consumeToken();
+
+  // same in IR
+  if (op.is(TokenKind::Tilde)) {
+    op.setKind(TokenKind::Not);
+  }
+
   return m_ASTRoot->registerNode<ast::UnaryOpExpr>(
       ast::ASTDebugInfo{ op }, parseValueExpression(), op.getKind());
 }
@@ -245,6 +255,7 @@ auto Parser::parseBinOpRhs(Ref<ast::ExpressionNode> lhs,
       binOp.setKind(TokenKind::Pipe);
     }
 
+    // try to desugar compound assignment
     auto getAssignTok{ [](TokenKind tok) -> std::optional<TokenKind> {
       switch (tok) {
       case TokenKind::PlusAssign:
@@ -261,6 +272,10 @@ auto Parser::parseBinOpRhs(Ref<ast::ExpressionNode> lhs,
         return TokenKind::Xor;
       case TokenKind::PipeAssign:
         return TokenKind::Div;
+      case TokenKind::LShiftAssign:
+        return TokenKind::LShift;
+      case TokenKind::RShiftAssign:
+        return TokenKind::RShift;
       default:
         return std::nullopt;
       }
@@ -541,6 +556,10 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
     return parseReturnStatement();
   case TokenKind::KW_for:
     return parseForStatement();
+  case TokenKind::KW_break:
+    return parseBreakStatement();
+  case TokenKind::KW_continue:
+    return parseContinueStatement();
   default:
     break;
   }
@@ -555,6 +574,48 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
   consumeToken();
   return m_ASTRoot->registerNode<ast::ExpressionStmt>(
       ast::ASTDebugInfo{ stmtTok }, std::move(expression));
+}
+
+auto Parser::parseBreakStatement() -> Ref<ast::BreakStmt> {
+  bort_assert(curTok().is(TokenKind::KW_break), "Expected 'break'");
+
+  if (!m_InsideLoop) {
+    Diagnostic::emitError(curTok(), "'break' outside of loop");
+    return invalidNode();
+  }
+
+  auto breakTok{ curTok() };
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::BreakStmt>(
+      ast::ASTDebugInfo{ breakTok });
+}
+
+auto Parser::parseContinueStatement() -> Ref<ast::ContinueStmt> {
+  bort_assert(curTok().is(TokenKind::KW_continue), "Expected 'continue'");
+
+  if (!m_InsideLoop) {
+    Diagnostic::emitError(curTok(), "'break' outside of loop");
+    return invalidNode();
+  }
+
+  auto continueTok{ curTok() };
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::ContinueStmt>(
+      ast::ASTDebugInfo{ continueTok });
 }
 
 auto Parser::parseBlock() -> Unique<ast::Block> {
@@ -622,7 +683,10 @@ auto Parser::parseWhileStatement() -> Ref<ast::WhileStmt> {
     return invalidNode();
   }
   auto condition{ parseParenExpr() };
+
+  m_InsideLoop = true;
   auto body{ parseBlock() };
+  m_InsideLoop = false;
 
   return m_ASTRoot->registerNode<ast::WhileStmt>(
       ast::ASTDebugInfo{ whileTok }, std::move(condition),
@@ -707,7 +771,10 @@ auto Parser::parseForStatement() -> Ref<ast::Block> {
     Diagnostic::emitError(curTok(), "Expected '{{'");
     return invalidNode();
   }
+
+  m_InsideLoop = true;
   auto body{ parseBlock() };
+  m_InsideLoop = false;
 
   if (update) {
     body->pushChild(m_ASTRoot->registerNode<ast::ExpressionStmt>(

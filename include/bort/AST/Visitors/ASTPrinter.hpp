@@ -1,4 +1,6 @@
 #pragma once
+#include "bort/AST/BreakStmt.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/InitializerList.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -32,6 +34,8 @@ private:
   void visit(const Ref<IfStmt>& ifStmtNode) override;
   void visit(const Ref<WhileStmt>& whileStmtNode) override;
   void visit(const Ref<ReturnStmt>& returnStmtNode) override;
+  void visit(const Ref<BreakStmt>& breakStmtNode) override;
+  void visit(const Ref<ContinueStmt>& continueStmtNode) override;
   void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
 
   void push();

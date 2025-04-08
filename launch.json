@@ -10,7 +10,7 @@
         "--emit-ir",
         "-o",
         "-",
-        "${workspaceFolder}/tests/corpus/expression.c"
+        "${workspaceFolder}/tests/corpus/loops.c"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

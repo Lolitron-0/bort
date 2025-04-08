@@ -85,8 +85,10 @@ private:
       if (opInst->getOp() == TokenKind::Plus ||
           opInst->getOp() == TokenKind::Amp ||
           opInst->getOp() == TokenKind::Pipe ||
-          opInst->getOp() == TokenKind::Xor) {
-        // add can be immediate
+          opInst->getOp() == TokenKind::Xor ||
+          opInst->getOp() == TokenKind::LShift ||
+          opInst->getOp() == TokenKind::RShift) {
+        // these can be immediate
         break;
       }
     }
@@ -228,24 +230,24 @@ private:
           .Case(TokenKind::Minus, "sub")
           .Case(TokenKind::Star, "mul")
           .Case(TokenKind::Div, "div")
+          .Case(TokenKind::Mod, "rem")
           .Case(TokenKind::Less, "slt")
           .Case(TokenKind::Greater, "sgt")
           .Case(TokenKind::Equals, "seqz")
           .Case(TokenKind::NotEquals, "snez")
           .Case(TokenKind::Amp, "and")
           .Case(TokenKind::Pipe, "or")
-          .Case(TokenKind::Xor, "xor");
+          .Case(TokenKind::Xor, "xor")
+          .Case(TokenKind::Xor, "sll")
+          .Case(TokenKind::Xor, "sra");
     } };
 
     bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),
                 "Unknown op name");
     if (opInst->getOp() == TokenKind::Equals ||
         opInst->getOp() == TokenKind::NotEquals) {
-      if (auto src2Constant{
-              dynCastRef<IntegralConstant>(opInst->getSrc2()) }) {
-        bort_assert(src2Constant->getValue() == 0,
-                    "Preprocess should leave only ==/!= 0");
-      }
+      bort_assert(!opInst->getSrc2(),
+                  "Preprocess should leave only ==/!= nullptr");
     }
 
     RVInstInfo info{ std::string{

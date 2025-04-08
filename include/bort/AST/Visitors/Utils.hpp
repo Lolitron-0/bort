@@ -2,6 +2,8 @@
 
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/BreakStmt.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
@@ -82,6 +84,14 @@ auto callHandler(const Ref<Node>& node, F&& visit) {
   case NodeKind::ReturnStmt:
     bort_assert_nomsg(dynCastRef<ReturnStmt>(node));
     return visit(dynCastRef<ReturnStmt>(node));
+    break;
+  case NodeKind::BreakStmt:
+    bort_assert_nomsg(dynCastRef<BreakStmt>(node));
+    return visit(dynCastRef<BreakStmt>(node));
+    break;
+  case NodeKind::ContinueStmt:
+    bort_assert_nomsg(dynCastRef<ContinueStmt>(node));
+    return visit(dynCastRef<ContinueStmt>(node));
     break;
   case NodeKind::ASTRoot:
     bort_assert_nomsg(dynCastRef<ASTRoot>(node));

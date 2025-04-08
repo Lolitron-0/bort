@@ -1,5 +1,7 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
+#include "bort/AST/BreakStmt.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
@@ -50,7 +52,7 @@ protected:
   /// identifier \n
   /// -> varExpr \n
   /// -> functionCallExpr \n
-  /// -> identifier indexationExpr 
+  /// -> identifier indexationExpr
   auto parseIdentifierExpr() -> Unique<ast::ExpressionNode>;
   /// value expression \n
   /// -> number \n
@@ -100,7 +102,13 @@ protected:
   /// -> ifStatement \n
   /// -> whileStatement \n
   /// -> returnStatement \n
+  /// -> breakStatement \n
+  /// -> continueStatement
   auto parseStatement() -> Ref<ast::Statement>;
+  /// breakStatement -> 'break' ';'
+  auto parseBreakStatement() -> Ref<ast::BreakStmt>;
+  /// continueStatement -> 'continue' ';'
+  auto parseContinueStatement() -> Ref<ast::ContinueStmt>;
   /// block
   /// -> '{' statement... '}'
   auto parseBlock() -> Unique<ast::Block>;
@@ -143,6 +151,7 @@ private:
   Ref<ast::ASTRoot> m_ASTRoot;
   bool m_ASTInvalid{ false };
   bool m_DiagnosticSilenced{ false };
+  bool m_InsideLoop{ false };
 };
 
 } // namespace bort

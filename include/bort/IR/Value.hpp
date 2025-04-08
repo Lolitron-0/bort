@@ -41,6 +41,11 @@ public:
   }
 
   template <MetadataClass T>
+  void removeMDNode() {
+    m_MDList->remove<T>();
+  }
+
+  template <MetadataClass T>
   auto getMDNode() const -> const T* {
     return m_MDList->get<T>();
   }

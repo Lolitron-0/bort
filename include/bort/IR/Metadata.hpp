@@ -40,6 +40,11 @@ public:
     return node;
   }
 
+  template <MetadataClass T>
+  void remove() {
+    m_Registry.erase(typeid(T));
+  }
+
   auto nodes() {
     return std::views::values(m_Registry);
   }

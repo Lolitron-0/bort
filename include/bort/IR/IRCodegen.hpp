@@ -1,6 +1,8 @@
 #pragma once
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
+#include "bort/AST/BreakStmt.hpp"
+#include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
@@ -47,11 +49,14 @@ private:
   auto visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef;
   auto visit(const Ref<ast::WhileStmt>& whileStmtNode) -> ValueRef;
   auto visit(const Ref<ast::ReturnStmt>& returnStmt) -> ValueRef;
+  auto visit(const Ref<ast::BreakStmt>& breakStmt) -> ValueRef;
+  auto visit(const Ref<ast::ContinueStmt>& continueStmt) -> ValueRef;
   auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
 
   auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
                               bool negate = false) -> Ref<BranchInst>;
-  auto genArrayPtr(const ValueRef& arr) -> std::pair<Ref<PointerType>, ValueRef>;
+  auto genArrayPtr(const ValueRef& arr)
+      -> std::pair<Ref<PointerType>, ValueRef>;
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>

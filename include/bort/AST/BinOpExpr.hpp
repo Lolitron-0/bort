@@ -16,6 +16,9 @@ public:
     /// @todo bitwise operators
     return m_Op == TokenKind::Plus || m_Op == TokenKind::Minus ||
            m_Op == TokenKind::Star || m_Op == TokenKind::Div ||
+           m_Op == TokenKind::Mod || m_Op == TokenKind::LShift ||
+           m_Op == TokenKind::RShift || m_Op == TokenKind::Amp ||
+           m_Op == TokenKind::Pipe || m_Op == TokenKind::Xor ||
            m_Op == TokenKind::Amp || m_Op == TokenKind::Pipe;
   }
   [[nodiscard]] constexpr auto isLogical() const -> bool {

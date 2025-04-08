@@ -116,6 +116,7 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::Minus, "sub")
       .Case(TokenKind::Star, "mul")
       .Case(TokenKind::Div, "div")
+      .Case(TokenKind::Mod, "rem")
       .Case(TokenKind::Less, "slt")
       .Case(TokenKind::Greater, "sgt")
       .Case(TokenKind::GreaterEqual, "sge")
@@ -124,7 +125,9 @@ static constexpr cul::BiMap s_OpInstNames{ [](auto&& selector) {
       .Case(TokenKind::NotEquals, "sne")
       .Case(TokenKind::Amp, "and")
       .Case(TokenKind::Pipe, "or")
-      .Case(TokenKind::Xor, "xor");
+      .Case(TokenKind::Xor, "xor")
+      .Case(TokenKind::LShift, "sl")
+      .Case(TokenKind::RShift, "sr");
 } };
 
 namespace bort {

@@ -50,6 +50,18 @@ private:
   ValueRef m_Loc;
 };
 
+struct BrToLoopEndMDTag : public MDTag {
+  explicit BrToLoopEndMDTag()
+      : MDTag{ "br_to_loop_end" } {
+  }
+};
+
+struct BrToLoopStartMDTag : public MDTag {
+  explicit BrToLoopStartMDTag()
+      : MDTag{ "br_to_loop_cond" } {
+  }
+};
+
 auto IRCodegen::genBranchFromCondition(
     const Ref<ast::ExpressionNode>& cond,
     bool negate) -> Ref<BranchInst> {
@@ -300,17 +312,17 @@ auto IRCodegen::visit(const Ref<ast::IfStmt>& ifStmtNode) -> ValueRef {
       genBranchFromCondition(ifStmtNode->getCondition())) };
   bort_assert_nomsg(thenBr);
 
-  pushBB("_false");
+  pushBB("_false_if");
   genericVisit(ifStmtNode->getElseBlock());
   auto endBr{ addInstruction(makeRef<BranchInst>()) };
   bort_assert_nomsg(endBr);
 
-  pushBB("_true");
+  pushBB("_true_if");
   auto lastBBIt{ m_Module.getLastBBIt() };
   thenBr->setTarget(&*lastBBIt);
   genericVisit(ifStmtNode->getThenBlock());
 
-  pushBB("_end");
+  pushBB("_end_if");
   lastBBIt = m_Module.getLastBBIt();
   endBr->setTarget(&*lastBBIt);
   return nullptr;
@@ -328,19 +340,34 @@ void IRCodegen::pushBB(std::string postfix, std::string name) {
 
 auto IRCodegen::visit(const Ref<ast::WhileStmt>& whileStmtNode)
     -> ValueRef {
-  pushBB("_cond");
+  pushBB("_cond_loop");
   auto& condBB{ *m_Module.getLastBBIt() };
 
   auto endBr{ addInstruction(
       genBranchFromCondition(whileStmtNode->getCondition(), true)) };
 
-  pushBB("_body");
+  pushBB("_body_loop");
   genericVisit(whileStmtNode->getBody());
   auto loopBr{ addInstruction(makeRef<BranchInst>()) };
   loopBr->setTarget(&condBB);
 
-  pushBB("_end");
-  endBr->setTarget(&*m_Module.getLastBBIt());
+  pushBB("_end_loop");
+  auto& endBB{ *m_Module.getLastBBIt() };
+  endBr->setTarget(&endBB);
+
+  for (auto&& bb : *m_Module.getLastFunctionIt()) {
+    for (auto&& inst : bb) {
+      if (auto br{ dynCastRef<BranchInst>(inst) }) {
+        if (br->getMDNode<BrToLoopEndMDTag>()) {
+          br->setTarget(&endBB);
+          br->removeMDNode<BrToLoopEndMDTag>();
+        } else if (br->getMDNode<BrToLoopStartMDTag>()) {
+          br->setTarget(&condBB);
+          br->removeMDNode<BrToLoopStartMDTag>();
+        }
+      }
+    }
+  }
   return nullptr;
 }
 
@@ -383,6 +410,20 @@ void IRCodegen::processNewInst(const Ref<Instruction>& instruction) {
           IntegralConstant::getInt(dest->getType()->getSizeof())));
     }
   }
+}
+
+auto IRCodegen::visit(const Ref<ast::BreakStmt>& /*breakStmt*/)
+    -> ValueRef {
+  auto newInst{ addInstruction(makeRef<BranchInst>()) };
+  newInst->addMDNode(BrToLoopEndMDTag{});
+  return nullptr;
+}
+
+auto IRCodegen::visit(const Ref<ast::ContinueStmt>& /*continueStmt*/)
+    -> ValueRef {
+  auto newInst{ addInstruction(makeRef<BranchInst>()) };
+  newInst->addMDNode(BrToLoopStartMDTag{});
+  return nullptr;
 }
 
 } // namespace bort::ir

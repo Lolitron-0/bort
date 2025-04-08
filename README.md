@@ -3,7 +3,7 @@
 **bort** is a cross-platform Small-C language cross compiler for RISC-V architecture.
 
 ## Global TODOs
-- Global variables
+- global variables
 - goto
 - switch
 - compound variable declaration (`int a = 5, b, c = d;`)

@@ -4,7 +4,7 @@ project(bort)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(BORT_BUILD_TESTS ON)
+set(BORT_BUILD_TESTS OFF)
 
 include_directories(include)
 

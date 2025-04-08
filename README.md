@@ -4,10 +4,8 @@
 
 ## Global TODOs
 - Global variables
-- for-loops
 - goto
 - switch
-- compound assignment (`+=`, `*=`, ...)
 - compound variable declaration (`int a = 5, b, c = d;`)
 - testing
 

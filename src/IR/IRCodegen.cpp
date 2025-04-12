@@ -1,6 +1,8 @@
 #include "bort/IR/IRCodegen.hpp"
+#include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/ExpressionNode.hpp"
+#include "bort/AST/VarDecl.hpp"
 #include "bort/AST/Visitors/Utils.hpp"
 #include "bort/Basic/Assert.hpp"
 #include "bort/Basic/Casts.hpp"
@@ -189,6 +191,9 @@ auto IRCodegen::visit(const Ref<ast::NumberExpr>& numberNode)
 }
 
 auto IRCodegen::visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef {
+  if (varNode->getVariable()->isGlobal()) {
+    return m_Module.getGlobalVariable(varNode->getVariable());
+  }
   return VariableUse::get(varNode->getVariable());
 }
 
@@ -201,6 +206,26 @@ auto IRCodegen::visit(const Ref<ast::ASTRoot>& rootNode) -> ValueRef {
 
 auto IRCodegen::visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef {
   auto varSymbol{ varDeclNode->getVariable() };
+
+  if (varSymbol->isGlobal()) {
+    ValueRef initializer;
+    if (varDeclNode->hasInitializer()) {
+      initializer = genericVisit(varDeclNode->getInitializer());
+    } else {
+      auto varTy{ varSymbol->getType() };
+      if (varTy->isOneOf(TypeKind::Int, TypeKind::Char,
+                         TypeKind::Pointer)) {
+        initializer = IntegralConstant::getInt(0);
+      } else if (auto arrTy{ dynCastRef<ArrayType>(varTy) }) {
+        initializer = GlobalInitializer::getOrCreate(
+            std::vector<Ref<IntegralConstant>>(
+                arrTy->getNumElements(), IntegralConstant::getInt(0)));
+      }
+    }
+    return m_Module.addGlobal(makeRef<GlobalVariable>(
+        std::move(varSymbol), std::move(initializer)));
+  }
+
   auto elementSize{ IntegralConstant::getInt(
       static_cast<int32_t>(varSymbol->getType()->getSizeof())) };
   ValueRef numElements{ IntegralConstant::getInt(1) };
@@ -230,7 +255,8 @@ auto IRCodegen::visit(
     values.push_back(
         IntegralConstant::getOrCreate(num->getValue(), num->getType()));
   }
-  return m_Module.addGlobal(GlobalArray::getOrCreate(std::move(values)));
+  return m_Module.addGlobal(
+      GlobalInitializer::getOrCreate(std::move(values)));
 }
 
 auto IRCodegen::visit(const Ref<ast::IndexationExpr>& indexationNode)
@@ -260,6 +286,7 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
   }
   m_Module.addFunction(functionDeclNode->getFunction());
   pushBB("", functionDeclNode->getFunction()->getName());
+
   genericVisit(functionDeclNode->getBody());
 
   bool seenRet{ std::count_if(m_Module.getLastBBIt()->begin(),

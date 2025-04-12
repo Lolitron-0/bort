@@ -71,4 +71,19 @@ private:
   Ref<MachineRegister> m_Register;
 };
 
+class GlobalLoc final : public ValueLoc {
+public:
+  explicit GlobalLoc(Ref<ir::GlobalVariable> global)
+      : ValueLoc{ LocationKind::Global },
+        m_Global{ std::move(global) } {
+  }
+
+  [[nodiscard]] auto getGV() const -> Ref<ir::GlobalVariable> {
+    return m_Global;
+  }
+
+private:
+  Ref<ir::GlobalVariable> m_Global;
+};
+
 } // namespace bort::codegen

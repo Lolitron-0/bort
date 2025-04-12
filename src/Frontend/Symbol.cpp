@@ -14,7 +14,8 @@ void Symbol::dump() const {
 
 auto Variable::toString() const -> std::string {
   std::ostringstream ss;
-  ss << fmt::format(s_ObjectStyle, "Variable: ");
+  ss << fmt::format(s_ObjectStyle,
+                    "Variable{}: ", m_Global ? " (global)" : "");
   ss << m_Type->toString();
   ss << fmt::format(" {}", m_Name);
   return ss.str();

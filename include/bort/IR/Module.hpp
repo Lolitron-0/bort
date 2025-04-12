@@ -6,6 +6,7 @@
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/Value.hpp"
 #include <algorithm>
+#include <ranges>
 
 namespace bort::ir {
 
@@ -58,12 +59,17 @@ public:
 
   void revalidateBasicBlocks();
 
-  auto addGlobal(Ref<GlobalValue> global) -> Ref<GlobalValue>;
+  auto addGlobal(const Ref<GlobalValue>& global) -> Ref<GlobalValue>;
 
-  [[nodiscard]] auto getGlobals() const
-      -> const std::vector<Ref<GlobalValue>>& {
-    return m_Globals;
+  [[nodiscard]] auto getGlobals() const {
+    return std::views::values(m_Globals);
   }
+
+  [[nodiscard]] auto getGlobalVariable(const std::string& name)
+      -> Ref<GlobalVariable>;
+
+  [[nodiscard]] auto getGlobalVariable(const Ref<Variable>& variable)
+      -> Ref<GlobalVariable>;
 
   void addBasicBlock(std::string name);
 
@@ -101,7 +107,7 @@ public:
 
 private:
   std::list<IRFunction> m_Functions;
-  std::vector<Ref<GlobalValue>> m_Globals;
+  std::unordered_map<std::string, Ref<GlobalValue>> m_Globals;
 };
 
 struct TraversalContext {

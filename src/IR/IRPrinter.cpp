@@ -19,7 +19,6 @@
 #include <fmt/color.h>
 #include <fmt/format.h>
 #include <fmt/ranges.h>
-#include <memory>
 
 static constexpr auto s_DefaultStyle(fmt::fg(fmt::color::white));
 static constexpr auto s_InstructionStyle(
@@ -48,7 +47,7 @@ static auto getMDClause(const Value& val) -> std::string {
   return fmt::format(s_MDStyle, "[{}]", std::move(res));
 }
 
-auto formatValueColored(const bort::ir::ValueRef& val) -> std::string {
+auto formatValueStyled(const bort::ir::ValueRef& val) -> std::string {
   if (auto constant{ dynCastRef<bort::ir::IntegralConstant>(val) }) {
     return fmt::format(s_ConstantStyle, "{}", constant->getValue());
   }
@@ -69,7 +68,7 @@ static auto formatFuncSignature(const IRFunction& func) -> std::string {
   std::string delim{ ", " };
   for (auto&& arg : func.getFunction()->getArgs()) {
     args += delim + arg->getType()->toString() + " " +
-            formatValueColored(VariableUse::get(arg));
+            formatValueStyled(VariableUse::get(arg));
   }
   args.erase(0, delim.size());
   return fmt::format(s_DefaultStyle, "{}({})", func.getName(),
@@ -77,7 +76,7 @@ static auto formatFuncSignature(const IRFunction& func) -> std::string {
 }
 
 struct GlobalValueInitializerFormatter {
-  auto visit(GlobalArray* val) -> std::string {
+  auto visit(GlobalInitializer* val) -> std::string {
     std::string values{};
     std::string delim{ ", " };
     for (auto&& n : val->getValues()) {
@@ -89,6 +88,11 @@ struct GlobalValueInitializerFormatter {
     }
     return fmt::format("{} = {{{}}}", formatValueNameColored(val),
                        values);
+  }
+
+  auto visit(GlobalVariable* val) -> std::string {
+    return fmt::format("{} = {}", formatValueNameColored(val),
+                       formatValueStyled(val->getInitializer()));
   }
 
 private:
@@ -168,40 +172,40 @@ void IRPrinter::visit(const Ref<OpInst>& opInst) {
   bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),
               "OpInst name not added");
   fmt::print(stderr, "{} = {} {}, {}",
-             formatValueColored(opInst->getDestination()),
+             formatValueStyled(opInst->getDestination()),
              styleInst(s_OpInstNames.Find(opInst->getOp()).value()),
-             formatValueColored(opInst->getSrc()),
-             formatValueColored(opInst->getSrc2()));
+             formatValueStyled(opInst->getSrc()),
+             formatValueStyled(opInst->getSrc2()));
 }
 
 void bort::ir::IRPrinter::visit(const Ref<UnaryInst>& unaryInst) {
   bort_assert(s_UnaryInstNames.Find(unaryInst->getOp()).has_value(),
               "UnaryInst name not added");
   fmt::print(stderr, "{} = {} {}",
-             formatValueColored(unaryInst->getDestination()),
+             formatValueStyled(unaryInst->getDestination()),
              styleInst(s_UnaryInstNames.Find(unaryInst->getOp()).value()),
-             formatValueColored(unaryInst->getSrc()));
+             formatValueStyled(unaryInst->getSrc()));
 }
 
 void bort::ir::IRPrinter::visit(const Ref<GepInst>& gepInst) {
   fmt::print(stderr, "{} = {} {}, {}",
-             formatValueColored(gepInst->getDestination()),
-             styleInst("gep"), formatValueColored(gepInst->getBasePtr()),
-             formatValueColored(gepInst->getIndex()));
+             formatValueStyled(gepInst->getDestination()),
+             styleInst("gep"), formatValueStyled(gepInst->getBasePtr()),
+             formatValueStyled(gepInst->getIndex()));
 }
 
 void IRPrinter::visit(const Ref<AllocaInst>& allocaInst) {
   fmt::print(stderr, "{} = {} {}, {}",
-             formatValueColored(allocaInst->getDestination()),
+             formatValueStyled(allocaInst->getDestination()),
              styleInst("alloca"),
-             formatValueColored(allocaInst->getElementSize()),
-             formatValueColored(allocaInst->getNumElements()));
+             formatValueStyled(allocaInst->getElementSize()),
+             formatValueStyled(allocaInst->getNumElements()));
 }
 
 void bort::ir::IRPrinter::visit(const Ref<MoveInst>& moveInst) {
   fmt::print(stderr, "{} = {}",
-             formatValueColored(moveInst->getDestination()),
-             formatValueColored(moveInst->getSrc()));
+             formatValueStyled(moveInst->getDestination()),
+             formatValueStyled(moveInst->getSrc()));
 }
 
 void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
@@ -215,7 +219,7 @@ void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
     auto [lhs, rhs]{ branchInst->getOperands() };
     fmt::print(stderr, "{} {}, {}, {}",
                styleInst("b" + s_ModeNames.at(branchInst->getMode())),
-               formatValueColored(lhs), formatValueColored(rhs),
+               formatValueStyled(lhs), formatValueStyled(rhs),
                branchInst->getTarget()->getName());
   } else {
     fmt::print(stderr, "{} {}", styleInst("br"),
@@ -226,34 +230,34 @@ void IRPrinter::visit(const Ref<BranchInst>& branchInst) {
 void bort::ir::IRPrinter::visit(const Ref<CallInst>& callInst) {
   if (!callInst->isVoid()) {
     fmt::print(stderr,
-               "{} = ", formatValueColored(callInst->getDestination()));
+               "{} = ", formatValueStyled(callInst->getDestination()));
   }
 
   fmt::print(stderr, "{} {}", styleInst("call"),
              callInst->getFunction()->getName());
 
   for (size_t i{ 0 }; i < callInst->getNumArgs(); i++) {
-    fmt::print(stderr, ", {}", formatValueColored(callInst->getArg(i)));
+    fmt::print(stderr, ", {}", formatValueStyled(callInst->getArg(i)));
   }
 }
 
 void bort::ir::IRPrinter::visit(const Ref<RetInst>& retInst) {
   fmt::print(stderr, "{}", styleInst("ret"));
   if (retInst->hasValue()) {
-    fmt::print(stderr, " {}", formatValueColored(retInst->getValue()));
+    fmt::print(stderr, " {}", formatValueStyled(retInst->getValue()));
   }
 }
 
 void bort::ir::IRPrinter::visit(const Ref<LoadInst>& loadInst) {
   fmt::print(stderr, "{} = {} {}, {}",
-             formatValueColored(loadInst->getDestination()),
-             styleInst("load"), formatValueColored(loadInst->getLoc()),
-             formatValueColored(loadInst->getBytes()));
+             formatValueStyled(loadInst->getDestination()),
+             styleInst("load"), formatValueStyled(loadInst->getLoc()),
+             formatValueStyled(loadInst->getBytes()));
 }
 
 void bort::ir::IRPrinter::visit(const Ref<StoreInst>& storeInst) {
   fmt::print(stderr, "{} {}, {}, {}", styleInst("store"),
-             formatValueColored(storeInst->getSource()),
-             formatValueColored(storeInst->getLoc()),
-             formatValueColored(storeInst->getBytes()));
+             formatValueStyled(storeInst->getSource()),
+             formatValueStyled(storeInst->getLoc()),
+             formatValueStyled(storeInst->getBytes()));
 }

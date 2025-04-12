@@ -52,6 +52,7 @@ private:
   auto visit(const Ref<ast::BreakStmt>& breakStmt) -> ValueRef;
   auto visit(const Ref<ast::ContinueStmt>& continueStmt) -> ValueRef;
   auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
+  void processGlobalVarDecl(const Ref<ast::VarDecl>& varDeclNode);
 
   auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
                               bool negate = false) -> Ref<BranchInst>;

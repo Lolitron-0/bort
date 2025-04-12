@@ -59,9 +59,10 @@ public:
       : Symbol{ ObjectKind::Variable, std::move(name), true },
         m_Type{ nullptr } {
   }
-  Variable(std::string name, TypeRef type)
+  Variable(std::string name, TypeRef type, bool global = false)
       : Symbol{ ObjectKind::Variable, std::move(name), false },
-        m_Type{ std::move(type) } {
+        m_Type{ std::move(type) },
+        m_Global{ global } {
   }
   [[nodiscard]] auto getType() const -> TypeRef {
     bort_assert(!isShallow(), "Type access on shallow symbol");
@@ -70,8 +71,17 @@ public:
 
   [[nodiscard]] auto toString() const -> std::string override;
 
+  [[nodiscard]] auto isGlobal() const -> bool {
+    return m_Global;
+  }
+
+  void setGlobal(bool global) {
+    m_Global = global;
+  }
+
 private:
   TypeRef m_Type;
+  bool m_Global{ false };
 };
 
 class Function final : public Symbol {

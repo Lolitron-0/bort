@@ -13,6 +13,7 @@
 #include "bort/IR/CallInst.hpp"
 #include "bort/IR/Constant.hpp"
 #include "bort/IR/GepInst.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
@@ -64,6 +65,12 @@ auto RVBranchInfo::toString() const -> std::string {
 struct MemoryDependencyMDTag : MDTag {
   MemoryDependencyMDTag()
       : MDTag{ "mem_dependency" } {
+  }
+};
+
+struct RVLoadLabelAddrMDTag : public ir::MDTag {
+  RVLoadLabelAddrMDTag()
+      : ir::MDTag{ "rv_load_label_addr" } {
   }
 };
 
@@ -145,8 +152,9 @@ private:
   /// store %valueReg, %arrPtr
   /// %arrPtr = add %arrPtr, %elementSize
   /// ...
-  void processGlobalArrayAssignment(const Ref<ir::MoveInst>& inst,
-                                    const Ref<ir::GlobalArray>& GA) {
+  void processGlobalArrayAssignment(
+      const Ref<ir::MoveInst>& inst,
+      const Ref<ir::GlobalInitializer>& GA) {
     auto arrTy{ dynCastRef<ArrayType>(GA->getType()) };
     auto arrPtrTy{ PointerType::get(arrTy->getBaseType()) };
     auto arrPtr{ Register::getOrCreate(arrPtrTy) };
@@ -175,7 +183,7 @@ private:
   }
 
   void visit(const Ref<MoveInst>& moveInst) override {
-    if (auto GA{ dynCastRef<GlobalArray>(moveInst->getSrc()) }) {
+    if (auto GA{ dynCastRef<GlobalInitializer>(moveInst->getSrc()) }) {
       processGlobalArrayAssignment(moveInst, GA);
       return;
     }
@@ -317,6 +325,11 @@ private:
       info.InstName = "lw";
       break;
     }
+
+    if (loadInst->getMDNode<RVLoadLabelAddrMDTag>()) {
+      info.InstName = "la";
+    }
+
     loadInst->addMDNode(std::move(info));
   }
 
@@ -364,6 +377,18 @@ struct FrameOffset : public Metadata {
   size_t Offset;
 };
 
+struct GlobalAddr : public Metadata {
+  explicit GlobalAddr(std::string label)
+      : Label{ std::move(label) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override {
+    return fmt::format("stack_loc .lbl={}", Label);
+  }
+
+  std::string Label;
+};
+
 auto RVMachineRegister::get(GPR gprId) -> Ref<RVMachineRegister> {
   static std::unordered_map<GPR, Ref<RVMachineRegister>> s_Registry;
   static bool s_RegistryInitialized{ false };
@@ -387,6 +412,28 @@ auto RVMachineRegister::get(GPR gprId) -> Ref<RVMachineRegister> {
   return s_Registry.at(gprId);
 }
 
+auto RVStoreTmpReg::toString() const -> std::string {
+  return fmt::format("rv_store_tmp_reg .reg={}", Reg->getName());
+}
+
+auto Generator::getOperandStorageLoc(const Ref<ir::Operand>& op) const
+    -> Ref<ValueLoc> {
+  if (auto* frameOffsetMD{ op->getMDNode<FrameOffset>() }) {
+    return makeRef<StackLoc>(frameOffsetMD->Offset);
+  }
+
+  if (auto* globalAddrMD{ op->getMDNode<GlobalAddr>() }) {
+    return makeRef<GlobalLoc>(
+        m_Module.getGlobalVariable(globalAddrMD->Label));
+  }
+
+  bort_assert(false,
+              fmt::format("Unknown operand storage location for op: {}",
+                          op->getName())
+                  .c_str());
+  return nullptr;
+}
+
 auto Generator::tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
     -> std::optional<RVMachineRegisterRef> {
   bort_assert(m_OperandLocs.contains(op),
@@ -405,8 +452,20 @@ auto Generator::tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
   return std::nullopt;
 }
 
-auto Generator::chooseRegAndSpill(const Ref<ir::Operand>& op,
-                                  std::unordered_set<ir::ValueRef> ctxOps)
+auto Generator::tryFindFreeRegister()
+    -> std::optional<RVMachineRegisterRef> {
+  auto freeRegIt{ std::ranges::find_if(m_RegisterContent, [](auto pair) {
+    return pair.second.empty();
+  }) };
+
+  if (freeRegIt != m_RegisterContent.end()) {
+    return freeRegIt->first;
+  }
+
+  return std::nullopt;
+}
+
+auto Generator::chooseRegAndSpill(std::unordered_set<ir::ValueRef> ctxOps)
     -> RVMachineRegisterRef {
   for (int regIDCounter{ static_cast<int>(GPR::VALUE_REGS_END) - 1 };
        regIDCounter >= static_cast<int>(GPR::VALUE_REGS_START);
@@ -423,7 +482,6 @@ auto Generator::chooseRegAndSpill(const Ref<ir::Operand>& op,
 
     RVMachineRegisterRef reg{ RVMachineRegister::get(regID) };
     for (auto&& oldOp : m_RegisterContent[reg]) {
-      bort_assert(oldOp != op, "Find free register failed");
       auto [_, memLoc]{ getOperandRegisterMemoryLocs(oldOp) };
       generateStore(oldOp, reg, memLoc);
     }
@@ -443,15 +501,12 @@ auto Generator::chooseReadReg(const Ref<ir::Operand>& op,
     return existingRegister.value();
   }
 
-  auto freeRegIt{ std::ranges::find_if(m_RegisterContent, [](auto pair) {
-    return pair.second.empty();
-  }) };
-
-  if (freeRegIt != m_RegisterContent.end()) {
-    return freeRegIt->first;
+  auto freeRegister{ tryFindFreeRegister() };
+  if (freeRegister.has_value()) {
+    return freeRegister.value();
   }
 
-  return chooseRegAndSpill(op, std::move(ctxOps));
+  return chooseRegAndSpill(std::move(ctxOps));
 }
 
 auto Generator::chooseDstReg(const Ref<ir::Operand>& op,
@@ -462,17 +517,12 @@ auto Generator::chooseDstReg(const Ref<ir::Operand>& op,
     return existingRegister.value();
   }
 
-  auto freeRegIt{ std::ranges::find_if(
-      m_RegisterContent, [&op](auto pair) {
-        auto& ops{ pair.second };
-        return (ops.size() == 1 && ops.contains(op)) || ops.empty();
-      }) };
-
-  if (freeRegIt != m_RegisterContent.end()) {
-    return freeRegIt->first;
+  auto freeRegister{ tryFindFreeRegister() };
+  if (freeRegister.has_value()) {
+    return freeRegister.value();
   }
 
-  return chooseRegAndSpill(op, std::move(ctxOps));
+  return chooseRegAndSpill(std::move(ctxOps));
 }
 
 static constexpr cul::BiMap s_GPRStrings{ [](auto selector) {
@@ -518,10 +568,14 @@ void Generator::assignLocalOperandsOffsets() {
     size_t offset{ 8 };
     auto operands{ getUniqueOperands(func) };
     for (auto&& operand : operands) {
-      operand->addMDNode(FrameOffset{ offset });
-      // @todo: pack variables and add alignment at the end
-      offset += 4;
-      // offset += operand->getType()->getSizeof();
+      if (isaRef<VariableUse>(operand) || isaRef<Register>(operand)) {
+        operand->addMDNode(FrameOffset{ offset });
+        // @todo: pack variables and add alignment at the end
+        offset += 4;
+        // offset += operand->getType()->getSizeof();
+      } else if (auto GV{ dynCastRef<GlobalVariable>(operand) }) {
+        operand->addMDNode(GlobalAddr{ GV->getName() });
+      }
     }
 
     auto alignment{ 16 - (offset % 16) };
@@ -560,7 +614,7 @@ auto Generator::getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op)
 
 auto Generator::notLocalToBBFilter(const Ref<ir::Operand>& op,
                                    const ir::BasicBlock& bb) -> bool {
-  return isaRef<VariableUse>(op) ||
+  return isaRef<VariableUse>(op) || isaRef<GlobalVariable>(op) ||
          std::count_if(m_OperandUsages[op].begin(),
                        m_OperandUsages[op].end(),
                        [&bb](const auto* usageBB) {
@@ -578,9 +632,7 @@ void Generator::spillIf(const SpillFilter& filter) {
 
     if (!inMemoryLoc) {
       bort_assert(regLoc, "Operand is neither in memory nor register");
-      auto* frameOffset{ op->getMDNode<FrameOffset>() };
-      generateStore(op, regLoc->getRegister(),
-                    makeRef<StackLoc>(frameOffset->Offset));
+      generateStore(op, regLoc->getRegister(), getOperandStorageLoc(op));
     }
   }
 }
@@ -719,6 +771,9 @@ void Generator::generateStore(const Ref<ir::Operand>& op,
   auto storeInst{ makeRef<StoreInst>(
       reg, loc, IntegralConstant::getInt(op->getType()->getSizeof())) };
   storeInst->addMDNode(StoreSourceOperandMD{ op });
+
+  attachTmpRegInfoIfNeeded(storeInst);
+
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(storeInst));
 }
 
@@ -867,6 +922,8 @@ void Generator::visit(const Ref<ir::StoreInst>& storeInst) {
     processSourceChoice(locReg, locOp);
     storeInst->setLoc(makeRef<RegisterLoc>(locReg));
   }
+
+  attachTmpRegInfoIfNeeded(storeInst);
 }
 
 void Generator::visit(const Ref<ir::MoveInst>& mvInst) {
@@ -968,9 +1025,7 @@ void Generator::reinitDescriptors(const BasicBlock& bb, bool isEntry) {
       continue;
     }
 
-    auto* opLoc{ operand->getMDNode<FrameOffset>() };
-    bort_assert(opLoc, "Operand has no FrameOffset");
-    m_OperandLocs[operand].insert(makeRef<StackLoc>(opLoc->Offset));
+    m_OperandLocs[operand].insert(getOperandStorageLoc(operand));
   }
 
   if (isEntry) {
@@ -1004,6 +1059,16 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
     return;
   }
 
+  if (auto globalLoc{ dynCastRef<GlobalLoc>(loc) }) {
+    auto load{ makeRef<LoadInst>(
+        dest, loc,
+        IntegralConstant::getInt(
+            PointerType::get(VoidType::get())->getSizeof())) };
+    load->addMDNode(RVLoadLabelAddrMDTag{});
+    m_CurrentBBIter->insertBefore(m_CurrentInstIter, std::move(load));
+    return;
+  }
+
   bort_assert(false, fmt::format("Cant evaluate location address for: {}",
                                  loc->getName())
                          .c_str());
@@ -1012,6 +1077,23 @@ void Generator::evaluateLocAddress(const Ref<ValueLoc>& loc,
 void Generator::addInstruction(const Ref<ir::Instruction>& inst) {
   m_CurrentBBIter->insertBefore(m_CurrentInstIter, inst);
   InstructionVisitorBase::genericVisit(inst);
+}
+
+void Generator::attachTmpRegInfoIfNeeded(
+    const Ref<ir::StoreInst>& storeInst) {
+  if (!isaRef<GlobalLoc>(storeInst->getLoc())) {
+    return;
+  }
+
+  RVMachineRegisterRef tmpReg{};
+  auto freeReg{ tryFindFreeRegister() };
+  if (freeReg) {
+    tmpReg = *freeReg;
+  } else {
+    tmpReg = chooseRegAndSpill({ storeInst->getSource() });
+  }
+
+  storeInst->addMDNode(RVStoreTmpReg{ std::move(tmpReg) });
 }
 
 } // namespace bort::codegen::rv

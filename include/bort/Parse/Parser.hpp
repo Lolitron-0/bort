@@ -152,6 +152,7 @@ private:
   bool m_ASTInvalid{ false };
   bool m_DiagnosticSilenced{ false };
   bool m_InsideLoop{ false };
+  bool m_GlobalScope{ true };
 };
 
 } // namespace bort

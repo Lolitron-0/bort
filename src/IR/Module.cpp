@@ -1,4 +1,6 @@
 #include "bort/IR/Module.hpp"
+#include "bort/Basic/Assert.hpp"
+#include "bort/IR/GlobalValue.hpp"
 
 using namespace bort::ir;
 using namespace bort;
@@ -57,10 +59,24 @@ void bort::ir::Module::revalidateBasicBlocks() {
   }
 }
 
-auto bort::ir::Module::addGlobal(Ref<GlobalValue> global)
+auto bort::ir::Module::addGlobal(const Ref<GlobalValue>&  global)
     -> Ref<GlobalValue> {
-  m_Globals.push_back(std::move(global));
-  return m_Globals.back();
+  m_Globals[global->getName()] = global;
+  return m_Globals.at(global->getName());
+}
+
+auto bort::ir::Module::getGlobalVariable(const std::string& name)
+    -> Ref<GlobalVariable> {
+  bort_assert(m_Globals.contains(name), "No GlobalValue with such name");
+  auto GV{ dynCastRef<GlobalVariable>(m_Globals.at(name)) };
+  bort_assert(GV,
+              "GlobalValue with requested name is not a GlobalVariable");
+  return GV;
+}
+
+auto bort::ir::Module::getGlobalVariable(const Ref<Variable>& variable)
+    -> Ref<GlobalVariable> {
+      return getGlobalVariable(variable->getName());
 }
 
 void bort::ir::Module::addBasicBlock(std::string name) {
@@ -70,3 +86,4 @@ void bort::ir::Module::addBasicBlock(std::string name) {
 void bort::ir::Module::addFunction(Ref<Function> function) {
   m_Functions.emplace_back(std::move(function));
 }
+

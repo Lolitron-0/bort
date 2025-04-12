@@ -376,7 +376,7 @@ auto Parser::parseVarDecl(TypeRef type,
   }
 
   auto node{ m_ASTRoot->registerNode<ast::VarDecl>(
-      ast::ASTDebugInfo{ nameTok }, type, name) };
+      ast::ASTDebugInfo{ nameTok }, type, name, m_GlobalScope) };
 
   if (curTok().is(TokenKind::Assign)) {
     consumeToken();
@@ -483,7 +483,9 @@ auto Parser::parseFunctionDecl(const TypeRef& type, const Token& nameTok)
         '{');
     return invalidNode();
   }
+  m_GlobalScope = false;
   auto block{ parseBlock() };
+  m_GlobalScope = true;
   return m_ASTRoot->registerNode<ast::FunctionDecl>(
       ast::ASTDebugInfo{ nameTok }, std::move(name), type,
       std::move(args), std::move(block));

@@ -10,10 +10,10 @@ namespace bort::ast {
 
 class VarDecl final : public Statement {
 
-  VarDecl(TypeRef type, std::string name)
+  VarDecl(TypeRef type, std::string name, bool global = false)
       : Statement{ NodeKind::VarDecl },
-        m_Variable{ makeRef<Variable>(std::move(name),
-                                      std::move(type)) } {
+        m_Variable{ makeRef<Variable>(std::move(name), std::move(type),
+                                      global) } {
   }
 
 public:

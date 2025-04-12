@@ -12,6 +12,7 @@
 #include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/Instruction.hpp"
 #include "bort/IR/LoadInst.hpp"
+#include "bort/IR/Metadata.hpp"
 #include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
@@ -127,6 +128,16 @@ private:
 };
 using RVMachineRegisterRef = Ref<RVMachineRegister>;
 
+struct RVStoreTmpReg final : public ir::Metadata {
+  explicit RVStoreTmpReg(RVMachineRegisterRef reg)
+      : Reg{ std::move(reg) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override;
+
+  RVMachineRegisterRef Reg;
+};
+
 /// General note: for this type of IR, graph-coloring algorithm would be
 /// more preferable, but firstly I decided to quickly implement something
 /// simple
@@ -158,11 +169,11 @@ private:
   void visit(const Ref<ir::StoreInst>& storeInst) override;
 
   void processGlobalArrayAssignment(const Ref<ir::MoveInst>& inst,
-                                    const Ref<ir::GlobalArray>& GA);
+                                    const Ref<ir::GlobalInitializer>& GA);
   auto tryFindRegisterWithOperand(const Ref<ir::Operand>& op)
       -> std::optional<RVMachineRegisterRef>;
-  auto chooseRegAndSpill(const Ref<ir::Operand>& op,
-                         std::unordered_set<ir::ValueRef> ctxOps = {})
+  auto tryFindFreeRegister() -> std::optional<RVMachineRegisterRef>;
+  auto chooseRegAndSpill(std::unordered_set<ir::ValueRef> ctxOps = {})
       -> RVMachineRegisterRef;
   auto chooseReadReg(const Ref<ir::Operand>& op,
                      std::unordered_set<ir::ValueRef> ctxOps = {})
@@ -180,6 +191,10 @@ private:
   void fillOperandUsages();
   auto getOperandRegisterMemoryLocs(const Ref<ir::Operand>& op) const
       -> std::pair<Ref<RegisterLoc>, Ref<ValueLoc>>;
+  auto getOperandStorageLoc(const Ref<ir::Operand>& op) const
+      -> Ref<ValueLoc>;
+
+  void attachTmpRegInfoIfNeeded(const Ref<ir::StoreInst>& storeInst);
 
   auto notLocalToBBFilter(const Ref<ir::Operand>& op,
                           const ir::BasicBlock& bb) -> bool;

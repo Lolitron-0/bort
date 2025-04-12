@@ -4,13 +4,16 @@
 #include "bort/Codegen/Intrinsics.hpp"
 #include "bort/Codegen/RISCVCodegen.hpp"
 #include "bort/Codegen/ValueLoc.hpp"
+#include "bort/Frontend/Type.hpp"
 #include "bort/IR/BranchInst.hpp"
+#include "bort/IR/Constant.hpp"
+#include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/StoreInst.hpp"
 #include "bort/IR/Value.hpp"
-#include "fmt/color.h"
 #include <fmt/format.h>
 #include <fmt/ostream.h>
+#include <ostream>
 
 using namespace bort::ir;
 using namespace bort;
@@ -20,6 +23,10 @@ namespace bort::codegen::rv {
 static auto formatValueLoc(const Ref<ValueLoc>& VL) -> std::string {
   if (auto SL{ dynCastRef<StackLoc>(VL) }) {
     return fmt::format("{}(sp)", SL->getOffset());
+  }
+
+  if (auto GL{ dynCastRef<GlobalLoc>(VL) }) {
+    return fmt::format("{}", GL->getGV()->getName());
   }
 
   if (auto RL{ dynCastRef<RegisterLoc>(VL) }) {
@@ -46,6 +53,50 @@ auto formatMachineValue(const ValueRef& val) -> std::string {
   bort_assert(false, "Can't format Value in codegen");
   return "";
 }
+
+struct GlobalValueInitializerFormatter {
+
+  auto visit(GlobalInitializer* /*val*/) -> std::string {
+    return {};
+  }
+
+  auto visit(GlobalVariable* val) -> std::string {
+    std::string initializer{};
+    if (auto constant{
+            dynCastRef<IntegralConstant>(val->getInitializer()) }) {
+      initializer = fmt::format("{}", constant->getValue());
+    } else if (auto initList{ dynCastRef<GlobalInitializer>(
+                   val->getInitializer()) }) {
+      std::string delim{ ", " };
+      for (auto&& val : initList->getValues()) {
+        initializer += fmt::format("{}{}", delim, val->getValue());
+      }
+      initializer.erase(0, delim.size());
+    }
+    return fmt::format("{}: {} {}", val->getName(),
+                       formatGlobalVarTypeLabel(val->getType()),
+                       std::move(initializer));
+  }
+
+private:
+  static auto formatGlobalVarTypeLabel(const TypeRef& type)
+      -> std::string {
+    if (type->getKind() == TypeKind::Int ||
+        type->getKind() == TypeKind::Pointer) {
+      return ".word";
+    }
+    if (type->getKind() == TypeKind::Char) {
+      return ".byte";
+    }
+
+    if (auto arrayType{ dynCastRef<ArrayType>(type) }) {
+      return formatGlobalVarTypeLabel(arrayType->getBaseType());
+    }
+
+    bort_assert(false, "Unhandled GV type label");
+    return {};
+  }
+};
 
 void Printer::run(ir::Module& module) {
   printHeader(module);
@@ -141,9 +192,17 @@ void Printer::visit(const Ref<ir::MoveInst>& mvInst) {
 
 void Printer::visit(const Ref<StoreInst>& storeInst) {
   auto* II{ storeInst->getMDNode<RVInstInfo>() };
-  fmt::println(m_Stream, "{} {}, {}", II->InstName,
+  auto* storeTmpRegMD{ storeInst->getMDNode<RVStoreTmpReg>() };
+
+  std::string tmpRegStr{};
+  if (storeTmpRegMD) {
+    tmpRegStr = ", " + formatMachineValue(storeTmpRegMD->Reg);
+  }
+
+  fmt::println(m_Stream, "{} {}, {}{}", II->InstName,
                formatMachineValue(storeInst->getSource()),
-               formatMachineValue(storeInst->getLoc()));
+               formatMachineValue(storeInst->getLoc()),
+               std::move(tmpRegStr));
 }
 
 void Printer::visit(const Ref<ir::CallInst>& callInst) {
@@ -159,6 +218,13 @@ void Printer::printHeader(const Module& module) {
   bort_assert(macros, "Module has no macro definitions MD");
   for (auto&& def : macros->Macros) {
     fmt::println(m_Stream, "{}\n", def);
+  }
+
+  fmt::println(m_Stream, ".data");
+
+  for (auto&& GV : module.getGlobals()) {
+    fmt::println(m_Stream, "{}",
+                 GV->accept(GlobalValueInitializerFormatter{}));
   }
 
   fmt::println(m_Stream, R"(.globl main

@@ -28,8 +28,17 @@ public:
     return m_Sizeof;
   };
 
-  [[nodiscard]] inline auto is(TypeKind kind) const -> bool {
+  [[nodiscard]] auto is(TypeKind kind) const -> bool {
     return m_Kind == kind;
+  }
+  [[nodiscard]] constexpr auto isOneOf(TypeKind tk1,
+                                       TypeKind tk2) const -> bool {
+    return m_Kind == tk1 || m_Kind == tk2;
+  }
+  template <typename... TKs>
+  [[nodiscard]] constexpr auto isOneOf(TypeKind tk,
+                                       TKs... other) const -> bool {
+    return is(tk) || isOneOf(other...);
   }
 
   void dump() const;

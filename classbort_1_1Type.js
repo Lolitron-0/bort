@@ -6,5 +6,7 @@ var classbort_1_1Type =
     [ "getKind", "classbort_1_1Type.html#ab936d4e079153ee96b3494c4afd129aa", null ],
     [ "getSizeof", "classbort_1_1Type.html#a211075dcfcd257ca883b311f58e44230", null ],
     [ "is", "classbort_1_1Type.html#aceb4990aab71cdec86275002119694f6", null ],
+    [ "isOneOf", "classbort_1_1Type.html#af10c137821c9988cfb0e154106e2053c", null ],
+    [ "isOneOf", "classbort_1_1Type.html#a1e2ba1e14d0ab2e6400ba74adbfcd0b4", null ],
     [ "toString", "classbort_1_1Type.html#aa459447fac8d0f8d2a52839d039acb54", null ]
 ];

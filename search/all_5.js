@@ -3,7 +3,7 @@ var searchData=
   ['fatalsemanticerror_0',['FatalSemanticError',['../classbort_1_1ast_1_1FatalSemanticError.html',1,'bort::ast::FatalSemanticError'],['../classbort_1_1ast_1_1FatalSemanticError.html#aaeecb9a8024b7a4614dbb501cb6a6278',1,'bort::ast::FatalSemanticError::FatalSemanticError()']]],
   ['formatmachinevalue_1',['formatMachineValue',['../namespacebort_1_1codegen_1_1rv.html#a1cb1229ff75718eb8ff48ad705ec0305',1,'bort::codegen::rv']]],
   ['formatvalue_2',['formatValue',['../classbort_1_1ir_1_1Value.html#a94c6147d43613639fac94edceca8e3ad',1,'bort::ir::Value']]],
-  ['formatvaluecolored_3',['formatValueColored',['../IRPrinter_8cpp.html#a03fda0fb1403961a873b333be1b208a2',1,'IRPrinter.cpp']]],
+  ['formatvaluestyled_3',['formatValueStyled',['../IRPrinter_8cpp.html#a18262c6592af6821815029d22614e91b',1,'IRPrinter.cpp']]],
   ['fp_4',['fp',['../namespacebort_1_1codegen_1_1rv.html#a3e90a2b8f3bc1e06ec3135fd869ea248a0666f0acdeed38d4cd9084ade1739498',1,'bort::codegen::rv']]],
   ['frameinfo_5',['FrameInfo',['../classbort_1_1codegen_1_1FrameInfo.html',1,'bort::codegen']]],
   ['frameoffset_6',['FrameOffset',['../structbort_1_1codegen_1_1rv_1_1FrameOffset.html',1,'bort::codegen::rv::FrameOffset'],['../structbort_1_1codegen_1_1rv_1_1FrameOffset.html#adb3799a5c885d7d271699220288ef4ff',1,'bort::codegen::rv::FrameOffset::FrameOffset()']]],

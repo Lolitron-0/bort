@@ -124,6 +124,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a211075dcfcd257ca883b311f58e44230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aceb4990aab71cdec86275002119694f6"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Type.html#aceb4990aab71cdec86275002119694f6">is</a> (<a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a> kind) const -&gt; bool</td></tr>
 <tr class="separator:aceb4990aab71cdec86275002119694f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e2ba1e14d0ab2e6400ba74adbfcd0b4"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Type.html#a1e2ba1e14d0ab2e6400ba74adbfcd0b4">isOneOf</a> (<a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a> tk1, <a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a> tk2) const -&gt; bool</td></tr>
+<tr class="separator:a1e2ba1e14d0ab2e6400ba74adbfcd0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af10c137821c9988cfb0e154106e2053c"><td class="memTemplParams" colspan="2">template&lt;typename... TKs&gt; </td></tr>
+<tr class="memitem:af10c137821c9988cfb0e154106e2053c"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classbort_1_1Type.html#af10c137821c9988cfb0e154106e2053c">isOneOf</a> (<a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a> tk, TKs... other) const -&gt; bool</td></tr>
+<tr class="separator:af10c137821c9988cfb0e154106e2053c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15513fe36f0b234a7aa6366c8ce51989"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Type.html#a15513fe36f0b234a7aa6366c8ce51989">dump</a> () const</td></tr>
 <tr class="separator:a15513fe36f0b234a7aa6366c8ce51989"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa459447fac8d0f8d2a52839d039acb54"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Type.html#aa459447fac8d0f8d2a52839d039acb54">toString</a> () const -&gt; std::string=0</td></tr>
@@ -296,6 +301,108 @@ Here is the call graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Type_aceb4990aab71cdec86275002119694f6_icgraph.png" border="0" usemap="#aclassbort_1_1Type_aceb4990aab71cdec86275002119694f6_icgraph" alt=""/></div>
+<map name="aclassbort_1_1Type_aceb4990aab71cdec86275002119694f6_icgraph" id="aclassbort_1_1Type_aceb4990aab71cdec86275002119694f6_icgraph">
+<area shape="rect" title=" " alt="" coords="200,5,305,31"/>
+<area shape="rect" href="classbort_1_1Type.html#af10c137821c9988cfb0e154106e2053c" title=" " alt="" coords="5,5,152,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="af10c137821c9988cfb0e154106e2053c" name="af10c137821c9988cfb0e154106e2053c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af10c137821c9988cfb0e154106e2053c">&#9670;&#160;</a></span>isOneOf() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... TKs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto bort::Type::isOneOf </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a>&#160;</td>
+          <td class="paramname"><em>tk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">TKs...&#160;</td>
+          <td class="paramname"><em>other</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const -&gt; bool </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Type_af10c137821c9988cfb0e154106e2053c_cgraph.png" border="0" usemap="#aclassbort_1_1Type_af10c137821c9988cfb0e154106e2053c_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Type_af10c137821c9988cfb0e154106e2053c_cgraph" id="aclassbort_1_1Type_af10c137821c9988cfb0e154106e2053c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,152,56"/>
+<area shape="rect" href="classbort_1_1Type.html#aceb4990aab71cdec86275002119694f6" title=" " alt="" coords="221,5,326,31"/>
+<area shape="rect" href="classbort_1_1Type.html#a1e2ba1e14d0ab2e6400ba74adbfcd0b4" title=" " alt="" coords="200,55,347,80"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1e2ba1e14d0ab2e6400ba74adbfcd0b4" name="a1e2ba1e14d0ab2e6400ba74adbfcd0b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2ba1e14d0ab2e6400ba74adbfcd0b4">&#9670;&#160;</a></span>isOneOf() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto bort::Type::isOneOf </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a>&#160;</td>
+          <td class="paramname"><em>tk1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacebort.html#a4489f2d541ee63d59be9bb80cb5951e2">TypeKind</a>&#160;</td>
+          <td class="paramname"><em>tk2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const -&gt; bool </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Type_a1e2ba1e14d0ab2e6400ba74adbfcd0b4_icgraph.png" border="0" usemap="#aclassbort_1_1Type_a1e2ba1e14d0ab2e6400ba74adbfcd0b4_icgraph" alt=""/></div>
+<map name="aclassbort_1_1Type_a1e2ba1e14d0ab2e6400ba74adbfcd0b4_icgraph" id="aclassbort_1_1Type_a1e2ba1e14d0ab2e6400ba74adbfcd0b4_icgraph">
+<area shape="rect" title=" " alt="" coords="200,5,347,31"/>
+<area shape="rect" href="classbort_1_1Type.html#af10c137821c9988cfb0e154106e2053c" title=" " alt="" coords="5,5,152,31"/>
+</map>
+</div>
 
 </div>
 </div>

@@ -1,5 +1,7 @@
 <map id="bort::ir::GlobalValue" name="bort::ir::GlobalValue">
-<area shape="rect" id="node1" title=" " alt="" coords="5,79,156,104"/>
-<area shape="rect" id="node3" href="$classbort_1_1ir_1_1GlobalArray.html" title=" " alt="" coords="5,152,156,177"/>
-<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="26,5,135,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="115,152,266,177"/>
+<area shape="rect" id="node4" href="$classbort_1_1ir_1_1GlobalInitializer.html" title=" " alt="" coords="5,225,181,251"/>
+<area shape="rect" id="node5" href="$classbort_1_1ir_1_1GlobalVariable.html" title=" " alt="" coords="205,225,373,251"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Operand.html" title=" " alt="" coords="127,79,255,104"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="136,5,245,31"/>
 </map>

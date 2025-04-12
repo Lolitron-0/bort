@@ -13,12 +13,13 @@ var searchData=
   ['isastinvalid_10',['isASTInvalid',['../classbort_1_1Parser.html#a8f13b93d30c2d4bec7eb4be29ff98cb8',1,'bort::Parser']]],
   ['isastinvalidated_11',['isASTInvalidated',['../classbort_1_1ast_1_1ASTVisitorBase.html#ad3cbf49864d45326a5027af8bffcfa38',1,'bort::ast::ASTVisitorBase']]],
   ['isconditional_12',['isConditional',['../classbort_1_1ir_1_1BranchInst.html#ac84dd5f419ab191ece5210e905c2cf3d',1,'bort::ir::BranchInst']]],
-  ['isjumpinst_13',['isJumpInst',['../namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480',1,'bort::codegen::isJumpInst(const Ref&lt; ir::Instruction &gt; &amp;inst) -&gt; bool'],['../namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480',1,'bort::codegen::isJumpInst(const Ref&lt; ir::Instruction &gt; &amp;inst) -&gt; bool']]],
-  ['islogical_14',['isLogical',['../classbort_1_1ast_1_1BinOpExpr.html#ad2d1b550abe79e5d403e7143cb20150b',1,'bort::ast::BinOpExpr']]],
-  ['isnot_15',['isNot',['../classbort_1_1Token.html#a4db29e2e3d77796bb5902b8161edc60f',1,'bort::Token']]],
-  ['isoneof_16',['isOneOf',['../classbort_1_1Token.html#a3082bc0f8abb7af388341222870689ae',1,'bort::Token::isOneOf(TokenKind tk1, TokenKind tk2) const -&gt; bool'],['../classbort_1_1Token.html#ab1c11de1e0a722933970013c2f6df395',1,'bort::Token::isOneOf(TokenKind tk, TKs... other) const -&gt; bool']]],
-  ['isresolved_17',['isResolved',['../classbort_1_1ast_1_1FunctionCallExpr.html#a8faab01b8a042f9eb98acce93b165094',1,'bort::ast::FunctionCallExpr::isResolved()'],['../classbort_1_1ast_1_1VariableExpr.html#a1eb8e800f1bac874fa4f0c54621dad7f',1,'bort::ast::VariableExpr::isResolved()']]],
-  ['isshallow_18',['isShallow',['../classbort_1_1Symbol.html#a9e9df4906a811aac0dc2ed36cfb984b9',1,'bort::Symbol']]],
-  ['istyperesolved_19',['isTypeResolved',['../classbort_1_1ast_1_1ExpressionNode.html#a3fce52477f037165b7199d1c28411883',1,'bort::ast::ExpressionNode']]],
-  ['isvoid_20',['isVoid',['../classbort_1_1ir_1_1CallInst.html#a4b090070cf07a07ab83d67afeea3e3dd',1,'bort::ir::CallInst']]]
+  ['isglobal_13',['isGlobal',['../classbort_1_1Variable.html#ac90fb1f00a07967676afc40c04ca6020',1,'bort::Variable']]],
+  ['isjumpinst_14',['isJumpInst',['../namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480',1,'bort::codegen::isJumpInst(const Ref&lt; ir::Instruction &gt; &amp;inst) -&gt; bool'],['../namespacebort_1_1codegen.html#ace3e9d04d32609b66d9ed4205a922480',1,'bort::codegen::isJumpInst(const Ref&lt; ir::Instruction &gt; &amp;inst) -&gt; bool']]],
+  ['islogical_15',['isLogical',['../classbort_1_1ast_1_1BinOpExpr.html#ad2d1b550abe79e5d403e7143cb20150b',1,'bort::ast::BinOpExpr']]],
+  ['isnot_16',['isNot',['../classbort_1_1Token.html#a4db29e2e3d77796bb5902b8161edc60f',1,'bort::Token']]],
+  ['isoneof_17',['isOneOf',['../classbort_1_1Type.html#a1e2ba1e14d0ab2e6400ba74adbfcd0b4',1,'bort::Type::isOneOf(TypeKind tk1, TypeKind tk2) const -&gt; bool'],['../classbort_1_1Type.html#af10c137821c9988cfb0e154106e2053c',1,'bort::Type::isOneOf(TypeKind tk, TKs... other) const -&gt; bool'],['../classbort_1_1Token.html#a3082bc0f8abb7af388341222870689ae',1,'bort::Token::isOneOf(TokenKind tk1, TokenKind tk2) const -&gt; bool'],['../classbort_1_1Token.html#ab1c11de1e0a722933970013c2f6df395',1,'bort::Token::isOneOf(TokenKind tk, TKs... other) const -&gt; bool']]],
+  ['isresolved_18',['isResolved',['../classbort_1_1ast_1_1FunctionCallExpr.html#a8faab01b8a042f9eb98acce93b165094',1,'bort::ast::FunctionCallExpr::isResolved()'],['../classbort_1_1ast_1_1VariableExpr.html#a1eb8e800f1bac874fa4f0c54621dad7f',1,'bort::ast::VariableExpr::isResolved()']]],
+  ['isshallow_19',['isShallow',['../classbort_1_1Symbol.html#a9e9df4906a811aac0dc2ed36cfb984b9',1,'bort::Symbol']]],
+  ['istyperesolved_20',['isTypeResolved',['../classbort_1_1ast_1_1ExpressionNode.html#a3fce52477f037165b7199d1c28411883',1,'bort::ast::ExpressionNode']]],
+  ['isvoid_21',['isVoid',['../classbort_1_1ir_1_1CallInst.html#a4b090070cf07a07ab83d67afeea3e3dd',1,'bort::ir::CallInst']]]
 ];

@@ -1,6 +1,7 @@
 <map id="bort::codegen::ValueLoc" name="bort::codegen::ValueLoc">
-<area shape="rect" id="node1" title=" " alt="" coords="119,79,297,104"/>
-<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1RegisterLoc.html" title="Register location." alt="" coords="5,152,200,177"/>
-<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1StackLoc.html" title=" " alt="" coords="225,152,402,177"/>
-<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="153,5,263,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="221,79,399,104"/>
+<area shape="rect" id="node3" href="$classbort_1_1codegen_1_1GlobalLoc.html" title=" " alt="" coords="5,152,188,177"/>
+<area shape="rect" id="node4" href="$classbort_1_1codegen_1_1RegisterLoc.html" title="Register location." alt="" coords="213,152,407,177"/>
+<area shape="rect" id="node5" href="$classbort_1_1codegen_1_1StackLoc.html" title=" " alt="" coords="432,152,609,177"/>
+<area shape="rect" id="node2" href="$classbort_1_1ir_1_1Value.html" title=" " alt="" coords="255,5,365,31"/>
 </map>

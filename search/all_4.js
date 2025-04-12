@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['elementt_0',['ElementT',['../classbort_1_1ir_1_1GlobalArray.html#adc230d80167809283f2716cdb2f8bb40',1,'bort::ir::GlobalArray']]],
+  ['elementt_0',['ElementT',['../classbort_1_1ir_1_1GlobalInitializer.html#ad2e170e335f1736ec7f6fe52bf4abd5c',1,'bort::ir::GlobalInitializer']]],
   ['elemptr_1',['ElemPtr',['../namespacebort_1_1codegen_1_1rv_1_1intrinsics.html#a2e5fdc7d24b5f7791086d39ae2cd6710a72749fe959b7e30bc211b55a0648bdb3',1,'bort::codegen::rv::intrinsics']]],
   ['emiterror_2',['emitError',['../classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f',1,'bort::Diagnostic::emitError(const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)'],['../classbort_1_1Diagnostic.html#a67e3f1913f7587772106fbf4a1d58493',1,'bort::Diagnostic::emitError(const SourceFileIt &amp;loc, size_t length, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)'],['../classbort_1_1Diagnostic.html#a7244718f36ca87c2eb5572508b317e34',1,'bort::Diagnostic::emitError(const Token &amp;tok, const fmt::format_string&lt; Args... &gt; &amp;message, Args &amp;&amp;... args)']]],
   ['emitir_3',['EmitIR',['../classbort_1_1CLIOptions.html#a172b7cadafed8f780e301008821ffd63',1,'bort::CLIOptions']]],

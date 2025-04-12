@@ -13,7 +13,7 @@ var searchData=
   ['addbasicblock_10',['addBasicBlock',['../classbort_1_1ir_1_1Module.html#a87d0e6b90e86f8dc037f2ad5e194b1db',1,'bort::ir::Module']]],
   ['addbb_11',['addBB',['../classbort_1_1ir_1_1IRFunction.html#a73c9075b162475980697831eb5fbb6b8',1,'bort::ir::IRFunction']]],
   ['addfunction_12',['addFunction',['../classbort_1_1ir_1_1Module.html#abc4cfa8c0747c7b6a60db9063dcdd67b',1,'bort::ir::Module']]],
-  ['addglobal_13',['addGlobal',['../classbort_1_1ir_1_1Module.html#a9f5f57048411494755b7d828b31d5e43',1,'bort::ir::Module']]],
+  ['addglobal_13',['addGlobal',['../classbort_1_1ir_1_1Module.html#a01906de68ea1a14c26dce569031e529e',1,'bort::ir::Module']]],
   ['addinstruction_14',['addInstruction',['../classbort_1_1ir_1_1BasicBlock.html#a521f67cff9c23aa3a90183e29f40c128',1,'bort::ir::BasicBlock::addInstruction()'],['../classbort_1_1ir_1_1Module.html#a7f3ec1c8a91d03944d633840982a62d0',1,'bort::ir::Module::addInstruction()']]],
   ['addmdnode_15',['addMDNode',['../classbort_1_1ir_1_1Value.html#a03078c9d2ca075225ec798915037672a',1,'bort::ir::Value']]],
   ['all_16',['All',['../classbort_1_1Diagnostic.html#af0d93216469a2d6564e74d06e44bfca2ab1c94ca2fbc3e78fc30069c8d0f01680',1,'bort::Diagnostic']]],

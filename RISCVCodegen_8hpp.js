@@ -6,6 +6,7 @@ var RISCVCodegen_8hpp =
     [ "bort::codegen::rv::RARSMacroDefinitions", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions.html", "structbort_1_1codegen_1_1rv_1_1RARSMacroDefinitions" ],
     [ "bort::codegen::rv::RVBranchInfo", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo.html", "structbort_1_1codegen_1_1rv_1_1RVBranchInfo" ],
     [ "bort::codegen::rv::RVMachineRegister", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister.html", "classbort_1_1codegen_1_1rv_1_1RVMachineRegister" ],
+    [ "bort::codegen::rv::RVStoreTmpReg", "structbort_1_1codegen_1_1rv_1_1RVStoreTmpReg.html", "structbort_1_1codegen_1_1rv_1_1RVStoreTmpReg" ],
     [ "bort::codegen::rv::Generator", "classbort_1_1codegen_1_1rv_1_1Generator.html", "classbort_1_1codegen_1_1rv_1_1Generator" ],
     [ "RVMachineRegisterRef", "RISCVCodegen_8hpp.html#af53baca35254c91295c5504b75f3abbd", null ],
     [ "GPR", "RISCVCodegen_8hpp.html#a3e90a2b8f3bc1e06ec3135fd869ea248", [

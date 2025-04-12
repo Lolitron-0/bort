@@ -2,6 +2,7 @@ var namespacebort_1_1codegen =
 [
     [ "rv", "namespacebort_1_1codegen_1_1rv.html", "namespacebort_1_1codegen_1_1rv" ],
     [ "FrameInfo", "classbort_1_1codegen_1_1FrameInfo.html", "classbort_1_1codegen_1_1FrameInfo" ],
+    [ "GlobalLoc", "classbort_1_1codegen_1_1GlobalLoc.html", "classbort_1_1codegen_1_1GlobalLoc" ],
     [ "InstructionRemover", "classbort_1_1codegen_1_1InstructionRemover.html", "classbort_1_1codegen_1_1InstructionRemover" ],
     [ "InstructionVisitorBase", "classbort_1_1codegen_1_1InstructionVisitorBase.html", "classbort_1_1codegen_1_1InstructionVisitorBase" ],
     [ "MachineRegister", "classbort_1_1codegen_1_1MachineRegister.html", "classbort_1_1codegen_1_1MachineRegister" ],

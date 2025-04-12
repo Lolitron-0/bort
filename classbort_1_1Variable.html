@@ -122,12 +122,16 @@ Collaboration diagram for bort::Variable:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9f3caa07bb4f64eae012854efd32bd9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#a9f3caa07bb4f64eae012854efd32bd9b">Variable</a> (std::string name)</td></tr>
 <tr class="separator:a9f3caa07bb4f64eae012854efd32bd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f1c162cb037355a6d8679fe98a08837"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#a7f1c162cb037355a6d8679fe98a08837">Variable</a> (std::string name, <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type)</td></tr>
-<tr class="separator:a7f1c162cb037355a6d8679fe98a08837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a556820f10fb51ead2c3196bb4c3ab64b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#a556820f10fb51ead2c3196bb4c3ab64b">Variable</a> (std::string name, <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a> type, bool global=false)</td></tr>
+<tr class="separator:a556820f10fb51ead2c3196bb4c3ab64b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a898f3d3f0bdbe756bf06042dc8206574"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#a898f3d3f0bdbe756bf06042dc8206574">getType</a> () const -&gt; <a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a></td></tr>
 <tr class="separator:a898f3d3f0bdbe756bf06042dc8206574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f20b13929cb390ce574444b17daed5"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#aa0f20b13929cb390ce574444b17daed5">toString</a> () const -&gt; std::string override</td></tr>
 <tr class="separator:aa0f20b13929cb390ce574444b17daed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac90fb1f00a07967676afc40c04ca6020"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#ac90fb1f00a07967676afc40c04ca6020">isGlobal</a> () const -&gt; bool</td></tr>
+<tr class="separator:ac90fb1f00a07967676afc40c04ca6020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4d5de6ef253b1fbc28822ad759003dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Variable.html#ac4d5de6ef253b1fbc28822ad759003dc">setGlobal</a> (bool global)</td></tr>
+<tr class="separator:ac4d5de6ef253b1fbc28822ad759003dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classbort_1_1Symbol"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classbort_1_1Symbol')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classbort_1_1Symbol.html">bort::Symbol</a></td></tr>
 <tr class="memitem:aa271333de59556ef9fbd59fd06214b2d inherit pub_methods_classbort_1_1Symbol"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Symbol.html#aa271333de59556ef9fbd59fd06214b2d">Symbol</a> (<a class="el" href="namespacebort.html#a1bc8e411555e570a7000488baea924c9">ObjectKind</a> kind, std::string name, bool shallow)</td></tr>
 <tr class="separator:aa271333de59556ef9fbd59fd06214b2d inherit pub_methods_classbort_1_1Symbol"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,8 +181,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f1c162cb037355a6d8679fe98a08837" name="a7f1c162cb037355a6d8679fe98a08837"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f1c162cb037355a6d8679fe98a08837">&#9670;&#160;</a></span>Variable() <span class="overload">[2/2]</span></h2>
+<a id="a556820f10fb51ead2c3196bb4c3ab64b" name="a556820f10fb51ead2c3196bb4c3ab64b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a556820f10fb51ead2c3196bb4c3ab64b">&#9670;&#160;</a></span>Variable() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +200,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespacebort.html#ad37fcb92b9d778f5050dd5007c5ca039">TypeRef</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>global</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -245,6 +255,57 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classbort_1_1Symbol.html#a9e9df4906a811aac0dc2ed36cfb984b9" title=" " alt="" coords="221,5,396,31"/>
 </map>
 </div>
+
+</div>
+</div>
+<a id="ac90fb1f00a07967676afc40c04ca6020" name="ac90fb1f00a07967676afc40c04ca6020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac90fb1f00a07967676afc40c04ca6020">&#9670;&#160;</a></span>isGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Variable::isGlobal </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; bool </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac4d5de6ef253b1fbc28822ad759003dc" name="ac4d5de6ef253b1fbc28822ad759003dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4d5de6ef253b1fbc28822ad759003dc">&#9670;&#160;</a></span>setGlobal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void bort::Variable::setGlobal </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>global</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

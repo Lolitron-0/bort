@@ -1,4 +1,5 @@
 <map id="bort::ast::ASTVisitorBase::getNodeDebugInfo" name="bort::ast::ASTVisitorBase::getNodeDebugInfo">
-<area shape="rect" id="node1" title=" " alt="" coords="256,5,439,45"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="288,37,471,77"/>
+<area shape="rect" id="node2" href="$structbort_1_1ast_1_1CollectLabelDefinitionsVisitor.html#a6b1c1d4829015f665a0ec7dc3314e8d8" title=" " alt="" coords="5,5,240,45"/>
+<area shape="rect" id="node3" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html#af29708a85096fce3aa85b008b56f083c" title=" " alt="" coords="21,69,224,109"/>
 </map>

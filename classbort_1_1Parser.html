@@ -175,6 +175,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ad7fb31030c6b199bc0e09e329bbb5443"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#ad7fb31030c6b199bc0e09e329bbb5443">parseReturnStatement</a> () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1ReturnStmt.html">ast::ReturnStmt</a> &gt;</td></tr>
 <tr class="memdesc:ad7fb31030c6b199bc0e09e329bbb5443"><td class="mdescLeft">&#160;</td><td class="mdescRight">returnStatement -&gt; 'return' (expr)? ';'  <br /></td></tr>
 <tr class="separator:ad7fb31030c6b199bc0e09e329bbb5443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7aa5158b843dc568c9edaf493040cbe"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#ac7aa5158b843dc568c9edaf493040cbe">parseLabelStatement</a> () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1LabelStmt.html">ast::LabelStmt</a> &gt;</td></tr>
+<tr class="memdesc:ac7aa5158b843dc568c9edaf493040cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">labelStatement -&gt; identifier ':' ';'  <br /></td></tr>
+<tr class="separator:ac7aa5158b843dc568c9edaf493040cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ef68e97570ff9f35ef7ae912cbd0d18"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1Parser.html#a2ef68e97570ff9f35ef7ae912cbd0d18">parseGotoStatement</a> () -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt; <a class="el" href="classbort_1_1ast_1_1GotoStmt.html">ast::GotoStmt</a> &gt;</td></tr>
+<tr class="memdesc:a2ef68e97570ff9f35ef7ae912cbd0d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">gotoStatement -&gt; 'goto' identifier ';'  <br /></td></tr>
+<tr class="separator:a2ef68e97570ff9f35ef7ae912cbd0d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>don't check null on error and then traverse, checking for null, to recieve more errors at once </dd></dl>
@@ -621,6 +627,42 @@ Here is the call graph for this function:</div>
 
 </div>
 </div>
+<a id="a2ef68e97570ff9f35ef7ae912cbd0d18" name="a2ef68e97570ff9f35ef7ae912cbd0d18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ef68e97570ff9f35ef7ae912cbd0d18">&#9670;&#160;</a></span>parseGotoStatement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Parser::parseGotoStatement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="el" href="classbort_1_1ast_1_1GotoStmt.html">ast::GotoStmt</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>gotoStatement -&gt; 'goto' identifier ';' </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_a2ef68e97570ff9f35ef7ae912cbd0d18_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_a2ef68e97570ff9f35ef7ae912cbd0d18_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_a2ef68e97570ff9f35ef7ae912cbd0d18_cgraph" id="aclassbort_1_1Parser_a2ef68e97570ff9f35ef7ae912cbd0d18_cgraph">
+<area shape="rect" title="gotoStatement &#45;&gt; &#39;goto&#39; identifier &#39;;&#39;" alt="" coords="5,5,244,31"/>
+<area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="292,5,487,31"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="ac4ae3cb710b01b46c39ebe6cb6e5c08b" name="ac4ae3cb710b01b46c39ebe6cb6e5c08b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac4ae3cb710b01b46c39ebe6cb6e5c08b">&#9670;&#160;</a></span>parseIdentifierExpr()</h2>
 
@@ -755,6 +797,42 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="initializerList &#45;&gt; &#39;{&#39; number, ... &#39;}&#39; | stringLiteral" alt="" coords="5,31,229,56"/>
 <area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="277,5,472,31"/>
 <area shape="rect" href="classbort_1_1CharType.html#ace23df476f6beb7eaa641d7084cebd02" title=" " alt="" coords="302,55,447,80"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac7aa5158b843dc568c9edaf493040cbe" name="ac7aa5158b843dc568c9edaf493040cbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7aa5158b843dc568c9edaf493040cbe">&#9670;&#160;</a></span>parseLabelStatement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto bort::Parser::parseLabelStatement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> -&gt; <a class="el" href="namespacebort.html#acd1b1c718ad9eb9764e2a02eb6724e61">Ref</a>&lt;<a class="el" href="classbort_1_1ast_1_1LabelStmt.html">ast::LabelStmt</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>labelStatement -&gt; identifier ':' ';' </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classbort_1_1Parser_ac7aa5158b843dc568c9edaf493040cbe_cgraph.png" border="0" usemap="#aclassbort_1_1Parser_ac7aa5158b843dc568c9edaf493040cbe_cgraph" alt=""/></div>
+<map name="aclassbort_1_1Parser_ac7aa5158b843dc568c9edaf493040cbe_cgraph" id="aclassbort_1_1Parser_ac7aa5158b843dc568c9edaf493040cbe_cgraph">
+<area shape="rect" title="labelStatement &#45;&gt; identifier &#39;:&#39; &#39;;&#39;" alt="" coords="5,5,180,45"/>
+<area shape="rect" href="classbort_1_1Diagnostic.html#a204d46813b9d2374e8b47e497aa0735f" title=" " alt="" coords="228,13,423,38"/>
 </map>
 </div>
 
@@ -937,7 +1015,8 @@ Here is the call graph for this function:</div>
 -&gt; whileStatement <br  />
 -&gt; returnStatement <br  />
 -&gt; breakStatement <br  />
--&gt; continueStatement </p>
+-&gt; continueStatement <br  />
+-&gt; labelStatement </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">

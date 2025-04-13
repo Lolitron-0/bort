@@ -11,6 +11,7 @@ var namespacebort_1_1ir =
     [ "GlobalInitializer", "classbort_1_1ir_1_1GlobalInitializer.html", "classbort_1_1ir_1_1GlobalInitializer" ],
     [ "GlobalValue", "classbort_1_1ir_1_1GlobalValue.html", "classbort_1_1ir_1_1GlobalValue" ],
     [ "GlobalVariable", "classbort_1_1ir_1_1GlobalVariable.html", "classbort_1_1ir_1_1GlobalVariable" ],
+    [ "GotoUnresolvedLabelMD", "structbort_1_1ir_1_1GotoUnresolvedLabelMD.html", "structbort_1_1ir_1_1GotoUnresolvedLabelMD" ],
     [ "Instruction", "classbort_1_1ir_1_1Instruction.html", "classbort_1_1ir_1_1Instruction" ],
     [ "IntegralConstant", "classbort_1_1ir_1_1IntegralConstant.html", "classbort_1_1ir_1_1IntegralConstant" ],
     [ "IRCodegen", "classbort_1_1ir_1_1IRCodegen.html", "classbort_1_1ir_1_1IRCodegen" ],

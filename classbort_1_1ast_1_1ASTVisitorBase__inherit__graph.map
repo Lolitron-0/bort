@@ -1,8 +1,9 @@
 <map id="bort::ast::ASTVisitorBase" name="bort::ast::ASTVisitorBase">
-<area shape="rect" id="node1" title=" " alt="" coords="5,95,188,120"/>
-<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html" title="Base class of all SA visitors." alt="" coords="236,87,420,127"/>
-<area shape="rect" id="node3" href="$classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="493,5,645,31"/>
-<area shape="rect" id="node4" href="$classbort_1_1ast_1_1NodeSubstitutionVisitor.html" title=" " alt="" coords="471,55,667,95"/>
-<area shape="rect" id="node5" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="468,119,671,159"/>
-<area shape="rect" id="node6" href="$classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="473,183,665,223"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,127,188,152"/>
+<area shape="rect" id="node2" href="$classbort_1_1ast_1_1StructureAwareASTVisitor.html" title="Base class of all SA visitors." alt="" coords="236,119,420,159"/>
+<area shape="rect" id="node3" href="$classbort_1_1ast_1_1ASTPrinter.html" title=" " alt="" coords="509,5,661,31"/>
+<area shape="rect" id="node4" href="$structbort_1_1ast_1_1CollectLabelDefinitionsVisitor.html" title=" " alt="" coords="468,55,703,95"/>
+<area shape="rect" id="node5" href="$classbort_1_1ast_1_1NodeSubstitutionVisitor.html" title=" " alt="" coords="487,119,683,159"/>
+<area shape="rect" id="node6" href="$classbort_1_1ast_1_1SymbolResolutionVisitor.html" title=" " alt="" coords="484,183,687,223"/>
+<area shape="rect" id="node7" href="$classbort_1_1ast_1_1TypePropagationVisitor.html" title=" " alt="" coords="489,247,681,287"/>
 </map>

@@ -22,6 +22,8 @@ var ASTNode_8hpp =
       [ "ReturnStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663", null ],
       [ "BreakStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa7f3b653c9eeb22e74957b5736fdba34a", null ],
       [ "ContinueStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286", null ],
+      [ "LabelStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa36981c4c1ab588394a56b009471a89f2", null ],
+      [ "GotoStmt", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa618ca74d8929e2534d7d02a594681eff", null ],
       [ "ASTRoot", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29", null ],
       [ "NUM_NODES", "ASTNode_8hpp.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283", null ]
     ] ],

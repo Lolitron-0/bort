@@ -123,6 +123,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1BreakStmt.html">BreakStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbort_1_1ast_1_1CollectLabelDefinitionsVisitor.html">CollectLabelDefinitionsVisitor</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ContinueStmt.html">ContinueStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1ExpressionNode.html">ExpressionNode</a></td></tr>
@@ -135,11 +137,15 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1FunctionDecl.html">FunctionDecl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1GotoStmt.html">GotoStmt</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1IfStmt.html">IfStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1IndexationExpr.html">IndexationExpr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1InitializerList.html">InitializerList</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1LabelStmt.html">LabelStmt</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classbort_1_1ast_1_1Node.html">Node</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,7 +203,10 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa7f3b653c9eeb22e74957b5736fdba34a">BreakStmt</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286">ContinueStmt</a>
-, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa36981c4c1ab588394a56b009471a89f2">LabelStmt</a>
+, <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa618ca74d8929e2534d7d02a594681eff">GotoStmt</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29">ASTRoot</a>
 , <a class="el" href="namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283">NUM_NODES</a>
 <br />
  }</td></tr>
@@ -252,6 +261,8 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663" name="af477babacfc630db95da7ed465bfe37aafcc83d44c72e7a81578678d54fbcd663"></a>ReturnStmt&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa7f3b653c9eeb22e74957b5736fdba34a" name="af477babacfc630db95da7ed465bfe37aa7f3b653c9eeb22e74957b5736fdba34a"></a>BreakStmt&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286" name="af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286"></a>ContinueStmt&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa36981c4c1ab588394a56b009471a89f2" name="af477babacfc630db95da7ed465bfe37aa36981c4c1ab588394a56b009471a89f2"></a>LabelStmt&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa618ca74d8929e2534d7d02a594681eff" name="af477babacfc630db95da7ed465bfe37aa618ca74d8929e2534d7d02a594681eff"></a>GotoStmt&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29" name="af477babacfc630db95da7ed465bfe37aa050aa6830b85f0c024cc6f0263b10f29"></a>ASTRoot&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283" name="af477babacfc630db95da7ed465bfe37aaf75a03e0afd4f8ad64e089c78610a283"></a>NUM_NODES&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -300,7 +311,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classbort_1_1ast_1_1StructureAwareASTVisitor.html#abb57e7bfa9332570a4e6c1731107116a" title=" " alt="" coords="265,69,449,109"/>
 <area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#a711f7795660c73e0a84b4fb7668b60b9" title=" " alt="" coords="256,133,459,173"/>
 <area shape="rect" href="structbort_1_1FrontEndInstance.html#a603da25664ea6247c8d88ffbb036b1bb" title=" " alt="" coords="8,13,205,38"/>
-<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#ad4958a03c18ff689262f6fbe61474a76" title=" " alt="" coords="5,69,208,109"/>
+<area shape="rect" href="classbort_1_1ast_1_1SymbolResolutionVisitor.html#ac34015395cb8ae911f6e6a9136f3116f" title=" " alt="" coords="5,65,208,105"/>
 </map>
 </div>
 

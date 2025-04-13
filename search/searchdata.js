@@ -8,7 +8,7 @@ var indexSectionsWithContent =
   5: "bcdefilmnoprst",
   6: "bdeilorstuv",
   7: "cglmnot",
-  8: "abcefginprstuvw",
+  8: "abcefgilnprstuvw",
   9: "ai",
   10: "bdkpt",
   11: "t",

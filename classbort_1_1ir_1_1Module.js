@@ -14,6 +14,7 @@ var classbort_1_1ir_1_1Module =
     [ "getGlobalVariable", "classbort_1_1ir_1_1Module.html#ae603ecf6070a443bd361150ab4095394", null ],
     [ "getLastBBIt", "classbort_1_1ir_1_1Module.html#a3ac6f7dbf0b39c194280c7bb8c565606", null ],
     [ "getLastBBIt", "classbort_1_1ir_1_1Module.html#ab37fbb9623b769964fabd92cecf672ac", null ],
+    [ "getLastFunctionIt", "classbort_1_1ir_1_1Module.html#a9552b891cc92b6ee48e80bba9079af74", null ],
     [ "getLastFunctionIt", "classbort_1_1ir_1_1Module.html#af0f4b846246c274a07d1b20133167f8d", null ],
     [ "revalidateBasicBlocks", "classbort_1_1ir_1_1Module.html#a5bf30a789c437e86edce89f29dcc66ef", null ]
 ];

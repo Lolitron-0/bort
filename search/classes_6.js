@@ -7,5 +7,7 @@ var searchData=
   ['globalloc_4',['GlobalLoc',['../classbort_1_1codegen_1_1GlobalLoc.html',1,'bort::codegen']]],
   ['globalvalue_5',['GlobalValue',['../classbort_1_1ir_1_1GlobalValue.html',1,'bort::ir']]],
   ['globalvalueinitializerformatter_6',['GlobalValueInitializerFormatter',['../structbort_1_1codegen_1_1rv_1_1GlobalValueInitializerFormatter.html',1,'bort::codegen::rv::GlobalValueInitializerFormatter'],['../structGlobalValueInitializerFormatter.html',1,'GlobalValueInitializerFormatter']]],
-  ['globalvariable_7',['GlobalVariable',['../classbort_1_1ir_1_1GlobalVariable.html',1,'bort::ir']]]
+  ['globalvariable_7',['GlobalVariable',['../classbort_1_1ir_1_1GlobalVariable.html',1,'bort::ir']]],
+  ['gotostmt_8',['GotoStmt',['../classbort_1_1ast_1_1GotoStmt.html',1,'bort::ast']]],
+  ['gotounresolvedlabelmd_9',['GotoUnresolvedLabelMD',['../structbort_1_1ir_1_1GotoUnresolvedLabelMD.html',1,'bort::ir']]]
 ];

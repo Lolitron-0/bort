@@ -1,7 +1,6 @@
 <map id="bort::MiddleEndInstance::run" name="bort::MiddleEndInstance::run">
 <area shape="rect" id="node1" title=" " alt="" coords="5,45,213,70"/>
 <area shape="rect" id="node2" href="$classbort_1_1ir_1_1IRCodegen.html#a8311e73ed0badecf1e91f698f892f32d" title=" " alt="" coords="261,5,404,45"/>
-<area shape="rect" id="node4" href="$classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2" title=" " alt="" coords="268,69,397,109"/>
-<area shape="rect" id="node3" href="$classbort_1_1ir_1_1Module.html#a5bf30a789c437e86edce89f29dcc66ef" title=" " alt="" coords="454,5,649,45"/>
-<area shape="rect" id="node5" href="$classbort_1_1ir_1_1Module.html#a7a70fd007aefc2701541ee39c3210640" title=" " alt="" coords="452,77,651,102"/>
+<area shape="rect" id="node3" href="$classbort_1_1ir_1_1IRPrinter.html#aaa07a3c7e31ca148aaa22ca209df7da2" title=" " alt="" coords="268,69,397,109"/>
+<area shape="rect" id="node4" href="$classbort_1_1ir_1_1Module.html#a7a70fd007aefc2701541ee39c3210640" title=" " alt="" coords="452,77,651,102"/>
 </map>

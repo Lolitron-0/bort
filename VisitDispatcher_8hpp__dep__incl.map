@@ -1,26 +1,26 @@
 <map id="include/bort/Basic/VisitDispatcher.hpp" name="include/bort/Basic/VisitDispatcher.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="1200,5,1352,45"/>
-<area shape="rect" id="node2" href="$GlobalValue_8hpp.html" title=" " alt="" coords="1016,93,1242,119"/>
-<area shape="rect" id="node13" href="$InstructionVisitor_8cpp.html" title=" " alt="" coords="1053,335,1296,361"/>
-<area shape="rect" id="node3" href="$RISCVCodegen_8hpp.html" title=" " alt="" coords="685,328,845,368"/>
-<area shape="rect" id="node5" href="$RISCVCodegen_8cpp.html" title=" " alt="" coords="166,416,396,441"/>
-<area shape="rect" id="node6" href="$RISCVPrinter_8cpp.html" title=" " alt="" coords="599,416,814,441"/>
-<area shape="rect" id="node8" href="$Module_8hpp.html" title=" " alt="" coords="895,167,1091,192"/>
-<area shape="rect" id="node19" href="$IRCodegen_8cpp.html" title=" " alt="" coords="1988,335,2147,361"/>
-<area shape="rect" id="node21" href="$IRPrinter_8cpp.html" title=" " alt="" coords="1744,335,1888,361"/>
-<area shape="rect" id="node23" href="$Module_8cpp.html" title=" " alt="" coords="2122,247,2259,273"/>
-<area shape="rect" id="node24" href="$GlobalValue_8cpp.html" title=" " alt="" coords="1167,167,1334,192"/>
-<area shape="rect" id="node4" href="$BackendInstance_8cpp.html" title=" " alt="" coords="1008,416,1250,441"/>
-<area shape="rect" id="node7" href="$MiddleEndInstance_8cpp.html" title=" " alt="" coords="1455,416,1667,441"/>
-<area shape="rect" id="node9" href="$BackendInstance_8hpp.html" title=" " alt="" coords="1150,240,1314,280"/>
-<area shape="rect" id="node11" href="$InstructionVisitorBase_8hpp.html" title=" " alt="" coords="826,240,1024,280"/>
-<area shape="rect" id="node12" href="$RISCVPrinter_8hpp.html" title=" " alt="" coords="869,328,1029,368"/>
-<area shape="rect" id="node14" href="$Codegen_2Utils_8hpp.html" title=" " alt="" coords="81,240,241,280"/>
-<area shape="rect" id="node16" href="$ValueLoc_8hpp.html" title=" " alt="" coords="541,240,701,280"/>
-<area shape="rect" id="node17" href="$ValueLoc_8cpp.html" title=" " alt="" coords="318,335,508,361"/>
-<area shape="rect" id="node18" href="$IRCodegen_8hpp.html" title=" " alt="" coords="1828,247,2046,273"/>
-<area shape="rect" id="node20" href="$IRPrinter_8hpp.html" title=" " alt="" coords="1601,247,1804,273"/>
-<area shape="rect" id="node22" href="$MiddleEndInstance_8hpp.html" title=" " alt="" coords="1338,240,1526,280"/>
-<area shape="rect" id="node10" href="$Main_8cpp.html" title=" " alt="" coords="1370,335,1498,361"/>
-<area shape="rect" id="node15" href="$Codegen_2Utils_8cpp.html" title=" " alt="" coords="80,335,242,361"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1405,5,1557,45"/>
+<area shape="rect" id="node2" href="$GlobalValue_8hpp.html" title=" " alt="" coords="738,93,965,119"/>
+<area shape="rect" id="node13" href="$InstructionVisitor_8cpp.html" title=" " alt="" coords="1789,335,2032,361"/>
+<area shape="rect" id="node3" href="$RISCVCodegen_8hpp.html" title=" " alt="" coords="604,328,764,368"/>
+<area shape="rect" id="node5" href="$RISCVCodegen_8cpp.html" title=" " alt="" coords="229,416,458,441"/>
+<area shape="rect" id="node6" href="$RISCVPrinter_8cpp.html" title=" " alt="" coords="518,416,732,441"/>
+<area shape="rect" id="node8" href="$Module_8hpp.html" title=" " alt="" coords="754,167,950,192"/>
+<area shape="rect" id="node19" href="$IRCodegen_8cpp.html" title=" " alt="" coords="788,335,947,361"/>
+<area shape="rect" id="node21" href="$IRPrinter_8cpp.html" title=" " alt="" coords="2072,335,2216,361"/>
+<area shape="rect" id="node23" href="$Module_8cpp.html" title=" " alt="" coords="1936,247,2074,273"/>
+<area shape="rect" id="node24" href="$GlobalValue_8cpp.html" title=" " alt="" coords="1026,167,1192,192"/>
+<area shape="rect" id="node4" href="$BackendInstance_8cpp.html" title=" " alt="" coords="1430,416,1673,441"/>
+<area shape="rect" id="node7" href="$MiddleEndInstance_8cpp.html" title=" " alt="" coords="1095,416,1307,441"/>
+<area shape="rect" id="node9" href="$BackendInstance_8hpp.html" title=" " alt="" coords="1520,240,1684,280"/>
+<area shape="rect" id="node11" href="$InstructionVisitorBase_8hpp.html" title=" " alt="" coords="985,240,1182,280"/>
+<area shape="rect" id="node12" href="$RISCVPrinter_8hpp.html" title=" " alt="" coords="1073,328,1233,368"/>
+<area shape="rect" id="node14" href="$Codegen_2Utils_8hpp.html" title=" " alt="" coords="50,240,210,280"/>
+<area shape="rect" id="node16" href="$ValueLoc_8hpp.html" title=" " alt="" coords="356,240,516,280"/>
+<area shape="rect" id="node17" href="$ValueLoc_8cpp.html" title=" " alt="" coords="287,335,478,361"/>
+<area shape="rect" id="node18" href="$IRCodegen_8hpp.html" title=" " alt="" coords="742,247,961,273"/>
+<area shape="rect" id="node20" href="$IRPrinter_8hpp.html" title=" " alt="" coords="1709,247,1912,273"/>
+<area shape="rect" id="node22" href="$MiddleEndInstance_8hpp.html" title=" " alt="" coords="1308,240,1496,280"/>
+<area shape="rect" id="node10" href="$Main_8cpp.html" title=" " alt="" coords="1374,335,1502,361"/>
+<area shape="rect" id="node15" href="$Codegen_2Utils_8cpp.html" title=" " alt="" coords="49,335,212,361"/>
 </map>

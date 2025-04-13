@@ -13,13 +13,14 @@ var searchData=
   ['clioptions_10',['CLIOptions',['../classbort_1_1CLIOptions.html',1,'bort']]],
   ['clioptions_2ehpp_11',['CLIOptions.hpp',['../CLIOptions_8hpp.html',1,'']]],
   ['codegen_12',['codegen',['../classbort_1_1ir_1_1IRCodegen.html#a8311e73ed0badecf1e91f698f892f32d',1,'bort::ir::IRCodegen']]],
-  ['constant_13',['Constant',['../structbort_1_1ir_1_1Constant.html',1,'bort::ir']]],
-  ['constant_2ehpp_14',['Constant.hpp',['../Constant_8hpp.html',1,'']]],
-  ['consumeident_15',['consumeIdent',['../namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808',1,'bort']]],
-  ['contains_16',['contains',['../classbort_1_1ir_1_1MDList.html#ab5a70952888d7f9104b207cca289fa94',1,'bort::ir::MDList']]],
-  ['continuestmt_17',['ContinueStmt',['../classbort_1_1ast_1_1ContinueStmt.html',1,'bort::ast::ContinueStmt'],['../namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286',1,'bort::ast::ContinueStmt()']]],
-  ['continuestmt_2ehpp_18',['ContinueStmt.hpp',['../ContinueStmt_8hpp.html',1,'']]],
-  ['countpunctuators_19',['CountPunctuators',['../namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda',1,'bort::detail']]],
-  ['countpunctuators_5fv_20',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]],
-  ['createunique_21',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
+  ['collectlabeldefinitionsvisitor_13',['CollectLabelDefinitionsVisitor',['../structbort_1_1ast_1_1CollectLabelDefinitionsVisitor.html',1,'bort::ast']]],
+  ['constant_14',['Constant',['../structbort_1_1ir_1_1Constant.html',1,'bort::ir']]],
+  ['constant_2ehpp_15',['Constant.hpp',['../Constant_8hpp.html',1,'']]],
+  ['consumeident_16',['consumeIdent',['../namespacebort.html#adeee1082fdfff92af54abdcbfdfe1808',1,'bort']]],
+  ['contains_17',['contains',['../classbort_1_1ir_1_1MDList.html#ab5a70952888d7f9104b207cca289fa94',1,'bort::ir::MDList']]],
+  ['continuestmt_18',['ContinueStmt',['../classbort_1_1ast_1_1ContinueStmt.html',1,'bort::ast::ContinueStmt'],['../namespacebort_1_1ast.html#af477babacfc630db95da7ed465bfe37aa40ecd06acfb3292ba760deb2c76a1286',1,'bort::ast::ContinueStmt()']]],
+  ['continuestmt_2ehpp_19',['ContinueStmt.hpp',['../ContinueStmt_8hpp.html',1,'']]],
+  ['countpunctuators_20',['CountPunctuators',['../namespacebort_1_1detail.html#a0f41351525d5450a1fec6087900c0eda',1,'bort::detail']]],
+  ['countpunctuators_5fv_21',['CountPunctuators_v',['../namespacebort_1_1detail.html#a1cd6526f07aed00a3df8da8b10b4085a',1,'bort::detail']]],
+  ['createunique_22',['createUnique',['../classbort_1_1ir_1_1VariableUse.html#aaf17401c1c447e47c2a6f0cd17325385',1,'bort::ir::VariableUse']]]
 ];

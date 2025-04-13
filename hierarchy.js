@@ -4,6 +4,7 @@ var hierarchy =
     [ "bort::ast::ASTVisitorBase", "classbort_1_1ast_1_1ASTVisitorBase.html", [
       [ "bort::ast::StructureAwareASTVisitor", "classbort_1_1ast_1_1StructureAwareASTVisitor.html", [
         [ "bort::ast::ASTPrinter", "classbort_1_1ast_1_1ASTPrinter.html", null ],
+        [ "bort::ast::CollectLabelDefinitionsVisitor", "structbort_1_1ast_1_1CollectLabelDefinitionsVisitor.html", null ],
         [ "bort::ast::NodeSubstitutionVisitor", "classbort_1_1ast_1_1NodeSubstitutionVisitor.html", null ],
         [ "bort::ast::SymbolResolutionVisitor", "classbort_1_1ast_1_1SymbolResolutionVisitor.html", null ],
         [ "bort::ast::TypePropagationVisitor", "classbort_1_1ast_1_1TypePropagationVisitor.html", null ]
@@ -37,6 +38,7 @@ var hierarchy =
       [ "bort::codegen::rv::RVOpAdditionalInfo", "structbort_1_1codegen_1_1rv_1_1RVOpAdditionalInfo.html", null ],
       [ "bort::codegen::rv::RVStoreTmpReg", "structbort_1_1codegen_1_1rv_1_1RVStoreTmpReg.html", null ],
       [ "bort::codegen::rv::StoreSourceOperandMD", "classbort_1_1codegen_1_1rv_1_1StoreSourceOperandMD.html", null ],
+      [ "bort::ir::GotoUnresolvedLabelMD", "structbort_1_1ir_1_1GotoUnresolvedLabelMD.html", null ],
       [ "bort::ir::MDTag", "classbort_1_1ir_1_1MDTag.html", [
         [ "bort::codegen::RemoveInstructionMDTag", "structbort_1_1codegen_1_1RemoveInstructionMDTag.html", null ],
         [ "bort::codegen::rv::MemoryDependencyMDTag", "structbort_1_1codegen_1_1rv_1_1MemoryDependencyMDTag.html", null ],
@@ -64,7 +66,9 @@ var hierarchy =
         [ "bort::ast::ContinueStmt", "classbort_1_1ast_1_1ContinueStmt.html", null ],
         [ "bort::ast::ExpressionStmt", "classbort_1_1ast_1_1ExpressionStmt.html", null ],
         [ "bort::ast::FunctionDecl", "classbort_1_1ast_1_1FunctionDecl.html", null ],
+        [ "bort::ast::GotoStmt", "classbort_1_1ast_1_1GotoStmt.html", null ],
         [ "bort::ast::IfStmt", "classbort_1_1ast_1_1IfStmt.html", null ],
+        [ "bort::ast::LabelStmt", "classbort_1_1ast_1_1LabelStmt.html", null ],
         [ "bort::ast::ReturnStmt", "classbort_1_1ast_1_1ReturnStmt.html", null ],
         [ "bort::ast::VarDecl", "classbort_1_1ast_1_1VarDecl.html", null ],
         [ "bort::ast::WhileStmt", "classbort_1_1ast_1_1WhileStmt.html", null ]

@@ -2,7 +2,7 @@
 <area shape="rect" id="node1" href="$classbort_1_1ast_1_1Node.html" title=" " alt="" coords="5,179,124,204"/>
 <area shape="rect" id="node2" href="$classbort_1_1ast_1_1ASTRoot.html" title=" " alt="" coords="197,129,336,155"/>
 <area shape="rect" id="node3" href="$classbort_1_1ast_1_1ExpressionNode.html" title=" " alt="" coords="172,179,361,204"/>
-<area shape="rect" id="node11" href="$classbort_1_1ast_1_1Statement.html" title=" " alt="" coords="191,523,343,548"/>
+<area shape="rect" id="node11" href="$classbort_1_1ast_1_1Statement.html" title=" " alt="" coords="191,572,343,597"/>
 <area shape="rect" id="node4" href="$classbort_1_1ast_1_1BinOpExpr.html" title=" " alt="" coords="430,5,582,31"/>
 <area shape="rect" id="node5" href="$classbort_1_1ast_1_1FunctionCallExpr.html" title=" " alt="" coords="409,55,603,80"/>
 <area shape="rect" id="node6" href="$classbort_1_1ast_1_1IndexationExpr.html" title=" " alt="" coords="415,104,597,129"/>
@@ -15,8 +15,10 @@
 <area shape="rect" id="node14" href="$classbort_1_1ast_1_1ContinueStmt.html" title=" " alt="" coords="419,449,593,475"/>
 <area shape="rect" id="node15" href="$classbort_1_1ast_1_1ExpressionStmt.html" title=" " alt="" coords="413,499,599,524"/>
 <area shape="rect" id="node16" href="$classbort_1_1ast_1_1FunctionDecl.html" title=" " alt="" coords="422,548,590,573"/>
-<area shape="rect" id="node17" href="$classbort_1_1ast_1_1IfStmt.html" title=" " alt="" coords="444,597,568,623"/>
-<area shape="rect" id="node18" href="$classbort_1_1ast_1_1ReturnStmt.html" title=" " alt="" coords="427,647,585,672"/>
-<area shape="rect" id="node19" href="$classbort_1_1ast_1_1VarDecl.html" title=" " alt="" coords="439,696,573,721"/>
-<area shape="rect" id="node20" href="$classbort_1_1ast_1_1WhileStmt.html" title=" " alt="" coords="430,745,582,771"/>
+<area shape="rect" id="node17" href="$classbort_1_1ast_1_1GotoStmt.html" title=" " alt="" coords="433,597,579,623"/>
+<area shape="rect" id="node18" href="$classbort_1_1ast_1_1IfStmt.html" title=" " alt="" coords="444,647,568,672"/>
+<area shape="rect" id="node19" href="$classbort_1_1ast_1_1LabelStmt.html" title=" " alt="" coords="431,696,581,721"/>
+<area shape="rect" id="node20" href="$classbort_1_1ast_1_1ReturnStmt.html" title=" " alt="" coords="427,745,585,771"/>
+<area shape="rect" id="node21" href="$classbort_1_1ast_1_1VarDecl.html" title=" " alt="" coords="439,795,573,820"/>
+<area shape="rect" id="node22" href="$classbort_1_1ast_1_1WhileStmt.html" title=" " alt="" coords="430,844,582,869"/>
 </map>

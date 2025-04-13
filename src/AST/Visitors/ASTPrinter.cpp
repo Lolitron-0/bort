@@ -38,6 +38,8 @@ static constexpr cul::BiMap s_NodeKindNames{ [](auto&& selector) {
       .Case(NodeKind::ReturnStmt, "ReturnStmt")
       .Case(NodeKind::BreakStmt, "BreakStmt")
       .Case(NodeKind::ContinueStmt, "ContinueStmt")
+      .Case(NodeKind::LabelStmt, "LabelStmt")
+      .Case(NodeKind::GotoStmt, "GotoStmt")
       .Case(NodeKind::Block, "Block")
       .Case(NodeKind::ASTRoot, "ASTRoot");
 } };
@@ -202,4 +204,13 @@ void ASTPrinter::visit(const Ref<ContinueStmt>& continueStmtNode) {
   dumpNodeInfo(continueStmtNode);
 }
 
+void ASTPrinter::visit(const Ref<LabelStmt>& labelStmtNode) {
+  dumpNodeInfo(labelStmtNode);
+  dump("Name", labelStmtNode->getLabelName());
+}
+
+void ASTPrinter::visit(const Ref<GotoStmt>& gotoStmtNode) {
+  dumpNodeInfo(gotoStmtNode);
+  dump("Target", gotoStmtNode->getTargetLabel());
+}
 } // namespace bort::ast

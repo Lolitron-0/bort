@@ -1,4 +1,5 @@
 #include "bort/IR/IRCodegen.hpp"
+#include "bort/AST/ASTDebugInfo.hpp"
 #include "bort/AST/ASTNode.hpp"
 #include "bort/AST/BinOpExpr.hpp"
 #include "bort/AST/ExpressionNode.hpp"
@@ -17,6 +18,7 @@
 #include "bort/IR/GlobalValue.hpp"
 #include "bort/IR/LoadInst.hpp"
 #include "bort/IR/Metadata.hpp"
+#include "bort/IR/Module.hpp"
 #include "bort/IR/MoveInst.hpp"
 #include "bort/IR/OpInst.hpp"
 #include "bort/IR/Register.hpp"
@@ -62,6 +64,23 @@ struct BrToLoopStartMDTag : public MDTag {
   explicit BrToLoopStartMDTag()
       : MDTag{ "br_to_loop_cond" } {
   }
+};
+
+struct GotoUnresolvedLabelMD : Metadata {
+  GotoUnresolvedLabelMD(IRFuncIter funcIter, std::string label,
+                        ast::ASTDebugInfo stmtDebugInfo)
+      : FuncIter{ funcIter },
+        Label{ std::move(label) },
+        StmtDebugInfo{ std::move(stmtDebugInfo) } {
+  }
+
+  [[nodiscard]] auto toString() const -> std::string override {
+    return fmt::format("goto_unresolved_label");
+  }
+
+  IRFuncIter FuncIter;
+  std::string Label;
+  ast::ASTDebugInfo StmtDebugInfo;
 };
 
 auto IRCodegen::genBranchFromCondition(
@@ -123,9 +142,45 @@ auto IRCodegen::genArrayPtr(const ValueRef& arr)
   return { ptrTy, arrPtr };
 }
 
+static void resolveGotoBranch(const Module& M,
+                              const Ref<ir::BranchInst>& br,
+                              GotoUnresolvedLabelMD* GUL) {
+  for (auto funcIt{ M.begin() }; funcIt != M.end(); ++funcIt) {
+    for (auto&& bbTarget : *funcIt) {
+      std::cerr << bbTarget.getName() << std::endl;
+      if (bbTarget.getName() == GUL->Label) {
+        if (funcIt != GUL->FuncIter) {
+          Diagnostic::emitWarning(GUL->StmtDebugInfo.Token,
+                                  "Goto outside function");
+        }
+        br->setTarget(&bbTarget);
+        return;
+      }
+    }
+  }
+  bort_assert(false, "Label resolution failed");
+}
+
+void IRCodegen::resolveGotoLabels() {
+  for (auto&& func : m_Module) {
+    for (auto&& bb : func) {
+      for (auto&& inst : bb) {
+        if (auto* GUL{ inst->getMDNode<GotoUnresolvedLabelMD>() }) {
+          auto br{ dynCastRef<BranchInst>(inst) };
+          bort_assert(br, "Branch expected");
+          resolveGotoBranch(m_Module, br, GUL);
+          br->removeMDNode<GotoUnresolvedLabelMD>();
+        }
+      }
+    }
+  }
+}
+
 void IRCodegen::codegen(const Ref<ast::ASTRoot>& ast) {
   m_ASTRoot = ast;
   genericVisit(ast);
+
+  resolveGotoLabels();
   m_Module.revalidateBasicBlocks();
 }
 
@@ -299,7 +354,7 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
 
   if (!voidFunc && !seenRet) {
     Diagnostic::emitWarning(
-        m_ASTRoot->getNodeDebugInfo(functionDeclNode).token,
+        m_ASTRoot->getNodeDebugInfo(functionDeclNode).Token,
         "Non-void function does not return a value");
   }
 
@@ -450,6 +505,19 @@ auto IRCodegen::visit(const Ref<ast::ContinueStmt>& /*continueStmt*/)
     -> ValueRef {
   auto newInst{ addInstruction(makeRef<BranchInst>()) };
   newInst->addMDNode(BrToLoopStartMDTag{});
+  return nullptr;
+}
+
+auto IRCodegen::visit(const Ref<ast::LabelStmt>& labelStmt) -> ValueRef {
+  pushBB("", labelStmt->getLabelName());
+  return nullptr;
+}
+
+auto IRCodegen::visit(const Ref<ast::GotoStmt>& gotoStmt) -> ValueRef {
+  auto newInst{ addInstruction(makeRef<BranchInst>()) };
+  newInst->addMDNode(GotoUnresolvedLabelMD{
+      m_Module.getLastFunctionIt(), gotoStmt->getTargetLabel(),
+      m_ASTRoot->getNodeDebugInfo(gotoStmt) });
   return nullptr;
 }
 

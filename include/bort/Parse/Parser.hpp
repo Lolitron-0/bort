@@ -5,8 +5,10 @@
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/InitializerList.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
@@ -103,7 +105,8 @@ protected:
   /// -> whileStatement \n
   /// -> returnStatement \n
   /// -> breakStatement \n
-  /// -> continueStatement
+  /// -> continueStatement \n
+  /// -> labelStatement
   auto parseStatement() -> Ref<ast::Statement>;
   /// breakStatement -> 'break' ';'
   auto parseBreakStatement() -> Ref<ast::BreakStmt>;
@@ -120,6 +123,10 @@ protected:
   auto parseForStatement() -> Ref<ast::Block>;
   /// returnStatement -> 'return' (expr)? ';'
   auto parseReturnStatement() -> Ref<ast::ReturnStmt>;
+  /// labelStatement -> identifier ':' ';'
+  auto parseLabelStatement() -> Ref<ast::LabelStmt>;
+  /// gotoStatement -> 'goto' identifier ';'
+  auto parseGotoStatement() -> Ref<ast::GotoStmt>;
 
 private:
   void disableDiagnostics() {
@@ -137,10 +144,7 @@ private:
     return *m_CurTokIter;
   }
 
-  auto invalidNode() -> std::nullptr_t {
-    m_ASTInvalid = true;
-    return nullptr;
-  }
+  auto invalidNode() -> std::nullptr_t;
 
   inline void consumeToken() {
     m_CurTokIter++;

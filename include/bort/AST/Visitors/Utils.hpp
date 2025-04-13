@@ -7,9 +7,11 @@
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/InitializerList.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -18,6 +20,12 @@
 #include "bort/AST/WhileStmt.hpp"
 #include "bort/Basic/Casts.hpp"
 namespace bort::ast {
+
+template <typename NodeT, typename F>
+constexpr static auto castVisit(const Ref<Node>& node, F&& visit) {
+  bort_assert_nomsg(dynCastRef<NodeT>((node)));
+  return visit(dynCastRef<NodeT>((node)));
+}
 
 /// \brief Driver for all AST walkers
 ///
@@ -30,73 +38,43 @@ template <typename F>
 auto callHandler(const Ref<Node>& node, F&& visit) {
   switch (node->getKind()) {
   case NodeKind::NumberExpr:
-    bort_assert_nomsg(dynCastRef<NumberExpr>(node));
-    return visit(dynCastRef<NumberExpr>(node));
-    break;
+    return castVisit<NumberExpr>(node, visit);
   case NodeKind::VariableExpr:
-    bort_assert_nomsg(dynCastRef<VariableExpr>(node));
-    return visit(dynCastRef<VariableExpr>(node));
-    break;
+    return castVisit<VariableExpr>(node, visit);
   case NodeKind::BinOpExpr:
-    bort_assert_nomsg(dynCastRef<BinOpExpr>(node));
-    return visit(dynCastRef<BinOpExpr>(node));
-    break;
+    return castVisit<BinOpExpr>(node, visit);
   case NodeKind::UnaryOpExpr:
-    bort_assert_nomsg(dynCastRef<UnaryOpExpr>(node));
-    return visit(dynCastRef<UnaryOpExpr>(node));
-    break;
+    return castVisit<UnaryOpExpr>(node, visit);
   case NodeKind::VarDecl:
-    bort_assert_nomsg(dynCastRef<VarDecl>(node));
-    return visit(dynCastRef<VarDecl>(node));
-    break;
+    return castVisit<VarDecl>(node, visit);
   case NodeKind::InitializerList:
-    bort_assert_nomsg(dynCastRef<InitializerList>(node));
-    return visit(dynCastRef<InitializerList>(node));
-    break;
+    return castVisit<InitializerList>(node, visit);
   case NodeKind::IndexationExpr:
-    bort_assert_nomsg(dynCastRef<IndexationExpr>(node));
-    return visit(dynCastRef<IndexationExpr>(node));
-    break;
+    return castVisit<IndexationExpr>(node, visit);
   case NodeKind::FunctionDecl:
-    bort_assert_nomsg(dynCastRef<FunctionDecl>(node));
-    return visit(dynCastRef<FunctionDecl>(node));
-    break;
+    return castVisit<FunctionDecl>(node, visit);
   case NodeKind::FunctionCallExpr:
-    bort_assert_nomsg(dynCastRef<FunctionCallExpr>(node));
-    return visit(dynCastRef<FunctionCallExpr>(node));
-    break;
+    return castVisit<FunctionCallExpr>(node, visit);
   case NodeKind::ExpressionStmt:
-    bort_assert_nomsg(dynCastRef<ExpressionStmt>(node));
-    return visit(dynCastRef<ExpressionStmt>(node));
-    break;
+    return castVisit<ExpressionStmt>(node, visit);
   case NodeKind::Block:
-    bort_assert_nomsg(dynCastRef<Block>(node));
-    return visit(dynCastRef<Block>(node));
-    break;
+    return castVisit<Block>(node, visit);
   case NodeKind::IfStmt:
-    bort_assert_nomsg(dynCastRef<IfStmt>(node));
-    return visit(dynCastRef<IfStmt>(node));
-    break;
+    return castVisit<IfStmt>(node, visit);
   case NodeKind::WhileStmt:
-    bort_assert_nomsg(dynCastRef<WhileStmt>(node));
-    return visit(dynCastRef<WhileStmt>(node));
-    break;
+    return castVisit<WhileStmt>(node, visit);
   case NodeKind::ReturnStmt:
-    bort_assert_nomsg(dynCastRef<ReturnStmt>(node));
-    return visit(dynCastRef<ReturnStmt>(node));
-    break;
+    return castVisit<ReturnStmt>(node, visit);
   case NodeKind::BreakStmt:
-    bort_assert_nomsg(dynCastRef<BreakStmt>(node));
-    return visit(dynCastRef<BreakStmt>(node));
-    break;
+    return castVisit<BreakStmt>(node, visit);
   case NodeKind::ContinueStmt:
-    bort_assert_nomsg(dynCastRef<ContinueStmt>(node));
-    return visit(dynCastRef<ContinueStmt>(node));
-    break;
+    return castVisit<ContinueStmt>(node, visit);
+  case NodeKind::LabelStmt:
+    return castVisit<LabelStmt>(node, visit);
+  case NodeKind::GotoStmt:
+    return castVisit<GotoStmt>(node, visit);
   case NodeKind::ASTRoot:
-    bort_assert_nomsg(dynCastRef<ASTRoot>(node));
-    return visit(dynCastRef<ASTRoot>(node));
-    break;
+    return castVisit<ASTRoot>(node, visit);
   default:
     bort_assert(false, "Generic visit not implemented for node");
     // unreachable, casting to root just for fun

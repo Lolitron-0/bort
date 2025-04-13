@@ -1,12 +1,31 @@
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
+#include <fmt/color.h>
+#include <unordered_set>
 
 namespace bort::ast {
+
+struct CollectLabelDefinitionsVisitor : StructureAwareASTVisitor {
+  void visit(const Ref<LabelStmt>& labelStmtNode) override {
+    if (DefinedLabels.contains(labelStmtNode->getLabelName())) {
+      Diagnostic::emitError(
+          getASTRoot()->getNodeDebugInfo(labelStmtNode).Token,
+          "Label '{}' already defined", labelStmtNode->getLabelName());
+      markASTInvalid();
+      return;
+    }
+    DefinedLabels.insert(labelStmtNode->getLabelName());
+  }
+
+  std::unordered_set<std::string> DefinedLabels;
+};
 
 Scope::Scope(Ref<Scope> enclosingScope)
     : m_EnclosingScope{ std::move(enclosingScope) },
@@ -49,6 +68,14 @@ SymbolResolutionVisitor::SymbolResolutionVisitor()
     : m_CurrentScope{ makeRef<Scope>(nullptr, "Global") } {
 }
 
+void SymbolResolutionVisitor::visit(const Ref<ASTRoot>& astRoot) {
+  CollectLabelDefinitionsVisitor visitor;
+  visitor.SAVisit(astRoot);
+  m_DefinedLabels = std::move(visitor.DefinedLabels);
+
+  StructureAwareASTVisitor::visit(astRoot);
+}
+
 void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
   if (varNode->isResolved()) {
     return;
@@ -59,7 +86,7 @@ void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
     return;
   }
 
-  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(varNode).token,
+  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(varNode).Token,
                         "Unresolved variable: {}", varNode->getVarName());
   markASTInvalid();
 }
@@ -71,7 +98,7 @@ void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
     define(varDeclNode->getVariable());
   } catch (const SymbolAlreadyDefinedError& e) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(varDeclNode).token, "{}",
+        getASTRoot()->getNodeDebugInfo(varDeclNode).Token, "{}",
         e.what());
     auto prevSym{ resolve(varDeclNode->getVariable()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
@@ -95,7 +122,7 @@ void SymbolResolutionVisitor::visit(
     define(functionDeclNode->getFunction());
   } catch (const SymbolAlreadyDefinedError& e) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
+        getASTRoot()->getNodeDebugInfo(functionDeclNode).Token, "{}",
         e.what());
     auto prevSym{ resolve(functionDeclNode->getFunction()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
@@ -111,7 +138,7 @@ void SymbolResolutionVisitor::visit(
       define(paramVar);
     } catch (const SymbolAlreadyDefinedError& e) {
       Diagnostic::emitError(
-          getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
+          getASTRoot()->getNodeDebugInfo(functionDeclNode).Token, "{}",
           e.what());
       auto prevSym{ resolve(paramVar->getName()) };
       bort_assert(prevSym, "define/resolve mismatch");
@@ -125,6 +152,15 @@ void SymbolResolutionVisitor::visit(
   pop();
 }
 
+void SymbolResolutionVisitor::visit(const Ref<GotoStmt>& gotoStmt) {
+  if (!m_DefinedLabels.contains(gotoStmt->getTargetLabel())) {
+    Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(gotoStmt).Token,
+                          "Undefined label: {}",
+                          gotoStmt->getTargetLabel());
+    markASTInvalid();
+  }
+}
+
 void SymbolResolutionVisitor::visit(
     const Ref<FunctionCallExpr>& functionCallExpr) {
   if (functionCallExpr->isResolved()) {
@@ -134,7 +170,7 @@ void SymbolResolutionVisitor::visit(
   auto symbol = resolve(functionCallExpr->getFunction()->getName());
   if (!symbol) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(functionCallExpr).token,
+        getASTRoot()->getNodeDebugInfo(functionCallExpr).Token,
         "Unresolved function: {}",
         functionCallExpr->getFunction()->getName());
     markASTInvalid();

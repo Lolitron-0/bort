@@ -34,6 +34,8 @@ enum class NodeKind {
   ReturnStmt,
   BreakStmt,
   ContinueStmt,
+  LabelStmt,
+  GotoStmt,
   ASTRoot,
   NUM_NODES
 };

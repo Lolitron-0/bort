@@ -99,6 +99,12 @@ public:
     return it;
   }
 
+  [[nodiscard]] auto getLastFunctionIt() {
+    auto it{ m_Functions.end() };
+    it--;
+    return it;
+  }
+
   [[nodiscard]] auto getLastBBIt() {
     auto it{ m_Functions.back().end() };
     it--;

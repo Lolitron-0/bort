@@ -1,5 +1,6 @@
 #include "bort/IR/Module.hpp"
 #include "bort/Basic/Assert.hpp"
+#include "bort/IR/BranchInst.hpp"
 #include "bort/IR/GlobalValue.hpp"
 
 using namespace bort::ir;
@@ -45,12 +46,27 @@ auto bort::ir::Module::addInstruction(Ref<Instruction> instruction)
   return lastBB.getInstructions().back();
 }
 
+static auto hasReferencingBranch(const IRFunction& func,
+                                 BasicBlock* bb) -> bool {
+  for (auto&& BB : func) {
+    for (auto&& inst : BB) {
+      if (auto br{ dynCastRef<BranchInst>(inst) }) {
+        if (br->getTarget() == bb) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 void bort::ir::Module::revalidateBasicBlocks() {
   for (auto&& func : m_Functions) {
     for (auto it{ func.begin() }; it != func.end();) {
       /// last BB can be empty
       if (it->getInstructions().empty() &&
-          ++decltype(it){ it } != func.end()) {
+          ++decltype(it){ it } != func.end() &&
+          !hasReferencingBranch(func, &*it)) {
         it = func.erase(it);
       } else {
         it++;
@@ -59,7 +75,7 @@ void bort::ir::Module::revalidateBasicBlocks() {
   }
 }
 
-auto bort::ir::Module::addGlobal(const Ref<GlobalValue>&  global)
+auto bort::ir::Module::addGlobal(const Ref<GlobalValue>& global)
     -> Ref<GlobalValue> {
   m_Globals[global->getName()] = global;
   return m_Globals.at(global->getName());
@@ -76,7 +92,7 @@ auto bort::ir::Module::getGlobalVariable(const std::string& name)
 
 auto bort::ir::Module::getGlobalVariable(const Ref<Variable>& variable)
     -> Ref<GlobalVariable> {
-      return getGlobalVariable(variable->getName());
+  return getGlobalVariable(variable->getName());
 }
 
 void bort::ir::Module::addBasicBlock(std::string name) {
@@ -86,4 +102,3 @@ void bort::ir::Module::addBasicBlock(std::string name) {
 void bort::ir::Module::addFunction(Ref<Function> function) {
   m_Functions.emplace_back(std::move(function));
 }
-

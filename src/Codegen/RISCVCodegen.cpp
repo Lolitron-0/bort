@@ -246,8 +246,8 @@ private:
           .Case(TokenKind::Amp, "and")
           .Case(TokenKind::Pipe, "or")
           .Case(TokenKind::Xor, "xor")
-          .Case(TokenKind::Xor, "sll")
-          .Case(TokenKind::Xor, "sra");
+          .Case(TokenKind::LShift, "sll")
+          .Case(TokenKind::RShift, "sra");
     } };
 
     bort_assert(s_OpInstNames.Find(opInst->getOp()).has_value(),

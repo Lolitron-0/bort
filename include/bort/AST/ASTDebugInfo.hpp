@@ -4,7 +4,7 @@
 namespace bort::ast {
 
 struct ASTDebugInfo {
-  Token token; ///< Token node originated from
+  Token Token; ///< Token node originated from
 };
 
 } // namespace bort::ast

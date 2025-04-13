@@ -1,8 +1,10 @@
 #pragma once
 #include "bort/AST/BreakStmt.hpp"
 #include "bort/AST/ContinueStmt.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/InitializerList.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include <concepts>
@@ -23,6 +25,7 @@ private:
   void visit(const Ref<VariableExpr>& varNode) override;
   void visit(const Ref<StringExpr>& strNode) override;
   void visit(const Ref<CharExpr>& charNode) override;
+  void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
   void visit(const Ref<InitializerList>& initializerListNode) override;
   void visit(const Ref<IndexationExpr>& indexationExpr) override;
@@ -36,7 +39,8 @@ private:
   void visit(const Ref<ReturnStmt>& returnStmtNode) override;
   void visit(const Ref<BreakStmt>& breakStmtNode) override;
   void visit(const Ref<ContinueStmt>& continueStmtNode) override;
-  void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
+  void visit(const Ref<LabelStmt>& labelStmtNode) override;
+  void visit(const Ref<GotoStmt>& gotoStmtNode) override;
 
   void push();
   void pop();

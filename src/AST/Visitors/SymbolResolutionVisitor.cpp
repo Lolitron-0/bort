@@ -1,12 +1,31 @@
 #include "bort/AST/Visitors/SymbolResolutionVisitor.hpp"
 #include "bort/AST/Block.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/VarDecl.hpp"
 #include "bort/AST/VariableExpr.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Casts.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
+#include <fmt/color.h>
+#include <unordered_set>
 
 namespace bort::ast {
+
+struct CollectLabelDefinitionsVisitor : StructureAwareASTVisitor {
+  void visit(const Ref<LabelStmt>& labelStmtNode) override {
+    if (DefinedLabels.contains(labelStmtNode->getLabelName())) {
+      Diagnostic::emitError(
+          getASTRoot()->getNodeDebugInfo(labelStmtNode).token,
+          "Label '{}' already defined", labelStmtNode->getLabelName());
+      markASTInvalid();
+      return;
+    }
+    DefinedLabels.insert(labelStmtNode->getLabelName());
+  }
+
+  std::unordered_set<std::string> DefinedLabels;
+};
 
 Scope::Scope(Ref<Scope> enclosingScope)
     : m_EnclosingScope{ std::move(enclosingScope) },
@@ -47,6 +66,14 @@ auto Scope::resolve(const std::string& name) -> Ref<Symbol> {
 
 SymbolResolutionVisitor::SymbolResolutionVisitor()
     : m_CurrentScope{ makeRef<Scope>(nullptr, "Global") } {
+}
+
+void SymbolResolutionVisitor::visit(const Ref<ASTRoot>& astRoot) {
+  CollectLabelDefinitionsVisitor visitor;
+  visitor.SAVisit(astRoot);
+  m_DefinedLabels = std::move(visitor.DefinedLabels);
+
+  StructureAwareASTVisitor::visit(astRoot);
 }
 
 void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
@@ -123,6 +150,15 @@ void SymbolResolutionVisitor::visit(
 
   genericVisit(functionDeclNode->getBody());
   pop();
+}
+
+void SymbolResolutionVisitor::visit(const Ref<GotoStmt>& gotoStmt) {
+  if (!m_DefinedLabels.contains(gotoStmt->getTargetLabel())) {
+    Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(gotoStmt).token,
+                          "Undefined label: {}",
+                          gotoStmt->getTargetLabel());
+    markASTInvalid();
+  }
 }
 
 void SymbolResolutionVisitor::visit(

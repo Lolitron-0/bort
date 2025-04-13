@@ -1,12 +1,14 @@
 #pragma once
 #include "bort/AST/FunctionCallExpr.hpp"
 #include "bort/AST/FunctionDecl.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/Visitors/ASTVisitor.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/Frontend/Symbol.hpp"
 #include <optional>
 #include <stdexcept>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace bort::ast {
 
@@ -37,11 +39,13 @@ public:
   SymbolResolutionVisitor();
 
 protected:
+  void visit(const Ref<ASTRoot>& astRoot) override;
   void visit(const Ref<VariableExpr>& varNode) override;
   void visit(const Ref<VarDecl>& varDeclNode) override;
   void visit(const Ref<Block>& blockNode) override;
   void visit(const Ref<FunctionDecl>& functionDeclNode) override;
   void visit(const Ref<FunctionCallExpr>& functionCallExpr) override;
+  void visit(const Ref<GotoStmt>& gotoStmt) override;
 
 private:
   void push();
@@ -51,5 +55,6 @@ private:
   [[nodiscard]] auto resolve(const std::string& name) -> Ref<Symbol>;
 
   Ref<Scope> m_CurrentScope;
+  std::unordered_set<std::string> m_DefinedLabels;
 };
 } // namespace bort::ast

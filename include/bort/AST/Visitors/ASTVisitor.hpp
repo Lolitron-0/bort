@@ -25,6 +25,8 @@ class WhileStmt;
 class ReturnStmt;
 class BreakStmt;
 class ContinueStmt;
+class LabelStmt;
+class GotoStmt;
 
 class ASTVisitorBase {
 public:
@@ -86,6 +88,12 @@ protected:
     // leaf
   }
   virtual void visit(const Ref<ContinueStmt>& /* continueNode */) {
+    // leaf
+  }
+  virtual void visit(const Ref<LabelStmt>& /* labelNode */) {
+    // leaf
+  }
+  virtual void visit(const Ref<GotoStmt>& /* gotoNode */) {
     // leaf
   }
   virtual void visit(const Ref<VarDecl>& varDeclNode);

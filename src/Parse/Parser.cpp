@@ -7,6 +7,7 @@
 #include "bort/AST/ExpressionNode.hpp"
 #include "bort/AST/ExpressionStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/InitializerList.hpp"
 #include "bort/AST/NumberExpr.hpp"
@@ -19,6 +20,7 @@
 #include "bort/Basic/Casts.hpp"
 #include "bort/Basic/Ref.hpp"
 #include "bort/CLI/IO.hpp"
+#include "bort/Frontend/FrontEndInstance.hpp"
 #include "bort/Frontend/Symbol.hpp"
 #include "bort/Frontend/Type.hpp"
 #include "bort/Lex/Token.hpp"
@@ -562,6 +564,13 @@ auto Parser::parseStatement() -> Ref<ast::Statement> {
     return parseBreakStatement();
   case TokenKind::KW_continue:
     return parseContinueStatement();
+  case TokenKind::Identifier:
+    if (lookahead(1).is(TokenKind::Colon)) {
+      return parseLabelStatement();
+    }
+    break;
+  case TokenKind::KW_goto:
+    return parseGotoStatement();
   default:
     break;
   }
@@ -647,6 +656,12 @@ auto Parser::lookahead(uint32_t offset) const -> const Token& {
   auto iter{ m_CurTokIter };
   std::advance(iter, offset);
   return *iter;
+}
+
+auto Parser::invalidNode() -> std::nullptr_t {
+  m_ASTInvalid = true;
+  throw FrontEndFatalError{ "Invalid syntax" };
+  return nullptr;
 }
 
 auto Parser::parseIfStatement() -> Ref<ast::IfStmt> {
@@ -791,6 +806,48 @@ auto Parser::parseForStatement() -> Ref<ast::Block> {
       std::move(body)));
 
   return outerBlock;
+}
+
+auto Parser::parseLabelStatement() -> Ref<ast::LabelStmt> {
+  bort_assert(curTok().is(TokenKind::Identifier), "Expected identifier");
+  auto labelTok{ curTok() };
+  consumeToken();
+  if (curTok().isNot(TokenKind::Colon)) {
+    Diagnostic::emitError(curTok(), "Expected ':'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  if (curTok().is(TokenKind::Semicolon)) {
+    consumeToken();
+  }
+
+  return m_ASTRoot->registerNode<ast::LabelStmt>(
+      ast::ASTDebugInfo{ labelTok },
+      std::string{ labelTok.getStringView() });
+}
+
+auto Parser::parseGotoStatement() -> Ref<ast::GotoStmt> {
+  bort_assert(curTok().is(TokenKind::KW_goto), "Expected 'goto'");
+  auto gotoTok{ curTok() };
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::Identifier)) {
+    Diagnostic::emitError(curTok(), "Expected identifier");
+    return invalidNode();
+  }
+  auto labelTok{ curTok() };
+  consumeToken();
+
+  if (curTok().isNot(TokenKind::Semicolon)) {
+    Diagnostic::emitError(curTok(), "Expected ';'");
+    return invalidNode();
+  }
+  consumeToken();
+
+  return m_ASTRoot->registerNode<ast::GotoStmt>(
+      ast::ASTDebugInfo{ gotoTok },
+      std::string{ labelTok.getStringView() });
 }
 
 } // namespace bort

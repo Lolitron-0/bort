@@ -4,9 +4,11 @@
 #include "bort/AST/BreakStmt.hpp"
 #include "bort/AST/ContinueStmt.hpp"
 #include "bort/AST/FunctionCallExpr.hpp"
+#include "bort/AST/GotoStmt.hpp"
 #include "bort/AST/IfStmt.hpp"
 #include "bort/AST/IndexationExpr.hpp"
 #include "bort/AST/InitializerList.hpp"
+#include "bort/AST/LabelStmt.hpp"
 #include "bort/AST/NumberExpr.hpp"
 #include "bort/AST/ReturnStmt.hpp"
 #include "bort/AST/UnaryOpExpr.hpp"
@@ -21,6 +23,8 @@
 #include <type_traits>
 
 namespace bort::ir {
+
+struct GotoUnresolvedLabelMD;
 
 class IRCodegen {
 public:
@@ -38,6 +42,7 @@ private:
   auto visit(const Ref<ast::UnaryOpExpr>& unaryOpExpr) -> ValueRef;
   auto visit(const Ref<ast::NumberExpr>& numNode) -> ValueRef;
   auto visit(const Ref<ast::VariableExpr>& varNode) -> ValueRef;
+  auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
   auto visit(const Ref<ast::VarDecl>& varDeclNode) -> ValueRef;
   auto visit(const Ref<ast::InitializerList>& initializerListNode)
       -> ValueRef;
@@ -51,13 +56,16 @@ private:
   auto visit(const Ref<ast::ReturnStmt>& returnStmt) -> ValueRef;
   auto visit(const Ref<ast::BreakStmt>& breakStmt) -> ValueRef;
   auto visit(const Ref<ast::ContinueStmt>& continueStmt) -> ValueRef;
-  auto visit(const Ref<ast::FunctionCallExpr>& funcCallExpr) -> ValueRef;
+  auto visit(const Ref<ast::LabelStmt>& labelStmt) -> ValueRef;
+  auto visit(const Ref<ast::GotoStmt>& gotoStmt) -> ValueRef;
+
   void processGlobalVarDecl(const Ref<ast::VarDecl>& varDeclNode);
 
   auto genBranchFromCondition(const Ref<ast::ExpressionNode>& cond,
                               bool negate = false) -> Ref<BranchInst>;
   auto genArrayPtr(const ValueRef& arr)
       -> std::pair<Ref<PointerType>, ValueRef>;
+  void resolveGotoLabels();
 
   template <typename T>
     requires std::is_base_of_v<Instruction, T>

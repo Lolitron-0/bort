@@ -106,7 +106,7 @@ void TypePropagationVisitor::visit(const Ref<BinOpExpr>& binopNode) {
     auto opResultTy{ getArithmeticOpResultType(lhsTy, rhsTy) };
     if (!opResultTy) {
       Diagnostic::emitError(
-          getNodeDebugInfo(binopNode).Token,
+          getNodeDebugInfo(binopNode).token,
           "Invalid operands to arithmetic expression: {}, {}",
           lhsTy->toString(), rhsTy->toString());
       throw FatalSemanticError();
@@ -158,7 +158,7 @@ void TypePropagationVisitor::visit(const Ref<UnaryOpExpr>& unaryOpNode) {
       type = ptrType->getPointee();
     } else {
       Diagnostic::emitError(
-          getASTRoot()->getNodeDebugInfo(unaryOpNode).Token,
+          getASTRoot()->getNodeDebugInfo(unaryOpNode).token,
           "Invalid operand to dereference expression: {}",
           type->toString());
       throw FatalSemanticError();
@@ -183,7 +183,7 @@ void TypePropagationVisitor::visit(
       indexationNode->getArray()->getType()) };
   if (!arrayTy) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(indexationNode->getArray()).Token,
+        getASTRoot()->getNodeDebugInfo(indexationNode->getArray()).token,
         "Expression should have array type, got {} instead",
         indexationNode->getArray()->getType()->toString());
     throw FatalSemanticError();
@@ -209,7 +209,7 @@ void TypePropagationVisitor::promoteAssignmentOperands(
   };
 
   if (isaRef<IntType>(rhsTy) && isaRef<CharType>(lhsTy)) {
-    Diagnostic::emitWarning(debugInfo.Token,
+    Diagnostic::emitWarning(debugInfo.token,
                             "Narrowing conversion from {} to {}",
                             rhsTy->toString(), lhsTy->toString());
   }
@@ -220,7 +220,7 @@ void TypePropagationVisitor::promoteAssignmentOperands(
 
   if (rhsTy != lhsTy) {
     Diagnostic::emitError(
-        debugInfo.Token,
+        debugInfo.token,
         "Invalid assignment RHS type, expected {}, got {} instead",
         lhsTy->toString(), rhsTy->toString());
     throw FatalSemanticError();
@@ -239,7 +239,7 @@ void TypePropagationVisitor::assertLvalue(const Ref<Node>& node) {
     }
   }
 
-  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(node).Token,
+  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(node).token,
                         "Expected lvalue");
   throw FatalSemanticError();
 }

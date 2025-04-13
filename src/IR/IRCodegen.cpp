@@ -150,7 +150,7 @@ static void resolveGotoBranch(const Module& M,
       std::cerr << bbTarget.getName() << std::endl;
       if (bbTarget.getName() == GUL->Label) {
         if (funcIt != GUL->FuncIter) {
-          Diagnostic::emitWarning(GUL->StmtDebugInfo.Token,
+          Diagnostic::emitWarning(GUL->StmtDebugInfo.token,
                                   "Goto outside function");
         }
         br->setTarget(&bbTarget);
@@ -354,7 +354,7 @@ auto IRCodegen::visit(const Ref<ast::FunctionDecl>& functionDeclNode)
 
   if (!voidFunc && !seenRet) {
     Diagnostic::emitWarning(
-        m_ASTRoot->getNodeDebugInfo(functionDeclNode).Token,
+        m_ASTRoot->getNodeDebugInfo(functionDeclNode).token,
         "Non-void function does not return a value");
   }
 

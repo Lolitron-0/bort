@@ -16,7 +16,7 @@ struct CollectLabelDefinitionsVisitor : StructureAwareASTVisitor {
   void visit(const Ref<LabelStmt>& labelStmtNode) override {
     if (DefinedLabels.contains(labelStmtNode->getLabelName())) {
       Diagnostic::emitError(
-          getASTRoot()->getNodeDebugInfo(labelStmtNode).Token,
+          getASTRoot()->getNodeDebugInfo(labelStmtNode).token,
           "Label '{}' already defined", labelStmtNode->getLabelName());
       markASTInvalid();
       return;
@@ -86,7 +86,7 @@ void SymbolResolutionVisitor::visit(const Ref<VariableExpr>& varNode) {
     return;
   }
 
-  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(varNode).Token,
+  Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(varNode).token,
                         "Unresolved variable: {}", varNode->getVarName());
   markASTInvalid();
 }
@@ -98,7 +98,7 @@ void SymbolResolutionVisitor::visit(const Ref<VarDecl>& varDeclNode) {
     define(varDeclNode->getVariable());
   } catch (const SymbolAlreadyDefinedError& e) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(varDeclNode).Token, "{}",
+        getASTRoot()->getNodeDebugInfo(varDeclNode).token, "{}",
         e.what());
     auto prevSym{ resolve(varDeclNode->getVariable()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
@@ -122,7 +122,7 @@ void SymbolResolutionVisitor::visit(
     define(functionDeclNode->getFunction());
   } catch (const SymbolAlreadyDefinedError& e) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(functionDeclNode).Token, "{}",
+        getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
         e.what());
     auto prevSym{ resolve(functionDeclNode->getFunction()->getName()) };
     bort_assert(prevSym, "define/resolve mismatch");
@@ -138,7 +138,7 @@ void SymbolResolutionVisitor::visit(
       define(paramVar);
     } catch (const SymbolAlreadyDefinedError& e) {
       Diagnostic::emitError(
-          getASTRoot()->getNodeDebugInfo(functionDeclNode).Token, "{}",
+          getASTRoot()->getNodeDebugInfo(functionDeclNode).token, "{}",
           e.what());
       auto prevSym{ resolve(paramVar->getName()) };
       bort_assert(prevSym, "define/resolve mismatch");
@@ -154,7 +154,7 @@ void SymbolResolutionVisitor::visit(
 
 void SymbolResolutionVisitor::visit(const Ref<GotoStmt>& gotoStmt) {
   if (!m_DefinedLabels.contains(gotoStmt->getTargetLabel())) {
-    Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(gotoStmt).Token,
+    Diagnostic::emitError(getASTRoot()->getNodeDebugInfo(gotoStmt).token,
                           "Undefined label: {}",
                           gotoStmt->getTargetLabel());
     markASTInvalid();
@@ -170,7 +170,7 @@ void SymbolResolutionVisitor::visit(
   auto symbol = resolve(functionCallExpr->getFunction()->getName());
   if (!symbol) {
     Diagnostic::emitError(
-        getASTRoot()->getNodeDebugInfo(functionCallExpr).Token,
+        getASTRoot()->getNodeDebugInfo(functionCallExpr).token,
         "Unresolved function: {}",
         functionCallExpr->getFunction()->getName());
     markASTInvalid();

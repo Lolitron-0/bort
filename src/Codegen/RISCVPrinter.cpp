@@ -101,16 +101,12 @@ private:
 void Printer::run(ir::Module& module) {
   printHeader(module);
   for (auto&& func : module) {
-    bool firstBlock{ true };
     const auto* PE{ func.getMDNode<RVFuncPrologueEpilogue>() };
-    fmt::println(m_Stream, "{}:", func.begin()->getName());
+    fmt::println(m_Stream, "{}:", func.getFunction()->getName());
     /// @todo this is bad af, better make another structure
     fmt::print(m_Stream, "{}", PE->Prologue);
     for (auto&& BB : func) {
-      if (!firstBlock) {
-        fmt::println(m_Stream, "{}:", BB.getName());
-      }
-      firstBlock = false;
+      fmt::println(m_Stream, "{}:", BB.getName());
       for (auto&& inst : BB) {
         genericVisit(inst);
       }

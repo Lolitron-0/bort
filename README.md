@@ -8,7 +8,7 @@
 - testing
 
 ## Build
-bort uses cmake build system, so building pipeline is pretty standard. All dependencies are downloaded during cmake configuration via `FetchContent` (~1G by now).
+bort uses CMake build system, so building pipeline is pretty standard. All dependencies are downloaded during CMake configuration via `FetchContent` (~1G by now).
 
 ```bash
 git clone https://github.com/Lolitron-0/bort
@@ -24,4 +24,4 @@ After building, you can find binaries directly in build directory. You can start
 ```bash
 ./build/bort -h
 ```
-To explore available command line options.
+https://github.com/HSE-DB/seminar-10-Lolitron-0To explore available command line options.
